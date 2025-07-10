@@ -3,12 +3,31 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Mail, Linkedin, ArrowUp } from "lucide-react"
+import { useTranslations } from "@/lib/i18n"
 
 export default function Footer() {
+  const t = useTranslations()
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   }
+
+  const navItems = [
+    { name: t("nav.about"), href: "#about" },
+    { name: t("nav.process"), href: "#process" },
+    { name: t("nav.work"), href: "#work" },
+    { name: t("nav.team"), href: "#team" },
+    { name: t("nav.blog"), href: "#blog" },
+    { name: t("nav.contact"), href: "#contact" },
+  ]
+
+  const categoryItems = [
+    { name: t("footer.categories.residential"), href: "/categories#residential" },
+    { name: t("footer.categories.commercial"), href: "/categories#commercial" },
+    { name: t("footer.categories.interior"), href: "/categories#interior" },
+    { name: t("footer.categories.exterior"), href: "/categories#exterior" },
+    { name: t("footer.categories.sustainable"), href: "/categories#sustainable" },
+  ]
 
   return (
     <footer className="py-12 border-t border-neutral-100 dark:border-neutral-800">
@@ -24,7 +43,7 @@ export default function Footer() {
           >
             <h3 className="text-xl font-light text-neutral-900 dark:text-neutral-100 mb-4">LEXIA</h3>
             <p className="text-neutral-600 dark:text-neutral-400 mb-6 max-w-md">
-              Web サイトやアプリ制作を通じて、ビジネスの成長をサポートします。
+              {t("footer.description")}
             </p>
             <div className="flex space-x-4">
               <Link
@@ -54,16 +73,16 @@ export default function Footer() {
             variants={fadeIn}
           >
             <h4 className="text-sm font-medium uppercase tracking-wider text-neutral-900 dark:text-neutral-100 mb-4">
-              Navigation
+              {t("footer.nav.title")}
             </h4>
             <ul className="space-y-2">
-              {["About", "Process", "Work", "Team", "Blog", "Contact"].map((item) => (
-                <li key={item}>
+              {navItems.map((item) => (
+                <li key={item.href}>
                   <Link
-                    href={`#${item.toLowerCase()}`}
+                    href={item.href}
                     className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 text-sm transition-colors duration-300"
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}
@@ -78,16 +97,16 @@ export default function Footer() {
             variants={fadeIn}
           >
             <h4 className="text-sm font-medium uppercase tracking-wider text-neutral-900 dark:text-neutral-100 mb-4">
-              Categories
+              {t("footer.categories.title")}
             </h4>
             <ul className="space-y-2">
-              {["Residential", "Commercial", "Interior", "Exterior", "Sustainable"].map((item) => (
-                <li key={item}>
+              {categoryItems.map((item) => (
+                <li key={item.href}>
                   <Link
-                    href={`/categories#${item.toLowerCase()}`}
+                    href={item.href}
                     className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 text-sm transition-colors duration-300"
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}
@@ -104,7 +123,7 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.4 }}
             variants={fadeIn}
           >
-            © {new Date().getFullYear()} LEXIA. All rights reserved.
+            © {new Date().getFullYear()} LEXIA. {t("footer.rightsReserved")}
           </motion.p>
           <motion.button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -116,7 +135,7 @@ export default function Footer() {
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            <span className="text-sm mr-1">Back to top</span>
+            <span className="text-sm mr-1">{t("footer.backToTop")}</span>
             <ArrowUp className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1" />
           </motion.button>
         </div>

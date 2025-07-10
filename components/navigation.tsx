@@ -8,18 +8,18 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Search } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { SearchDialog } from "@/components/search-dialog"
-
-// Japanese navigation items
-const navItems = [
-  { name: "会社概要", href: "#about" },
-  { name: "制作工程", href: "#process" },
-  { name: "制作実績", href: "#work" },
-  { name: "チーム", href: "#team" },
-  { name: "ブログ", href: "#blog" },
-  { name: "お問い合わせ", href: "#contact" },
-]
+import { useTranslations } from "@/lib/i18n"
 
 export default function Navigation() {
+  const t = useTranslations()
+  const navItems = [
+    { name: t("nav.about"), href: "#about" },
+    { name: t("nav.process"), href: "#process" },
+    { name: t("nav.work"), href: "#work" },
+    { name: t("nav.team"), href: "#team" },
+    { name: t("nav.blog"), href: "#blog" },
+    { name: t("nav.contact"), href: "#contact" },
+  ]
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("hero")
@@ -84,7 +84,7 @@ export default function Navigation() {
               <ul className="flex space-x-8">
                 {navItems.map((item, index) => (
                   <motion.li
-                    key={item.name}
+                    key={item.href}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: 0.1 * index }}
@@ -117,7 +117,7 @@ export default function Navigation() {
               transition={{ duration: 0.3, delay: 0.7 }}
               onClick={() => setSearchOpen(true)}
               className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-              aria-label="プロジェクトを検索"
+              aria-label={t("nav.searchProjects")}
             >
               <Search className="h-5 w-5" />
             </motion.button>
@@ -146,7 +146,7 @@ export default function Navigation() {
               transition={{ duration: 0.3, delay: 0.5 }}
               className="text-neutral-900 dark:text-neutral-100"
               onClick={() => setMobileMenuOpen(true)}
-              aria-label="メニューを開く"
+              aria-label={t("nav.openMenu")}
             >
               <Menu />
             </motion.button>
@@ -167,7 +167,7 @@ export default function Navigation() {
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-neutral-900 dark:text-neutral-100"
-                aria-label="メニューを閉じる"
+                aria-label={t("nav.closeMenu")}
               >
                 <X />
               </button>
@@ -177,7 +177,7 @@ export default function Navigation() {
               <ul className="space-y-8 text-center">
                 {navItems.map((item, index) => (
                   <motion.li
-                    key={item.name}
+                    key={item.href}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: 0.1 * index }}

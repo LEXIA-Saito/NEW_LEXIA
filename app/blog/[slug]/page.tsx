@@ -16,8 +16,10 @@ import { ReadingTime } from "@/components/reading-time"
 import { SeriesNavigation } from "@/components/series-navigation"
 import { SocialShare } from "@/components/social-share"
 import { AuthorProfile } from "@/components/author-profile"
+import { useTranslations } from "@/lib/i18n"
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
+  const t = useTranslations()
   const [isLoaded, setIsLoaded] = useState(false)
 
   // Find the blog post by slug
@@ -32,10 +34,10 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       <>
         <Navigation />
         <div className="container mx-auto px-4 py-24 md:py-32 text-center">
-          <h1 className="text-3xl font-light mb-6">Blog Post Not Found</h1>
-          <p className="mb-8">The blog post you're looking for doesn't exist or has been moved.</p>
+          <h1 className="text-3xl font-light mb-6">{t("blog.notFound.title")}</h1>
+          <p className="mb-8">{t("blog.notFound.message")}</p>
           <Link href="/blog">
-            <Button>Return to Blog</Button>
+            <Button>{t("blog.notFound.returnLink")}</Button>
           </Link>
         </div>
         <Footer />
@@ -48,7 +50,9 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   }
 
   // Find related posts (same category, excluding current post)
-  const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug && p.category === post.category).slice(0, 3)
+  const relatedPosts = blogPosts
+    .filter((p) => p.slug !== post.slug && p.category.slug === post.category.slug)
+    .slice(0, 3)
 
   // Find next and previous posts
   const currentIndex = blogPosts.findIndex((p) => p.slug === post.slug)
@@ -67,14 +71,14 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               className="inline-flex items-center text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 group"
             >
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
-              ブログへ戻る
+              {t("blog.returnToBlog")}
             </Link>
           </div>
 
           <article className="max-w-3xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <Link href={`/categories/${post.category.toLowerCase()}`}>
-                <Chip className="mb-4">{post.category}</Chip>
+              <Link href={`/categories/${post.category.slug}`}>
+                <Chip className="mb-4">{t(post.category.nameKey)}</Chip>
               </Link>
 
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-neutral-900 dark:text-neutral-100 mb-6">
@@ -89,10 +93,10 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 <div className="flex items-center">
                   <User className="h-4 w-4 mr-2" />
                   <Link
-                    href={`/authors/${post.author.toLowerCase().replace(/\s+/g, "-")}`}
+                    href={`/authors/${post.authorInfo.slug}`}
                     className="hover:text-neutral-900 dark:hover:text-neutral-100 hover:underline"
                   >
-                    {post.author}
+                    {t(post.authorInfo.nameKey)}
                   </Link>
                 </div>
                 <ReadingTime minutes={post.readingTime} />
@@ -167,16 +171,16 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               className="border-t border-neutral-200 dark:border-neutral-800 pt-8 mb-12"
             >
               <div className="flex flex-wrap gap-2 mb-8">
-                {post.tags?.map((tag) => (
-                  <Link key={tag} href={`/tags/${tag.toLowerCase().replace(/\s+/g, "-")}`}>
+                {post.tags?.map((tagInfo) => (
+                  <Link key={`${params.slug}-${tagInfo.slug}`} href={`/tags/${tagInfo.slug}`}>
                     <span className="inline-block px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 rounded-full text-sm hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors">
-                      #{tag}
+                      #{t(tagInfo.nameKey)}
                     </span>
                   </Link>
                 ))}
               </div>
 
-              <AuthorProfile authorName={post.author} />
+              <AuthorProfile authorSlug={post.authorInfo.slug} />
             </motion.div>
 
             {relatedPosts.length > 0 && (
@@ -186,7 +190,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="mb-12"
               >
-                <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6">Related Articles</h3>
+                <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6">{t("blog.relatedArticles")}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {relatedPosts.map((relatedPost) => (
                     <Link key={relatedPost.slug} href={`/blog/${relatedPost.slug}`}>
@@ -232,7 +236,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             >
               {prevPost && (
                 <Link href={`/blog/${prevPost.slug}`} className="mb-4 sm:mb-0 group">
-                  <span className="block text-sm text-neutral-500 dark:text-neutral-400 mb-1">Previous Article</span>
+                  <span className="block text-sm text-neutral-500 dark:text-neutral-400 mb-1">{t("blog.nav.previousArticle")}</span>
                   <span className="text-neutral-900 dark:text-neutral-100 group-hover:underline flex items-center">
                     <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
                     {prevPost.title}
@@ -242,7 +246,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
               {nextPost && (
                 <Link href={`/blog/${nextPost.slug}`} className="text-right group">
-                  <span className="block text-sm text-neutral-500 dark:text-neutral-400 mb-1">Next Article</span>
+                  <span className="block text-sm text-neutral-500 dark:text-neutral-400 mb-1">{t("blog.nav.nextArticle")}</span>
                   <span className="text-neutral-900 dark:text-neutral-100 group-hover:underline flex items-center justify-end">
                     {nextPost.title}
                     <ArrowLeft className="ml-2 h-4 w-4 rotate-180 transition-transform duration-300 group-hover:translate-x-1" />
