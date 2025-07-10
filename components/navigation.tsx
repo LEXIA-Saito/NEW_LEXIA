@@ -12,12 +12,12 @@ import { SearchDialog } from "@/components/search-dialog"
 
 // Simplified navigation items
 const navItems = [
-  { name: "About", href: "#about" },
-  { name: "Process", href: "#process" },
-  { name: "Work", href: "#work" },
-  { name: "Team", href: "#team" },
-  { name: "Blog", href: "#blog" },
-  { name: "Contact", href: "#contact" },
+  { name: "会社案内", href: "#about" },
+  { name: "制作の流れ", href: "#process" },
+  { name: "実績", href: "#work" },
+  { name: "チーム", href: "#team" },
+  { name: "ブログ", href: "#blog" },
+  { name: "お問い合わせ", href: "#contact" },
 ]
 
 export default function Navigation() {
