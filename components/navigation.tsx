@@ -9,14 +9,14 @@ import { Menu, X, Search } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { SearchDialog } from "@/components/search-dialog"
 
-// Simplified navigation items
+// Japanese navigation items
 const navItems = [
-  { name: "About", href: "#about" },
-  { name: "Process", href: "#process" },
-  { name: "Work", href: "#work" },
-  { name: "Team", href: "#team" },
-  { name: "Blog", href: "#blog" },
-  { name: "Contact", href: "#contact" },
+  { name: "会社概要", href: "#about" },
+  { name: "制作工程", href: "#process" },
+  { name: "制作実績", href: "#work" },
+  { name: "チーム", href: "#team" },
+  { name: "ブログ", href: "#blog" },
+  { name: "お問い合わせ", href: "#contact" },
 ]
 
 export default function Navigation() {
@@ -117,7 +117,7 @@ export default function Navigation() {
               transition={{ duration: 0.3, delay: 0.7 }}
               onClick={() => setSearchOpen(true)}
               className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-              aria-label="Search projects"
+              aria-label="プロジェクトを検索"
             >
               <Search className="h-5 w-5" />
             </motion.button>
@@ -133,7 +133,7 @@ export default function Navigation() {
               transition={{ duration: 0.3, delay: 0.3 }}
               onClick={() => setSearchOpen(true)}
               className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-              aria-label="Search projects"
+              aria-label="プロジェクトを検索"
             >
               <Search className="h-5 w-5" />
             </motion.button>
@@ -146,7 +146,7 @@ export default function Navigation() {
               transition={{ duration: 0.3, delay: 0.5 }}
               className="text-neutral-900 dark:text-neutral-100"
               onClick={() => setMobileMenuOpen(true)}
-              aria-label="Open menu"
+              aria-label="メニューを開く"
             >
               <Menu />
             </motion.button>
@@ -167,7 +167,7 @@ export default function Navigation() {
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-neutral-900 dark:text-neutral-100"
-                aria-label="Close menu"
+                aria-label="メニューを閉じる"
               >
                 <X />
               </button>
