@@ -1,56 +1,56 @@
 "use client"
 
-import fs from "fs"
-import path from "path"
+/**
+ * lib/i18n.ts
+ * ブラウザでも動作する簡易 i18n 実装。
+ * - Node.js の `fs` 依存を排除
+ * - デフォルトで日本語辞書（`/locales/ja/common.json`）をインポート
+ * - `t()` と `useTranslations()` の 2 つを公開
+ */
 
-type Locale = "ja" | "en"
+import ja from "@/locales/ja/common.json"
 
-interface Translations {
-  [key: string]: string | Translations
+export type Locale = "ja"
+type Dictionary = Record<string, any>
+
+const dictionaries: Record<Locale, Dictionary> = {
+  ja,
 }
 
-const translations: Record<Locale, Translations> = {
-  ja: {},
-  en: {},
+/* -------------------------------------------------- */
+/* helpers                                            */
+/* -------------------------------------------------- */
+
+function getNestedValue(obj: Dictionary, path: string): string | undefined {
+  return path.split(".").reduce((acc, part) => {
+    if (acc && typeof acc === "object") return acc[part] as Dictionary
+    return undefined
+  }, obj) as string | undefined
 }
 
-// Load translations
-function loadTranslations() {
-  const localesDir = path.join(process.cwd(), "locales")
+/* -------------------------------------------------- */
+/* public api                                         */
+/* -------------------------------------------------- */
 
-  try {
-    // Load Japanese translations
-    const jaPath = path.join(localesDir, "ja", "common.json")
-    if (fs.existsSync(jaPath)) {
-      translations.ja = JSON.parse(fs.readFileSync(jaPath, "utf8"))
-    }
-
-    // Load English translations (if exists)
-    const enPath = path.join(localesDir, "en", "common.json")
-    if (fs.existsSync(enPath)) {
-      translations.en = JSON.parse(fs.readFileSync(enPath, "utf8"))
-    }
-  } catch (error) {
-    console.warn("Failed to load translations:", error)
-  }
-}
-
-// Initialize translations
-loadTranslations()
-
-function getNestedValue(obj: Translations, path: string): string {
-  return path.split(".").reduce((current, key) => {
-    return current && typeof current === "object" ? (current as any)[key] : undefined
-  }, obj) as string
-}
-
+/**
+ * 同期的に翻訳文字列を取得するユーティリティ関数。
+ * 見つからない場合はキー自体を返す。
+ *
+ * @param key    - 例: "ourWork.title"
+ * @param locale - 現状は "ja" のみ
+ */
 export function t(key: string, locale: Locale = "ja"): string {
-  const value = getNestedValue(translations[locale], key)
-  return value || key
+  const value = getNestedValue(dictionaries[locale], key)
+  return typeof value === "string" ? value : key
 }
 
-export function useTranslations() {
-  return t
+/**
+ * React コンポーネント内で使用するフック。
+ * ```tsx
+ * const t = useTranslations()
+ * return <h1>{t('ourWork.title')}</h1>
+ * ```
+ */
+export function useTranslations(locale: Locale = "ja") {
+  return (key: string): string => t(key, locale)
 }
-
-export type { Locale }
