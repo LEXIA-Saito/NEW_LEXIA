@@ -1,0 +1,203 @@
+"use client"
+
+import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
+import { motion, AnimatePresence } from "framer-motion"
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Chip } from "@/components/ui/chip"
+
+// Testimonial data
+const testimonials = [
+  {
+    id: 1,
+    name: "Sarah Johnson",
+    title: "Homeowner",
+    quote:
+      "Risala Design transformed our vision into a home that perfectly balances aesthetics and functionality. Their attention to detail and ability to listen made all the difference.",
+    image: "/testimonials/person-1.png",
+  },
+  {
+    id: 2,
+    name: "Michael Chen",
+    title: "Restaurant Owner",
+    quote:
+      "Working with Risala on our restaurant redesign was a seamless experience. They understood our brand and created a space that our customers love to spend time in.",
+    image: "/testimonials/person-2.png",
+  },
+  {
+    id: 3,
+    name: "Amelia Rodriguez",
+    title: "Real Estate Developer",
+    quote:
+      "I've worked with many architects, but Risala Design stands out for their collaborative approach and innovative solutions. They consistently deliver projects that exceed expectations.",
+    image: "/testimonials/person-3.png",
+  },
+  {
+    id: 4,
+    name: "David Okafor",
+    title: "Office Manager",
+    quote:
+      "Our office renovation by Risala Design has completely transformed our workspace. The thoughtful design has improved team collaboration and created a space we're proud to bring clients to.",
+    image: "/testimonials/person-4.png",
+  },
+]
+
+export default function Testimonials() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [direction, setDirection] = useState(0)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  const goToPrevious = () => {
+    setDirection(-1)
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1))
+  }
+
+  const goToNext = () => {
+    setDirection(1)
+    setCurrentIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1))
+  }
+
+  // Auto-advance the carousel
+  useEffect(() => {
+    const startTimeout = () => {
+      timeoutRef.current = setTimeout(() => {
+        goToNext()
+      }, 6000)
+    }
+
+    startTimeout()
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [currentIndex])
+
+  // Reset the timeout when manually navigating
+  const handleNavigation = (callback: () => void) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    callback()
+  }
+
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+  }
+
+  return (
+    <div className="container mx-auto px-4">
+      <div className="text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <Chip>Testimonials</Chip>
+          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
+            What Our Clients Say
+          </h2>
+        </motion.div>
+      </div>
+
+      <div className="relative max-w-4xl mx-auto">
+        <div className="overflow-hidden">
+          <div className="relative h-[300px] md:h-[250px]">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={currentIndex}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.2 },
+                }}
+                className="absolute w-full"
+              >
+                <div className="bg-neutral-50 dark:bg-neutral-800 p-6 md:p-10 rounded-lg shadow-sm">
+                  <div className="flex flex-col md:flex-row gap-6 items-center">
+                    <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden flex-shrink-0">
+                      <Image
+                        src={testimonials[currentIndex].image || "/placeholder.svg"}
+                        alt={testimonials[currentIndex].name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <Quote className="h-8 w-8 text-neutral-300 dark:text-neutral-600 mb-2" />
+                      <p className="text-neutral-700 dark:text-neutral-300 italic mb-4">
+                        "{testimonials[currentIndex].quote}"
+                      </p>
+                      <div>
+                        <h3 className="font-medium text-neutral-900 dark:text-neutral-100">
+                          {testimonials[currentIndex].name}
+                        </h3>
+                        <p className="text-neutral-500 dark:text-neutral-400 text-sm">
+                          {testimonials[currentIndex].title}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <div className="flex justify-center mt-8 gap-2">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                setDirection(index > currentIndex ? 1 : -1)
+                setCurrentIndex(index)
+              }}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === currentIndex ? "bg-neutral-900 dark:bg-neutral-100 w-6" : "bg-neutral-300 dark:bg-neutral-600"
+              }`}
+              aria-label={`Go to testimonial ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 bg-white dark:bg-neutral-800 shadow-md rounded-full h-10 w-10"
+          onClick={() => handleNavigation(goToPrevious)}
+          aria-label="Previous testimonial"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </Button>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 bg-white dark:bg-neutral-800 shadow-md rounded-full h-10 w-10"
+          onClick={() => handleNavigation(goToNext)}
+          aria-label="Next testimonial"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </Button>
+      </div>
+    </div>
+  )
+}

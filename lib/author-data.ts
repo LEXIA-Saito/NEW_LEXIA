@@ -1,0 +1,38 @@
+export const authorData = [
+  {
+    name: "Rafly Kurnia",
+    role: "Principal Architect",
+    bio: "Rafly leads our design vision with a focus on sustainable and contextual architecture. With over 15 years of experience, he brings a thoughtful approach to every project.",
+    image: "/team/person-1.png",
+    email: "rafly@risala.design",
+    linkedin: "https://www.linkedin.com/in/raflykurnia72/",
+    slug: "rafly-kurnia",
+  },
+  {
+    name: "Maya Wijaya",
+    role: "Interior Designer",
+    bio: "Maya specializes in creating harmonious interior spaces that complement the architectural vision. Her articles focus on the psychology of space and interior design principles.",
+    image: "/team/person-2.png",
+    email: "maya@risala.design",
+    linkedin: "#",
+    slug: "maya-wijaya",
+  },
+  {
+    name: "Aisha Putri",
+    role: "Landscape Architect",
+    bio: "Aisha creates outdoor spaces that seamlessly integrate with architectural designs. She writes about biophilic design and the connection between architecture and nature.",
+    image: "/team/person-4.png",
+    email: "aisha@risala.design",
+    linkedin: "#",
+    slug: "aisha-putri",
+  },
+  {
+    name: "Daniel Hartono",
+    role: "Project Manager",
+    bio: "Daniel ensures our projects run smoothly from concept to completion. His articles focus on project management and the practical aspects of architectural implementation.",
+    image: "/team/person-3.png",
+    email: "daniel@risala.design",
+    linkedin: "#",
+    slug: "daniel-hartono",
+  },
+]
