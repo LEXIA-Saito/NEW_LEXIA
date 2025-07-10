@@ -60,7 +60,7 @@ export default function SeriesPage({ params }: { params: { seriesId: string } })
               className="inline-flex items-center text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 group"
             >
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
-              Back to All Series
+              シリーズ一覧へ戻る
             </Link>
           </div>
 
@@ -89,7 +89,7 @@ export default function SeriesPage({ params }: { params: { seriesId: string } })
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500 dark:text-neutral-400 h-5 w-5" />
               <Input
-                placeholder={`Search in ${series.title}...`}
+                placeholder={`${series.title}の記事を検索...`}
                 className="pl-10 py-6 text-base"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -99,7 +99,7 @@ export default function SeriesPage({ params }: { params: { seriesId: string } })
 
           {filteredPosts.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-neutral-500 dark:text-neutral-400">No articles found matching your criteria.</p>
+              <p className="text-neutral-500 dark:text-neutral-400">条件に一致する記事は見つかりませんでした。</p>
             </div>
           ) : (
             <div className="space-y-8">
@@ -146,7 +146,7 @@ export default function SeriesPage({ params }: { params: { seriesId: string } })
                           href={`/blog/${post.slug}`}
                           className="inline-flex items-center text-neutral-900 dark:text-neutral-100 text-sm hover:underline group"
                         >
-                          Read Article
+                          記事を読む
                           <ArrowUpRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                         </Link>
                       </div>

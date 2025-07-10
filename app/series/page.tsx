@@ -34,18 +34,18 @@ export default function SeriesIndexPage() {
               className="inline-flex items-center text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 group"
             >
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
-              Back to Blog
+              ブログへ戻る
             </Link>
           </div>
 
           <div className="text-center mb-16">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <Chip>Collections</Chip>
+              <Chip>シリーズ</Chip>
               <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-                Article Series
+                記事シリーズ
               </h1>
               <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
-                Explore our curated series of articles that dive deep into specific architectural topics and themes.
+                特定テーマを深掘りする連載記事をまとめました。
               </p>
             </motion.div>
           </div>
@@ -87,7 +87,7 @@ export default function SeriesIndexPage() {
                     href={`/series/${series.id}`}
                     className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline group"
                   >
-                    Read Series
+                    シリーズを見る
                     <ArrowUpRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
                 </div>
