@@ -8,24 +8,23 @@
  * - `t()` と `useTranslations()` の 2 つを公開
  */
 
-import ja from "@/locales/ja.json"
+import ja from "../locales/ja.json"
+import en from "../locales/en.json"
 
-export type Locale = "ja"
+export type Locale = "ja" | "en"
 type Dictionary = Record<string, any>
 
 const dictionaries: Record<Locale, Dictionary> = {
   ja,
+  en,
 }
 
 /* -------------------------------------------------- */
 /* helpers                                            */
 /* -------------------------------------------------- */
 
-function getNestedValue(obj: Dictionary, path: string): string | undefined {
-  return path.split(".").reduce((acc, part) => {
-    if (acc && typeof acc === "object") return acc[part] as Dictionary
-    return undefined
-  }, obj) as string | undefined
+function getValue(obj: Dictionary, key: string): string | undefined {
+  return obj[key]
 }
 
 /* -------------------------------------------------- */
@@ -40,7 +39,7 @@ function getNestedValue(obj: Dictionary, path: string): string | undefined {
  * @param locale - 現状は "ja" のみ
  */
 export function t(key: string, locale: Locale = "ja"): string {
-  const value = getNestedValue(dictionaries[locale], key)
+  const value = getValue(dictionaries[locale], key)
   return typeof value === "string" ? value : key
 }
 
