@@ -85,10 +85,10 @@ export default function Footer() {
               {[t('footer.residential'), t('footer.commercial'), t('footer.interior'), t('footer.exterior'), t('footer.sustainable')].map((item) => (
                 <li key={item}>
                   <Link
-                    href={`/categories#${item.toLowerCase()}`}
+                    href={item.href}
                     className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 text-sm transition-colors duration-300"
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}
