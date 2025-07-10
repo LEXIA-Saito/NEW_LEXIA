@@ -11,6 +11,14 @@ export default function Footer() {
     visible: { opacity: 1, y: 0 },
   }
 
+  const categoryLinks = [
+    { name: t('footer.residential'), href: '/categories/residential' },
+    { name: t('footer.commercial'), href: '/categories/commercial' },
+    { name: t('footer.interior'), href: '/categories/interior' },
+    { name: t('footer.exterior'), href: '/categories/exterior' },
+    { name: t('footer.sustainable'), href: '/categories/sustainable' },
+  ]
+
   return (
     <footer className="py-12 border-t border-neutral-100 dark:border-neutral-800">
       <div className="container mx-auto px-4">
@@ -82,8 +90,8 @@ export default function Footer() {
               {t('footer.categories')}
             </h4>
             <ul className="space-y-2">
-              {[t('footer.residential'), t('footer.commercial'), t('footer.interior'), t('footer.exterior'), t('footer.sustainable')].map((item) => (
-                <li key={item}>
+              {categoryLinks.map((item) => (
+                <li key={item.href}>
                   <Link
                     href={item.href}
                     className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 text-sm transition-colors duration-300"
