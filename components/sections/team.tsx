@@ -135,6 +135,55 @@ export default function Team() {
           Our collaborative approach ensures that each web project benefits from our combined expertise and creative vision.
         </p>
       </motion.div>
+
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.8 }}
+        variants={fadeIn}
+        className="mt-12 space-y-4 text-neutral-700 dark:text-neutral-300"
+      >
+        <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100">
+          イシュー（課題提起）
+        </h3>
+        <p>
+          企業のウェブサイトは“顔”であると同時に、ブランド価値を伝える最重要タッチポイントです。しかし、デザイン性だけでなく、ユーザビリティ、表示速度、SEO対策、多言語対応などを高いレベルで両立させることは、多くの企業にとって大きなハードル。
+        </p>
+        <p>
+          LEXIAは代表・齋藤雅人が一貫してプロジェクトをリードし、これら複合的な課題をワンストップで解決。御社のウェブサイトを「成果を生む資産」へと進化させます。
+        </p>
+
+        <hr className="my-4 border-neutral-200 dark:border-neutral-700" />
+
+        <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100">
+          LEXIA 社内チーム紹介
+        </h3>
+        <h4 className="text-xl font-medium text-neutral-900 dark:text-neutral-100">
+          齋藤雅人（さいとう まさと）／代表
+        </h4>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>デジタル業界歴15年以上、これまでに200件以上のサイト立ち上げを指揮</li>
+          <li>UXリサーチからデザイン、フロントエンド実装、SEO・アクセス解析まで一貫対応</li>
+          <li>アジャイル開発による高速PDCAで、常に効果検証と改善を繰り返し成果を最大化</li>
+        </ul>
+
+        <hr className="my-4 border-neutral-200 dark:border-neutral-700" />
+
+        <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100">
+          なぜLEXIAか？
+        </h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>経営視点×技術視点の両輪で、ビジネスゴールを確実に達成</li>
+          <li>グローバル＆ローカル市場に対応した多言語サイト構築</li>
+          <li>SEO・パフォーマンス・セキュリティをトータルに最適化</li>
+          <li>アジャイル手法で柔軟かつ迅速な開発を実現</li>
+        </ul>
+
+        <p className="mt-4">
+          LEXIA代表・齋藤が直接窓口となり、御社の要望に密着。企画段階から運用まで、一貫した品質とスピードでご期待に応えます。まずはお気軽にご相談ください。
+        </p>
+      </motion.div>
     </div>
   )
 }
