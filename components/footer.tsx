@@ -81,13 +81,19 @@ export default function Footer() {
               Categories
             </h4>
             <ul className="space-y-2">
-              {["Residential", "Commercial", "Interior", "Exterior", "Sustainable"].map((item) => (
-                <li key={item}>
+              {[
+                { name: "Residential", href: "/categories#residential" },
+                { name: "Commercial", href: "/categories#commercial" },
+                { name: "Interior", href: "/categories#interior" },
+                { name: "Exterior", href: "/categories#exterior" },
+                { name: "Sustainable", href: "/categories#sustainable" }
+              ].map((item) => (
+                <li key={item.name}>
                   <Link
-                    href={`/categories#${item.toLowerCase()}`}
+                    href={item.href}
                     className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 text-sm transition-colors duration-300"
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}
