@@ -67,7 +67,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               className="inline-flex items-center text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 group"
             >
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
-              Back to Blog
+              ブログに戻る
             </Link>
           </div>
 

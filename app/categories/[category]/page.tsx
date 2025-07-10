@@ -56,7 +56,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
               className="inline-flex items-center text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 group"
             >
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
-              Back to All Articles
+              記事一覧へ戻る
             </Link>
           </div>
 
@@ -142,7 +142,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
                       href={`/blog/${post.slug}`}
                       className="inline-flex items-center text-neutral-900 dark:text-neutral-100 text-sm hover:underline group"
                     >
-                      Read More
+                      続きを読む
                       <ArrowUpRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </Link>
                   </div>
