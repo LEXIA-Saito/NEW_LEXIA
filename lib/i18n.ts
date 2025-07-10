@@ -8,7 +8,7 @@
  * - `t()` と `useTranslations()` の 2 つを公開
  */
 
-import ja from "@/locales/ja/common.json"
+import ja from "@/locales/ja.json"
 
 export type Locale = "ja"
 type Dictionary = Record<string, any>

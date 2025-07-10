@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
+import { t } from "@/lib/i18n"
 
 export default function WhyUs() {
   return (
@@ -13,15 +14,14 @@ export default function WhyUs() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <Chip>Why us</Chip>
+          <Chip>LEXIAを選ぶ理由</Chip>
 
           <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-            We listen first
+            {t('about.listen.title')}
           </h2>
 
           <p className="text-lg text-neutral-700 dark:text-neutral-300">
-            At LEXIA, we begin by understanding you—your goals, your site, and the message you want to share—so
-            every choice truly reflects your vision.
+            {t('about.listen.body')}
           </p>
         </motion.div>
       </div>
