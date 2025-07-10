@@ -14,7 +14,7 @@ const teamMembers = [
     role: "Lead Web Designer",
     bio: "With over 10 years in the digital landscape, Rafly spearheads our web design strategy, focusing on innovative and user-centric solutions.",
     image: "/team/person-1.png",
-    linkedin: "https://www.linkedin.com/company/lexia",
+    linkedin: "https://www.linkedin.com/in/lexia-saito/",
     email: "rafly@lexia.design",
   },
   {
@@ -23,7 +23,7 @@ const teamMembers = [
     role: "UX/UI Lead",
     bio: "Maya excels in crafting intuitive and engaging user experiences, ensuring our designs are both beautiful and functional.",
     image: "/team/person-2.png",
-    linkedin: "https://www.linkedin.com/company/lexia",
+    linkedin: "https://www.linkedin.com/in/lexia-saito/",
     email: "maya@lexia.design",
   },
   {
@@ -32,7 +32,7 @@ const teamMembers = [
     role: "Digital Project Manager",
     bio: "Daniel orchestrates our web projects with precision, ensuring timely delivery and seamless collaboration from kickoff to launch.",
     image: "/team/person-3.png",
-    linkedin: "https://www.linkedin.com/company/lexia",
+    linkedin: "https://www.linkedin.com/in/lexia-saito/",
     email: "daniel@lexia.design",
   },
   {
@@ -41,7 +41,7 @@ const teamMembers = [
     role: "Frontend Development Lead",
     bio: "Aisha leads our frontend team, transforming designs into responsive and performant websites using modern technologies.",
     image: "/team/person-4.png",
-    linkedin: "https://www.linkedin.com/company/lexia",
+    linkedin: "https://www.linkedin.com/in/lexia-saito/",
     email: "aisha@lexia.design",
   },
 ]

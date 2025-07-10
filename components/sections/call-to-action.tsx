@@ -30,7 +30,7 @@ export default function CallToAction() {
             </Button>
           </Link>
 
-          <Link href="mailto:contact@lexia.design">
+          <Link href="mailto:lexia0web@gmail.com">
             <Button
               variant="outline"
               className="rounded-full px-6 py-6 text-base border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 w-full sm:w-auto"
@@ -40,7 +40,7 @@ export default function CallToAction() {
             </Button>
           </Link>
 
-          <Link href="https://www.linkedin.com/company/lexia" target="_blank" rel="noopener noreferrer">
+          <Link href="https://www.linkedin.com/in/lexia-saito/" target="_blank" rel="noopener noreferrer">
             <Button className="rounded-full px-6 py-6 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 w-full sm:w-auto">
               Connect on LinkedIn
               <ExternalLink className="ml-2 h-4 w-4" />
