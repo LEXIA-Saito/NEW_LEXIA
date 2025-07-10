@@ -25,7 +25,7 @@ export default function About() {
         >
           <Chip>About Us</Chip>
           <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-            Our Approach to Architecture
+            Our Approach to Web Development
           </h2>
         </motion.div>
 
@@ -39,7 +39,7 @@ export default function About() {
           >
             <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-4">We listen first</h3>
             <p className="text-neutral-700 dark:text-neutral-300 mb-6">
-              At Risala Design, we begin by understanding you—your goals, your site, and the message you want to
+              At LEXIA, we begin by understanding you—your goals, your site, and the message you want to
               share—so every choice truly reflects your vision.
             </p>
             <Link
@@ -61,7 +61,7 @@ export default function About() {
           >
             <Image
               src="/about/about-1.png"
-              alt="Risala Design team discussing with clients"
+              alt="LEXIA team discussing with clients"
               fill
               className="object-cover"
             />

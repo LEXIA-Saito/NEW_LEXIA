@@ -11,25 +11,25 @@ export function BlogSchema({ post }: BlogSchemaProps) {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
-    image: post.image ? `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}${post.image}` : undefined,
+    image: post.image ? `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}${post.image}` : undefined,
     datePublished: new Date(post.date).toISOString(),
     dateModified: post.dateModified ? new Date(post.dateModified).toISOString() : new Date(post.date).toISOString(),
     author: {
       "@type": "Person",
       name: post.author,
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/team`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/team`,
     },
     publisher: {
       "@type": "Organization",
-      name: "Risala Design",
+      name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/logo.png`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
       },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/blog/${post.slug}`,
+      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/blog/${post.slug}`,
     },
     keywords: post.tags?.join(", ") || post.category,
   }

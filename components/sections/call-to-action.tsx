@@ -30,7 +30,7 @@ export default function CallToAction() {
             </Button>
           </Link>
 
-          <Link href="mailto:contact@risala.design">
+          <Link href="mailto:contact@lexia.design">
             <Button
               variant="outline"
               className="rounded-full px-6 py-6 text-base border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 w-full sm:w-auto"

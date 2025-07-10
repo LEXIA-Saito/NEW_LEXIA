@@ -7,9 +7,9 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Risala Design | Architecture That Speaks",
-  description: "We shape spaces to carry your story and spark positive change.",
-    generator: 'v0.dev'
+  title: "LEXIA | Web Design That Speaks",
+  description: "デジタルであなたのストーリーを伝え、成果につなげます。",
+  generator: "v0.dev",
 }
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} antialiased`}>
-        <ThemeProvider defaultTheme="light" storageKey="risala-theme">
+        <ThemeProvider defaultTheme="light" storageKey="lexia-theme">
           {children}
         </ThemeProvider>
       </body>

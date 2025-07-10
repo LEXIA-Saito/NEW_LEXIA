@@ -68,7 +68,7 @@ export const blogPosts = [
       {
         title: "Our Approach to Sustainability",
         content: [
-          "At Risala Design, sustainability isn't an add-on or afterthought—it's integrated into our design process from the earliest conceptual stages. We believe that beautiful, functional architecture and environmental responsibility can and should go hand in hand.",
+          "At LEXIA, sustainability isn't an add-on or afterthought—it's integrated into our design process from the earliest conceptual stages. We believe that beautiful, functional architecture and environmental responsibility can and should go hand in hand.",
           "Each project begins with a thorough site analysis to understand local climate conditions, solar patterns, prevailing winds, and natural features. This information forms the foundation for passive design strategies that work with nature rather than against it.",
           "We're committed to continuous learning and innovation in sustainable practices. As technologies evolve and new materials emerge, we stay at the forefront of sustainable design to offer our clients the most effective and appropriate solutions for their specific needs and contexts.",
         ],
@@ -119,7 +119,7 @@ export const blogPosts = [
         title: "Biophilic Design: Our Connection to Nature",
         content: [
           "Humans have an innate affinity for natural elements—a concept known as biophilia. Incorporating nature into built environments through views, natural materials, plants, and even patterns that mimic natural forms can reduce stress, improve cognitive function, and enhance creativity.",
-          "At Risala Design, we integrate biophilic principles into our projects whenever possible. This might include maximizing views to natural landscapes, incorporating interior plantings, using natural materials like wood and stone, or designing with organic forms and patterns.",
+          "At LEXIA, we integrate biophilic principles into our projects whenever possible. This might include maximizing views to natural landscapes, incorporating interior plantings, using natural materials like wood and stone, or designing with organic forms and patterns.",
           "The psychological benefits of these connections to nature are particularly valuable in urban environments where access to natural settings may be limited. Even small interventions—a living wall, a carefully framed view of the sky, or the strategic use of natural materials—can have significant positive impacts on occupant wellbeing.",
         ],
       },
@@ -231,7 +231,7 @@ export const blogPosts = [
       {
         title: "Biophilic Design in Practice",
         content: [
-          "At Risala Design, we integrate biophilic principles across our projects, from residential homes to commercial spaces. In a recent office project, we incorporated a central atrium with a living wall and skylight, bringing natural light and vegetation into the heart of the building. Conference rooms feature views to exterior landscaping, and break areas include water features that provide both visual interest and ambient sound.",
+          "At LEXIA, we integrate biophilic principles across our projects, from residential homes to commercial spaces. In a recent office project, we incorporated a central atrium with a living wall and skylight, bringing natural light and vegetation into the heart of the building. Conference rooms feature views to exterior landscaping, and break areas include water features that provide both visual interest and ambient sound.",
           "In residential projects, we prioritize indoor-outdoor connections, often designing rooms with multiple aspects to maximize natural light throughout the day. Material selections emphasize natural textures and patterns, creating sensory richness that synthetic materials rarely provide.",
           "The beauty of biophilic design is its scalability. While ambitious features like green roofs and extensive interior plantings make a dramatic impact, even small interventions can be meaningful. Something as simple as ensuring that workstations have views to the outdoors or incorporating natural materials in key touch points can significantly enhance the human experience of a space.",
         ],
@@ -253,7 +253,7 @@ export const blogPosts = [
     shareCount: 31,
     content: [
       "As urban populations grow and housing costs rise, many people find themselves living and working in increasingly compact spaces. While small-footprint living presents challenges, thoughtful design can transform even the most limited square footage into comfortable, functional, and beautiful environments.",
-      "At Risala Design, we approach small spaces not as limitations but as opportunities for creative problem-solving. With the right strategies, compact spaces can be not just adequate but exceptional—offering efficiency, character, and quality of life that sometimes exceeds that of larger environments.",
+      "At LEXIA, we approach small spaces not as limitations but as opportunities for creative problem-solving. With the right strategies, compact spaces can be not just adequate but exceptional—offering efficiency, character, and quality of life that sometimes exceeds that of larger environments.",
     ],
     sections: [
       {
@@ -372,7 +372,7 @@ export const blogPosts = [
     shareCount: 29,
     content: [
       "In tropical climates, where high temperatures and humidity persist year-round, thoughtful passive design strategies can dramatically reduce energy consumption while creating comfortable living environments. These approaches draw on both traditional wisdom and contemporary understanding of building physics.",
-      "At Risala Design, our work in Indonesia and other tropical regions has reinforced our belief that climate-responsive design must be the foundation of sustainable architecture. Mechanical cooling should supplement, not replace, passive strategies that work with the local climate.",
+      "At LEXIA, our work in Indonesia and other tropical regions has reinforced our belief that climate-responsive design must be the foundation of sustainable architecture. Mechanical cooling should supplement, not replace, passive strategies that work with the local climate.",
     ],
     sections: [
       {

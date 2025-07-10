@@ -14,15 +14,15 @@ export function AuthorsIndexSchema({ authors }: AuthorsIndexSchemaProps) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    headline: "Our Authors - Risala Design Blog",
+    headline: "Our Authors - LEXIA Blog",
     description: "Meet the talented team behind our architectural insights and articles.",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/authors`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/authors`,
     publisher: {
       "@type": "Organization",
-      name: "Risala Design",
+      name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/logo.png`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
       },
     },
     mainEntity: {
@@ -30,7 +30,7 @@ export function AuthorsIndexSchema({ authors }: AuthorsIndexSchemaProps) {
       itemListElement: authors.map((author, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/authors/${author.slug}`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/authors/${author.slug}`,
         name: author.name,
         description: author.role,
       })),

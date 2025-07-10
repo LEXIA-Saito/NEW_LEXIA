@@ -9,15 +9,15 @@ export function BlogListSchema({ posts }: BlogListSchemaProps) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    headline: "Architecture Journal - Risala Design Blog",
-    description: "Thoughts, insights, and explorations on architecture, design, and the built environment.",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/blog`,
+    headline: "Web Design Journal - LEXIA Blog",
+    description: "ウェブ制作やデザインに関する最新情報を発信しています。",
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/blog`,
     publisher: {
       "@type": "Organization",
-      name: "Risala Design",
+      name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/logo.png`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
       },
     },
     mainEntity: {
@@ -25,7 +25,7 @@ export function BlogListSchema({ posts }: BlogListSchemaProps) {
       itemListElement: posts.map((post, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/blog/${post.slug}`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/blog/${post.slug}`,
         name: post.title,
       })),
     },

@@ -20,7 +20,7 @@ export default function WhyUs() {
           </h2>
 
           <p className="text-lg text-neutral-700 dark:text-neutral-300">
-            At Risala Design, we begin by understanding you—your goals, your site, and the message you want to share—so
+            At LEXIA, we begin by understanding you—your goals, your site, and the message you want to share—so
             every choice truly reflects your vision.
           </p>
         </motion.div>

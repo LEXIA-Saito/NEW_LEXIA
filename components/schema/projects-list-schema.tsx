@@ -9,16 +9,16 @@ export function ProjectsListSchema({ projects }: ProjectsListSchemaProps) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    headline: "Our Projects - Risala Design Portfolio",
+    headline: "Our Projects - LEXIA Portfolio",
     description:
       "Explore our diverse portfolio of architectural projects, from residential homes to commercial spaces.",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/projects`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/projects`,
     publisher: {
       "@type": "Organization",
-      name: "Risala Design",
+      name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/logo.png`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
       },
     },
     mainEntity: {
@@ -26,7 +26,7 @@ export function ProjectsListSchema({ projects }: ProjectsListSchemaProps) {
       itemListElement: projects.map((project, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/projects/${project.slug}`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/projects/${project.slug}`,
         name: project.title,
       })),
     },

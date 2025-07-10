@@ -8,15 +8,15 @@ export function TagSchema({ tag, postCount }: TagSchemaProps) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    headline: `#${tag} - Risala Design Blog`,
+    headline: `#${tag} - LEXIA Blog`,
     description: `Articles related to ${tag}`,
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/tags/${tag.toLowerCase().replace(/\s+/g, "-")}`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/tags/${tag.toLowerCase().replace(/\s+/g, "-")}`,
     publisher: {
       "@type": "Organization",
-      name: "Risala Design",
+      name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/logo.png`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
       },
     },
     mainEntity: {

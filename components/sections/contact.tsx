@@ -47,11 +47,11 @@ export default function Contact() {
               24-48 hours during business days.
             </p>
             <Link
-              href="mailto:contact@risala.design?subject=Project%20Inquiry&body=Hello%20Risala%20Team%2C%0D%0A%0D%0AI%20would%20like%20to%20discuss%20a%20potential%20project%20with%20you.%0D%0A%0D%0AProject%20details%3A%0D%0A-%20Type%20of%20project%3A%0D%0A-%20Location%3A%0D%0A-%20Timeline%3A%0D%0A-%20Additional%20information%3A%0D%0A%0D%0AThank%20you%2C%0D%0A"
+              href="mailto:contact@lexia.design?subject=Project%20Inquiry&body=Hello%20LEXIA%20Team%2C%0D%0A%0D%0AI%20would%20like%20to%20discuss%20a%20potential%20project%20with%20you.%0D%0A%0D%0AProject%20details%3A%0D%0A-%20Type%20of%20project%3A%0D%0A-%20Location%3A%0D%0A-%20Timeline%3A%0D%0A-%20Additional%20information%3A%0D%0A%0D%0AThank%20you%2C%0D%0A"
               className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline text-lg group"
             >
               <Mail className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-              contact@risala.design
+              contact@lexia.design
             </Link>
           </motion.div>
 

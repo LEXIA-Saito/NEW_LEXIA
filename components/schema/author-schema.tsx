@@ -16,29 +16,29 @@ export function AuthorSchema({ author, postCount }: AuthorSchemaProps) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
-    headline: `${author.name} - Risala Design Blog`,
+    headline: `${author.name} - LEXIA Blog`,
     description: author.bio,
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/authors/${author.slug}`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/authors/${author.slug}`,
     mainEntity: {
       "@type": "Person",
       name: author.name,
       jobTitle: author.role,
       description: author.bio,
-      image: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}${author.image}`,
+      image: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}${author.image}`,
       email: author.email,
       sameAs: author.linkedin ? [author.linkedin] : undefined,
       worksFor: {
         "@type": "Organization",
-        name: "Risala Design",
-        url: process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design",
+        name: "LEXIA",
+        url: process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design",
       },
     },
     publisher: {
       "@type": "Organization",
-      name: "Risala Design",
+      name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/logo.png`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
       },
     },
   }

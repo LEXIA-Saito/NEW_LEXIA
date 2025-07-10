@@ -14,7 +14,7 @@ const testimonials = [
     name: "Sarah Johnson",
     title: "Homeowner",
     quote:
-      "Risala Design transformed our vision into a home that perfectly balances aesthetics and functionality. Their attention to detail and ability to listen made all the difference.",
+      "LEXIA transformed our vision into a home that perfectly balances aesthetics and functionality. Their attention to detail and ability to listen made all the difference.",
     image: "/testimonials/person-1.png",
   },
   {
@@ -22,7 +22,7 @@ const testimonials = [
     name: "Michael Chen",
     title: "Restaurant Owner",
     quote:
-      "Working with Risala on our restaurant redesign was a seamless experience. They understood our brand and created a space that our customers love to spend time in.",
+      "Working with LEXIA on our restaurant redesign was a seamless experience. They understood our brand and created a space that our customers love to spend time in.",
     image: "/testimonials/person-2.png",
   },
   {
@@ -30,7 +30,7 @@ const testimonials = [
     name: "Amelia Rodriguez",
     title: "Real Estate Developer",
     quote:
-      "I've worked with many architects, but Risala Design stands out for their collaborative approach and innovative solutions. They consistently deliver projects that exceed expectations.",
+      "I've worked with many architects, but LEXIA stands out for their collaborative approach and innovative solutions. They consistently deliver projects that exceed expectations.",
     image: "/testimonials/person-3.png",
   },
   {
@@ -38,7 +38,7 @@ const testimonials = [
     name: "David Okafor",
     title: "Office Manager",
     quote:
-      "Our office renovation by Risala Design has completely transformed our workspace. The thoughtful design has improved team collaboration and created a space we're proud to bring clients to.",
+      "Our office renovation by LEXIA has completely transformed our workspace. The thoughtful design has improved team collaboration and created a space we're proud to bring clients to.",
     image: "/testimonials/person-4.png",
   },
 ]

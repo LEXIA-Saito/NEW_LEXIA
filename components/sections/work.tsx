@@ -30,7 +30,7 @@ const projects = [
     featured: true,
     testimonial: {
       quote:
-        "Risala Design transformed our vision into a home that perfectly balances aesthetics and functionality. Their attention to detail made all the difference.",
+        "LEXIA transformed our vision into a home that perfectly balances aesthetics and functionality. Their attention to detail made all the difference.",
       author: "Sarah Johnson",
       role: "Homeowner",
       image: "/testimonials/person-1.png",
@@ -100,7 +100,7 @@ const projects = [
     featured: true,
     testimonial: {
       quote:
-        "Working with Risala on our store redesign was a seamless experience. They understood our brand and created a space that our customers love to spend time in.",
+        "Working with LEXIA on our store redesign was a seamless experience. They understood our brand and created a space that our customers love to spend time in.",
       author: "Michael Chen",
       role: "Store Owner",
       image: "/testimonials/person-2.png",
@@ -115,7 +115,7 @@ const testimonials = [
   {
     id: 1,
     quote:
-      "I've worked with many architects, but Risala Design stands out for their collaborative approach and innovative solutions. They consistently deliver projects that exceed expectations.",
+      "I've worked with many architects, but LEXIA stands out for their collaborative approach and innovative solutions. They consistently deliver projects that exceed expectations.",
     author: "Amelia Rodriguez",
     role: "Real Estate Developer",
     image: "/testimonials/person-3.png",
@@ -123,7 +123,7 @@ const testimonials = [
   {
     id: 2,
     quote:
-      "Risala Design transformed our vision into a home that perfectly balances aesthetics and functionality. Their attention to detail made all the difference.",
+      "LEXIA transformed our vision into a home that perfectly balances aesthetics and functionality. Their attention to detail made all the difference.",
     author: "Sarah Johnson",
     role: "Homeowner",
     image: "/testimonials/person-1.png",
@@ -131,7 +131,7 @@ const testimonials = [
   {
     id: 3,
     quote:
-      "Working with Risala on our store redesign was a seamless experience. They understood our brand and created a space that our customers love to spend time in.",
+      "Working with LEXIA on our store redesign was a seamless experience. They understood our brand and created a space that our customers love to spend time in.",
     author: "Michael Chen",
     role: "Store Owner",
     image: "/testimonials/person-2.png",

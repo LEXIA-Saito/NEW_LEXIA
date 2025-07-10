@@ -1,30 +1,25 @@
-# NEW LEXIA
+# LEXIA Web Design
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+愛知県碧南市のWEB制作会社「LEXIA」のリポジトリです。v0.dev で構築したチャット UI と Vercel のデプロイが同期されています。
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/lexia-projects/v0-risala-design)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/lexia-projects/lexia-web)
 [![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/9UrVLVai4dj)
 
-## Overview
+## 概要
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+このリポジトリは [v0.dev](https://v0.dev) で編集した内容を自動で取得し、Vercel にデプロイすることで最新状態を保ちます。
 
-## Deployment
+## デプロイ先
 
-Your project is live at:
+**[https://vercel.com/lexia-projects/lexia-web](https://vercel.com/lexia-projects/lexia-web)**
 
-**[https://vercel.com/lexia-projects/v0-risala-design](https://vercel.com/lexia-projects/v0-risala-design)**
+## 開発の続き
 
-## Build your app
+さらに開発する場合は **[https://v0.dev/chat/projects/9UrVLVai4dj](https://v0.dev/chat/projects/9UrVLVai4dj)** にアクセスしてください。
 
-Continue building your app on:
+## 仕組み
 
-**[https://v0.dev/chat/projects/9UrVLVai4dj](https://v0.dev/chat/projects/9UrVLVai4dj)**
-
-## How It Works
-
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+1. [v0.dev](https://v0.dev) でプロジェクトを編集
+2. v0 の画面からデプロイ
+3. 変更がこのリポジトリへ自動プッシュ
+4. Vercel が最新バージョンを公開

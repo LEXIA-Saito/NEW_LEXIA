@@ -11,15 +11,15 @@ export function TagsIndexSchema({ tags }: TagsIndexSchemaProps) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    headline: "Article Tags - Risala Design Blog",
+    headline: "Article Tags - LEXIA Blog",
     description: "Explore our articles by specific topics and keywords to find exactly what you're looking for.",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/tags`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/tags`,
     publisher: {
       "@type": "Organization",
-      name: "Risala Design",
+      name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/logo.png`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
       },
     },
     mainEntity: {
@@ -27,7 +27,7 @@ export function TagsIndexSchema({ tags }: TagsIndexSchemaProps) {
       itemListElement: tags.map((tag, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/tags/${tag.slug}`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/tags/${tag.slug}`,
         name: `#${tag.name}`,
         description: `${tag.count} articles`,
       })),

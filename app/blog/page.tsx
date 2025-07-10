@@ -96,10 +96,10 @@ export default function BlogPage() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
               <Chip>Insights</Chip>
               <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-                Architecture Journal
+                Web Design Journal
               </h1>
               <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
-                Thoughts, insights, and explorations on architecture, design, and the built environment.
+                ウェブ制作やデザインに関する情報をお届けします。
               </p>
               <div className="flex justify-center mt-6">
                 <Link href="/series">

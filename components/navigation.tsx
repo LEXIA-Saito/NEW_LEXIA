@@ -75,7 +75,7 @@ export default function Navigation() {
         <div className="container mx-auto px-4 flex justify-between items-center">
           <Link href="/" className="text-neutral-900 dark:text-neutral-100 font-light text-xl">
             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
-              Risala Design
+              LEXIA
             </motion.span>
           </Link>
 
