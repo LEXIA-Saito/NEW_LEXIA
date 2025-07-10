@@ -25,7 +25,7 @@ function FloatingPaths({ position }: { position: number }) {
         viewBox="0 0 696 316"
         fill="none"
       >
-        <title>Background Paths</title>
+        <title>背景パス</title>
         {paths.map((path) => (
           <motion.path
             key={path.id}
@@ -52,7 +52,7 @@ function FloatingPaths({ position }: { position: number }) {
 }
 
 export function BackgroundPaths({
-  title = "Background Paths",
+  title = "背景パス",
 }: {
   title?: string
 }) {

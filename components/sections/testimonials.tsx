@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Chip } from "@/components/ui/chip"
+import { t } from "@/lib/i18n"
 
 // Testimonial data
 const testimonials = [
@@ -107,9 +108,9 @@ export default function Testimonials() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <Chip>Testimonials</Chip>
+          <Chip>お客様の声</Chip>
           <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-            What Our Clients Say
+            {t('ourWork.clientsSay')}
           </h2>
         </motion.div>
       </div>
@@ -173,7 +174,7 @@ export default function Testimonials() {
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
                 index === currentIndex ? "bg-neutral-900 dark:bg-neutral-100 w-6" : "bg-neutral-300 dark:bg-neutral-600"
               }`}
-              aria-label={`Go to testimonial ${index + 1}`}
+              aria-label={`テストモニアル${index + 1}へ`}
             />
           ))}
         </div>
@@ -183,7 +184,7 @@ export default function Testimonials() {
           size="icon"
           className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 bg-white dark:bg-neutral-800 shadow-md rounded-full h-10 w-10"
           onClick={() => handleNavigation(goToPrevious)}
-          aria-label="Previous testimonial"
+          aria-label="前の声へ"
         >
           <ChevronLeft className="h-5 w-5" />
         </Button>
@@ -193,7 +194,7 @@ export default function Testimonials() {
           size="icon"
           className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 bg-white dark:bg-neutral-800 shadow-md rounded-full h-10 w-10"
           onClick={() => handleNavigation(goToNext)}
-          aria-label="Next testimonial"
+          aria-label="次の声へ"
         >
           <ChevronRight className="h-5 w-5" />
         </Button>

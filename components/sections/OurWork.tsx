@@ -11,12 +11,12 @@ import { t } from "@/lib/i18n"
 
 // Project categories
 const categories = [
-  { id: "all", name: "All" },
-  { id: "ecommerce", name: "E-commerce" },
-  { id: "corporate", name: "Corporate Sites" },
-  { id: "webapp", name: "Web Apps" },
-  { id: "branding", name: "Branding" },
-  { id: "seo", name: "SEO Optimization" },
+  { id: "all", name: t("categories.all") },
+  { id: "ecommerce", name: t("categories.ecommerce") },
+  { id: "corporate", name: t("categories.corporate") },
+  { id: "webapp", name: t("categories.webapp") },
+  { id: "branding", name: t("categories.branding") },
+  { id: "seo", name: t("categories.seo") },
 ]
 
 // Portfolio projects data with categories and testimonials
@@ -41,8 +41,8 @@ const projects = [
   },
   {
     id: 2,
-    title: "Startup Landing Page",
-    description: "Impactful landing page designed for high conversion and brand presence.",
+    title: t("project.startup.title"),
+    description: t("project.startup.body"),
     image: "/portfolio/house-2.png", // Placeholder: replace with web design project image
     slug: "startup-landing-page",
     categories: ["corporate", "branding"],
@@ -52,8 +52,8 @@ const projects = [
   },
   {
     id: 3,
-    title: "SaaS Product Website",
-    description: "User-focused website for a SaaS product, driving sign-ups and demos.",
+    title: t("project.saas.title"),
+    description: t("project.saas.body"),
     image: "/portfolio/house-3.png", // Placeholder: replace with web design project image
     slug: "saas-product-website",
     categories: ["webapp", "corporate", "seo"],
@@ -63,8 +63,8 @@ const projects = [
   },
   {
     id: 4,
-    title: "Corporate Portal Redesign",
-    description: "Comprehensive redesign of a corporate portal for improved UX.",
+    title: t("project.corporate.title"),
+    description: t("project.corporate.body"),
     image: "/portfolio/house-4.png", // Placeholder: replace with web design project image
     slug: "corporate-portal-redesign",
     categories: ["corporate", "webapp"],
@@ -81,8 +81,8 @@ const projects = [
   },
   {
     id: 5,
-    title: "Portfolio Site for Creatives",
-    description: "Visually stunning portfolio website for a creative agency.",
+    title: t("project.portfolio.title"),
+    description: t("project.portfolio.body"),
     image: "/portfolio/house-5.png", // Placeholder: replace with web design project image
     slug: "portfolio-site-for-creatives",
     categories: ["branding", "corporate"],
@@ -92,8 +92,8 @@ const projects = [
   },
   {
     id: 6,
-    title: "Online Booking System",
-    description: "Custom web app for online bookings and scheduling.",
+    title: t("project.booking.title"),
+    description: t("project.booking.body"),
     image: "/portfolio/house-6.png", // Placeholder: replace with web design project image
     slug: "online-booking-system",
     categories: ["webapp", "ecommerce"],
@@ -321,7 +321,7 @@ export default function Work() {
             transition={{ duration: 0.6 }}
             variants={fadeIn}
           >
-            What Our Clients Say
+            {t('ourWork.clientsSay')}
           </motion.h3>
         </div>
 
@@ -426,7 +426,7 @@ export default function Work() {
             transition={{ duration: 0.6 }}
             variants={fadeIn}
           >
-            Explore Our Portfolio
+            {t('ourWork.explorePortfolio')}
           </motion.h3>
 
           {/* Category filters */}
@@ -477,7 +477,7 @@ export default function Work() {
                         className="rounded text-neutral-900 dark:text-neutral-100"
                       />
                       <label htmlFor="filter-recent" className="text-sm">
-                        Recent (2023)
+                        {t('ourWork.filter.recent')}
                       </label>
                     </div>
                     <div className="flex items-center gap-2">
@@ -489,13 +489,13 @@ export default function Work() {
                         className="rounded text-neutral-900 dark:text-neutral-100"
                       />
                       <label htmlFor="filter-japanesemarket" className="text-sm">
-                        Japanese Market Focus
+                        {t('ourWork.filter.japan')}
                       </label>
                     </div>
                     {/* VR Tour filter option removed */}
                     <div className="pt-2 border-t border-neutral-200 dark:border-neutral-700 mt-2">
                       <Button variant="ghost" size="sm" onClick={() => setActiveFilters([])} className="w-full text-xs">
-                        Clear Filters
+                        {t('ourWork.clearFilters')}
                       </Button>
                     </div>
                   </div>
@@ -570,7 +570,7 @@ export default function Work() {
               whileTap={{ scale: 0.95 }}
               as={motion.button}
             >
-              <span>View All Categories</span>
+              <span>{t('ourWork.viewAllCategories')}</span>
               <ArrowUpRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Button>
           </Link>

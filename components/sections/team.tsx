@@ -5,13 +5,14 @@ import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
 import { Linkedin, Mail } from "lucide-react"
 import Link from "next/link"
+import { t } from "@/lib/i18n"
 
 // Team member data
 const teamMembers = [
   {
     id: 1,
     name: "Rafly Kurnia",
-    role: "Lead Web Designer",
+    role: t("team.role.leadDesigner"),
     bio: "With over 10 years in the digital landscape, Rafly spearheads our web design strategy, focusing on innovative and user-centric solutions.",
     image: "/team/person-1.png",
     linkedin: "https://www.linkedin.com/in/lexia-saito/",
@@ -20,7 +21,7 @@ const teamMembers = [
   {
     id: 2,
     name: "Maya Wijaya",
-    role: "UX/UI Lead",
+    role: t("team.role.uxLead"),
     bio: "Maya excels in crafting intuitive and engaging user experiences, ensuring our designs are both beautiful and functional.",
     image: "/team/person-2.png",
     linkedin: "https://www.linkedin.com/in/lexia-saito/",
@@ -29,7 +30,7 @@ const teamMembers = [
   {
     id: 3,
     name: "Daniel Hartono",
-    role: "Digital Project Manager",
+    role: t("team.role.pm"),
     bio: "Daniel orchestrates our web projects with precision, ensuring timely delivery and seamless collaboration from kickoff to launch.",
     image: "/team/person-3.png",
     linkedin: "https://www.linkedin.com/in/lexia-saito/",
@@ -38,7 +39,7 @@ const teamMembers = [
   {
     id: 4,
     name: "Aisha Putri",
-    role: "Frontend Development Lead",
+    role: t("team.role.frontendLead"),
     bio: "Aisha leads our frontend team, transforming designs into responsive and performant websites using modern technologies.",
     image: "/team/person-4.png",
     linkedin: "https://www.linkedin.com/in/lexia-saito/",
@@ -62,12 +63,12 @@ export default function Team() {
           transition={{ duration: 0.6 }}
           variants={fadeIn}
         >
-          <Chip>Our Team</Chip>
+          <Chip>{t('team.chip')}</Chip>
           <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-            Meet the Team
+            {t('team.heading')}
           </h2>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
-            Our talented team of web designers and developers brings diverse expertise and a shared passion for crafting exceptional digital experiences.
+            {t('team.intro')}
           </p>
         </motion.div>
       </div>

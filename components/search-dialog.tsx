@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Search, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { t } from "@/lib/i18n"
 import { motion, AnimatePresence } from "framer-motion"
 
 // Sample project data for search
@@ -129,7 +130,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         <div className="flex items-center border-b border-neutral-200 dark:border-neutral-800 p-4">
           <Search className="h-5 w-5 text-neutral-500 dark:text-neutral-400 mr-2" />
           <Input
-            placeholder="Search projects, blog posts..."
+            placeholder={t('search.placeholder')}
             className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 p-0"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -154,7 +155,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                 : "text-neutral-500 dark:text-neutral-400"
             }`}
           >
-            All
+            {t('search.tab.all')}
           </button>
           <button
             onClick={() => setActiveTab("projects")}
@@ -164,7 +165,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                 : "text-neutral-500 dark:text-neutral-400"
             }`}
           >
-            Projects
+            {t('search.tab.projects')}
           </button>
           <button
             onClick={() => setActiveTab("blog")}
@@ -174,7 +175,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                 : "text-neutral-500 dark:text-neutral-400"
             }`}
           >
-            Blog
+            {t('search.tab.blog')}
           </button>
         </div>
 
@@ -188,7 +189,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                 transition={{ duration: 0.2 }}
                 className="text-center py-8"
               >
-                <p className="text-neutral-500 dark:text-neutral-400">No results found</p>
+                <p className="text-neutral-500 dark:text-neutral-400">{t('search.noResults')}</p>
               </motion.div>
             ) : (
               <motion.div
@@ -218,7 +219,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                         <div className="flex items-center gap-2">
                           <h3 className="text-sm font-medium text-neutral-900 dark:text-neutral-100">{item.title}</h3>
                           <span className="text-[10px] px-1.5 py-0.5 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-full">
-                            {item.type === "blog" ? "Blog" : "Project"}
+                            {item.type === "blog" ? t('search.tab.blog') : t('search.tab.projects')}
                           </span>
                         </div>
                         <p className="text-xs text-neutral-500 dark:text-neutral-400 line-clamp-1">

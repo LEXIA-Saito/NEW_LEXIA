@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
 import { ExternalLink, Mail } from "lucide-react"
 import Link from "next/link"
+import { t } from "@/lib/i18n"
 
 export default function Contact() {
   const fadeIn = {
@@ -22,7 +23,7 @@ export default function Contact() {
           variants={fadeIn}
           className="text-center mb-16"
         >
-          <Chip>お問い合わせ ― Get in Touch</Chip>
+          <Chip>{t('contact.chip')}</Chip>
           <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
             まずはお気軽にご相談ください。
           </h2>
@@ -61,7 +62,7 @@ export default function Contact() {
             variants={fadeIn}
             className="bg-neutral-50 dark:bg-neutral-800 p-8 rounded-lg transform transition-transform duration-300 hover:scale-[1.02]"
           >
-            <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6">LinkedIn でつながる</h3>
+            <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6">{t('contact.linkedin')}</h3>
             <p className="text-neutral-700 dark:text-neutral-300 mb-8">
               最新の制作事例や WEB デザインのヒントを発信しています。ぜひフォローして最新情報をご覧ください。
             </p>
@@ -72,7 +73,7 @@ export default function Contact() {
               className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline text-lg group"
             >
               <ExternalLink className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-              LEXIA on LinkedIn
+              {t('contact.linkedin')}
             </Link>
           </motion.div>
         </div>

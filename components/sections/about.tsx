@@ -5,6 +5,7 @@ import { Chip } from "@/components/ui/chip"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { t } from "@/lib/i18n"
 
 export default function About() {
   const fadeIn = {
@@ -23,9 +24,9 @@ export default function About() {
           variants={fadeIn}
           className="text-center mb-16"
         >
-          <Chip>About Us</Chip>
+          <Chip>{t('about.chip')}</Chip>
           <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-            Our Approach to Web Development
+            {t('about.heading')}
           </h2>
         </motion.div>
 
@@ -37,16 +38,15 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.2 }}
             variants={fadeIn}
           >
-            <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-4">We listen first</h3>
+            <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-4">{t('about.listen.title')}</h3>
             <p className="text-neutral-700 dark:text-neutral-300 mb-6">
-              At LEXIA, we begin by understanding you—your goals, your site, and the message you want to
-              share—so every choice truly reflects your vision.
+              {t('about.listen.body')}
             </p>
             <Link
               href="#process"
               className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline group"
             >
-              Learn about our process
+              {t('about.learnProcess')}
               <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
@@ -90,16 +90,15 @@ export default function About() {
             variants={fadeIn}
             className="order-2 md:order-1"
           >
-            <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-4">We bring ideas to life</h3>
+            <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-4">{t('about.ideas.title')}</h3>
             <p className="text-neutral-700 dark:text-neutral-300 mb-6">
-              We turn your thoughts into concept sketches, develop clear plans, create 3D visuals to help you see the
-              design, and stay by your side through every step of the build.
+              {t('about.ideas.body')}
             </p>
             <Link
               href="#work"
               className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline group"
             >
-              See our work
+              {t('about.seeWork')}
               <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>

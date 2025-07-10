@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Mail, Linkedin, ArrowUp } from "lucide-react"
+import { t } from "@/lib/i18n"
 
 export default function Footer() {
   const fadeIn = {
@@ -32,7 +33,7 @@ export default function Footer() {
                 className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors duration-300"
               >
                 <Mail className="h-5 w-5" />
-                <span className="sr-only">Email</span>
+                <span className="sr-only">メール</span>
               </Link>
               <Link
                 href="https://www.linkedin.com/in/lexia-saito/"
@@ -54,10 +55,10 @@ export default function Footer() {
             variants={fadeIn}
           >
             <h4 className="text-sm font-medium uppercase tracking-wider text-neutral-900 dark:text-neutral-100 mb-4">
-              Navigation
+              {t('footer.navigation')}
             </h4>
             <ul className="space-y-2">
-              {["About", "Process", "Work", "Team", "Blog", "Contact"].map((item) => (
+              {[t('about.chip'), t('ourProcess.title'), t('ourWork.title'), t('team.chip'), "ブログ", t('contact.chip')].map((item) => (
                 <li key={item}>
                   <Link
                     href={`#${item.toLowerCase()}`}
@@ -78,17 +79,11 @@ export default function Footer() {
             variants={fadeIn}
           >
             <h4 className="text-sm font-medium uppercase tracking-wider text-neutral-900 dark:text-neutral-100 mb-4">
-              Categories
+              {t('footer.categories')}
             </h4>
             <ul className="space-y-2">
-              {[
-                { name: "Residential", href: "/categories#residential" },
-                { name: "Commercial", href: "/categories#commercial" },
-                { name: "Interior", href: "/categories#interior" },
-                { name: "Exterior", href: "/categories#exterior" },
-                { name: "Sustainable", href: "/categories#sustainable" }
-              ].map((item) => (
-                <li key={item.name}>
+              {[t('footer.residential'), t('footer.commercial'), t('footer.interior'), t('footer.exterior'), t('footer.sustainable')].map((item) => (
+                <li key={item}>
                   <Link
                     href={item.href}
                     className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 text-sm transition-colors duration-300"
@@ -110,7 +105,7 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.4 }}
             variants={fadeIn}
           >
-            © {new Date().getFullYear()} LEXIA. All rights reserved.
+            © {new Date().getFullYear()} LEXIA. {t('footer.allRights')}
           </motion.p>
           <motion.button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -122,7 +117,7 @@ export default function Footer() {
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            <span className="text-sm mr-1">Back to top</span>
+            <span className="text-sm mr-1">{t('footer.backToTop')}</span>
             <ArrowUp className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1" />
           </motion.button>
         </div>

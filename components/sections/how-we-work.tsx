@@ -2,22 +2,23 @@
 
 import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
+import { t } from "@/lib/i18n"
 
 const steps = [
   {
     number: "01",
-    title: "Listen & Learn",
-    description: "We dive into your story and site context.",
+    title: "ヒアリング・理解",
+    description: "サイトの目的や課題を丁寧に把握します。",
   },
   {
     number: "02",
-    title: "Shape & Share",
-    description: "We sketch, model, and refine together until it feels right.",
+    title: "設計・共有",
+    description: "設計案を共有しながら最適解へブラッシュアップ。",
   },
   {
     number: "03",
-    title: "Build & Better",
-    description: "We support construction to ensure your vision comes alive.",
+    title: "構築・改善",
+    description: "公開後も検証を重ね、より良いサイトへと育てます。",
   },
 ]
 
@@ -31,15 +32,14 @@ export default function HowWeWork() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <Chip>How we collaborate</Chip>
+          <Chip>共創の流れ</Chip>
 
           <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-            We partner with you
+            {t('about.listen.title')}
           </h2>
 
           <p className="text-lg text-neutral-700 dark:text-neutral-300">
-            We believe collaboration brings out the best in every design—working side by side, sharing ideas, and
-            refining every detail together.
+            {t('about.listen.body')}
           </p>
         </motion.div>
       </div>
