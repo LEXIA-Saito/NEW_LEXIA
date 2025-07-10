@@ -7,6 +7,7 @@ import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Search } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { SearchDialog } from "@/components/search-dialog"
 
 // Simplified navigation items
@@ -121,6 +122,9 @@ export default function Navigation() {
             >
               <Search className="h-5 w-5" />
             </motion.button>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.75 }}>
+              <LanguageSwitcher />
+            </motion.div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.8 }}>
               <ThemeToggle />
             </motion.div>
@@ -137,6 +141,9 @@ export default function Navigation() {
             >
               <Search className="h-5 w-5" />
             </motion.button>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.35 }}>
+              <LanguageSwitcher />
+            </motion.div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.4 }}>
               <ThemeToggle />
             </motion.div>
