@@ -59,9 +59,9 @@ export default function Blog() {
           transition={{ duration: 0.6 }}
           variants={fadeIn}
         >
-          <Chip>Insights</Chip>
+          <Chip>最新情報</Chip>
           <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-            Web Design Journal
+            WEB制作コラム
           </h2>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
             ウェブ制作やデザインに関する最新情報をお届けします。
@@ -110,7 +110,7 @@ export default function Blog() {
                 href={`/blog/${post.slug}`}
                 className="inline-flex items-center text-neutral-900 dark:text-neutral-100 text-sm hover:underline group"
               >
-                Read More
+                続きを読む
                 <ArrowUpRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </div>
@@ -122,7 +122,7 @@ export default function Blog() {
         <Link href="/blog">
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button variant="outline" className="rounded-full group">
-              View All Articles
+              記事一覧を見る
               <ArrowUpRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Button>
           </motion.div>

@@ -88,15 +88,15 @@ export default function BlogPage() {
               className="inline-flex items-center text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
+              ホームへ戻る
             </Link>
           </div>
 
           <div className="text-center mb-16">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <Chip>Insights</Chip>
+              <Chip>最新情報</Chip>
               <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-                Web Design Journal
+                WEB制作コラム
               </h1>
               <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
                 ウェブ制作やデザインに関する情報をお届けします。
@@ -105,7 +105,7 @@ export default function BlogPage() {
                 <Link href="/series">
                   <Button variant="outline" className="rounded-full">
                     <BookOpen className="mr-2 h-4 w-4" />
-                    Browse Article Series
+                    記事シリーズを見る
                   </Button>
                 </Link>
               </div>
@@ -114,7 +114,7 @@ export default function BlogPage() {
 
           {/* Featured Posts */}
           <div className="mb-20">
-            <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-8">Featured Articles</h2>
+            <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-8">注目記事</h2>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {featuredPosts.map((post, index) => (
                 <motion.div
@@ -179,7 +179,7 @@ export default function BlogPage() {
                       href={`/blog/${post.slug}`}
                       className="inline-flex items-center text-neutral-900 dark:text-neutral-100 text-sm hover:underline group"
                     >
-                      Read More
+                      続きを読む
                       <ArrowUpRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </Link>
                   </div>
@@ -194,7 +194,7 @@ export default function BlogPage() {
               <div className="relative w-full md:w-auto md:flex-1 max-w-3xl">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500 dark:text-neutral-400 h-5 w-5" />
                 <Input
-                  placeholder="Search articles..."
+                  placeholder="記事を検索..."
                   className="pl-10 py-6 text-base"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -390,9 +390,9 @@ export default function BlogPage() {
           {/* Blog Posts Grid */}
           {filteredPosts.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-neutral-500 dark:text-neutral-400 mb-4">No articles found matching your criteria.</p>
+              <p className="text-neutral-500 dark:text-neutral-400 mb-4">条件に一致する記事は見つかりませんでした。</p>
               <Button onClick={clearFilters} variant="outline">
-                Clear Filters
+                フィルターをリセット
               </Button>
             </div>
           ) : (
@@ -462,7 +462,7 @@ export default function BlogPage() {
                         href={`/blog/${post.slug}`}
                         className="inline-flex items-center text-neutral-900 dark:text-neutral-100 text-sm hover:underline group"
                       >
-                        Read More
+                        続きを読む
                         <ArrowUpRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                       </Link>
                     </div>
