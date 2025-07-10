@@ -1,6 +1,6 @@
 import About from "@/components/sections/about"
 import Process from "@/components/sections/process"
-import Work from "@/components/sections/work"
+import Work from "@/components/sections/OurWork"
 import Contact from "@/components/sections/contact"
 import Blog from "@/components/sections/blog"
 import Team from "@/components/sections/team"

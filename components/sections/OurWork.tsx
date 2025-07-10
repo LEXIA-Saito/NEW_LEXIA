@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ArrowUpRight, ChevronLeft, ChevronRight, Quote, ExternalLink, Filter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Chip } from "@/components/ui/chip"
+import { t } from "@/lib/i18n"
 
 // Project categories
 const categories = [
@@ -22,17 +23,17 @@ const categories = [
 const projects = [
   {
     id: 1,
-    title: "E-commerce Platform Refresh",
-    description: "A modern e-commerce platform with intuitive UX and SEO focus.",
+    title: t("project.ecommerce.title"),
+    description: t("project.ecommerce.body"),
     image: "/portfolio/house-1.png", // Placeholder: replace with web design project image
     slug: "ecommerce-platform-refresh",
     categories: ["ecommerce", "webapp", "seo"],
+    tags: t("project.ecommerce.tags"),
     featured: true,
     testimonial: {
-      quote:
-        "LEXIA took our startup's vision and crafted a website that perfectly balances aesthetics and user experience. Their attention to detail and collaborative approach were key to our successful launch.",
+      quote: t("project.ecommerce.quote"),
       author: "Sarah Johnson",
-      role: "Startup Founder",
+      role: "スタートアップ創業者",
       image: "/testimonials/person-1.png", // Placeholder: consider updating image for new role
     },
     location: "Fashion E-commerce",
@@ -209,9 +210,9 @@ export default function Work() {
           transition={{ duration: 0.6 }}
           variants={fadeIn}
         >
-          <Chip>Our Work</Chip>
+          <Chip>{t("ourWork.title")}</Chip>
           <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-            Featured Projects
+            {t("ourWork.subtitle")}
           </h2>
         </motion.div>
       </div>
@@ -263,7 +264,7 @@ export default function Work() {
                 {project.testimonial && (
                   <div className="bg-neutral-50 dark:bg-neutral-800 p-6 rounded-lg mb-6 transform transition-transform duration-300 hover:scale-[1.01]">
                     <Quote className="h-6 w-6 text-neutral-300 dark:text-neutral-600 mb-2" />
-                    <p className="text-neutral-700 dark:text-neutral-300 italic mb-4">"{project.testimonial.quote}"</p>
+                    <p className="text-neutral-700 dark:text-neutral-300 italic leading-relaxed mb-4">"{project.testimonial.quote}"</p>
                     <div className="flex items-center">
                       <div className="relative w-10 h-10 rounded-full overflow-hidden mr-3">
                         <Image
@@ -283,20 +284,23 @@ export default function Work() {
                   </div>
                 )}
 
-                <div className="flex flex-wrap gap-3 mb-6">
-                  {project.categories.map((category) => (
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {(project.tags
+                    ? project.tags.split(" • ")
+                    : project.categories
+                  ).map((tag) => (
                     <span
-                      key={category}
+                      key={tag}
                       className="text-xs px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-full"
                     >
-                      {category}
+                      {tag}
                     </span>
                   ))}
                 </div>
 
                 <Link href={`/projects/${project.slug}`}>
                   <Button className="rounded-full bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 group">
-                    <span>View Project</span>
+                    <span>{t("project.viewProject")}</span>
                     <ArrowUpRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Button>
                 </Link>
@@ -426,7 +430,7 @@ export default function Work() {
           </motion.h3>
 
           {/* Category filters */}
-          <div className="flex flex-wrap justify-center gap-3 mb-6">
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
             {categories.map((category) => (
               <motion.button
                 key={category.id}
