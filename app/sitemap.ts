@@ -6,10 +6,11 @@ import { projectsData } from "@/lib/projects-data"
 import { SITE_URL } from "../lib/config"
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  // TODO: Consider changing the placeholder date "2024-01-01" to a more meaningful date.
   // Main pages
   const routes = ["", "/blog", "/categories", "/tags", "/authors", "/projects", "/about", "/contact"].map((route) => ({
     url: `${SITE_URL}${route}`,
-    lastModified: new Date(),
+    lastModified: new Date("2024-01-01"),
     changeFrequency: "monthly" as const,
     priority: route === "" ? 1 : 0.8,
   }))
@@ -25,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Category pages
   const categoryRoutes = categoryData.map((category) => ({
     url: `${SITE_URL}/categories/${category.id}`,
-    lastModified: new Date(),
+    lastModified: new Date("2024-01-01"),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }))
@@ -33,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Author pages
   const authorRoutes = authorData.map((author) => ({
     url: `${SITE_URL}/authors/${author.slug}`,
-    lastModified: new Date(),
+    lastModified: new Date("2024-01-01"),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }))
