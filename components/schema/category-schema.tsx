@@ -12,15 +12,15 @@ export function CategorySchema({ category, postCount }: CategorySchemaProps) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    headline: `${category.name} - Risala Design Blog`,
+    headline: `${category.name} - LEXIA Blog`,
     description: category.description,
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/categories/${category.id}`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/categories/${category.id}`,
     publisher: {
       "@type": "Organization",
-      name: "Risala Design",
+      name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/logo.png`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
       },
     },
     mainEntity: {

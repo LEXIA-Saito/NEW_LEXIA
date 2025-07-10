@@ -15,7 +15,7 @@ const teamMembers = [
     bio: "With over 15 years of experience, Rafly leads our design vision with a focus on sustainable and contextual architecture.",
     image: "/team/person-1.png",
     linkedin: "https://www.linkedin.com/in/raflykurnia72/",
-    email: "rafly@risala.design",
+    email: "rafly@lexia.design",
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ const teamMembers = [
     bio: "Maya specializes in creating harmonious interior spaces that complement the architectural vision.",
     image: "/team/person-2.png",
     linkedin: "#",
-    email: "maya@risala.design",
+    email: "maya@lexia.design",
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ const teamMembers = [
     bio: "Daniel ensures our projects run smoothly from concept to completion, with meticulous attention to detail.",
     image: "/team/person-3.png",
     linkedin: "#",
-    email: "daniel@risala.design",
+    email: "daniel@lexia.design",
   },
   {
     id: 4,
@@ -42,7 +42,7 @@ const teamMembers = [
     bio: "Aisha creates outdoor spaces that seamlessly integrate with our architectural designs.",
     image: "/team/person-4.png",
     linkedin: "#",
-    email: "aisha@risala.design",
+    email: "aisha@lexia.design",
   },
 ]
 

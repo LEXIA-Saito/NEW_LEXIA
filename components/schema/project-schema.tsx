@@ -12,13 +12,13 @@ export function ProjectSchema({ project }: ProjectSchemaProps) {
     name: project.title,
     description: project.description,
     image: project.coverImage
-      ? `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}${project.coverImage}`
+      ? `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}${project.coverImage}`
       : undefined,
     datePublished: new Date(project.year, 0).toISOString(),
     author: {
       "@type": "Organization",
-      name: "Risala Design",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}`,
+      name: "LEXIA",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}`,
     },
     locationCreated: {
       "@type": "Place",
@@ -27,7 +27,7 @@ export function ProjectSchema({ project }: ProjectSchemaProps) {
     genre: project.category,
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"}/projects/${project.slug}`,
+      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/projects/${project.slug}`,
     },
   }
 

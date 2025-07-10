@@ -22,14 +22,13 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
             variants={fadeIn}
           >
-            <h3 className="text-xl font-light text-neutral-900 dark:text-neutral-100 mb-4">Risala Design</h3>
+            <h3 className="text-xl font-light text-neutral-900 dark:text-neutral-100 mb-4">LEXIA</h3>
             <p className="text-neutral-600 dark:text-neutral-400 mb-6 max-w-md">
-              We create thoughtful architectural designs that reflect your vision and enhance the way you live, work,
-              and interact with your environment.
+              Web サイトやアプリ制作を通じて、ビジネスの成長をサポートします。
             </p>
             <div className="flex space-x-4">
               <Link
-                href="mailto:contact@risala.design"
+                href="mailto:contact@lexia.design"
                 className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors duration-300"
               >
                 <Mail className="h-5 w-5" />
@@ -105,7 +104,7 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.4 }}
             variants={fadeIn}
           >
-            © {new Date().getFullYear()} Risala Design. All rights reserved.
+            © {new Date().getFullYear()} LEXIA. All rights reserved.
           </motion.p>
           <motion.button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

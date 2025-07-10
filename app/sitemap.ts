@@ -5,7 +5,7 @@ import { authorData } from "@/lib/author-data"
 import { projectsData } from "@/lib/projects-data"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://risala.design"
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"
 
   // Main pages
   const routes = ["", "/blog", "/categories", "/tags", "/authors", "/projects", "/about", "/contact"].map((route) => ({

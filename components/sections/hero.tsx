@@ -21,7 +21,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            Architecture That Speaks
+            Web Design That Speaks
           </motion.h1>
 
           <motion.p
@@ -30,7 +30,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            We shape spaces to carry your story and spark positive change.
+            デジタルであなたのストーリーを伝え、成果につなげます。
           </motion.p>
 
           <motion.div
@@ -51,10 +51,10 @@ export default function Hero() {
               </motion.div>
             </Link>
 
-            <Link href="https://www.linkedin.com/in/raflykurnia72/" target="_blank" rel="noopener noreferrer">
+            <Link href="https://www.linkedin.com/company/lexia" target="_blank" rel="noopener noreferrer">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button className="rounded-full px-6 py-6 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 w-full sm:w-auto group">
-                  Connect with Rafly on LinkedIn
+                  Connect with us on LinkedIn
                   <ExternalLink className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
                 </Button>
               </motion.div>

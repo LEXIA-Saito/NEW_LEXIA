@@ -61,10 +61,10 @@ export default function Blog() {
         >
           <Chip>Insights</Chip>
           <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-            Architecture Journal
+            Web Design Journal
           </h2>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
-            Thoughts, insights, and explorations on architecture, design, and the built environment.
+            ウェブ制作やデザインに関する最新情報をお届けします。
           </p>
         </motion.div>
       </div>

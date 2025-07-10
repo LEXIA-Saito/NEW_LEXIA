@@ -29,7 +29,7 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 export function ThemeProvider({
   children,
   defaultTheme = "light",
-  storageKey = "risala-theme",
+  storageKey = "lexia-theme",
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(defaultTheme)
