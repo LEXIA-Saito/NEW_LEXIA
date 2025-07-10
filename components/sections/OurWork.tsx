@@ -563,15 +563,11 @@ export default function Work() {
 
         <div className="text-center mt-12">
           <Link href="/categories">
-            <Button
-              variant="outline"
-              className="rounded-full group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              as={motion.button}
-            >
-              <span>{t('ourWork.viewAllCategories')}</span>
-              <ArrowUpRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <Button asChild variant="outline" className="rounded-full group">
+              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <span>{t('ourWork.viewAllCategories')}</span>
+                <ArrowUpRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </motion.button>
             </Button>
           </Link>
         </div>
