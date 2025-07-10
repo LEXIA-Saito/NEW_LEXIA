@@ -7,19 +7,16 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ArrowUpRight, ChevronLeft, ChevronRight, Quote, ExternalLink, Filter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Chip } from "@/components/ui/chip"
-import { t, useTranslations } from "@/lib/i18n"
+import { t } from "@/lib/i18n"
 
 // Project categories
-// Note: `t` is used directly here as it's outside a component.
-// If this component were server-rendered with translations passed as props,
-// this approach would need to change. For client components, this is fine.
 const categories = [
-  { id: "all", name: t("ourWork.categories.all") },
-  { id: "ecommerce", name: t("ourWork.categories.ecommerce") },
-  { id: "corporate", name: t("ourWork.categories.corporateSites") },
-  { id: "webapp", name: t("ourWork.categories.webApps") },
-  { id: "branding", name: t("ourWork.categories.branding") },
-  { id: "seo", name: t("ourWork.categories.seoOptimization") },
+  { id: "all", name: "All" },
+  { id: "ecommerce", name: "E-commerce" },
+  { id: "corporate", name: "Corporate Sites" },
+  { id: "webapp", name: "Web Apps" },
+  { id: "branding", name: "Branding" },
+  { id: "seo", name: "SEO Optimization" },
 ]
 
 // Portfolio projects data with categories and testimonials
@@ -35,128 +32,113 @@ const projects = [
     featured: true,
     testimonial: {
       quote: t("project.ecommerce.quote"),
-      author: t("project.ecommerce.quoteAuthor"), // Assuming this was intended for translation
-      role: t("ourWork.project1.testimonial.role"), // New key for role
-      image: "/testimonials/person-1.png",
+      author: "Sarah Johnson",
+      role: "スタートアップ創業者",
+      image: "/testimonials/person-1.png", // Placeholder: consider updating image for new role
     },
-    location: t("ourWork.project1.location"), // New key for location
+    location: "Fashion E-commerce",
     year: "2023",
   },
   {
     id: 2,
-    title: t("ourWork.project2.title"),
-    description: t("ourWork.project2.description"),
-    image: "/portfolio/house-2.png",
+    title: "Startup Landing Page",
+    description: "Impactful landing page designed for high conversion and brand presence.",
+    image: "/portfolio/house-2.png", // Placeholder: replace with web design project image
     slug: "startup-landing-page",
     categories: ["corporate", "branding"],
     featured: true,
-    location: t("ourWork.project2.location"),
+    location: "Tech Startup",
     year: "2022",
   },
   {
     id: 3,
-    title: t("ourWork.project3.title"),
-    description: t("ourWork.project3.description"),
-    image: "/portfolio/house-3.png",
+    title: "SaaS Product Website",
+    description: "User-focused website for a SaaS product, driving sign-ups and demos.",
+    image: "/portfolio/house-3.png", // Placeholder: replace with web design project image
     slug: "saas-product-website",
     categories: ["webapp", "corporate", "seo"],
     featured: false,
-    location: t("ourWork.project3.location"),
+    location: "Software Solutions",
     year: "2023",
   },
   {
     id: 4,
-    title: t("ourWork.project4.title"),
-    description: t("ourWork.project4.description"),
-    image: "/portfolio/house-4.png",
+    title: "Corporate Portal Redesign",
+    description: "Comprehensive redesign of a corporate portal for improved UX.",
+    image: "/portfolio/house-4.png", // Placeholder: replace with web design project image
     slug: "corporate-portal-redesign",
     categories: ["corporate", "webapp"],
     featured: true,
     testimonial: {
-      quote: t("ourWork.project4.testimonial.quote"),
-      author: t("ourWork.project4.testimonial.author"),
-      role: t("ourWork.project4.testimonial.role"),
-      image: "/testimonials/person-4.png",
+      quote:
+        "LEXIA's redesign of our corporate website has completely transformed our online presence. The thoughtful UX has improved lead generation, and we're proud to direct clients to our new site.",
+      author: "David Okafor",
+      role: "Head of Digital",
+      image: "/testimonials/person-4.png", // Placeholder: consider updating image for new role
     },
-    location: t("ourWork.project4.location"),
+    location: "Financial Services",
     year: "2022",
   },
   {
     id: 5,
-    title: t("ourWork.project5.title"),
-    description: t("ourWork.project5.description"),
-    image: "/portfolio/house-5.png",
+    title: "Portfolio Site for Creatives",
+    description: "Visually stunning portfolio website for a creative agency.",
+    image: "/portfolio/house-5.png", // Placeholder: replace with web design project image
     slug: "portfolio-site-for-creatives",
     categories: ["branding", "corporate"],
     featured: false,
-    location: t("ourWork.project5.location"),
+    location: "Design Agency",
     year: "2021",
   },
   {
     id: 6,
-    title: t("ourWork.project6.title"),
-    description: t("ourWork.project6.description"),
-    image: "/portfolio/house-6.png",
+    title: "Online Booking System",
+    description: "Custom web app for online bookings and scheduling.",
+    image: "/portfolio/house-6.png", // Placeholder: replace with web design project image
     slug: "online-booking-system",
     categories: ["webapp", "ecommerce"],
     featured: true,
     testimonial: {
-      quote: t("ourWork.project6.testimonial.quote"),
-      author: t("ourWork.project6.testimonial.author"),
-      role: t("ourWork.project6.testimonial.role"),
-      image: "/testimonials/person-2.png",
+      quote:
+        "Partnering with LEXIA for our e-commerce platform was seamless. They understood our brand and built a site that our customers find intuitive and engaging, significantly boosting sales.",
+      author: "Michael Chen",
+      role: "E-commerce Business Owner",
+      image: "/testimonials/person-2.png", // Placeholder: consider updating image for new role
     },
-    location: t("ourWork.project6.location"),
+    location: "Travel & Tourism",
     year: "2022",
   },
 ]
 
 // Featured testimonials for carousel
-// Note: `t` is used directly here as it's outside a component.
 const testimonials = [
   {
     id: 1,
-    quote: t("ourWork.clientTestimonial1.quote"),
-    author: t("ourWork.clientTestimonial1.author"),
-    role: t("ourWork.clientTestimonial1.role"),
-    image: "/testimonials/person-3.png",
+    quote:
+      "I've partnered with many design agencies, but LEXIA stands out for their user-centric approach and innovative web solutions. They consistently deliver products that exceed user expectations and drive engagement.",
+    author: "Amelia Rodriguez",
+    role: "SaaS Product Manager",
+    image: "/testimonials/person-3.png", // Placeholder: Consider updating image
   },
   {
     id: 2,
-    // This testimonial's quote and author are from project.ecommerce, role needs a new key.
-    // For consistency, we could define new keys for all parts of this testimonial.
-    // Let's assume project.ecommerce.quote is t("project.ecommerce.quote")
-    // and author is t("project.ecommerce.quoteAuthor")
-    // We need a new role: t("ourWork.clientTestimonial2.role")
-    // However, the original data has "Sarah Johnson" and "Startup Founder"
-    // which matches project 1's original testimonial author and a *new* role for testimonial array.
-    // The task description implies project1's testimonial author was "Sarah Johnson" and role "スタートアップ創業者"
-    // which is t("project.ecommerce.quoteAuthor") and t("ourWork.project1.testimonial.role")
-    // Let's ensure testimonials array is distinctly translated.
-    quote: t("ourWork.clientTestimonial2.quote"),
-    author: t("ourWork.clientTestimonial2.author"),
-    role: t("ourWork.clientTestimonial2.role"),
-    image: "/testimonials/person-1.png",
+    quote:
+      "LEXIA took our startup's vision and crafted a website that perfectly balances aesthetics and user experience. Their attention to detail and collaborative approach were key to our successful launch.",
+    author: "Sarah Johnson",
+    role: "Startup Founder",
+    image: "/testimonials/person-1.png", // Placeholder: Consider updating image
   },
   {
     id: 3,
-    // This testimonial matches project 6's original data.
-    // Let's ensure testimonials array is distinctly translated.
-    quote: t("ourWork.clientTestimonial3.quote"),
-    author: t("ourWork.clientTestimonial3.author"),
-    role: t("ourWork.clientTestimonial3.role"),
-    image: "/testimonials/person-2.png",
+    quote:
+      "Partnering with LEXIA for our e-commerce platform was seamless. They understood our brand and built a site that our customers find intuitive and engaging, significantly boosting sales.",
+    author: "Michael Chen",
+    role: "E-commerce Business Owner",
+    image: "/testimonials/person-2.png", // Placeholder: Consider updating image
   },
 ]
 
 export default function Work() {
-  // const t = useTranslations() // Already available globally for constants
-  // For component-specific translations if needed, or if constants were not using `t` directly.
-  // In this case, since constants above use `t`, we might not need a local `t`
-  // unless for aria-labels or other component-rendered text not in constants.
-  // Let's add it for clarity and future use within the component scope.
-  const hookT = useTranslations() // Renaming to avoid conflict if t was passed as prop
-
   const [activeCategory, setActiveCategory] = useState("all")
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
   const [direction, setDirection] = useState(0)
@@ -308,7 +290,7 @@ export default function Work() {
                     : project.categories
                   ).map((tag) => (
                     <span
-                      key={`${project.id}-${tag}`}
+                      key={tag}
                       className="text-xs px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-full"
                     >
                       {tag}
@@ -339,7 +321,7 @@ export default function Work() {
             transition={{ duration: 0.6 }}
             variants={fadeIn}
           >
-            {hookT("ourWork.whatClientsSay")}
+            What Our Clients Say
           </motion.h3>
         </div>
 
@@ -394,9 +376,9 @@ export default function Work() {
           </div>
 
           <div className="flex justify-center mt-6 gap-2">
-            {testimonials.map((testimonial, index) => (
+            {testimonials.map((_, index) => (
               <button
-                key={testimonial.id}
+                key={index}
                 onClick={() => {
                   setDirection(index > currentTestimonial ? 1 : -1)
                   setCurrentTestimonial(index)
@@ -406,7 +388,7 @@ export default function Work() {
                     ? "bg-neutral-900 dark:bg-neutral-100 w-6"
                     : "bg-neutral-300 dark:bg-neutral-600"
                 }`}
-                aria-label={hookT("ourWork.aria.goToTestimonialNumbered") + (index + 1)}
+                aria-label={`Go to testimonial ${index + 1}`}
               />
             ))}
           </div>
@@ -416,7 +398,7 @@ export default function Work() {
             size="icon"
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 bg-white dark:bg-neutral-800 shadow-md rounded-full h-10 w-10"
             onClick={goToPrevious}
-            aria-label={hookT("ourWork.aria.prevTestimonial")}
+            aria-label="Previous testimonial"
           >
             <ChevronLeft className="h-5 w-5" />
           </Button>
@@ -426,7 +408,7 @@ export default function Work() {
             size="icon"
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 bg-white dark:bg-neutral-800 shadow-md rounded-full h-10 w-10"
             onClick={goToNext}
-            aria-label={hookT("ourWork.aria.nextTestimonial")}
+            aria-label="Next testimonial"
           >
             <ChevronRight className="h-5 w-5" />
           </Button>
@@ -444,7 +426,7 @@ export default function Work() {
             transition={{ duration: 0.6 }}
             variants={fadeIn}
           >
-            {hookT("ourWork.explorePortfolio")}
+            Explore Our Portfolio
           </motion.h3>
 
           {/* Category filters */}
@@ -495,7 +477,7 @@ export default function Work() {
                         className="rounded text-neutral-900 dark:text-neutral-100"
                       />
                       <label htmlFor="filter-recent" className="text-sm">
-                        {hookT("ourWork.filters.recent")}
+                        Recent (2023)
                       </label>
                     </div>
                     <div className="flex items-center gap-2">
@@ -507,13 +489,13 @@ export default function Work() {
                         className="rounded text-neutral-900 dark:text-neutral-100"
                       />
                       <label htmlFor="filter-japanesemarket" className="text-sm">
-                        {hookT("ourWork.filters.japaneseMarketFocus")}
+                        Japanese Market Focus
                       </label>
                     </div>
                     {/* VR Tour filter option removed */}
                     <div className="pt-2 border-t border-neutral-200 dark:border-neutral-700 mt-2">
                       <Button variant="ghost" size="sm" onClick={() => setActiveFilters([])} className="w-full text-xs">
-                        {hookT("ourWork.filters.clearFilters")}
+                        Clear Filters
                       </Button>
                     </div>
                   </div>
@@ -588,7 +570,7 @@ export default function Work() {
               whileTap={{ scale: 0.95 }}
               as={motion.button}
             >
-              <span>{hookT("ourWork.viewAllCategories")}</span>
+              <span>View All Categories</span>
               <ArrowUpRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Button>
           </Link>
