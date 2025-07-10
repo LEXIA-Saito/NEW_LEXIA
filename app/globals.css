@@ -7,6 +7,16 @@ html {
 }
 
 @layer base {
+      /* Apply Noto Sans JP when lang is 'ja' */
+      html[lang="ja"] {
+        font-family: var(--font-noto-sans-jp), sans-serif;
+      }
+
+      /* Apply Inter when lang is 'en' */
+      html[lang="en"] {
+        font-family: var(--font-inter), sans-serif;
+      }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
@@ -63,6 +73,7 @@ html {
 
   body {
     @apply bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100;
+    font-family: inherit; /* Ensure this is part of the body rule if it wasn't added above explicitly */
   }
 }
 
