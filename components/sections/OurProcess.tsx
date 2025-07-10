@@ -3,35 +3,25 @@
 import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
 import Image from "next/image"
+import { useTranslations } from "@/lib/i18n"
 
 const steps = [
   {
     number: "01",
-    title: "Listen & Learn",
-    description: "We dive into your story and site context.",
-    details:
-      "Every project begins with a conversation. We take the time to understand your vision, needs, and the unique characteristics of your site. This foundation ensures that our design truly reflects your goals.",
     image: "/process/process-1.png",
   },
   {
     number: "02",
-    title: "Shape & Share",
-    description: "We sketch, model, and refine together until it feels right.",
-    details:
-      "We transform your ideas into initial concepts, then collaborate closely with you to refine them. Through sketches, 3D models, and detailed plans, we ensure the design evolves to perfectly match your vision.",
     image: "/process/process-2.png",
   },
   {
     number: "03",
-    title: "Build & Better",
-    description: "We support construction to ensure your vision comes alive.",
-    details:
-      "Our involvement continues throughout the construction phase. We work closely with builders and contractors to ensure that every detail is executed according to plan, making adjustments as needed to bring your vision to life.",
     image: "/process/process-3.png",
   },
 ]
 
-export default function Process() {
+export default function OurProcess() {
+  const t = useTranslations()
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
@@ -47,13 +37,9 @@ export default function Process() {
           transition={{ duration: 0.6 }}
           variants={fadeIn}
         >
-          <Chip>Our Process</Chip>
-          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-            We partner with you
-          </h2>
-          <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
-            We believe collaboration brings out the best in every design—working side by side, sharing ideas, and
-            refining every detail together.
+          <Chip>{t('ourProcess.title')}</Chip>
+          <p className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
+            {t('ourProcess.intro')}
           </p>
         </motion.div>
       </div>
@@ -79,7 +65,7 @@ export default function Process() {
               >
                 <Image
                   src={step.image || "/placeholder.svg"}
-                  alt={step.title}
+                  alt={t(`ourProcess.steps.${step.number}.title`)}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -94,10 +80,22 @@ export default function Process() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <div className="text-neutral-400 dark:text-neutral-500 text-5xl font-light mb-4">{step.number}</div>
-                <h3 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100 mb-3">{step.title}</h3>
-                <p className="text-lg text-neutral-700 dark:text-neutral-300 mb-4">{step.description}</p>
-                <p className="text-neutral-600 dark:text-neutral-400">{step.details}</p>
+                <div className="flex items-baseline space-x-2 md:block md:space-x-0">
+                  <div className="text-neutral-400 dark:text-neutral-500 text-3xl md:text-5xl font-light">
+                    {step.number}
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-medium text-neutral-900 dark:text-neutral-100">
+                    {t(`ourProcess.steps.${step.number}.title`)}
+                  </h3>
+                </div>
+                <div className="space-y-3 md:space-y-4 mt-3">
+                  <p className="text-lg text-neutral-700 dark:text-neutral-300">
+                    {t(`ourProcess.steps.${step.number}.description`)}
+                  </p>
+                  <p className="text-neutral-600 dark:text-neutral-400">
+                    {t(`ourProcess.steps.${step.number}.body`)}
+                  </p>
+                </div>
               </motion.div>
             </div>
           </motion.div>
