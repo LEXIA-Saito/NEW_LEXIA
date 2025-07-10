@@ -30,12 +30,20 @@ export const blogPosts = [
       "Exploring how accessible web design practices can create inclusive and user-friendly websites for all.",
     image: "/blog/blog-1.png", // Placeholder, recommend updating
     date: "May 15, 2023",
-    author: "Rafly Kurnia",
-    authorImage: "/team/person-1.png",
-    authorRole: "Lead Web Designer",
+    authorInfo: {
+      slug: "rafly-kurnia",
+      nameKey: "blogAuthors.raflyKurnia",
+      image: "/team/person-1.png",
+      roleKey: "blogAuthorRoles.leadWebDesigner",
+    },
     slug: "accessible-web-design",
-    category: "Accessibility",
-    tags: ["Web Accessibility", "WCAG", "Inclusive Design", "UX"],
+    category: { slug: "accessibility", nameKey: "blogCategories.accessibility" },
+    tags: [
+      { slug: "web-accessibility", nameKey: "blogTags.webAccessibility" },
+      { slug: "wcag", nameKey: "blogTags.wcag" },
+      { slug: "inclusive-design", nameKey: "blogTags.inclusiveDesign" },
+      { slug: "ux", nameKey: "blogTags.ux" },
+    ],
     series: {
       id: "responsive-web-design",
       title: "Responsive Web Design Series",
@@ -81,12 +89,20 @@ export const blogPosts = [
     excerpt: "Understanding the profound impact that user experience design has on online behavior and decision-making.",
     image: "/blog/blog-2.png", // Placeholder, recommend updating
     date: "April 3, 2023",
-    author: "Maya Wijaya",
-    authorImage: "/team/person-2.png",
-    authorRole: "UX/UI Specialist",
+    authorInfo: {
+      slug: "maya-wijaya",
+      nameKey: "blogAuthors.mayaWijaya",
+      image: "/team/person-2.png",
+      roleKey: "blogAuthorRoles.uxUiSpecialist",
+    },
     slug: "psychology-of-ux",
-    category: "UX Design",
-    tags: ["UX Psychology", "User Behavior", "Cognitive Bias", "UI Design"],
+    category: { slug: "ux-design", nameKey: "blogCategories.uxDesign" },
+    tags: [
+      { slug: "ux-psychology", nameKey: "blogTags.uxPsychology" },
+      { slug: "user-behavior", nameKey: "blogTags.userBehavior" },
+      { slug: "cognitive-bias", nameKey: "blogTags.cognitiveBias" },
+      { slug: "ui-design", nameKey: "blogTags.uiDesign" },
+    ],
     series: {
       id: "ux-psychology",
       title: "UX Psychology Insights",
@@ -132,12 +148,21 @@ export const blogPosts = [
       "How we migrated a client's outdated website to a modern tech stack, improving performance and user experience.",
     image: "/blog/blog-3.png", // Placeholder, recommend updating
     date: "March 12, 2023",
-    author: "Rafly Kurnia",
-    authorImage: "/team/person-1.png",
-    authorRole: "Lead Web Designer",
+    authorInfo: {
+      slug: "rafly-kurnia",
+      nameKey: "blogAuthors.raflyKurnia",
+      image: "/team/person-1.png",
+      roleKey: "blogAuthorRoles.leadWebDesigner",
+    },
     slug: "modernizing-legacy-systems",
-    category: "Case Study",
-    tags: ["Web Development", "Legacy Systems", "React", "Next.js", "Case Study"],
+    category: { slug: "case-study", nameKey: "blogCategories.caseStudy" },
+    tags: [
+      { slug: "web-development", nameKey: "blogTags.webDevelopment" },
+      { slug: "legacy-systems", nameKey: "blogTags.legacySystems" },
+      { slug: "react", nameKey: "blogTags.react" },
+      { slug: "next-js", nameKey: "blogTags.nextJs" },
+      { slug: "case-study", nameKey: "blogTags.caseStudy" },
+    ],
     series: {
       id: "web-design-trends-japan",
       title: "Web Design Trends in Japan",
@@ -192,12 +217,20 @@ export const blogPosts = [
       "Exploring how to design and develop websites with minimal environmental impact, focusing on performance and resource efficiency.",
     image: "/blog/blog-4.png", // Placeholder, recommend updating
     date: "February 28, 2023",
-    author: "Aisha Putri",
-    authorImage: "/team/person-4.png",
-    authorRole: "Frontend Developer",
+    authorInfo: {
+      slug: "aisha-putri",
+      nameKey: "blogAuthors.aishaPutri",
+      image: "/team/person-4.png",
+      roleKey: "blogAuthorRoles.frontendDeveloper",
+    },
     slug: "sustainable-web-development",
-    category: "Web Development",
-    tags: ["Sustainable Web", "Green Coding", "Performance", "Eco-Friendly"],
+    category: { slug: "web-development", nameKey: "blogCategories.webDevelopment" },
+    tags: [
+      { slug: "sustainable-web", nameKey: "blogTags.sustainableWeb" },
+      { slug: "green-coding", nameKey: "blogTags.greenCoding" },
+      { slug: "performance", nameKey: "blogTags.performance" },
+      { slug: "eco-friendly", nameKey: "blogTags.ecoFriendly" },
+    ],
     series: {
       id: "responsive-web-design",
       title: "Responsive Web Design Series",
@@ -245,12 +278,20 @@ export const blogPosts = [
     excerpt: "Design strategies for creating effective and engaging user interfaces for mobile devices and small screens.",
     image: "/blog/blog-5.png", // Placeholder, recommend updating
     date: "January 17, 2023",
-    author: "Maya Wijaya",
-    authorImage: "/team/person-2.png",
-    authorRole: "UX/UI Specialist",
+    authorInfo: {
+      slug: "maya-wijaya",
+      nameKey: "blogAuthors.mayaWijaya",
+      image: "/team/person-2.png",
+      roleKey: "blogAuthorRoles.uxUiSpecialist",
+    },
     slug: "ui-design-small-screens",
-    category: "UI Design",
-    tags: ["Mobile UI", "Small Screens", "User Interface", "Responsive Design"],
+    category: { slug: "ui-design", nameKey: "blogCategories.uiDesign" },
+    tags: [
+      { slug: "mobile-ui", nameKey: "blogTags.mobileUi" },
+      { slug: "small-screens", nameKey: "blogTags.smallScreens" },
+      { slug: "user-interface", nameKey: "blogTags.userInterface" },
+      { slug: "responsive-design", nameKey: "blogTags.responsiveDesign" },
+    ],
     shareCount: 31,
     content: [
       "As users increasingly access the web via mobile devices, designing for small screens is no longer an afterthought but a primary consideration. While limited screen real estate presents challenges, thoughtful UI design can transform compact interfaces into powerful and engaging user experiences.",
@@ -299,12 +340,21 @@ export const blogPosts = [
     excerpt: "Examining trends and innovations that will shape e-commerce websites in the dynamic Southeast Asian market.",
     image: "/blog/blog-6.png", // Placeholder, recommend updating
     date: "December 5, 2022",
-    author: "Rafly Kurnia",
-    authorImage: "/team/person-1.png",
-    authorRole: "Lead Web Designer",
+    authorInfo: {
+      slug: "rafly-kurnia",
+      nameKey: "blogAuthors.raflyKurnia",
+      image: "/team/person-1.png",
+      roleKey: "blogAuthorRoles.leadWebDesigner",
+    },
     slug: "future-ecommerce-web-design-sea",
-    category: "E-commerce",
-    tags: ["E-commerce", "Web Design", "Future Trends", "Southeast Asia", "UX"],
+    category: { slug: "e-commerce", nameKey: "blogCategories.eCommerce" },
+    tags: [
+      { slug: "e-commerce", nameKey: "blogTags.eCommerce" },
+      { slug: "web-design", nameKey: "blogTags.webDesign" },
+      { slug: "future-trends", nameKey: "blogTags.futureTrends" },
+      { slug: "southeast-asia", nameKey: "blogTags.southeastAsia" },
+      { slug: "ux", nameKey: "blogTags.ux" },
+    ],
     series: {
       id: "web-design-trends-japan", // Changed from Indonesian Architecture to a more relevant one
       title: "Web Design Trends in Japan", // Aligned with new series
@@ -358,12 +408,21 @@ export const blogPosts = [
     excerpt: "Exploring effective techniques for improving website speed and user experience to meet Google's Core Web Vitals.",
     image: "/blog/blog-7.png", // Placeholder, recommend updating
     date: "November 10, 2022",
-    author: "Rafly Kurnia",
-    authorImage: "/team/person-1.png",
-    authorRole: "Lead Web Designer",
+    authorInfo: {
+      slug: "rafly-kurnia",
+      nameKey: "blogAuthors.raflyKurnia",
+      image: "/team/person-1.png",
+      roleKey: "blogAuthorRoles.leadWebDesigner",
+    },
     slug: "optimizing-core-web-vitals",
-    category: "Web Performance",
-    tags: ["Core Web Vitals", "Website Speed", "UX", "SEO", "Web Development"],
+    category: { slug: "web-performance", nameKey: "blogCategories.webPerformance" },
+    tags: [
+      { slug: "core-web-vitals", nameKey: "blogTags.coreWebVitals" },
+      { slug: "website-speed", nameKey: "blogTags.websiteSpeed" },
+      { slug: "ux", nameKey: "blogTags.ux" },
+      { slug: "seo", nameKey: "blogTags.seo" },
+      { slug: "web-development", nameKey: "blogTags.webDevelopment" },
+    ],
     series: {
       id: "responsive-web-design",
       title: "Responsive Web Design Series",
