@@ -7,7 +7,16 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ArrowUpRight, ChevronLeft, ChevronRight, Quote, ExternalLink, Filter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Chip } from "@/components/ui/chip"
-import { categories } from "@/lib/work-categories-data";
+
+// Project categories
+const categories = [
+  { id: "all", name: "All" },
+  { id: "ecommerce", name: "E-commerce" },
+  { id: "corporate", name: "Corporate Sites" },
+  { id: "webapp", name: "Web Apps" },
+  { id: "branding", name: "Branding" },
+  { id: "seo", name: "SEO Optimization" },
+]
 
 // Portfolio projects data with categories and testimonials
 const projects = [

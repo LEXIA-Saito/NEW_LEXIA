@@ -45,7 +45,7 @@ export default function Hero() {
                   variant="outline"
                   className="rounded-full px-6 py-6 text-base border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 w-full sm:w-auto group"
                 >
-                  実績を見る
+                  View Our Work
                   <ArrowDown className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-y-1" />
                 </Button>
               </motion.div>
@@ -54,7 +54,7 @@ export default function Hero() {
             <Link href="https://www.linkedin.com/company/lexia" target="_blank" rel="noopener noreferrer">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button className="rounded-full px-6 py-6 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 w-full sm:w-auto group">
-                  既存のお客様はこちら
+                  Connect with us on LinkedIn
                   <ExternalLink className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
                 </Button>
               </motion.div>

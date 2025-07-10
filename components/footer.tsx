@@ -3,14 +3,12 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Mail, Linkedin, ArrowUp } from "lucide-react"
-import { useI18n } from "@/hooks/use-i18n"
 
 export default function Footer() {
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   }
-  const t = useI18n('footer')
 
   return (
     <footer className="py-12 border-t border-neutral-100 dark:border-neutral-800">
@@ -56,16 +54,16 @@ export default function Footer() {
             variants={fadeIn}
           >
             <h4 className="text-sm font-medium uppercase tracking-wider text-neutral-900 dark:text-neutral-100 mb-4">
-              {t('navigation')}
+              Navigation
             </h4>
             <ul className="space-y-2">
-              {(['about', 'process', 'work', 'team', 'blog', 'contact'] as const).map((key) => (
-                <li key={key}>
+              {["About", "Process", "Work", "Team", "Blog", "Contact"].map((item) => (
+                <li key={item}>
                   <Link
-                    href={`#${key}`}
+                    href={`#${item.toLowerCase()}`}
                     className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 text-sm transition-colors duration-300"
                   >
-                    {t(key)}
+                    {item}
                   </Link>
                 </li>
               ))}
@@ -80,16 +78,16 @@ export default function Footer() {
             variants={fadeIn}
           >
             <h4 className="text-sm font-medium uppercase tracking-wider text-neutral-900 dark:text-neutral-100 mb-4">
-              {t('categories')}
+              Categories
             </h4>
             <ul className="space-y-2">
-              {(['residential', 'commercial', 'interior', 'exterior', 'sustainable'] as const).map((key) => (
-                <li key={key}>
+              {["Residential", "Commercial", "Interior", "Exterior", "Sustainable"].map((item) => (
+                <li key={item}>
                   <Link
-                    href={`/categories#${key}`}
+                    href={`/categories#${item.toLowerCase()}`}
                     className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 text-sm transition-colors duration-300"
                   >
-                    {t(key)}
+                    {item}
                   </Link>
                 </li>
               ))}

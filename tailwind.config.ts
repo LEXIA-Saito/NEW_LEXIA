@@ -19,11 +19,6 @@ const config = {
       },
     },
     extend: {
-          fontFamily: { // Add this section
-            sans: ['var(--font-inter)', 'sans-serif'], // Default to Inter
-            'noto-sans-jp': ['var(--font-noto-sans-jp)', 'sans-serif'],
-            'inter': ['var(--font-inter)', 'sans-serif'],
-          },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

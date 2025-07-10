@@ -7,17 +7,16 @@ import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Search } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { LanguageSwitcher } from "@/components/language-switcher";
 import { SearchDialog } from "@/components/search-dialog"
 
 // Simplified navigation items
 const navItems = [
-  { name: "会社案内", href: "#about" },
-  { name: "制作の流れ", href: "#process" },
-  { name: "実績", href: "#work" },
-  { name: "チーム", href: "#team" },
-  { name: "ブログ", href: "#blog" },
-  { name: "お問い合わせ", href: "#contact" },
+  { name: "About", href: "#about" },
+  { name: "Process", href: "#process" },
+  { name: "Work", href: "#work" },
+  { name: "Team", href: "#team" },
+  { name: "Blog", href: "#blog" },
+  { name: "Contact", href: "#contact" },
 ]
 
 export default function Navigation() {
@@ -122,9 +121,6 @@ export default function Navigation() {
             >
               <Search className="h-5 w-5" />
             </motion.button>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.75 }}>
-              <LanguageSwitcher />
-            </motion.div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.8 }}>
               <ThemeToggle />
             </motion.div>
@@ -141,9 +137,6 @@ export default function Navigation() {
             >
               <Search className="h-5 w-5" />
             </motion.button>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.35 }}>
-              <LanguageSwitcher />
-            </motion.div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.4 }}>
               <ThemeToggle />
             </motion.div>
