@@ -12,34 +12,34 @@ const testimonials = [
   {
     id: 1,
     name: "Sarah Johnson",
-    title: "Homeowner",
+    title: "Startup Founder",
     quote:
-      "LEXIA transformed our vision into a home that perfectly balances aesthetics and functionality. Their attention to detail and ability to listen made all the difference.",
-    image: "/testimonials/person-1.png",
+      "LEXIA took our startup's vision and crafted a website that perfectly balances aesthetics and user experience. Their attention to detail and collaborative approach were key to our successful launch.",
+    image: "/testimonials/person-1.png", // Placeholder, consider updating image for new role
   },
   {
     id: 2,
     name: "Michael Chen",
-    title: "Restaurant Owner",
+    title: "E-commerce Store Owner",
     quote:
-      "Working with LEXIA on our restaurant redesign was a seamless experience. They understood our brand and created a space that our customers love to spend time in.",
-    image: "/testimonials/person-2.png",
+      "Partnering with LEXIA for our e-commerce platform was seamless. They understood our brand and built a site that our customers find intuitive and engaging, significantly boosting sales.",
+    image: "/testimonials/person-2.png", // Placeholder, consider updating image for new role
   },
   {
     id: 3,
     name: "Amelia Rodriguez",
-    title: "Real Estate Developer",
+    title: "SaaS Product Manager",
     quote:
-      "I've worked with many architects, but LEXIA stands out for their collaborative approach and innovative solutions. They consistently deliver projects that exceed expectations.",
-    image: "/testimonials/person-3.png",
+      "I've partnered with many design agencies, but LEXIA stands out for their user-centric approach and innovative web solutions. They consistently deliver products that exceed user expectations and drive engagement.",
+    image: "/testimonials/person-3.png", // Placeholder, consider updating image for new role
   },
   {
     id: 4,
     name: "David Okafor",
-    title: "Office Manager",
+    title: "Head of Digital",
     quote:
-      "Our office renovation by LEXIA has completely transformed our workspace. The thoughtful design has improved team collaboration and created a space we're proud to bring clients to.",
-    image: "/testimonials/person-4.png",
+      "LEXIA's redesign of our corporate website has completely transformed our online presence. The thoughtful UX has improved lead generation, and we're proud to direct clients to our new site.",
+    image: "/testimonials/person-4.png", // Placeholder, consider updating image for new role
   },
 ]
 

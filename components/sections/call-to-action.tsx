@@ -40,7 +40,7 @@ export default function CallToAction() {
             </Button>
           </Link>
 
-          <Link href="https://www.linkedin.com/in/raflykurnia72/" target="_blank" rel="noopener noreferrer">
+          <Link href="https://www.linkedin.com/company/lexia" target="_blank" rel="noopener noreferrer">
             <Button className="rounded-full px-6 py-6 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 w-full sm:w-auto">
               Connect on LinkedIn
               <ExternalLink className="ml-2 h-4 w-4" />

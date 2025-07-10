@@ -1,4 +1,5 @@
 import type { projectsData } from "@/lib/projects-data"
+import { SITE_URL } from "../../lib/config"
 
 interface ProjectsListSchemaProps {
   projects: typeof projectsData
@@ -9,16 +10,16 @@ export function ProjectsListSchema({ projects }: ProjectsListSchemaProps) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    headline: "Our Projects - LEXIA Portfolio",
+    headline: "プロジェクト実績 - LEXIAポートフォリオ",
     description:
-      "Explore our diverse portfolio of architectural projects, from residential homes to commercial spaces.",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/projects`,
+      "ダイナミックなEコマースプラットフォームから魅力的なコーポレートサイトまで、LEXIAの多様なウェブデザインプロジェクトをご覧ください。",
+    url: `${SITE_URL}/projects`,
     publisher: {
       "@type": "Organization",
       name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
+        url: `${SITE_URL}/logo.png`,
       },
     },
     mainEntity: {
@@ -26,7 +27,7 @@ export function ProjectsListSchema({ projects }: ProjectsListSchemaProps) {
       itemListElement: projects.map((project, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/projects/${project.slug}`,
+        url: `${SITE_URL}/projects/${project.slug}`,
         name: project.title,
       })),
     },

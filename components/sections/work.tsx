@@ -11,101 +11,100 @@ import { Chip } from "@/components/ui/chip"
 // Project categories
 const categories = [
   { id: "all", name: "All" },
-  { id: "residential", name: "Residential" },
-  { id: "commercial", name: "Commercial" },
-  { id: "interior", name: "Interior" },
-  { id: "exterior", name: "Exterior" },
-  { id: "sustainable", name: "Sustainable" },
+  { id: "ecommerce", name: "E-commerce" },
+  { id: "corporate", name: "Corporate Sites" },
+  { id: "webapp", name: "Web Apps" },
+  { id: "branding", name: "Branding" },
+  { id: "seo", name: "SEO Optimization" },
 ]
 
 // Portfolio projects data with categories and testimonials
 const projects = [
   {
     id: 1,
-    title: "Minimalist Villa",
-    description: "A contemporary villa with clean lines and natural materials",
-    image: "/portfolio/house-1.png",
-    slug: "minimalist-villa",
-    categories: ["residential", "exterior", "sustainable"],
+    title: "E-commerce Platform Refresh",
+    description: "A modern e-commerce platform with intuitive UX and SEO focus.",
+    image: "/portfolio/house-1.png", // Placeholder: replace with web design project image
+    slug: "ecommerce-platform-refresh",
+    categories: ["ecommerce", "webapp", "seo"],
     featured: true,
     testimonial: {
       quote:
-        "LEXIA transformed our vision into a home that perfectly balances aesthetics and functionality. Their attention to detail made all the difference.",
+        "LEXIA took our startup's vision and crafted a website that perfectly balances aesthetics and user experience. Their attention to detail and collaborative approach were key to our successful launch.",
       author: "Sarah Johnson",
-      role: "Homeowner",
-      image: "/testimonials/person-1.png",
+      role: "Startup Founder",
+      image: "/testimonials/person-1.png", // Placeholder: consider updating image for new role
     },
-    hasVR: true,
-    location: "Bali, Indonesia",
+    location: "Fashion E-commerce",
     year: "2023",
   },
   {
     id: 2,
-    title: "Urban Apartment",
-    description: "Modern apartment renovation in the heart of the city",
-    image: "/portfolio/house-2.png",
-    slug: "urban-apartment",
-    categories: ["residential", "interior"],
+    title: "Startup Landing Page",
+    description: "Impactful landing page designed for high conversion and brand presence.",
+    image: "/portfolio/house-2.png", // Placeholder: replace with web design project image
+    slug: "startup-landing-page",
+    categories: ["corporate", "branding"],
     featured: true,
-    location: "Jakarta, Indonesia",
+    location: "Tech Startup",
     year: "2022",
   },
   {
     id: 3,
-    title: "Coastal Retreat",
-    description: "Beachfront home designed to embrace the natural surroundings",
-    image: "/portfolio/house-3.png",
-    slug: "coastal-retreat",
-    categories: ["residential", "exterior", "sustainable"],
+    title: "SaaS Product Website",
+    description: "User-focused website for a SaaS product, driving sign-ups and demos.",
+    image: "/portfolio/house-3.png", // Placeholder: replace with web design project image
+    slug: "saas-product-website",
+    categories: ["webapp", "corporate", "seo"],
     featured: false,
-    location: "Lombok, Indonesia",
+    location: "Software Solutions",
     year: "2023",
   },
   {
     id: 4,
-    title: "Office Complex",
-    description: "Contemporary office space designed for collaboration",
-    image: "/portfolio/house-4.png",
-    slug: "office-complex",
-    categories: ["commercial", "interior"],
+    title: "Corporate Portal Redesign",
+    description: "Comprehensive redesign of a corporate portal for improved UX.",
+    image: "/portfolio/house-4.png", // Placeholder: replace with web design project image
+    slug: "corporate-portal-redesign",
+    categories: ["corporate", "webapp"],
     featured: true,
     testimonial: {
       quote:
-        "Our office renovation has completely transformed our workspace. The thoughtful design has improved team collaboration and created a space we're proud to bring clients to.",
+        "LEXIA's redesign of our corporate website has completely transformed our online presence. The thoughtful UX has improved lead generation, and we're proud to direct clients to our new site.",
       author: "David Okafor",
-      role: "Office Manager",
-      image: "/testimonials/person-4.png",
+      role: "Head of Digital",
+      image: "/testimonials/person-4.png", // Placeholder: consider updating image for new role
     },
-    location: "Singapore",
+    location: "Financial Services",
     year: "2022",
   },
   {
     id: 5,
-    title: "Garden House",
-    description: "Sustainable home integrated with its garden landscape",
-    image: "/portfolio/house-5.png",
-    slug: "garden-house",
-    categories: ["residential", "exterior", "sustainable"],
+    title: "Portfolio Site for Creatives",
+    description: "Visually stunning portfolio website for a creative agency.",
+    image: "/portfolio/house-5.png", // Placeholder: replace with web design project image
+    slug: "portfolio-site-for-creatives",
+    categories: ["branding", "corporate"],
     featured: false,
-    location: "Bandung, Indonesia",
+    location: "Design Agency",
     year: "2021",
   },
   {
     id: 6,
-    title: "Retail Space",
-    description: "Modern retail environment focused on customer experience",
-    image: "/portfolio/house-6.png",
-    slug: "retail-space",
-    categories: ["commercial", "interior"],
+    title: "Online Booking System",
+    description: "Custom web app for online bookings and scheduling.",
+    image: "/portfolio/house-6.png", // Placeholder: replace with web design project image
+    slug: "online-booking-system",
+    categories: ["webapp", "ecommerce"],
     featured: true,
     testimonial: {
       quote:
-        "Working with LEXIA on our store redesign was a seamless experience. They understood our brand and created a space that our customers love to spend time in.",
+        "Partnering with LEXIA for our e-commerce platform was seamless. They understood our brand and built a site that our customers find intuitive and engaging, significantly boosting sales.",
       author: "Michael Chen",
-      role: "Store Owner",
-      image: "/testimonials/person-2.png",
+      role: "E-commerce Business Owner",
+      image: "/testimonials/person-2.png", // Placeholder: consider updating image for new role
     },
-    location: "Jakarta, Indonesia",
+    location: "Travel & Tourism",
     year: "2022",
   },
 ]
@@ -115,26 +114,26 @@ const testimonials = [
   {
     id: 1,
     quote:
-      "I've worked with many architects, but LEXIA stands out for their collaborative approach and innovative solutions. They consistently deliver projects that exceed expectations.",
+      "I've partnered with many design agencies, but LEXIA stands out for their user-centric approach and innovative web solutions. They consistently deliver products that exceed user expectations and drive engagement.",
     author: "Amelia Rodriguez",
-    role: "Real Estate Developer",
-    image: "/testimonials/person-3.png",
+    role: "SaaS Product Manager",
+    image: "/testimonials/person-3.png", // Placeholder: Consider updating image
   },
   {
     id: 2,
     quote:
-      "LEXIA transformed our vision into a home that perfectly balances aesthetics and functionality. Their attention to detail made all the difference.",
+      "LEXIA took our startup's vision and crafted a website that perfectly balances aesthetics and user experience. Their attention to detail and collaborative approach were key to our successful launch.",
     author: "Sarah Johnson",
-    role: "Homeowner",
-    image: "/testimonials/person-1.png",
+    role: "Startup Founder",
+    image: "/testimonials/person-1.png", // Placeholder: Consider updating image
   },
   {
     id: 3,
     quote:
-      "Working with LEXIA on our store redesign was a seamless experience. They understood our brand and created a space that our customers love to spend time in.",
+      "Partnering with LEXIA for our e-commerce platform was seamless. They understood our brand and built a site that our customers find intuitive and engaging, significantly boosting sales.",
     author: "Michael Chen",
-    role: "Store Owner",
-    image: "/testimonials/person-2.png",
+    role: "E-commerce Business Owner",
+    image: "/testimonials/person-2.png", // Placeholder: Consider updating image
   },
 ]
 
@@ -155,8 +154,8 @@ export default function Work() {
     // Check if project matches any active filter
     const matchesFilter = activeFilters.some((filter) => {
       if (filter === "recent" && project.year === "2023") return true
-      if (filter === "indonesia" && project.location.includes("Indonesia")) return true
-      if (filter === "vr" && project.hasVR) return true
+      if (filter === "japanesemarket" && project.location.toLowerCase().includes("japan")) return true // Assuming location might contain "Japan" or similar for this filter
+      // VR filter removed
       return false
     })
 
@@ -247,12 +246,7 @@ export default function Work() {
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300" />
 
-                  {project.hasVR && (
-                    <div className="absolute top-4 right-4 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 px-3 py-1 rounded-full text-xs font-medium flex items-center shadow-md">
-                      <ExternalLink className="h-3 w-3 mr-1" />
-                      VR Tour
-                    </div>
-                  )}
+                  {/* VR Tour badge removed */}
                 </motion.div>
               </Link>
             </div>
@@ -485,28 +479,16 @@ export default function Work() {
                     <div className="flex items-center gap-2">
                       <input
                         type="checkbox"
-                        id="filter-indonesia"
-                        checked={activeFilters.includes("indonesia")}
-                        onChange={() => toggleFilter("indonesia")}
+                        id="filter-japanesemarket"
+                        checked={activeFilters.includes("japanesemarket")}
+                        onChange={() => toggleFilter("japanesemarket")}
                         className="rounded text-neutral-900 dark:text-neutral-100"
                       />
-                      <label htmlFor="filter-indonesia" className="text-sm">
-                        Indonesia
+                      <label htmlFor="filter-japanesemarket" className="text-sm">
+                        Japanese Market Focus
                       </label>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        id="filter-vr"
-                        checked={activeFilters.includes("vr")}
-                        onChange={() => toggleFilter("vr")}
-                        className="rounded text-neutral-900 dark:text-neutral-100"
-                      />
-                      <label htmlFor="filter-vr" className="text-sm">
-                        VR Tour Available
-                      </label>
-                    </div>
-
+                    {/* VR Tour filter option removed */}
                     <div className="pt-2 border-t border-neutral-200 dark:border-neutral-700 mt-2">
                       <Button variant="ghost" size="sm" onClick={() => setActiveFilters([])} className="w-full text-xs">
                         Clear Filters
@@ -547,12 +529,7 @@ export default function Work() {
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300" />
 
-                    {project.hasVR && (
-                      <div className="absolute top-4 right-4 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 px-3 py-1 rounded-full text-xs font-medium flex items-center">
-                        <ExternalLink className="h-3 w-3 mr-1" />
-                        VR Tour
-                      </div>
-                    )}
+                    {/* VR Tour badge removed */}
 
                     <div className="absolute inset-0 p-6 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">

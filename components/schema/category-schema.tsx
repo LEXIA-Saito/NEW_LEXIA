@@ -1,3 +1,5 @@
+import { SITE_URL } from "../../lib/config"
+
 interface CategorySchemaProps {
   category: {
     id: string
@@ -14,13 +16,13 @@ export function CategorySchema({ category, postCount }: CategorySchemaProps) {
     "@type": "CollectionPage",
     headline: `${category.name} - LEXIA Blog`,
     description: category.description,
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/categories/${category.id}`,
+    url: `${SITE_URL}/categories/${category.id}`,
     publisher: {
       "@type": "Organization",
       name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
+        url: `${SITE_URL}/logo.png`,
       },
     },
     mainEntity: {

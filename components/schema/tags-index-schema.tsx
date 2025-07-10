@@ -1,3 +1,5 @@
+import { SITE_URL } from "../../lib/config"
+
 interface TagsIndexSchemaProps {
   tags: Array<{
     slug: string
@@ -11,15 +13,15 @@ export function TagsIndexSchema({ tags }: TagsIndexSchemaProps) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    headline: "Article Tags - LEXIA Blog",
-    description: "Explore our articles by specific topics and keywords to find exactly what you're looking for.",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/tags`,
+    headline: "記事タグ - LEXIA Blog",
+    description: "特定のトピックやキーワードで記事を検索し、お探しの情報を正確に見つけましょう。",
+    url: `${SITE_URL}/tags`,
     publisher: {
       "@type": "Organization",
       name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
+        url: `${SITE_URL}/logo.png`,
       },
     },
     mainEntity: {
@@ -27,7 +29,7 @@ export function TagsIndexSchema({ tags }: TagsIndexSchemaProps) {
       itemListElement: tags.map((tag, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/tags/${tag.slug}`,
+        url: `${SITE_URL}/tags/${tag.slug}`,
         name: `#${tag.name}`,
         description: `${tag.count} articles`,
       })),

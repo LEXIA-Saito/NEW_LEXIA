@@ -11,37 +11,37 @@ const teamMembers = [
   {
     id: 1,
     name: "Rafly Kurnia",
-    role: "Principal Architect",
-    bio: "With over 15 years of experience, Rafly leads our design vision with a focus on sustainable and contextual architecture.",
+    role: "Lead Web Designer",
+    bio: "With over 10 years in the digital landscape, Rafly spearheads our web design strategy, focusing on innovative and user-centric solutions.",
     image: "/team/person-1.png",
-    linkedin: "https://www.linkedin.com/in/raflykurnia72/",
+    linkedin: "https://www.linkedin.com/company/lexia",
     email: "rafly@lexia.design",
   },
   {
     id: 2,
     name: "Maya Wijaya",
-    role: "Interior Designer",
-    bio: "Maya specializes in creating harmonious interior spaces that complement the architectural vision.",
+    role: "UX/UI Lead",
+    bio: "Maya excels in crafting intuitive and engaging user experiences, ensuring our designs are both beautiful and functional.",
     image: "/team/person-2.png",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/company/lexia",
     email: "maya@lexia.design",
   },
   {
     id: 3,
     name: "Daniel Hartono",
-    role: "Project Manager",
-    bio: "Daniel ensures our projects run smoothly from concept to completion, with meticulous attention to detail.",
+    role: "Digital Project Manager",
+    bio: "Daniel orchestrates our web projects with precision, ensuring timely delivery and seamless collaboration from kickoff to launch.",
     image: "/team/person-3.png",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/company/lexia",
     email: "daniel@lexia.design",
   },
   {
     id: 4,
     name: "Aisha Putri",
-    role: "Landscape Architect",
-    bio: "Aisha creates outdoor spaces that seamlessly integrate with our architectural designs.",
+    role: "Frontend Development Lead",
+    bio: "Aisha leads our frontend team, transforming designs into responsive and performant websites using modern technologies.",
     image: "/team/person-4.png",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/company/lexia",
     email: "aisha@lexia.design",
   },
 ]
@@ -67,8 +67,7 @@ export default function Team() {
             Meet the Team
           </h2>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
-            Our talented team of architects and designers brings diverse expertise and a shared passion for creating
-            exceptional spaces.
+            Our talented team of web designers and developers brings diverse expertise and a shared passion for crafting exceptional digital experiences.
           </p>
         </motion.div>
       </div>
@@ -133,7 +132,7 @@ export default function Team() {
         className="text-center mt-12"
       >
         <p className="text-neutral-700 dark:text-neutral-300">
-          Our collaborative approach ensures that each project benefits from our combined expertise and creative vision.
+          Our collaborative approach ensures that each web project benefits from our combined expertise and creative vision.
         </p>
       </motion.div>
     </div>

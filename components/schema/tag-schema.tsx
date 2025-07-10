@@ -1,3 +1,5 @@
+import { SITE_URL } from "../../lib/config"
+
 interface TagSchemaProps {
   tag: string
   postCount: number
@@ -9,14 +11,14 @@ export function TagSchema({ tag, postCount }: TagSchemaProps) {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     headline: `#${tag} - LEXIA Blog`,
-    description: `Articles related to ${tag}`,
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/tags/${tag.toLowerCase().replace(/\s+/g, "-")}`,
+    description: `${tag}関連の記事`,
+    url: `${SITE_URL}/tags/${tag.toLowerCase().replace(/\s+/g, "-")}`,
     publisher: {
       "@type": "Organization",
       name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
+        url: `${SITE_URL}/logo.png`,
       },
     },
     mainEntity: {
