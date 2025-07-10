@@ -22,7 +22,7 @@ export default function Home() {
       </section>
 
       <section id="process" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800">
-        <Process />
+        <OurProcess />
       </section>
 
       <section id="work" className="py-24 md:py-32">
