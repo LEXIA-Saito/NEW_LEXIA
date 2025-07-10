@@ -51,7 +51,7 @@ export default function Hero() {
               </motion.div>
             </Link>
 
-            <Link href="https://www.linkedin.com/company/lexia" target="_blank" rel="noopener noreferrer">
+            <Link href="https://www.linkedin.com/in/lexia-saito/" target="_blank" rel="noopener noreferrer">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button className="rounded-full px-6 py-6 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 w-full sm:w-auto group">
                   Connect with us on LinkedIn

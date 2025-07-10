@@ -28,14 +28,14 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               <Link
-                href="mailto:contact@lexia.design"
+                href="mailto:lexia0web@gmail.com"
                 className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors duration-300"
               >
                 <Mail className="h-5 w-5" />
                 <span className="sr-only">Email</span>
               </Link>
               <Link
-                href="https://www.linkedin.com/company/lexia"
+                href="https://www.linkedin.com/in/lexia-saito/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors duration-300"

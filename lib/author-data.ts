@@ -5,7 +5,7 @@ export const authorData = [
     bio: "Rafly leads our web design strategy, focusing on innovative and user-centric solutions. With over 10 years in digital, his articles explore cutting-edge design trends and best practices.",
     image: "/team/person-1.png",
     email: "rafly@lexia.design",
-    linkedin: "https://www.linkedin.com/company/lexia",
+    linkedin: "https://www.linkedin.com/in/lexia-saito/",
     slug: "rafly-kurnia",
   },
   {
@@ -14,7 +14,7 @@ export const authorData = [
     bio: "Maya excels in crafting intuitive user experiences. Her articles delve into UX psychology, usability principles, and creating engaging digital interfaces.",
     image: "/team/person-2.png",
     email: "maya@lexia.design",
-    linkedin: "https://www.linkedin.com/company/lexia",
+    linkedin: "https://www.linkedin.com/in/lexia-saito/",
     slug: "maya-wijaya",
   },
   {
@@ -23,7 +23,7 @@ export const authorData = [
     bio: "Aisha heads our frontend development. She writes about modern frontend technologies, responsive design, and web performance optimization.",
     image: "/team/person-4.png",
     email: "aisha@lexia.design",
-    linkedin: "https://www.linkedin.com/company/lexia",
+    linkedin: "https://www.linkedin.com/in/lexia-saito/",
     slug: "aisha-putri",
   },
   {
@@ -32,7 +32,7 @@ export const authorData = [
     bio: "Daniel orchestrates our web projects with precision. His articles cover agile methodologies, digital project management, and ensuring successful project delivery.",
     image: "/team/person-3.png",
     email: "daniel@lexia.design",
-    linkedin: "https://www.linkedin.com/company/lexia",
+    linkedin: "https://www.linkedin.com/in/lexia-saito/",
     slug: "daniel-hartono",
   },
 ]
