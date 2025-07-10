@@ -3,13 +3,12 @@ import { blogPosts } from "@/lib/blog-data"
 import { categoryData } from "@/lib/category-data"
 import { authorData } from "@/lib/author-data"
 import { projectsData } from "@/lib/projects-data"
+import { SITE_URL } from "../lib/config"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"
-
   // Main pages
   const routes = ["", "/blog", "/categories", "/tags", "/authors", "/projects", "/about", "/contact"].map((route) => ({
-    url: `${baseUrl}${route}`,
+    url: `${SITE_URL}${route}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: route === "" ? 1 : 0.8,
@@ -17,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Blog posts
   const blogRoutes = blogPosts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
+    url: `${SITE_URL}/blog/${post.slug}`,
     lastModified: new Date(post.dateModified || post.date),
     changeFrequency: "monthly" as const,
     priority: 0.6,
@@ -25,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Category pages
   const categoryRoutes = categoryData.map((category) => ({
-    url: `${baseUrl}/categories/${category.id}`,
+    url: `${SITE_URL}/categories/${category.id}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
@@ -33,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Author pages
   const authorRoutes = authorData.map((author) => ({
-    url: `${baseUrl}/authors/${author.slug}`,
+    url: `${SITE_URL}/authors/${author.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
@@ -41,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Project pages
   const projectRoutes = projectsData.map((project) => ({
-    url: `${baseUrl}/projects/${project.slug}`,
+    url: `${SITE_URL}/projects/${project.slug}`,
     lastModified: new Date(project.year, 0),
     changeFrequency: "monthly" as const,
     priority: 0.7,
@@ -56,7 +55,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   })
 
   const tagRoutes = Array.from(tags).map((tag) => ({
-    url: `${baseUrl}/tags/${tag}`,
+    url: `${SITE_URL}/tags/${tag}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.6,

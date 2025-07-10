@@ -1,4 +1,5 @@
 import type { blogPosts } from "@/lib/blog-data"
+import { SITE_URL } from "../../lib/config"
 
 interface BlogListSchemaProps {
   posts: typeof blogPosts
@@ -9,15 +10,15 @@ export function BlogListSchema({ posts }: BlogListSchemaProps) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    headline: "Web Design Journal - LEXIA Blog",
+    headline: "ウェブデザインジャーナル - LEXIA Blog",
     description: "ウェブ制作やデザインに関する最新情報を発信しています。",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/blog`,
+    url: `${SITE_URL}/blog`,
     publisher: {
       "@type": "Organization",
       name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
+        url: `${SITE_URL}/logo.png`,
       },
     },
     mainEntity: {
@@ -25,7 +26,7 @@ export function BlogListSchema({ posts }: BlogListSchemaProps) {
       itemListElement: posts.map((post, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/blog/${post.slug}`,
+        url: `${SITE_URL}/blog/${post.slug}`,
         name: post.title,
       })),
     },

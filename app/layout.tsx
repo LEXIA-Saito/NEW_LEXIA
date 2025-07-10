@@ -7,7 +7,7 @@ import "./globals.css"
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "500"] })
 
 export const metadata: Metadata = {
-  title: "LEXIA | Web Design That Speaks",
+  title: "LEXIA | 語りかけるウェブデザイン",
   description: "デジタルであなたのストーリーを伝え、成果につなげます。",
   generator: "v0.dev",
 }

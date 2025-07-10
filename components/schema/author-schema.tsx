@@ -10,6 +10,7 @@ interface AuthorSchemaProps {
   }
   postCount: number
 }
+import { SITE_URL } from "../../lib/config"
 
 export function AuthorSchema({ author, postCount }: AuthorSchemaProps) {
   // Create the schema markup for an author page
@@ -18,19 +19,19 @@ export function AuthorSchema({ author, postCount }: AuthorSchemaProps) {
     "@type": "ProfilePage",
     headline: `${author.name} - LEXIA Blog`,
     description: author.bio,
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/authors/${author.slug}`,
+    url: `${SITE_URL}/authors/${author.slug}`,
     mainEntity: {
       "@type": "Person",
       name: author.name,
       jobTitle: author.role,
       description: author.bio,
-      image: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}${author.image}`,
+      image: `${SITE_URL}${author.image}`,
       email: author.email,
       sameAs: author.linkedin ? [author.linkedin] : undefined,
       worksFor: {
         "@type": "Organization",
         name: "LEXIA",
-        url: process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design",
+        url: SITE_URL,
       },
     },
     publisher: {
@@ -38,7 +39,7 @@ export function AuthorSchema({ author, postCount }: AuthorSchemaProps) {
       name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
+        url: `${SITE_URL}/logo.png`,
       },
     },
   }

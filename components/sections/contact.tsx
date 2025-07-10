@@ -65,17 +65,17 @@ export default function Contact() {
           >
             <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6">Connect on LinkedIn</h3>
             <p className="text-neutral-700 dark:text-neutral-300 mb-8">
-              Connect with our principal architect on LinkedIn to stay updated on our latest projects and architectural
+              Connect with LEXIA on LinkedIn to stay updated on our latest projects and web design
               insights.
             </p>
             <Link
-              href="https://www.linkedin.com/in/raflykurnia72/"
+              href="https://www.linkedin.com/company/lexia"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline text-lg group"
             >
               <ExternalLink className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-              Rafly Kurnia
+              LEXIA on LinkedIn
             </Link>
           </motion.div>
         </div>
@@ -89,7 +89,7 @@ export default function Contact() {
           className="text-center mt-16"
         >
           <p className="text-neutral-700 dark:text-neutral-300">
-            We look forward to hearing from you and discussing how we can bring your architectural vision to life.
+            We look forward to hearing from you and discussing how we can bring your digital vision to life.
           </p>
         </motion.div>
       </div>

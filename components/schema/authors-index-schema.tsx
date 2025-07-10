@@ -1,3 +1,5 @@
+import { SITE_URL } from "../../lib/config"
+
 interface AuthorsIndexSchemaProps {
   authors: Array<{
     name: string
@@ -14,15 +16,15 @@ export function AuthorsIndexSchema({ authors }: AuthorsIndexSchemaProps) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    headline: "Our Authors - LEXIA Blog",
-    description: "Meet the talented team behind our architectural insights and articles.",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/authors`,
+    headline: "著者一覧 - LEXIA Blog",
+    description: "LEXIAのウェブデザインと開発に関する洞察と記事の背後にいる才能あるチームを紹介します。",
+    url: `${SITE_URL}/authors`,
     publisher: {
       "@type": "Organization",
       name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/logo.png`,
+        url: `${SITE_URL}/logo.png`,
       },
     },
     mainEntity: {
@@ -30,7 +32,7 @@ export function AuthorsIndexSchema({ authors }: AuthorsIndexSchemaProps) {
       itemListElement: authors.map((author, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/authors/${author.slug}`,
+        url: `${SITE_URL}/authors/${author.slug}`,
         name: author.name,
         description: author.role,
       })),

@@ -1,4 +1,5 @@
 import type { projectsData } from "@/lib/projects-data"
+import { SITE_URL } from "../../lib/config"
 
 interface ProjectSchemaProps {
   project: (typeof projectsData)[0]
@@ -8,26 +9,24 @@ export function ProjectSchema({ project }: ProjectSchemaProps) {
   // Create the schema markup for a project page
   const schemaData = {
     "@context": "https://schema.org",
-    "@type": "ArchitectureProject",
+    "@type": "CreativeWork", // Changed from ArchitectureProject
     name: project.title,
     description: project.description,
-    image: project.coverImage
-      ? `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}${project.coverImage}`
-      : undefined,
+    image: project.coverImage ? `${SITE_URL}${project.coverImage}` : undefined,
     datePublished: new Date(project.year, 0).toISOString(),
     author: {
       "@type": "Organization",
       name: "LEXIA",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}`,
+      url: SITE_URL,
     },
     locationCreated: {
       "@type": "Place",
-      name: project.location,
+      name: project.location, // This now refers to client industry/type
     },
-    genre: project.category,
+    genre: project.category, // This now refers to web design categories
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design"}/projects/${project.slug}`,
+      "@id": `${SITE_URL}/projects/${project.slug}`,
     },
   }
 
