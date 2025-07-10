@@ -1,10 +1,10 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Noto_Sans_JP } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "500"] })
 
 export const metadata: Metadata = {
   title: "LEXIA | Web Design That Speaks",
@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} antialiased`}>
+    <html lang="ja" className="scroll-smooth">
+      <body className={`${notoSansJP.className} antialiased`}>
         <ThemeProvider defaultTheme="light" storageKey="lexia-theme">
           {children}
         </ThemeProvider>
