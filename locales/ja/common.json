@@ -1,23 +1,10 @@
 {
-  "ourProcess": {
-    "title": "LEXIAのプロセス",
-    "intro": "あなたとLEXIAが二人三脚で創る未来。愛知県碧南市からAIの力とクリエイティブを掛け合わせ、細部まで一緒に磨き上げます。",
-    "steps": {
-      "01": {
-        "title": "ヒアリング & インサイト",
-        "description": "すべては対話とデータ分析から。",
-        "body": "ビジョン・課題・業界背景を深掘りし、LEXIA独自のAIでインサイトを抽出。確かな土台があるから、ゴール直結のサイトを描けます。"
-      },
-      "02": {
-        "title": "デザイン & シェア",
-        "description": "AI生成モック × Figma × 3Dプレビューで高速プロトタイプ。",
-        "body": "フィードバックを重ね『これだ！』と思えるまでブラッシュアップ。"
-      },
-      "03": {
-        "title": "実装 & 改善",
-        "description": "Next.js × AI自動テストでスピーディーに公開。",
-        "body": "ローンチ後もアクセス解析とABテストを継続し、あなたとLEXIAでサイトを進化させます。"
-      }
-    }
-  }
+  "ourWork.title": "LEXIAの実績",
+  "ourWork.subtitle": "注目プロジェクト",
+  "project.ecommerce.title": "ECプラットフォーム刷新",
+  "project.ecommerce.body": "直感的UX × SEO強化で売上を加速させるモダンなECサイト。",
+  "project.ecommerce.quote": "LEXIAのおかげで、スタートアップのビジョンが“見た目の美しさ”と“使いやすさ”の両立という形で実現しました。細部まで行き届いた配慮と、二人三脚の進め方が成功の決め手でした。",
+  "project.ecommerce.quoteAuthor": "Sarah Johnson / スタートアップ創業者",
+  "project.ecommerce.tags": "ECサイト • Webアプリ • SEO",
+  "project.viewProject": "プロジェクトを見る"
 }
