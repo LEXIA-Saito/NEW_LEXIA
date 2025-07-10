@@ -6,7 +6,8 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "test": "node ./tests/i18n.test.js"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
