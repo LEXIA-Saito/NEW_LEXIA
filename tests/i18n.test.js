@@ -1,4 +1,4 @@
-const assert = require('node:assert');
+const assert = require('assert');
 const ja = require('../locales/ja.json');
 const en = require('../locales/en.json');
 
