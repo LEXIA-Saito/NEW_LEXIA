@@ -20,10 +20,6 @@ export default function AboutLexiaPage() {
         <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <LexiaLogoParticles />
-            <div className="absolute inset-0 bg-black/40" />
-          </div>
-          <div className="relative z-10 text-center">
-            <h1 className="text-3xl md:text-5xl font-light text-white drop-shadow-lg">価値を伝わるカタチに</h1>
           </div>
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-white animate-bounce">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-label="scroll down">
