@@ -127,6 +127,13 @@ export default function MasatoSaitoProfile() {
       evidence:
         "https://skillshop.credential.net/fe542ad1-d431-4a8f-9dd2-481922de271d#acc.hXES5HOF",
     },
+    {
+      no: 17,
+      name: "キャンペーン マネージャー 360 認定資格試験",
+      provider: "Google",
+      evidence:
+        "https://skillshop.credential.net/fbc2d357-1bd6-44e9-8407-b1640c5a0a80#acc.BiNpVYsM",
+    },
   ]
 
   return (
