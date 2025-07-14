@@ -4,14 +4,14 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowDown, ExternalLink } from "lucide-react"
-import { BackgroundPaths } from "@/components/background-paths"
+import ParticlesBackground from "@/components/kokonutui/particles-background"
 import { t } from "@/lib/i18n"
 
 export default function Hero() {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      <div className="absolute inset-0 opacity-30">
-        <BackgroundPaths title="" />
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <ParticlesBackground className="absolute inset-0 h-full w-full" title="" subtitle="" />
       </div>
 
       <div className="container mx-auto px-4 py-20 relative z-10">
