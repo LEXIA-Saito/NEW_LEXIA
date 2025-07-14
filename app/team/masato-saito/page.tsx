@@ -158,7 +158,7 @@ export default function MasatoSaitoProfile() {
               齋藤雅人
             </h1>
             <p className="text-neutral-700 dark:text-neutral-300 mb-4">
-              業界歴5年。若さと情熱を武器に、最新のWEB制作技術を駆使してクライアントの期待を超えるWEB制作を実現します。
+              最新の制作技術を駆使してクライアントの期待を超え、WEB上に価値を見出す制作を実現します。
             </p>
             <div className="flex justify-center gap-4">
               <Link
