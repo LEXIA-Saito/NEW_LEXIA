@@ -64,14 +64,62 @@ export default function MasatoSaitoProfile() {
     provider: "HubSpot Academy",
     evidence: "https://app-na2.hubspot.com/academy/achievements/pf4v135z/ja/1/-/",
   },
-    { no: 8, name: "Data Science Tools（DS0105EN）", provider: "IBM / Cognitive Class" },
-    { no: 9, name: "Data Science Methodology（DS0103EN）", provider: "IBM / Cognitive Class" },
-    { no: 10, name: "Data Science 101（DS0101EN）", provider: "IBM / Cognitive Class" },
-    { no: 11, name: "Data Science Foundations – Level 2 (V2)", provider: "IBM / Credly" },
-    { no: 12, name: "Deep Learning Fundamentals（ML0115EN）", provider: "IBM / Cognitive Class" },
-    { no: 13, name: "Deep Learning with TensorFlow（ML0120EN）", provider: "IBM / Cognitive Class" },
-    { no: 14, name: "Accelerating Deep Learning with GPUs（ML0122ENv3）", provider: "IBM / Cognitive Class" },
-    { no: 15, name: "Deep Learning（Credlyバッジ）", provider: "IBM" },
+    {
+      no: 8,
+      name: "Data Science Tools（DS0105EN）",
+      provider: "IBM / Cognitive Class",
+      evidence:
+        "https://courses.cognitiveclass.ai/certificates/730adef9c7af426bbb10ac188eb3879f",
+    },
+    {
+      no: 9,
+      name: "Data Science Methodology（DS0103EN）",
+      provider: "IBM / Cognitive Class",
+      evidence:
+        "https://courses.cognitiveclass.ai/certificates/0e14469b2bc34f6e97df22d4d6a6f39e",
+    },
+    {
+      no: 10,
+      name: "Data Science 101（DS0101EN）",
+      provider: "IBM / Cognitive Class",
+      evidence:
+        "https://courses.cognitiveclass.ai/certificates/40225d1628b945d69fc49bc598173220",
+    },
+    {
+      no: 11,
+      name: "Data Science Foundations – Level 2 (V2)",
+      provider: "IBM / Credly",
+      evidence:
+        "https://www.credly.com/badges/a3e9242a-bc70-40be-a9a6-88412c7aa68e/public_url",
+    },
+    {
+      no: 12,
+      name: "Deep Learning Fundamentals（ML0115EN）",
+      provider: "IBM / Cognitive Class",
+      evidence:
+        "https://courses.cognitiveclass.ai/certificates/23f3f8d8c8624cbfa9e48662b0eda5bf",
+    },
+    {
+      no: 13,
+      name: "Deep Learning with TensorFlow（ML0120EN）",
+      provider: "IBM / Cognitive Class",
+      evidence:
+        "https://courses.cognitiveclass.ai/certificates/a0f516d166be4e528687e67d6252f2c4",
+    },
+    {
+      no: 14,
+      name: "Accelerating Deep Learning with GPUs（ML0122ENv3）",
+      provider: "IBM / Cognitive Class",
+      evidence:
+        "https://courses.cognitiveclass.ai/certificates/876eee6671a943a3a3aedacae0d66f80",
+    },
+    {
+      no: 15,
+      name: "Deep Learning（Credlyバッジ）",
+      provider: "IBM",
+      evidence:
+        "https://www.credly.com/badges/5610114e-2780-4610-b18f-dc997f0214a4/public_url",
+    },
     {
       no: 16,
       name: "オフライン販売促進の認定資格",
@@ -216,18 +264,44 @@ export default function MasatoSaitoProfile() {
                   <img src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/6ca5a664ad074c19a0143b7a36cad867.png" />
                 </a>
               </div>
-              <div className="academy-badge">
-                <a
-                  href="https://app-na2.hubspot.com/academy/achievements/pf4v135z/ja/1/-/"
-                  title="フリクションレスセールス認定コース"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/26256c557ab94317b4b35c43eaf466e8.png" />
-                </a>
+                <div className="academy-badge">
+                  <a
+                    href="https://app-na2.hubspot.com/academy/achievements/pf4v135z/ja/1/-/"
+                    title="フリクションレスセールス認定コース"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/26256c557ab94317b4b35c43eaf466e8.png" />
+                  </a>
+                </div>
+                <div className="academy-badge">
+                  <div
+                    data-iframe-width="150"
+                    data-iframe-height="270"
+                    data-share-badge-id="5610114e-2780-4610-b18f-dc997f0214a4"
+                    data-share-badge-host="https://www.credly.com"
+                  ></div>
+                  <script
+                    type="text/javascript"
+                    async
+                    src="//cdn.credly.com/assets/utilities/embed.js"
+                  ></script>
+                </div>
+                <div className="academy-badge">
+                  <div
+                    data-iframe-width="150"
+                    data-iframe-height="270"
+                    data-share-badge-id="a3e9242a-bc70-40be-a9a6-88412c7aa68e"
+                    data-share-badge-host="https://www.credly.com"
+                  ></div>
+                  <script
+                    type="text/javascript"
+                    async
+                    src="//cdn.credly.com/assets/utilities/embed.js"
+                  ></script>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
         </div>
       </main>
       <Footer />
