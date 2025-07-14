@@ -31,7 +31,7 @@ export const blogPosts = [
     image: "/blog/blog-1.png", // Placeholder, recommend updating
     date: "May 15, 2023",
     author: "Rafly Kurnia",
-    authorImage: "/team/person-1.png",
+    authorImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/saito_profile/saito_profile.webp",
     authorRole: "Lead Web Designer",
     slug: "accessible-web-design",
     category: "Accessibility",
@@ -133,7 +133,7 @@ export const blogPosts = [
     image: "/blog/blog-3.png", // Placeholder, recommend updating
     date: "March 12, 2023",
     author: "Rafly Kurnia",
-    authorImage: "/team/person-1.png",
+    authorImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/saito_profile/saito_profile.webp",
     authorRole: "Lead Web Designer",
     slug: "modernizing-legacy-systems",
     category: "Case Study",
@@ -300,7 +300,7 @@ export const blogPosts = [
     image: "/blog/blog-6.png", // Placeholder, recommend updating
     date: "December 5, 2022",
     author: "Rafly Kurnia",
-    authorImage: "/team/person-1.png",
+    authorImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/saito_profile/saito_profile.webp",
     authorRole: "Lead Web Designer",
     slug: "future-ecommerce-web-design-sea",
     category: "E-commerce",
@@ -359,7 +359,7 @@ export const blogPosts = [
     image: "/blog/blog-7.png", // Placeholder, recommend updating
     date: "November 10, 2022",
     author: "Rafly Kurnia",
-    authorImage: "/team/person-1.png",
+    authorImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/saito_profile/saito_profile.webp",
     authorRole: "Lead Web Designer",
     slug: "optimizing-core-web-vitals",
     category: "Web Performance",

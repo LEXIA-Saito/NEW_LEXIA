@@ -18,8 +18,8 @@ import {
 
 export default function MasatoSaitoProfile() {
   const qualifications = [
-    { no: 1, name: "Google アナリティクス認定資格", provider: "Google Skillshop" },
-    { no: 2, name: "コンバージョン最適化認定資格試験", provider: "Google Skillshop" },
+    { no: 1, name: "Google アナリティクス認定資格", provider: "Google" },
+    { no: 2, name: "コンバージョン最適化認定資格試験", provider: "Google" },
     { no: 3, name: "AIを活用したパフォーマンス広告の認定資格", provider: "Google" },
     { no: 4, name: "インバウンドマーケティング認定資格", provider: "HubSpot Academy" },
     { no: 5, name: "ソーシャルメディアマーケティング認定資格", provider: "HubSpot Academy" },
@@ -33,6 +33,7 @@ export default function MasatoSaitoProfile() {
     { no: 13, name: "Deep Learning with TensorFlow（ML0120EN）", provider: "IBM / Cognitive Class" },
     { no: 14, name: "Accelerating Deep Learning with GPUs（ML0122ENv3）", provider: "IBM / Cognitive Class" },
     { no: 15, name: "Deep Learning（Credlyバッジ）", provider: "IBM" },
+    { no: 16, name: "オフライン販売促進の認定資格", provider: "Google" },
   ]
 
   return (
@@ -57,7 +58,7 @@ export default function MasatoSaitoProfile() {
             className="text-center mb-12"
           >
             <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
-              <Image src="/team/person-1.png" alt="齋藤雅人" fill className="object-cover" />
+              <Image src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/saito_profile/saito_profile.webp" alt="齋藤雅人" fill className="object-cover" />
             </div>
             <Chip className="mb-2">代表・WEBディレクター</Chip>
             <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4">

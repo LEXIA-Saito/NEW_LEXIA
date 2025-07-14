@@ -26,7 +26,7 @@ export default function AuthorPage({ params }: { params: { author: string } }) {
       .join(" "),
     role: "Author",
     bio: "Articles by this author",
-    image: "/team/person-1.png",
+    image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/saito_profile/saito_profile.webp",
     slug: authorSlug,
   }
 
