@@ -5,6 +5,7 @@ import { Chip } from "@/components/ui/chip"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { Button } from "@/components/ui/button"
 import { t } from "@/lib/i18n"
 
 export default function About() {
@@ -42,12 +43,11 @@ export default function About() {
             <p className="text-neutral-700 dark:text-neutral-300 mb-6">
               {t('about.listen.body')}
             </p>
-            <Link
-              href="/about-lexia"
-              className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline group"
-            >
-              {t('about.learnProcess')}
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            <Link href="/about-lexia">
+              <Button className="rounded-full px-6 py-4 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 group">
+                {t('about.learnProcess')}
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
             </Link>
           </motion.div>
 
@@ -60,7 +60,7 @@ export default function About() {
             className="relative aspect-[4/3] rounded-lg overflow-hidden"
           >
             <Image
-              src="/about/about-1.png"
+              src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lexia_visual/sandy_beach_lexia.webp"
               alt="LEXIA team discussing with clients"
               fill
               className="object-cover"
@@ -78,7 +78,15 @@ export default function About() {
             variants={fadeIn}
             className="relative aspect-[4/3] rounded-lg overflow-hidden order-1 md:order-2"
           >
-            <Image src="/about/about-2.png" alt="Architectural design process" fill className="object-cover" />
+            <video
+              src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/movie/lexia_movie_visual.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="object-cover w-full h-full"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
           </motion.div>
 
