@@ -10,7 +10,7 @@ interface AuthorSchemaProps {
   }
   postCount: number
 }
-import { SITE_URL } from "../../lib/config"
+import { SITE_URL, LOGO_URL } from "../../lib/config"
 
 export function AuthorSchema({ author, postCount }: AuthorSchemaProps) {
   // Create the schema markup for an author page
@@ -39,7 +39,7 @@ export function AuthorSchema({ author, postCount }: AuthorSchemaProps) {
       name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/logo.png`,
+        url: LOGO_URL,
       },
     },
   }

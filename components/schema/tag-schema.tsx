@@ -1,4 +1,4 @@
-import { SITE_URL } from "../../lib/config"
+import { SITE_URL, LOGO_URL } from "../../lib/config"
 
 interface TagSchemaProps {
   tag: string
@@ -18,7 +18,7 @@ export function TagSchema({ tag, postCount }: TagSchemaProps) {
       name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/logo.png`,
+        url: LOGO_URL,
       },
     },
     mainEntity: {

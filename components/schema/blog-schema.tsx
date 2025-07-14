@@ -1,5 +1,5 @@
 import type { blogPosts } from "@/lib/blog-data"
-import { SITE_URL } from "../../lib/config"
+import { SITE_URL, LOGO_URL } from "../../lib/config"
 
 interface BlogSchemaProps {
   post: (typeof blogPosts)[0]
@@ -25,7 +25,7 @@ export function BlogSchema({ post }: BlogSchemaProps) {
       name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/logo.png`,
+        url: LOGO_URL,
       },
     },
     mainEntityOfPage: {

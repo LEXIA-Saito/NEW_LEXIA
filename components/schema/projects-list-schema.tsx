@@ -1,5 +1,5 @@
 import type { projectsData } from "@/lib/projects-data"
-import { SITE_URL } from "../../lib/config"
+import { SITE_URL, LOGO_URL } from "../../lib/config"
 
 interface ProjectsListSchemaProps {
   projects: typeof projectsData
@@ -19,7 +19,7 @@ export function ProjectsListSchema({ projects }: ProjectsListSchemaProps) {
       name: "LEXIA",
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/logo.png`,
+        url: LOGO_URL,
       },
     },
     mainEntity: {

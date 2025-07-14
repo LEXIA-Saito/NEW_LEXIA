@@ -4,10 +4,12 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Search } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { SearchDialog } from "@/components/search-dialog"
+import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
 
 // Japanese navigation items
 const navItems = [
@@ -73,10 +75,23 @@ export default function Navigation() {
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <Link href="/" className="text-neutral-900 dark:text-neutral-100 font-light text-xl">
-            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
-              LEXIA
-            </motion.span>
+          <Link href="/" className="flex items-center" aria-label="LEXIA">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
+              <Image
+                src={LOGO_URL}
+                alt="LEXIA"
+                width={120}
+                height={24}
+                className="h-6 w-auto block dark:hidden"
+              />
+              <Image
+                src={LOGO_WHITE_URL}
+                alt="LEXIA"
+                width={120}
+                height={24}
+                className="h-6 w-auto hidden dark:block"
+              />
+            </motion.div>
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
