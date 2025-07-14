@@ -241,7 +241,11 @@ export default function MasatoSaitoProfile() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/82dab1bc96fd4cb5811d2bb021299270.png" />
+                  <img
+                    src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/82dab1bc96fd4cb5811d2bb021299270.png"
+                    width="150"
+                    alt="ソーシャル メディア マーケティング認定コース バッジ"
+                  />
                 </a>
               </div>
               <div className="academy-badge">
@@ -251,7 +255,11 @@ export default function MasatoSaitoProfile() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/31f535cfa08e485b814211be2d5cea1a.png" />
+                  <img
+                    src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/31f535cfa08e485b814211be2d5cea1a.png"
+                    width="150"
+                    alt="インバウンドマーケティング認定コース バッジ"
+                  />
                 </a>
               </div>
               <div className="academy-badge">
@@ -261,7 +269,11 @@ export default function MasatoSaitoProfile() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/6ca5a664ad074c19a0143b7a36cad867.png" />
+                  <img
+                    src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/6ca5a664ad074c19a0143b7a36cad867.png"
+                    width="150"
+                    alt="インバウンド認定コース バッジ"
+                  />
                 </a>
               </div>
                 <div className="academy-badge">
@@ -271,7 +283,11 @@ export default function MasatoSaitoProfile() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/26256c557ab94317b4b35c43eaf466e8.png" />
+                    <img
+                      src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/26256c557ab94317b4b35c43eaf466e8.png"
+                      width="150"
+                      alt="フリクションレスセールス認定コース バッジ"
+                    />
                   </a>
                 </div>
                 <div className="academy-badge">
