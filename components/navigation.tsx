@@ -12,8 +12,8 @@ import { SearchDialog } from "@/components/search-dialog"
 import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
 
 // Japanese navigation items
-const navItems = [
-  { name: "会社概要", href: "#about" },
+export const navItems = [
+  { name: "事業概要", href: "#about" },
   { name: "制作工程", href: "#process" },
   { name: "制作実績", href: "#work" },
   { name: "チーム", href: "#team" },
