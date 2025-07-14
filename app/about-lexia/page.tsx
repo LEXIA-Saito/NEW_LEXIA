@@ -5,8 +5,13 @@ import Link from "next/link"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import ContactForm from "@/components/contact-form"
+import { motion } from "framer-motion"
 
 export default function AboutLexiaPage() {
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  }
   return (
     <>
       <Navigation />
@@ -28,9 +33,90 @@ export default function AboutLexiaPage() {
             <p className="text-neutral-700 dark:text-neutral-300 mb-2">連絡先: 090-1742-3456 / lexia0web@gmail.com</p>
           </section>
 
-          <section className="space-y-2">
+          <section className="space-y-8">
             <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">LEXIAの理念・ミッション</h2>
-            <p className="text-neutral-700 dark:text-neutral-300">「価値を後世に」──LEGEND×AXIA の精神で、WEB制作を通じクライアントの資産価値を高めます。</p>
+
+            <div className="space-y-16">
+              <motion.div
+                className="grid md:grid-cols-2 gap-8 items-center"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                variants={fadeIn}
+              >
+                <div className="space-y-4">
+                  <h3 className="text-4xl font-semibold text-neutral-900 dark:text-neutral-100">LEGEND × AXIA</h3>
+                  <p className="text-neutral-700 dark:text-neutral-300">
+                    LEXIAの名前は、「LEGEND（伝説）」とギリシャ語の「AXIA（価値）」を掛け合わせた造語です。
+                    これは単なる言葉の組み合わせではなく、私たちの事業哲学と強い使命感を表現しています。
+                  </p>
+                </div>
+                <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden">
+                  <Image src="/placeholder.svg" alt="Legend meets Axia" fill className="object-cover" />
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="grid md:grid-cols-2 gap-8 items-center"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                variants={fadeIn}
+              >
+                <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden md:order-2">
+                  <Image src="/placeholder.svg" alt="Legend" fill className="object-cover" />
+                </div>
+                <div className="space-y-4 md:order-1">
+                  <h3 className="text-3xl font-semibold text-neutral-900 dark:text-neutral-100">LEGEND（伝説）</h3>
+                  <p className="text-neutral-700 dark:text-neutral-300">
+                    挑戦、努力、結果は伝えなきゃ、誰も知らないまま。
+                    私たちは、クライアント様の物語を「伝説」になるまで共に創り上げ、後世へと語りつなげていくパートナーでありたいと考えています。
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="grid md:grid-cols-2 gap-8 items-center"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                variants={fadeIn}
+              >
+                <div className="space-y-4">
+                  <h3 className="text-3xl font-semibold text-neutral-900 dark:text-neutral-100">AXIA（価値）</h3>
+                  <p className="text-neutral-700 dark:text-neutral-300">
+                    私たちが届けるのは、単なる「もの」や「サービス」ではなく、本質的な「価値」です。
+                    価値は時代や環境とともに変化しますが、私たちはそれを正確に捉え、先進技術をもって最大限に引き出し、伝えたい人に伝わるカタチにします。
+                  </p>
+                </div>
+                <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden">
+                  <Image src="/placeholder.svg" alt="Axia" fill className="object-cover" />
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="grid md:grid-cols-2 gap-8 items-center"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                variants={fadeIn}
+              >
+                <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden md:order-2">
+                  <Image src="/placeholder.svg" alt="Legend and Value" fill className="object-cover" />
+                </div>
+                <div className="space-y-4 md:order-1">
+                  <h3 className="text-3xl font-semibold text-neutral-900 dark:text-neutral-100">伝説×価値＝LEXIA</h3>
+                  <p className="text-neutral-700 dark:text-neutral-300">
+                    この２つの要素を掛け合わせることで、「価値を伝わるカタチに」という強い理念を掲げています。
+                    私たちは、ただのWEB制作事業ではなく、クライアントの想いとビジョンを形にし、「伝説的な価値」を創造する事業です。
+                  </p>
+                </div>
+              </motion.div>
+            </div>
           </section>
 
           <section className="space-y-2">
