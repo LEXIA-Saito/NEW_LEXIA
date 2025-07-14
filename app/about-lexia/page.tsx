@@ -6,6 +6,7 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import ContactForm from "@/components/contact-form"
 import { motion } from "framer-motion"
+import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect"
 
 export default function AboutLexiaPage() {
   const fadeIn = {
@@ -16,10 +17,24 @@ export default function AboutLexiaPage() {
     <>
       <Navigation />
       <main className="min-h-screen bg-white dark:bg-neutral-900">
-        <section className="relative h-80 md:h-96 w-full flex items-center justify-center overflow-hidden">
-          <Image src="/about/about-1.png" alt="LEXIA" fill className="object-cover" />
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+        <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0">
+            <CanvasRevealEffect
+              animationSpeed={2}
+              containerClassName="bg-neutral-900"
+              colors={[[0, 180, 0], [0, 220, 0], [100, 255, 100]]}
+              dotSize={3}
+              opacities={[0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1]}
+            />
+            <div className="absolute inset-0 bg-black/40" />
+          </div>
+          <div className="relative z-10 text-center">
             <h1 className="text-3xl md:text-5xl font-light text-white drop-shadow-lg">価値を伝わるカタチに</h1>
+          </div>
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-white animate-bounce">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-label="scroll down">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m0 0l-6-6m6 6l6-6" />
+            </svg>
           </div>
         </section>
 
