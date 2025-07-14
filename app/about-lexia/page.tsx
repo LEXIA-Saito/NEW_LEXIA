@@ -6,7 +6,7 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import ContactForm from "@/components/contact-form"
 import { motion } from "framer-motion"
-import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect"
+import LexiaLogoParticles from "@/components/lexia-logo-particles"
 
 export default function AboutLexiaPage() {
   const fadeIn = {
@@ -19,13 +19,7 @@ export default function AboutLexiaPage() {
       <main className="min-h-screen bg-white dark:bg-neutral-900">
         <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <CanvasRevealEffect
-              animationSpeed={2}
-              containerClassName="bg-neutral-900"
-              colors={[[0, 180, 0], [0, 220, 0], [100, 255, 100]]}
-              dotSize={3}
-              opacities={[0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1]}
-            />
+            <LexiaLogoParticles />
             <div className="absolute inset-0 bg-black/40" />
           </div>
           <div className="relative z-10 text-center">
