@@ -5,7 +5,7 @@ import Footer from "@/components/footer"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowLeft, Mail, Linkedin } from "lucide-react"
+import { ArrowLeft, Mail, Linkedin, ExternalLink } from "lucide-react"
 import { Chip } from "@/components/ui/chip"
 import {
   Table,
@@ -18,9 +18,27 @@ import {
 
 export default function MasatoSaitoProfile() {
   const qualifications = [
-    { no: 1, name: "Google アナリティクス認定資格", provider: "Google" },
-    { no: 2, name: "コンバージョン最適化認定資格試験", provider: "Google" },
-    { no: 3, name: "AIを活用したパフォーマンス広告の認定資格", provider: "Google" },
+    {
+      no: 1,
+      name: "Google アナリティクス認定資格",
+      provider: "Google",
+      evidence:
+        "https://skillshop.credential.net/32cb0472-08eb-4cb0-a397-0ee66cd3061c#acc.ERNX8itG",
+    },
+    {
+      no: 2,
+      name: "コンバージョン最適化認定資格試験",
+      provider: "Google",
+      evidence:
+        "https://skillshop.credential.net/4064cb8b-8082-459f-8e59-8222694e91bc#acc.Rm4TUPGI",
+    },
+    {
+      no: 3,
+      name: "AIを活用したパフォーマンス広告の認定資格",
+      provider: "Google",
+      evidence:
+        "https://skillshop.credential.net/5decfe3e-c5fd-46dd-8628-370f1a4c35f8#acc.evltk7nA",
+    },
     { no: 4, name: "インバウンドマーケティング認定資格", provider: "HubSpot Academy" },
     { no: 5, name: "ソーシャルメディアマーケティング認定資格", provider: "HubSpot Academy" },
     { no: 6, name: "インバウンド認定資格", provider: "HubSpot Academy" },
@@ -33,7 +51,13 @@ export default function MasatoSaitoProfile() {
     { no: 13, name: "Deep Learning with TensorFlow（ML0120EN）", provider: "IBM / Cognitive Class" },
     { no: 14, name: "Accelerating Deep Learning with GPUs（ML0122ENv3）", provider: "IBM / Cognitive Class" },
     { no: 15, name: "Deep Learning（Credlyバッジ）", provider: "IBM" },
-    { no: 16, name: "オフライン販売促進の認定資格", provider: "Google" },
+    {
+      no: 16,
+      name: "オフライン販売促進の認定資格",
+      provider: "Google",
+      evidence:
+        "https://skillshop.credential.net/fe542ad1-d431-4a8f-9dd2-481922de271d#acc.hXES5HOF",
+    },
   ]
 
   return (
@@ -101,6 +125,7 @@ export default function MasatoSaitoProfile() {
                   <TableHead>No.</TableHead>
                   <TableHead>資格名</TableHead>
                   <TableHead>提供元</TableHead>
+                  <TableHead>証明</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -109,6 +134,21 @@ export default function MasatoSaitoProfile() {
                     <TableCell>{q.no}</TableCell>
                     <TableCell>{q.name}</TableCell>
                     <TableCell>{q.provider}</TableCell>
+                    <TableCell className="text-center">
+                      {q.evidence ? (
+                        <Link
+                          href={q.evidence}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${q.name} の証明`}
+                          className="inline-flex p-1 rounded hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </Link>
+                      ) : (
+                        "-"
+                      )}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
