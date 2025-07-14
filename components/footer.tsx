@@ -1,9 +1,11 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { Mail, Linkedin, ArrowUp } from "lucide-react"
 import { t } from "@/lib/i18n"
+import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
 
 export default function Footer() {
   const fadeIn = {
@@ -31,7 +33,22 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
             variants={fadeIn}
           >
-            <h3 className="text-xl font-light text-neutral-900 dark:text-neutral-100 mb-4">LEXIA</h3>
+            <div className="mb-4">
+              <Image
+                src={LOGO_URL}
+                alt="LEXIA"
+                width={120}
+                height={24}
+                className="h-6 w-auto block dark:hidden"
+              />
+              <Image
+                src={LOGO_WHITE_URL}
+                alt="LEXIA"
+                width={120}
+                height={24}
+                className="h-6 w-auto hidden dark:block"
+              />
+            </div>
             <p className="text-neutral-600 dark:text-neutral-400 mb-6 max-w-md">
               Web サイトやアプリ制作を通じて、ビジネスの成長をサポートします。
             </p>
