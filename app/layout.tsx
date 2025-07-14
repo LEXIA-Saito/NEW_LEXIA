@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Noto_Sans_JP } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
+import TypewriterEffect from "@/components/typewriter-effect"
 import "./globals.css"
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "500"] })
@@ -21,6 +22,7 @@ export default function RootLayout({
     <html lang="ja" className="scroll-smooth">
       <body className={`${notoSansJP.className} antialiased`}>
         <ThemeProvider defaultTheme="light" storageKey="lexia-theme">
+          <TypewriterEffect />
           {children}
         </ThemeProvider>
       </body>
