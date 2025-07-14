@@ -3,7 +3,7 @@ export const authorData = [
     name: "齋藤雅人",
     role: "代表・WEBディレクター",
     bio: "WEB業界歴5年。若さと情熱を武器に最新技術で期待を超えるサイト制作を実現します。",
-    image: "/team/person-1.png",
+    image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/saito_profile/saito_profile.webp",
     email: "msms12120614@gmail.com",
     linkedin: "https://www.linkedin.com/in/lexia-saito/",
     slug: "masato-saito",
