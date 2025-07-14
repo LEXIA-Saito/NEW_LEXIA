@@ -39,10 +39,31 @@ export default function MasatoSaitoProfile() {
       evidence:
         "https://skillshop.credential.net/5decfe3e-c5fd-46dd-8628-370f1a4c35f8#acc.evltk7nA",
     },
-    { no: 4, name: "インバウンドマーケティング認定資格", provider: "HubSpot Academy" },
-    { no: 5, name: "ソーシャルメディアマーケティング認定資格", provider: "HubSpot Academy" },
-    { no: 6, name: "インバウンド認定資格", provider: "HubSpot Academy" },
-    { no: 7, name: "フリクションレスセールス認定資格", provider: "HubSpot Academy" },
+  {
+    no: 4,
+    name: "インバウンドマーケティング認定資格",
+    provider: "HubSpot Academy",
+    evidence: "https://app-na2.hubspot.com/academy/achievements/szzz05jb/ja/1/-/",
+  },
+  {
+    no: 5,
+    name: "ソーシャルメディアマーケティング認定資格",
+    provider: "HubSpot Academy",
+    evidence:
+      "https://app-na2.hubspot.com/academy/achievements/q7vxjrt4/ja/1/-/-",
+  },
+  {
+    no: 6,
+    name: "インバウンド認定資格",
+    provider: "HubSpot Academy",
+    evidence: "https://app-na2.hubspot.com/academy/achievements/tsc1yz5h/ja/1/-/",
+  },
+  {
+    no: 7,
+    name: "フリクションレスセールス認定資格",
+    provider: "HubSpot Academy",
+    evidence: "https://app-na2.hubspot.com/academy/achievements/pf4v135z/ja/1/-/",
+  },
     { no: 8, name: "Data Science Tools（DS0105EN）", provider: "IBM / Cognitive Class" },
     { no: 9, name: "Data Science Methodology（DS0103EN）", provider: "IBM / Cognitive Class" },
     { no: 10, name: "Data Science 101（DS0101EN）", provider: "IBM / Cognitive Class" },
@@ -153,6 +174,59 @@ export default function MasatoSaitoProfile() {
                 ))}
               </TableBody>
             </Table>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-12"
+          >
+            <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6 text-center">
+              取得バッジ
+            </h2>
+            <div className="flex flex-wrap justify-center gap-4">
+              <div className="academy-badge">
+                <a
+                  href="https://app-na2.hubspot.com/academy/achievements/q7vxjrt4/ja/1/-/-"
+                  title="ソーシャル メディア マーケティング認定コース"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/82dab1bc96fd4cb5811d2bb021299270.png" />
+                </a>
+              </div>
+              <div className="academy-badge">
+                <a
+                  href="https://app-na2.hubspot.com/academy/achievements/szzz05jb/ja/1/-/"
+                  title="インバウンドマーケティング認定コース"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/31f535cfa08e485b814211be2d5cea1a.png" />
+                </a>
+              </div>
+              <div className="academy-badge">
+                <a
+                  href="https://app-na2.hubspot.com/academy/achievements/tsc1yz5h/ja/1/-/"
+                  title="インバウンド認定コース"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/6ca5a664ad074c19a0143b7a36cad867.png" />
+                </a>
+              </div>
+              <div className="academy-badge">
+                <a
+                  href="https://app-na2.hubspot.com/academy/achievements/pf4v135z/ja/1/-/"
+                  title="フリクションレスセールス認定コース"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/26256c557ab94317b4b35c43eaf466e8.png" />
+                </a>
+              </div>
+            </div>
           </motion.div>
         </div>
       </main>
