@@ -41,18 +41,18 @@ export default function AuthorsPage() {
               className="inline-flex items-center text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 group"
             >
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
-              Back to Blog
+              ブログへ戻る
             </Link>
           </div>
 
           <div className="text-center mb-16">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <Chip>Team</Chip>
+              <Chip>チーム</Chip>
               <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-                Our Authors
+                著者一覧
               </h1>
               <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
-                Meet the talented team behind our architectural insights and articles.
+                建築に関する洞察と記事を支える、才能あるチームを紹介します。
               </p>
             </motion.div>
           </div>
@@ -99,14 +99,14 @@ export default function AuthorsPage() {
                   </div>
 
                   <p className="text-neutral-500 dark:text-neutral-400 text-sm mb-4">
-                    {author.count} {author.count === 1 ? "Article" : "Articles"}
+                    {author.count}件の記事
                   </p>
 
                   <Link
                     href={`/authors/${author.slug}`}
                     className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline group"
                   >
-                    View Articles
+                    記事を見る
                     <ArrowUpRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
                 </div>
