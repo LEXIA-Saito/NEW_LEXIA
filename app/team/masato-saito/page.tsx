@@ -125,7 +125,7 @@ export default function MasatoSaitoProfile() {
                   <TableHead>No.</TableHead>
                   <TableHead>資格名</TableHead>
                   <TableHead>提供元</TableHead>
-                  <TableHead>証明</TableHead>
+                  <TableHead>証明書</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -140,7 +140,7 @@ export default function MasatoSaitoProfile() {
                           href={q.evidence}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`${q.name} の証明`}
+                          aria-label={`${q.name} の証明書`}
                           className="inline-flex p-1 rounded hover:bg-neutral-100 dark:hover:bg-neutral-700"
                         >
                           <ExternalLink className="h-4 w-4" />
