@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
-import { Linkedin, Mail } from "lucide-react"
+import { Linkedin, Mail, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import { t } from "@/lib/i18n"
 
@@ -11,39 +11,23 @@ import { t } from "@/lib/i18n"
 const teamMembers = [
   {
     id: 1,
-    name: "Rafly Kurnia",
-    role: t("team.role.leadDesigner"),
-    bio: "With over 10 years in the digital landscape, Rafly spearheads our web design strategy, focusing on innovative and user-centric solutions.",
+    name: "齋藤雅人",
+    role: "代表・WEBディレクター",
+    bio: "WEB業界歴5年。若さと情熱を武器に最新技術で期待を超えるサイト制作を実現します。",
     image: "/team/person-1.png",
     linkedin: "https://www.linkedin.com/in/lexia-saito/",
-    email: "rafly@lexia.design",
+    email: "msms12120614@gmail.com",
+    slug: "masato-saito",
   },
   {
     id: 2,
-    name: "Maya Wijaya",
-    role: t("team.role.uxLead"),
-    bio: "Maya excels in crafting intuitive and engaging user experiences, ensuring our designs are both beautiful and functional.",
+    name: "齋藤李保",
+    role: "経理担当",
+    bio: "会社の資金管理や請求業務を担い、LEXIAの安定運営を支える縁の下の力持ちです。",
     image: "/team/person-2.png",
-    linkedin: "https://www.linkedin.com/in/lexia-saito/",
-    email: "maya@lexia.design",
-  },
-  {
-    id: 3,
-    name: "Daniel Hartono",
-    role: t("team.role.pm"),
-    bio: "Daniel orchestrates our web projects with precision, ensuring timely delivery and seamless collaboration from kickoff to launch.",
-    image: "/team/person-3.png",
-    linkedin: "https://www.linkedin.com/in/lexia-saito/",
-    email: "daniel@lexia.design",
-  },
-  {
-    id: 4,
-    name: "Aisha Putri",
-    role: t("team.role.frontendLead"),
-    bio: "Aisha leads our frontend team, transforming designs into responsive and performant websites using modern technologies.",
-    image: "/team/person-4.png",
-    linkedin: "https://www.linkedin.com/in/lexia-saito/",
-    email: "aisha@lexia.design",
+    linkedin: "",
+    email: "",
+    slug: "riho-saito",
   },
 ]
 
@@ -118,7 +102,16 @@ export default function Team() {
             <div className="p-6">
               <h3 className="text-xl font-medium text-neutral-900 dark:text-neutral-100 mb-1">{member.name}</h3>
               <p className="text-neutral-500 dark:text-neutral-400 mb-3">{member.role}</p>
-              <p className="text-neutral-700 dark:text-neutral-300 text-sm">{member.bio}</p>
+              <p className="text-neutral-700 dark:text-neutral-300 text-sm mb-3">{member.bio}</p>
+              {member.slug && (
+                <Link
+                  href={`/team/${member.slug}`}
+                  className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline group text-sm"
+                >
+                  プロフィールを見る
+                  <ArrowUpRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+              )}
             </div>
           </motion.div>
         ))}
