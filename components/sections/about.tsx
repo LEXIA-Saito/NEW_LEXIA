@@ -43,7 +43,7 @@ export default function About() {
               {t('about.listen.body')}
             </p>
             <Link
-              href="#process"
+              href="/about-lexia"
               className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline group"
             >
               {t('about.learnProcess')}
