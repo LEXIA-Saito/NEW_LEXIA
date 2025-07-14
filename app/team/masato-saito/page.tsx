@@ -243,7 +243,7 @@ export default function MasatoSaitoProfile() {
                 >
                   <img
                     src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/82dab1bc96fd4cb5811d2bb021299270.png"
-                    width="150"
+                    width="200"
                     alt="ソーシャル メディア マーケティング認定コース バッジ"
                   />
                 </a>
@@ -257,7 +257,7 @@ export default function MasatoSaitoProfile() {
                 >
                   <img
                     src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/31f535cfa08e485b814211be2d5cea1a.png"
-                    width="150"
+                    width="200"
                     alt="インバウンドマーケティング認定コース バッジ"
                   />
                 </a>
@@ -271,7 +271,7 @@ export default function MasatoSaitoProfile() {
                 >
                   <img
                     src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/6ca5a664ad074c19a0143b7a36cad867.png"
-                    width="150"
+                    width="200"
                     alt="インバウンド認定コース バッジ"
                   />
                 </a>
@@ -285,15 +285,15 @@ export default function MasatoSaitoProfile() {
                   >
                     <img
                       src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/26256c557ab94317b4b35c43eaf466e8.png"
-                      width="150"
+                      width="200"
                       alt="フリクションレスセールス認定コース バッジ"
                     />
                   </a>
                 </div>
                 <div className="academy-badge">
                   <div
-                    data-iframe-width="150"
-                    data-iframe-height="270"
+                    data-iframe-width="200"
+                    data-iframe-height="360"
                     data-share-badge-id="5610114e-2780-4610-b18f-dc997f0214a4"
                     data-share-badge-host="https://www.credly.com"
                   ></div>
@@ -305,8 +305,8 @@ export default function MasatoSaitoProfile() {
                 </div>
                 <div className="academy-badge">
                   <div
-                    data-iframe-width="150"
-                    data-iframe-height="270"
+                    data-iframe-width="200"
+                    data-iframe-height="360"
                     data-share-badge-id="a3e9242a-bc70-40be-a9a6-88412c7aa68e"
                     data-share-badge-host="https://www.credly.com"
                   ></div>
