@@ -4,8 +4,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { useState, useRef, useEffect } from "react"
 import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { navItems } from "@/components/navigation"
 
-const tabs = ["Overview", "Integrations", "Activity", "Domains", "Usage", "Monitoring"]
+// ナビゲーションのタイトルを流用したタブ
+const tabs = navItems.map((item) => item.name)
 
 export default function Frame() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
@@ -41,9 +43,9 @@ export default function Frame() {
 
   useEffect(() => {
     requestAnimationFrame(() => {
-      const overviewElement = tabRefs.current[0]
-      if (overviewElement) {
-        const { offsetLeft, offsetWidth } = overviewElement
+      const firstTabElement = tabRefs.current[0]
+      if (firstTabElement) {
+        const { offsetLeft, offsetWidth } = firstTabElement
         setActiveStyle({
           left: `${offsetLeft}px`,
           width: `${offsetWidth}px`,
