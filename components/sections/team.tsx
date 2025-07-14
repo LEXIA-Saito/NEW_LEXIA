@@ -13,7 +13,7 @@ const teamMembers = [
     id: 1,
     name: "齋藤雅人",
     role: "代表・WEBディレクター",
-    bio: "WEB業界歴5年。若さと情熱を武器に最新技術で期待を超えるサイト制作を実現します。",
+    bio: "業界歴5年。若さと情熱を武器に、最新のWEB制作技術を駆使してクライアントの期待を超えるWEB制作を実現します。",
     image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/saito_profile/saito_profile.webp",
     linkedin: "https://www.linkedin.com/in/lexia-saito/",
     email: "msms12120614@gmail.com",
