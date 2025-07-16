@@ -8,15 +8,15 @@ import { useTranslations } from "@/lib/i18n"
 const steps = [
   {
     number: "01",
-    image: "/process/process-1.png",
+    image: null, // または ""
   },
   {
     number: "02",
-    image: "/process/process-2.png",
+    image: null, // または ""
   },
   {
     number: "03",
-    image: "/process/process-3.png",
+    image: null, // または ""
   },
 ]
 
@@ -37,9 +37,9 @@ export default function OurProcess() {
           transition={{ duration: 0.6 }}
           variants={fadeIn}
         >
-          <Chip>{t('ourProcess.title')}</Chip>
+          <Chip>{t("ourProcess.title")}</Chip>
           <p className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
-            {t('ourProcess.intro')}
+            {t("ourProcess.intro")}
           </p>
         </motion.div>
       </div>
@@ -66,11 +66,14 @@ export default function OurProcess() {
                 <Image
                   src={
                     step.image ||
-                    "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/ui_kit/workflow.svg"
+                    "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/ui_kit/workflow.svg" ||
+                    "/placeholder.svg" ||
+                    "/placeholder.svg" ||
+                    "/placeholder.svg"
                   }
                   alt={t(`ourProcess.steps.${step.number}.title`)}
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
@@ -95,9 +98,7 @@ export default function OurProcess() {
                   <p className="text-lg text-neutral-700 dark:text-neutral-300">
                     {t(`ourProcess.steps.${step.number}.description`)}
                   </p>
-                  <p className="text-neutral-600 dark:text-neutral-400">
-                    {t(`ourProcess.steps.${step.number}.body`)}
-                  </p>
+                  <p className="text-neutral-600 dark:text-neutral-400">{t(`ourProcess.steps.${step.number}.body`)}</p>
                 </div>
               </motion.div>
             </div>
