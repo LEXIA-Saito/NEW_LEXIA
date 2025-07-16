@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
+import SectionIcon from "@/components/section-icon"
 import Image from "next/image"
 import { useTranslations } from "@/lib/i18n"
 
@@ -41,8 +42,9 @@ export default function OurProcess() {
           variants={fadeIn}
         >
           <Chip>{t("ourProcess.title")}</Chip>
-          <p className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
+          <p className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6 flex items-center justify-center">
             {t("ourProcess.intro")}
+            <SectionIcon index={1} />
           </p>
         </motion.div>
       </div>

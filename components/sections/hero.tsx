@@ -1,13 +1,28 @@
 "use client"
 
 import Link from "next/link"
-import { motion } from "framer-motion"
+import React from "react"
+import { motion, useAnimation, useScroll } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowDown, ExternalLink } from "lucide-react"
 import ParticlesBackground from "@/components/kokonutui/particles-background"
+import { footerIcons, spinDurations } from "@/lib/footerIcons"
 import { t } from "@/lib/i18n"
 
 export default function Hero() {
+  const controls = useAnimation()
+  const { scrollY } = useScroll()
+
+  React.useEffect(() => {
+    return scrollY.on("change", (y) => {
+      if (y > 100) {
+        controls.start({ y: 100, opacity: 0 })
+      } else {
+        controls.start({ y: 0, opacity: 1 })
+      }
+    })
+  }, [controls, scrollY])
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       <div className="absolute inset-0 opacity-30 pointer-events-none">
@@ -73,6 +88,34 @@ export default function Hero() {
         <Link href="#about" aria-label="Scroll down">
           <ArrowDown className="h-6 w-6 text-neutral-400 dark:text-neutral-500" />
         </Link>
+      </motion.div>
+
+      <motion.div
+        className="absolute bottom-4 right-4 flex space-x-2"
+        animate={controls}
+      >
+        {footerIcons.map((icon, index) => (
+          <motion.span
+            key={index}
+            animate={{ rotate: 360 }}
+            transition={{
+              repeat: Infinity,
+              duration: spinDurations[index % spinDurations.length],
+              ease: "linear",
+            }}
+          >
+            <img
+              src={icon.light}
+              alt="decorative icon"
+              className="w-4 h-4 block dark:hidden"
+            />
+            <img
+              src={icon.dark}
+              alt="decorative icon"
+              className="w-4 h-4 hidden dark:block"
+            />
+          </motion.span>
+        ))}
       </motion.div>
     </div>
   )

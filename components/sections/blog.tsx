@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
+import SectionIcon from "@/components/section-icon"
 import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -61,8 +62,9 @@ export default function Blog() {
           variants={fadeIn}
         >
           <Chip>最新情報</Chip>
-          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
+          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6 flex items-center justify-center">
             WEB制作コラム
+            <SectionIcon index={4} />
           </h2>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
             ウェブ制作やデザインに関する最新情報をお届けします。

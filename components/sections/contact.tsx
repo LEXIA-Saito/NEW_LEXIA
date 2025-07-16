@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
+import SectionIcon from "@/components/section-icon"
 import { ExternalLink, Mail } from "lucide-react"
 import Link from "next/link"
 import { t } from "@/lib/i18n"
@@ -24,8 +25,9 @@ export default function Contact() {
           className="text-center mb-16"
         >
           <Chip>{t('contact.chip')}</Chip>
-          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
+          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6 flex items-center justify-center">
             まずはお気軽にご相談ください。
+            <SectionIcon index={5} />
           </h2>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
             愛知県碧南市のWEB制作事業 LEXIA では、貴社のデジタルビジョンをカタチにするお手伝いをしています。ご質問・ご相談はメール、または LinkedIn から承ります。

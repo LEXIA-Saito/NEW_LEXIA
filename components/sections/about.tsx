@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
+import SectionIcon from "@/components/section-icon"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -26,8 +27,9 @@ export default function About() {
           className="text-center mb-16"
         >
           <Chip>{t('about.chip')}</Chip>
-          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
+          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6 flex items-center justify-center">
             {t('about.heading')}
+            <SectionIcon index={0} />
           </h2>
         </motion.div>
 
