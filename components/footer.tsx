@@ -5,7 +5,12 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { Mail, Linkedin, ArrowUp } from "lucide-react"
 import { t } from "@/lib/i18n"
-import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
+import {
+  LOGO_URL,
+  LOGO_WHITE_URL,
+  FOOTER_ICONS,
+  FOOTER_ICONS_DARK,
+} from "@/lib/config"
 
 export default function Footer() {
   const fadeIn = {
@@ -145,6 +150,25 @@ export default function Footer() {
             <span className="text-sm mr-1">{t('footer.backToTop')}</span>
             <ArrowUp className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1" />
           </motion.button>
+        </div>
+
+        <div className="mt-8 flex flex-wrap justify-center gap-4">
+          {FOOTER_ICONS.map((icon, i) => (
+            <div key={icon} className="h-6 w-6 relative">
+              <Image
+                src={icon}
+                alt={`icon ${i + 1}`}
+                fill
+                className="object-contain block dark:hidden"
+              />
+              <Image
+                src={FOOTER_ICONS_DARK[i]}
+                alt=""
+                fill
+                className="object-contain hidden dark:block"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </footer>
