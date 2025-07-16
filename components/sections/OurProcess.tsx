@@ -70,7 +70,12 @@ export default function OurProcess() {
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                <Image
+                  src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/ui_kit/modular-coding-of-application.svg"
+                  alt="Modular coding of application"
+                  fill
+                  className="absolute inset-0 object-contain bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"
+                />
               </motion.div>
             </div>
             <div className="w-full md:w-1/2">
