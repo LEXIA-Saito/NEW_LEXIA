@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ArrowUpRight, ChevronLeft, ChevronRight, Quote, ExternalLink, Filter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Chip } from "@/components/ui/chip"
+import SectionIcon from "@/components/section-icon"
 import { t } from "@/lib/i18n"
 
 // Project categories
@@ -211,8 +212,9 @@ export default function Work() {
           variants={fadeIn}
         >
           <Chip>{t("ourWork.title")}</Chip>
-          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
+          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6 flex items-center justify-center">
             {t("ourWork.subtitle")}
+            <SectionIcon index={2} />
           </h2>
         </motion.div>
       </div>
