@@ -25,10 +25,12 @@ export default function Contact() {
           className="text-center mb-16"
         >
           <Chip>{t('contact.chip')}</Chip>
-          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6 flex items-center justify-center">
-            まずはお気軽にご相談ください。
-            <SectionIcon index={5} />
-          </h2>
+          <div className="flex flex-col items-center mt-4 mb-6">
+            <SectionIcon index={5} className="mb-4" />
+            <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100">
+              まずはお気軽にご相談ください。
+            </h2>
+          </div>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
             愛知県碧南市のWEB制作事業 LEXIA では、貴社のデジタルビジョンをカタチにするお手伝いをしています。ご質問・ご相談はメール、または LinkedIn から承ります。
           </p>

@@ -49,10 +49,12 @@ export default function Team() {
           variants={fadeIn}
         >
           <Chip>{t('team.chip')}</Chip>
-          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6 flex items-center justify-center">
-            {t('team.heading')}
-            <SectionIcon index={3} />
-          </h2>
+          <div className="flex flex-col items-center mt-4 mb-6">
+            <SectionIcon index={3} className="mb-4" />
+            <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100">
+              {t('team.heading')}
+            </h2>
+          </div>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
             {t('team.intro')}
           </p>
