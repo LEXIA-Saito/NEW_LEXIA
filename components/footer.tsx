@@ -21,6 +21,45 @@ export default function Footer() {
     { name: t('footer.sustainable'), href: '/categories/sustainable' },
   ]
 
+  const footerIcons = [
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_1.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_1.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_2.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_2.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_3.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_3.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_4.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_4.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_5.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_5.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_6.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_6.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_7.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_7.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_8.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_8.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_9.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_9.svg",
+    },
+  ]
+
   return (
     <footer className="py-12 border-t border-neutral-100 dark:border-neutral-800">
       <div className="container mx-auto px-4">
@@ -145,6 +184,26 @@ export default function Footer() {
             <span className="text-sm mr-1">{t('footer.backToTop')}</span>
             <ArrowUp className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1" />
           </motion.button>
+        </div>
+        <div className="mt-8 flex justify-center space-x-4">
+          {footerIcons.map((icon, index) => (
+            <span key={index} className="w-6 h-6 flex items-center justify-center">
+              <Image
+                src={icon.light}
+                alt="footer icon"
+                width={24}
+                height={24}
+                className="block dark:hidden"
+              />
+              <Image
+                src={icon.dark}
+                alt="footer icon"
+                width={24}
+                height={24}
+                className="hidden dark:block"
+              />
+            </span>
+          ))}
         </div>
       </div>
     </footer>
