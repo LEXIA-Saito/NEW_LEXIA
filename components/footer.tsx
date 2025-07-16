@@ -104,7 +104,7 @@ export default function Footer() {
             </div>
 
             <h2 className="text-2xl font-bold mb-6">価値を伝わるカタチに</h2>
-            <p className="text-sm leading-relaxed text-gray-300">
+            <p className="text-sm leading-relaxed">
               企業のウェブサイトは"顔"であると同時に、ブランド価値を伝える最重要ポイントです。しかし、デザインだけでなく、ユーザビリティ、表示速度、多言語対応など多岐にわたる要素を高いレベルで両立させることは、多くの企業にとって大きなハードル。
               LEXIAは一貫してプロジェクトを管理し、これら複合的な課題をワンストップで解決。御社のウェブサイトを「成果を生む資産」へと進化させます。
             </p>
@@ -135,12 +135,12 @@ export default function Footer() {
             variants={fadeIn}
           >
             <h3 className="text-lg font-semibold mb-6">MENU</h3>
-            <ul className="space-y-3">
+            <ul className="space-y-3 text-transparent">
               {menuItems.map((item) => (
-                <li key={item.href}>
+                <li className="text-sm leading-relaxed text-black" key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-gray-300 hover:text-white transition-colors duration-300 text-sm"
+                    className="space-y-3 text-black"
                   >
                     {item.name}
                   </Link>
@@ -165,7 +165,7 @@ export default function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-gray-300 hover:text-white transition-colors duration-300 text-sm"
+                      className="hover:text-white transition-colors duration-300 text-sm text-black"
                     >
                       {item.name}
                     </Link>
@@ -178,7 +178,7 @@ export default function Footer() {
               <h3 className="text-lg font-semibold mb-4">Get in touch</h3>
               <Link
                 href="mailto:lexia0web@gmail.com"
-                className="text-gray-300 hover:text-white transition-colors duration-300 text-sm"
+                className="hover:text-white transition-colors duration-300 text-sm text-black"
               >
                 lexia0web@gmail.com
               </Link>
