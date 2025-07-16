@@ -73,7 +73,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-[#04070d] text-white py-16">
+    <footer className="bg-neutral-100 dark:bg-[#04070d] text-neutral-900 dark:text-white py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-16">
           {/* Left Section - Logo and Description */}
