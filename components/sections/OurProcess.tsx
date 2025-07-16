@@ -64,7 +64,10 @@ export default function OurProcess() {
                 transition={{ duration: 0.3 }}
               >
                 <Image
-                  src={step.image || "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/ui_kit/coding.svg"}
+                  src={
+                    step.image ||
+                    "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/ui_kit/workflow.svg"
+                  }
                   alt={t(`ourProcess.steps.${step.number}.title`)}
                   fill
                   className="object-cover"
