@@ -31,6 +31,45 @@ export default function Footer() {
     "M12 2l1.5 4.5h4.5l-3.5 2.5 1.5 4.5-3.5-2.5-3.5 2.5 1.5-4.5-3.5-2.5h4.5z",
   ]
 
+  const footerIcons = [
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_1.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_1.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_2.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_2.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_3.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_3.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_4.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_4.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_5.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_5.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_6.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_6.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_7.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_7.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_8.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_8.svg",
+    },
+    {
+      light: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/vector_9.svg",
+      dark: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/footer/black_vector_9.svg",
+    },
+  ]
+
   return (
     <footer className="bg-[#04070d] text-white py-16">
       <div className="container mx-auto px-4">
@@ -140,76 +179,27 @@ export default function Footer() {
             </div>
           </motion.div>
         </div>
+        <div className="mt-8 flex justify-center space-x-4">
+          {footerIcons.map((icon, index) => (
+            <span key={index} className="w-6 h-6 flex items-center justify-center">
+              <Image
+                src={icon.light}
+                alt="footer icon"
+                width={24}
+                height={24}
+                className="block dark:hidden"
+              />
+              <Image
+                src={icon.dark}
+                alt="footer icon"
+                width={24}
+                height={24}
+                className="hidden dark:block"
+              />
+            </span>
+          ))}
+        </div>
 
-        {/* Copyright */}
-        <motion.div
-          className="text-center mb-12"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          variants={fadeIn}
-        >
-          <p className="text-sm text-gray-400">© Copyright 2025. LEXIA. All rights reserved.</p>
-        </motion.div>
-
-        {/* Decorative Icons */}
-        <motion.div
-          className="flex justify-center items-center space-x-8"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          variants={fadeIn}
-        >
-          {/* 装飾的なアイコン群 */}
-          <div className="flex space-x-6 opacity-60">
-            {/* 星型アイコン */}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-
-            {/* 4つ星 */}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-              <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z" />
-            </svg>
-
-            {/* 8つ星 */}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-              <path d="M12 1l1.5 4.5h4.5l-3.5 2.5 1.5 4.5-3.5-2.5-3.5 2.5 1.5-4.5-3.5-2.5h4.5z" />
-            </svg>
-
-            {/* 矢印 */}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-              <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z" />
-            </svg>
-
-            {/* 十字 */}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-              <path d="M12 2v20M2 12h20" stroke="white" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-
-            {/* X印 */}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-              <path d="M6 6l12 12M18 6L6 18" stroke="white" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-
-            {/* 三角 */}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-              <path d="M12 2l10 20H2z" />
-            </svg>
-
-            {/* ダイヤモンド */}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-              <path d="M12 2l6 10-6 10-6-10z" />
-            </svg>
-
-            {/* 花型 */}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-              <path d="M12 2c2 0 4 2 4 4s-2 4-4 4-4-2-4-4 2-4 4-4zm0 8c2 0 4 2 4 4s-2 4-4 4-4-2-4-4 2-4 4-4z" />
-            </svg>
-          </div>
-        </motion.div>
       </div>
     </footer>
   )
