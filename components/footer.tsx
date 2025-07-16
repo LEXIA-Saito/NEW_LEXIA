@@ -72,6 +72,8 @@ export default function Footer() {
     },
   ]
 
+  const spinDurations = [4, 5, 6, 7, 8, 9, 10, 11, 12]
+
   return (
     <footer className="bg-neutral-100 dark:bg-[#04070d] text-neutral-900 dark:text-white py-16">
       <div className="container mx-auto px-4">
@@ -187,7 +189,16 @@ export default function Footer() {
         </div>
         <div className="mt-8 flex justify-center space-x-4">
           {footerIcons.map((icon, index) => (
-            <span key={index} className="w-6 h-6 flex items-center justify-center">
+            <motion.span
+              key={index}
+              className="w-6 h-6 flex items-center justify-center"
+              animate={{ rotate: 360 }}
+              transition={{
+                repeat: Infinity,
+                duration: spinDurations[index % spinDurations.length],
+                ease: "linear",
+              }}
+            >
               <Image
                 src={icon.light}
                 alt="footer icon"
@@ -202,7 +213,7 @@ export default function Footer() {
                 height={24}
                 className="hidden dark:block"
               />
-            </span>
+            </motion.span>
           ))}
         </div>
 
