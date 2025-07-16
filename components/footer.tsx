@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
-import { footerIcons, spinDurations } from "@/lib/footerIcons"
+import { footerIcons, getRandomSpinDuration } from "@/lib/footerIcons"
 
 export default function Footer() {
   const fadeIn = {
@@ -33,6 +33,11 @@ export default function Footer() {
     "M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z",
     "M12 2l1.5 4.5h4.5l-3.5 2.5 1.5 4.5-3.5-2.5-3.5 2.5 1.5-4.5-3.5-2.5h4.5z",
   ]
+
+  const randomDurations = React.useMemo(
+    () => footerIcons.map(() => getRandomSpinDuration()),
+    []
+  )
 
 
   return (
@@ -156,7 +161,7 @@ export default function Footer() {
               animate={{ rotate: 360 }}
               transition={{
                 repeat: Infinity,
-                duration: spinDurations[index % spinDurations.length],
+                duration: randomDurations[index],
                 ease: "linear",
               }}
             >

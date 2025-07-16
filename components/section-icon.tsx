@@ -3,7 +3,7 @@
 import React from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { footerIcons, spinDurations } from "@/lib/footerIcons"
+import { footerIcons, getRandomSpinDuration } from "@/lib/footerIcons"
 
 export default function SectionIcon({
   index,
@@ -24,7 +24,7 @@ export default function SectionIcon({
         animate={{ rotate: 360 }}
         transition={{
           repeat: Infinity,
-          duration: spinDurations[index % spinDurations.length],
+          duration: getRandomSpinDuration(),
           ease: "linear",
         }}
         className="inline-block"

@@ -6,12 +6,16 @@ import { motion, useAnimation, useScroll } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowDown, ExternalLink } from "lucide-react"
 import ParticlesBackground from "@/components/kokonutui/particles-background"
-import { footerIcons, spinDurations } from "@/lib/footerIcons"
+import { footerIcons, getRandomSpinDuration } from "@/lib/footerIcons"
 import { t } from "@/lib/i18n"
 
 export default function Hero() {
   const controls = useAnimation()
   const { scrollY } = useScroll()
+  const randomDurations = React.useMemo(
+    () => footerIcons.map(() => getRandomSpinDuration()),
+    []
+  )
 
   React.useEffect(() => {
     return scrollY.on("change", (y) => {
@@ -100,7 +104,7 @@ export default function Hero() {
             animate={{ rotate: 360 }}
             transition={{
               repeat: Infinity,
-              duration: spinDurations[index % spinDurations.length],
+              duration: randomDurations[index],
               ease: "linear",
             }}
           >
