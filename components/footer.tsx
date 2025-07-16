@@ -1,7 +1,9 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
+import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
 
 export default function Footer() {
   const fadeIn = {
@@ -85,16 +87,20 @@ export default function Footer() {
           >
             {/* LEXIA Logo */}
             <div className="mb-8">
-              <svg
-                width="60"
-                height="60"
-                viewBox="0 0 60 60"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="mb-4"
-              >
-                <path d="M15 15L45 45M45 15L15 45" stroke="white" strokeWidth="3" strokeLinecap="round" />
-              </svg>
+              <Image
+                src={LOGO_URL}
+                alt="LEXIA"
+                width={120}
+                height={24}
+                className="mb-4 h-6 w-auto block dark:hidden"
+              />
+              <Image
+                src={LOGO_WHITE_URL}
+                alt="LEXIA"
+                width={120}
+                height={24}
+                className="mb-4 h-6 w-auto hidden dark:block"
+              />
             </div>
 
             <h2 className="text-2xl font-bold mb-6">価値を伝わるカタチに</h2>
