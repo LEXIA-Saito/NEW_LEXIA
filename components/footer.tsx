@@ -1,11 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { motion } from "framer-motion"
-import { Mail, Linkedin, ArrowUp } from "lucide-react"
-import { t } from "@/lib/i18n"
-import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
 
 export default function Footer() {
   const fadeIn = {
@@ -13,12 +9,26 @@ export default function Footer() {
     visible: { opacity: 1, y: 0 },
   }
 
-  const categoryLinks = [
-    { name: t('footer.residential'), href: '/categories/residential' },
-    { name: t('footer.commercial'), href: '/categories/commercial' },
-    { name: t('footer.interior'), href: '/categories/interior' },
-    { name: t('footer.exterior'), href: '/categories/exterior' },
-    { name: t('footer.sustainable'), href: '/categories/sustainable' },
+  const menuItems = [
+    { name: "事業概要", href: "/about-lexia" },
+    { name: "制作工程", href: "#process" },
+    { name: "制作実績", href: "/projects" },
+    { name: "チーム", href: "#team" },
+    { name: "ブログ", href: "/blog" },
+    { name: "お問い合わせ", href: "/contact" },
+  ]
+
+  const connectItems = [
+    { name: "お問い合わせフォーム", href: "/contact" },
+    { name: "メール", href: "mailto:lexia0web@gmail.com" },
+    { name: "電話", href: "tel:+81-0000-000-000" },
+  ]
+
+  const decorativeIcons = [
+    // 星型アイコン群のSVGパス
+    "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z",
+    "M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z",
+    "M12 2l1.5 4.5h4.5l-3.5 2.5 1.5 4.5-3.5-2.5-3.5 2.5 1.5-4.5-3.5-2.5h4.5z",
   ]
 
   const footerIcons = [
@@ -61,96 +71,70 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="py-12 border-t border-neutral-100 dark:border-neutral-800">
+    <footer className="bg-[#04070d] text-white py-16">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-16">
+          {/* Left Section - Logo and Description */}
           <motion.div
-            className="md:col-span-2"
+            className="lg:col-span-1"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             variants={fadeIn}
           >
-            <div className="mb-4">
-              <Image
-                src={LOGO_URL}
-                alt="LEXIA"
-                width={120}
-                height={24}
-                className="h-6 w-auto block dark:hidden"
-              />
-              <Image
-                src={LOGO_WHITE_URL}
-                alt="LEXIA"
-                width={120}
-                height={24}
-                className="h-6 w-auto hidden dark:block"
-              />
+            {/* LEXIA Logo */}
+            <div className="mb-8">
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 60 60"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="mb-4"
+              >
+                <path d="M15 15L45 45M45 15L15 45" stroke="white" strokeWidth="3" strokeLinecap="round" />
+              </svg>
             </div>
-            <p className="text-neutral-600 dark:text-neutral-400 mb-6 max-w-md">
-              Web サイトやアプリ制作を通じて、ビジネスの成長をサポートします。
+
+            <h2 className="text-2xl font-bold mb-6">価値を伝わるカタチに</h2>
+            <p className="text-sm leading-relaxed text-gray-300">
+              企業のウェブサイトは"顔"であると同時に、ブランド価値を伝える最重要ポイントです。しかし、デザインだけでなく、ユーザビリティ、表示速度、多言語対応など多岐にわたる要素を高いレベルで両立させることは、多くの企業にとって大きなハードル。
+              LEXIAは一貫してプロジェクトを管理し、これら複合的な課題をワンストップで解決。御社のウェブサイトを「成果を生む資産」へと進化させます。
             </p>
-            <div className="flex space-x-4">
-              <Link
-                href="mailto:lexia0web@gmail.com"
-                className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors duration-300"
-              >
-                <Mail className="h-5 w-5" />
-                <span className="sr-only">メール</span>
-              </Link>
-              <Link
-                href="https://www.linkedin.com/in/lexia-saito/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors duration-300"
-              >
-                <Linkedin className="h-5 w-5" />
-                <span className="sr-only">LinkedIn</span>
-              </Link>
-            </div>
           </motion.div>
 
+          {/* Center Section - LEGEND AXIA LEXIA Logo */}
           <motion.div
+            className="lg:col-span-1 flex flex-col items-center justify-start"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
             variants={fadeIn}
           >
-            <h4 className="text-sm font-medium uppercase tracking-wider text-neutral-900 dark:text-neutral-100 mb-4">
-              {t('footer.navigation')}
-            </h4>
-            <ul className="space-y-2">
-              {[t('about.chip'), t('ourProcess.title'), t('ourWork.title'), t('team.chip'), "ブログ", t('contact.chip')].map((item) => (
-                <li key={item}>
-                  <Link
-                    href={`#${item.toLowerCase()}`}
-                    className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 text-sm transition-colors duration-300"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="text-center mb-8">
+              <div className="text-xs tracking-widest mb-2">LEGEND AXIA</div>
+              <div className="text-4xl font-bold tracking-wider">LEXIA</div>
+            </div>
           </motion.div>
 
+          {/* Menu Section */}
           <motion.div
+            className="lg:col-span-1"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
             variants={fadeIn}
           >
-            <h4 className="text-sm font-medium uppercase tracking-wider text-neutral-900 dark:text-neutral-100 mb-4">
-              {t('footer.categories')}
-            </h4>
-            <ul className="space-y-2">
-              {categoryLinks.map((item) => (
+            <h3 className="text-lg font-semibold mb-6">MENU</h3>
+            <ul className="space-y-3">
+              {menuItems.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 text-sm transition-colors duration-300"
+                    className="text-gray-300 hover:text-white transition-colors duration-300 text-sm"
                   >
                     {item.name}
                   </Link>
@@ -158,32 +142,42 @@ export default function Footer() {
               ))}
             </ul>
           </motion.div>
-        </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-neutral-100 dark:border-neutral-800">
-          <motion.p
-            className="text-neutral-500 dark:text-neutral-400 text-sm"
+          {/* Connect and Get in touch Section */}
+          <motion.div
+            className="lg:col-span-1"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
             variants={fadeIn}
           >
-            © {new Date().getFullYear()} LEXIA. {t('footer.allRights')}
-          </motion.p>
-          <motion.button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="flex items-center text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 mt-4 md:mt-0 group"
-            whileHover={{ y: -2 }}
-            transition={{ duration: 0.2 }}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-          >
-            <span className="text-sm mr-1">{t('footer.backToTop')}</span>
-            <ArrowUp className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1" />
-          </motion.button>
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold mb-6">Connect</h3>
+              <ul className="space-y-3">
+                {connectItems.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="text-gray-300 hover:text-white transition-colors duration-300 text-sm"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Get in touch</h3>
+              <Link
+                href="mailto:lexia0web@gmail.com"
+                className="text-gray-300 hover:text-white transition-colors duration-300 text-sm"
+              >
+                lexia0web@gmail.com
+              </Link>
+            </div>
+          </motion.div>
         </div>
         <div className="mt-8 flex justify-center space-x-4">
           {footerIcons.map((icon, index) => (
@@ -205,6 +199,7 @@ export default function Footer() {
             </span>
           ))}
         </div>
+
       </div>
     </footer>
   )
