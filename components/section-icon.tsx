@@ -5,14 +5,20 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { footerIcons, spinDurations } from "@/lib/footerIcons"
 
-export default function SectionIcon({ index }: { index: number }) {
+export default function SectionIcon({
+  index,
+  className,
+}: {
+  index: number
+  className?: string
+}) {
   const icon = footerIcons[index % footerIcons.length]
   return (
     <motion.span
-      initial={{ opacity: 0, x: 20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      className="inline-block ml-2 align-middle"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className={`inline-block align-middle ${className ?? ''}`}
     >
       <motion.span
         animate={{ rotate: 360 }}

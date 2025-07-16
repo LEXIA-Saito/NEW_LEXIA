@@ -27,10 +27,12 @@ export default function About() {
           className="text-center mb-16"
         >
           <Chip>{t('about.chip')}</Chip>
-          <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6 flex items-center justify-center">
-            {t('about.heading')}
-            <SectionIcon index={0} />
-          </h2>
+          <div className="flex flex-col items-center mt-4 mb-6">
+            <SectionIcon index={0} className="mb-4" />
+            <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100">
+              {t('about.heading')}
+            </h2>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center mb-20">

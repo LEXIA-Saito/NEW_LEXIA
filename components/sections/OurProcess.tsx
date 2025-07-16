@@ -42,10 +42,12 @@ export default function OurProcess() {
           variants={fadeIn}
         >
           <Chip>{t("ourProcess.title")}</Chip>
-          <p className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6 flex items-center justify-center">
-            {t("ourProcess.intro")}
-            <SectionIcon index={1} />
-          </p>
+          <div className="flex flex-col items-center mt-4 mb-6">
+            <SectionIcon index={1} className="mb-4" />
+            <p className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100">
+              {t("ourProcess.intro")}
+            </p>
+          </div>
         </motion.div>
       </div>
 
