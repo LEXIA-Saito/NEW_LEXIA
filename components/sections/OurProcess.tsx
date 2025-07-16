@@ -8,15 +8,18 @@ import { useTranslations } from "@/lib/i18n"
 const steps = [
   {
     number: "01",
-    image: null, // または ""
+    image:
+      "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/ui_kit/workflow.svg",
   },
   {
     number: "02",
-    image: null, // または ""
+    image:
+      "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/ui_kit/modular-coding-of-application.svg",
   },
   {
     number: "03",
-    image: null, // または ""
+    image:
+      "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/ui_kit/coding.svg",
   },
 ]
 
@@ -58,25 +61,14 @@ export default function OurProcess() {
             variants={fadeIn}
           >
             <div className="w-full md:w-1/2">
-              <motion.div
-                className="relative aspect-[4/3] overflow-hidden rounded-lg"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
+              <motion.div className="relative aspect-[4/3] overflow-hidden rounded-lg">
                 <Image
-                  src={
-                    step.image ||
-                    "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/ui_kit/workflow.svg" ||
-                    "/placeholder.svg" ||
-                    "/placeholder.svg" ||
-                    "/placeholder.svg"
-                  }
+                  src={step.image}
                   alt={t(`ourProcess.steps.${step.number}.title`)}
                   fill
                   className="object-contain"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
               </motion.div>
             </div>
             <div className="w-full md:w-1/2">
