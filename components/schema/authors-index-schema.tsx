@@ -16,8 +16,8 @@ export function AuthorsIndexSchema({ authors }: AuthorsIndexSchemaProps) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    headline: "著者一覧 - LEXIA Blog",
-    description: "LEXIAのウェブデザインと開発に関する洞察と記事の背後にいる才能あるチームを紹介します。",
+    headline: "チームメンバー一覧 - LEXIA Blog",
+    description: "LEXIAのWEB制作や開発に関わるチームメンバーを紹介します。",
     url: `${SITE_URL}/authors`,
     publisher: {
       "@type": "Organization",
