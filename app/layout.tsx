@@ -4,6 +4,8 @@ import { Noto_Sans_JP } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import TypewriterEffect from "@/components/typewriter-effect"
 import { Analytics } from "@vercel/analytics/next"
+import GoogleAnalytics from "@/components/google-analytics"
+import CookieConsent from "@/components/cookie-consent"
 import "./globals.css"
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "500"] })
@@ -26,6 +28,8 @@ export default function RootLayout({
           <TypewriterEffect />
           {children}
           <Analytics />
+          <GoogleAnalytics />
+          <CookieConsent />
         </ThemeProvider>
       </body>
     </html>
