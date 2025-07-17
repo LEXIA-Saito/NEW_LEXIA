@@ -28,6 +28,10 @@
 
 デフォルト言語は日本語です。将来的に英語などへの多言語対応を予定しており、詳細は [`docs/multilingual.md`](docs/multilingual.md) にまとめています。
 
+## Google Analytics
+
+利用者の同意を得てから GA スクリプトを読み込むよう実装しています。設定方法は [`docs/analytics.md`](docs/analytics.md) を参照してください。
+
 ## 開発メモ
 
 Next.js の `useSearchParams` フックを使用する際は、非同期処理になる可能性があるため
