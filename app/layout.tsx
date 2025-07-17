@@ -12,7 +12,8 @@ const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "500"] })
 
 export const metadata: Metadata = {
   title: "LEXIA | 価値を伝わるカタチに",
-  description: "デジタルであなたのストーリーを伝え、成果につなげます。",
+  description:
+    "愛知県碧南市のホームページ制作・WEB制作ならLEXIA｜システム開発・AI活用・デザインまで一貫対応。制作実績多数、無料相談実施中。最新技術×地元視点で成果にコミット。中部・全国対応可",
   generator: "v0.dev",
   icons: {
     icon: [
