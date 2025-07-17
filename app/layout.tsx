@@ -46,6 +46,7 @@ export const metadata: Metadata = {
     apple: "/favicon/apple-touch-icon.png",
     shortcut: "/favicon/lexia_logo_square.png",
   },
+    generator: 'v0.dev'
 }
 
 export default function RootLayout({
