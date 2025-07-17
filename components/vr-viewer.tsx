@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { X, MousePointer, RotateCcw } from "lucide-react"
-import * as THREE from "three"
+import { THREE } from "@/lib/three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import { motion } from "framer-motion"
 

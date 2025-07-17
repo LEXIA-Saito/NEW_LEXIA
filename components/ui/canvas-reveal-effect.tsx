@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import React, { useMemo, useRef } from "react"
-import * as THREE from "three"
+import { THREE } from "@/lib/three"
 
 export const CanvasRevealEffect = ({
   animationSpeed = 0.4,
