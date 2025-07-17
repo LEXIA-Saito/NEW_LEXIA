@@ -1,5 +1,5 @@
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://lexia.design";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://lexia-hp.com/";
 
 export const LOGO_URL =
   "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/logo/new_lexia_black_logo.svg";
