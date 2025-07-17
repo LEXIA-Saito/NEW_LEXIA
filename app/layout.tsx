@@ -18,12 +18,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/favicon/favicon.png",
+        url: "/favicon/lexia_logo_square.png",
         type: "image/png",
       },
     ],
     apple: "/favicon/apple-touch-icon.png",
-    shortcut: "/favicon/favicon.png",
+    shortcut: "/favicon/lexia_logo_square.png",
   },
 }
 

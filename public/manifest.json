@@ -3,12 +3,12 @@
   "short_name": "LEXIA",
   "icons": [
     {
-      "src": "/favicon/favicon.png",
+      "src": "/favicon/lexia_logo_square.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/favicon/favicon.png",
+      "src": "/favicon/lexia_logo_square.png",
       "sizes": "512x512",
       "type": "image/png"
     }
