@@ -27,3 +27,9 @@
 ## 今後の多言語展開
 
 デフォルト言語は日本語です。将来的に英語などへの多言語対応を予定しており、詳細は [`docs/multilingual.md`](docs/multilingual.md) にまとめています。
+
+## 開発メモ
+
+Next.js の `useSearchParams` フックを使用する際は、非同期処理になる可能性があるため
+`useSearchParams() should be wrapped in a suspense boundary` という警告が表示されることがあります。
+対応方法については [`docs/use-searchparams.md`](docs/use-searchparams.md) にまとめています。
