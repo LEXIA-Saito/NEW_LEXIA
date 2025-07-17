@@ -5,7 +5,7 @@ Next.js の `useSearchParams` フックは URL の検索パラメータを非同
 
 対策として、`useSearchParams` を利用するコンポーネントは React の `<Suspense>` でラップしてください。
 
-```tsx
+\`\`\`tsx
 import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 
@@ -21,6 +21,6 @@ export default function Page() {
     </Suspense>
   )
 }
-```
+\`\`\`
 
 これにより、非同期処理として検索パラメータを取得しても、警告なく動作します。
