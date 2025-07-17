@@ -14,6 +14,16 @@ export const metadata: Metadata = {
   title: "LEXIA | 価値を伝わるカタチに",
   description: "デジタルであなたのストーリーを伝え、成果につなげます。",
   generator: "v0.dev",
+  icons: {
+    icon: [
+      {
+        url: "/favicon/favicon.png",
+        type: "image/png",
+      },
+    ],
+    apple: "/favicon/apple-touch-icon.png",
+    shortcut: "/favicon/favicon.png",
+  },
 }
 
 export default function RootLayout({
