@@ -10,12 +10,13 @@ import { Input } from "@/components/ui/input"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { CategorySchema } from "@/components/schema/category-schema"
-import { blogPosts } from "@/lib/blog-data"
+import { usePosts } from "@/hooks/use-posts"
 import { categoryData } from "@/lib/category-data"
 
 export default function CategoryPage({ params }: { params: { category: string } }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [isLoaded, setIsLoaded] = useState(false)
+  const blogPosts = usePosts()
 
   // Get category info
   const categorySlug = params.category.toLowerCase()

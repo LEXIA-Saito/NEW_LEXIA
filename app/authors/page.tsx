@@ -10,10 +10,11 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { AuthorsIndexSchema } from "@/components/schema/authors-index-schema"
 import { authorData } from "@/lib/author-data"
-import { blogPosts } from "@/lib/blog-data"
+import { usePosts } from "@/hooks/use-posts"
 
 export default function AuthorsPage() {
   const [isLoaded, setIsLoaded] = useState(false)
+  const blogPosts = usePosts()
 
   // Count posts per author
   const authorCounts = authorData.map((author) => {

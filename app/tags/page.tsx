@@ -8,10 +8,11 @@ import { Chip } from "@/components/ui/chip"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { TagsIndexSchema } from "@/components/schema/tags-index-schema"
-import { blogPosts } from "@/lib/blog-data"
+import { usePosts } from "@/hooks/use-posts"
 
 export default function TagsPage() {
   const [isLoaded, setIsLoaded] = useState(false)
+  const blogPosts = usePosts()
 
   // Extract all tags and count their occurrences
   const tagCounts: Record<string, number> = {}

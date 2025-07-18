@@ -9,10 +9,11 @@ import { Chip } from "@/components/ui/chip"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { getAllSeries } from "@/lib/blog-utils"
-import { blogPosts } from "@/lib/blog-data"
+import { usePosts } from "@/hooks/use-posts"
 
 export default function SeriesIndexPage() {
   const [isLoaded, setIsLoaded] = useState(false)
+  const blogPosts = usePosts()
   const allSeries = getAllSeries(blogPosts)
 
   useEffect(() => {

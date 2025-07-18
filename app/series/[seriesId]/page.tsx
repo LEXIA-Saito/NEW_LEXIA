@@ -11,11 +11,13 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { ReadingTime } from "@/components/reading-time"
 import { getSeriesPosts } from "@/lib/blog-utils"
-import { blogPosts, seriesData } from "@/lib/blog-data"
+import { usePosts } from "@/hooks/use-posts"
+import { seriesData } from "@/lib/blog-data"
 
 export default function SeriesPage({ params }: { params: { seriesId: string } }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [isLoaded, setIsLoaded] = useState(false)
+  const blogPosts = usePosts()
 
   // Get series info
   const seriesId = params.seriesId

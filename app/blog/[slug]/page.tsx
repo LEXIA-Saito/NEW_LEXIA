@@ -10,7 +10,7 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { BlogSchema } from "@/components/schema/blog-schema"
 import { Button } from "@/components/ui/button"
-import { blogPosts } from "@/lib/blog-data"
+import { usePosts } from "@/hooks/use-posts"
 import { NewsletterSubscription } from "@/components/newsletter-subscription"
 import { ReadingTime } from "@/components/reading-time"
 import { SeriesNavigation } from "@/components/series-navigation"
@@ -19,6 +19,7 @@ import { AuthorProfile } from "@/components/author-profile"
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const [isLoaded, setIsLoaded] = useState(false)
+  const blogPosts = usePosts()
 
   // Find the blog post by slug
   const post = blogPosts.find((post) => post.slug === params.slug)
@@ -27,7 +28,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     setIsLoaded(true)
   }, [])
 
-  if (!post && isLoaded) {
+  if (!post && isLoaded && blogPosts.length > 0) {
     return (
       <>
         <Navigation />

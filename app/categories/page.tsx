@@ -10,10 +10,11 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { CategoriesIndexSchema } from "@/components/schema/categories-index-schema"
 import { categoryData } from "@/lib/category-data"
-import { blogPosts } from "@/lib/blog-data"
+import { usePosts } from "@/hooks/use-posts"
 
 export default function CategoriesPage() {
   const [isLoaded, setIsLoaded] = useState(false)
+  const blogPosts = usePosts()
 
   // Count posts per category
   const categoryCounts = categoryData.map((category) => {

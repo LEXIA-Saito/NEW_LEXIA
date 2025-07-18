@@ -10,11 +10,12 @@ import { Input } from "@/components/ui/input"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { TagSchema } from "@/components/schema/tag-schema"
-import { blogPosts } from "@/lib/blog-data"
+import { usePosts } from "@/hooks/use-posts"
 
 export default function TagPage({ params }: { params: { tag: string } }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [isLoaded, setIsLoaded] = useState(false)
+  const blogPosts = usePosts()
 
   // Get tag info
   const tagSlug = params.tag.toLowerCase()

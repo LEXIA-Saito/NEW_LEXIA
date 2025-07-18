@@ -10,12 +10,13 @@ import { Input } from "@/components/ui/input"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { AuthorSchema } from "@/components/schema/author-schema"
-import { blogPosts } from "@/lib/blog-data"
+import { usePosts } from "@/hooks/use-posts"
 import { authorData } from "@/lib/author-data"
 
 export default function AuthorPage({ params }: { params: { author: string } }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [isLoaded, setIsLoaded] = useState(false)
+  const blogPosts = usePosts()
 
   // Get author info
   const authorSlug = decodeURIComponent(params.author).toLowerCase().replace(/\s+/g, "-")

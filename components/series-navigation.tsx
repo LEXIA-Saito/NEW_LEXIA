@@ -4,7 +4,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react"
 import { getSeriesNavigation, getSeriesPosts } from "@/lib/blog-utils"
-import { blogPosts } from "@/lib/blog-data"
+import { usePosts } from "@/hooks/use-posts"
 
 interface SeriesNavigationProps {
   currentPost: any
@@ -14,6 +14,8 @@ export function SeriesNavigation({ currentPost }: SeriesNavigationProps) {
   if (!currentPost.series) {
     return null
   }
+
+  const blogPosts = usePosts()
 
   const { next, previous } = getSeriesNavigation(currentPost, blogPosts)
   const seriesPosts = getSeriesPosts(currentPost.series.id, blogPosts)
