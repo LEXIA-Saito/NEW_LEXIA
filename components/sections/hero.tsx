@@ -50,7 +50,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            デジタルであなたのストーリーを伝え、成果につなげます。
+            碧南市のホームページ制作ならLEXIAへ。Web制作からSEO対策までワンストップで成果につなげます。
           </motion.p>
 
           <motion.div
