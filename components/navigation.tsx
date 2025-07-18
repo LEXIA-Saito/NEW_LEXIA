@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Search } from "lucide-react"
+import { Menu, X, Search, Instagram } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { SearchDialog } from "@/components/search-dialog"
 import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
@@ -139,6 +139,18 @@ export default function Navigation() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.8 }}>
               <ThemeToggle />
             </motion.div>
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.9 }}
+              href="https://www.instagram.com/lexia_web/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-5 w-5" />
+            </motion.a>
           </div>
 
           <div className="flex items-center space-x-4 md:hidden">
@@ -155,10 +167,22 @@ export default function Navigation() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.4 }}>
               <ThemeToggle />
             </motion.div>
-            <motion.button
+            <motion.a
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.5 }}
+              href="https://www.instagram.com/lexia_web/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-5 w-5" />
+            </motion.a>
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.6 }}
               className="text-neutral-900 dark:text-neutral-100"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="メニューを開く"
@@ -211,6 +235,17 @@ export default function Navigation() {
                   </motion.li>
                 ))}
               </ul>
+              <div className="mt-8">
+                <Link
+                  href="https://www.instagram.com/lexia_web/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                >
+                  <Instagram className="h-6 w-6" />
+                </Link>
+              </div>
             </nav>
           </motion.div>
         )}
