@@ -16,9 +16,9 @@ export default function ContactCTA() {
         <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-6">
           お問い合わせはこちら
         </h2>
-        <Link href="/contact">
+        <Link href="https://www.instagram.com/lexia_web/" target="_blank" rel="noopener noreferrer">
           <Button className="rounded-full px-8 py-6 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900">
-            お問い合わせフォームへ
+            Instagramで相談する
           </Button>
         </Link>
       </motion.div>
