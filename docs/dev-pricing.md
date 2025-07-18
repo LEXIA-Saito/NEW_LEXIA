@@ -30,7 +30,7 @@
 - `uiComplexityCoefficient` – 特殊なUIを実装する場合に上乗せします。
 
 ### 使用例
-```ts
+\`\`\`ts
 import { calculateDevPricing } from '../lib/devPricing';
 
 const params = {
@@ -45,4 +45,4 @@ const params = {
 
 const total = calculateDevPricing(params);
 console.log(total); // 計算結果(円)
-```
+\`\`\`
