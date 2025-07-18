@@ -9,6 +9,7 @@ import HomepageRunningCost from "@/components/pricing/homepage-running-cost"
 import GeneralPricingTable, {
   PricingItem,
 } from "@/components/pricing/general-pricing-table"
+import DesignCalculator from "@/components/pricing/design-calculator"
 import PcClassPricingTable from "@/components/pricing/pc-class-pricing-table"
 
 export default function PricingPage() {
@@ -66,7 +67,7 @@ export default function PricingPage() {
               <GeneralPricingTable />
             </TabsContent>
             <TabsContent value="design">
-              <GeneralPricingTable />
+              <DesignCalculator />
             </TabsContent>
             <TabsContent value="pc">
               <PcClassPricingTable />
