@@ -8,6 +8,7 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Hero from "@/components/sections/hero"
 import ContactCTA from "@/components/sections/contact-cta"
+import PricingCTA from "@/components/sections/pricing-cta"
 
 export default function Home() {
   return (
@@ -24,6 +25,10 @@ export default function Home() {
 
       <section id="process" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800">
         <OurProcess />
+      </section>
+
+      <section className="py-24 md:py-32">
+        <PricingCTA />
       </section>
 
       <section id="work" className="py-24 md:py-32">
