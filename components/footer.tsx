@@ -14,7 +14,7 @@ export default function Footer() {
   }
 
   const menuItems = [
-    { name: "事業概要", href: "/about-lexia" },
+    { name: "事業概要", href: "/company" },
     { name: "制作工程", href: "#process" },
     { name: "制作実績", href: "/projects" },
     { name: "チーム", href: "#team" },

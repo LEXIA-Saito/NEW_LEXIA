@@ -8,7 +8,7 @@ import ContactForm from "@/components/contact-form"
 import { motion } from "framer-motion"
 import LexiaLogoParticles from "@/components/lexia-logo-particles"
 
-export default function AboutLexiaPage() {
+export default function CompanyPage() {
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },

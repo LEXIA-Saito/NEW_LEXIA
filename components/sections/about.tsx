@@ -47,7 +47,7 @@ export default function About() {
             <p className="text-neutral-700 dark:text-neutral-300 mb-6">
               {t('about.listen.body')}
             </p>
-            <Link href="/about-lexia">
+            <Link href="/company">
               <Button className="rounded-full px-6 py-4 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 group">
                 {t('about.learnProcess')}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
