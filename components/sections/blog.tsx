@@ -9,41 +9,8 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { t } from "@/lib/i18n"
 
-// Sample blog posts data
-const blogPosts = [
-  {
-    id: 1,
-    title: t("blog.post.sustainable.title"),
-    excerpt:
-      "Exploring how sustainable design practices can create environmentally responsible and resource-efficient buildings.",
-    image: "/blog/blog-1.png",
-    date: "May 15, 2023",
-    author: "Rafly Kurnia",
-    slug: "sustainable-architecture",
-    category: t("blog.category.sustainability"),
-  },
-  {
-    id: 2,
-    title: t("blog.post.psychology.title"),
-    excerpt: "Understanding the profound impact that spatial design has on human psychology and emotional wellbeing.",
-    image: "/blog/blog-2.png",
-    date: "April 3, 2023",
-    author: "Maya Wijaya",
-    slug: "psychology-of-space",
-    category: t("blog.category.designTheory"),
-  },
-  {
-    id: 3,
-    title: t("blog.post.caseStudy.title"),
-    excerpt:
-      "How we integrated traditional Indonesian architectural elements with contemporary design in a recent project.",
-    image: "/blog/blog-3.png",
-    date: "March 12, 2023",
-    author: "Rafly Kurnia",
-    slug: "blending-traditional-modern",
-    category: t("blog.category.caseStudy"),
-  },
-]
+// Blog posts are now managed via microCMS
+const blogPosts: any[] = []
 
 export default function Blog() {
   const fadeIn = {

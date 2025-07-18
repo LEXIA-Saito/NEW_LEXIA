@@ -61,25 +61,8 @@ const allProjects = [
   },
 ]
 
-// Sample blog posts for search
-const allBlogPosts = [
-  {
-    id: 1,
-    title: "Sustainable Architecture: Building for the Future",
-    excerpt: "Exploring sustainable design practices for environmentally responsible buildings.",
-    image: "/blog/blog-1.png",
-    slug: "sustainable-architecture",
-    type: "blog",
-  },
-  {
-    id: 2,
-    title: "The Psychology of Space",
-    excerpt: "Understanding how spatial design impacts human psychology and wellbeing.",
-    image: "/blog/blog-2.png",
-    slug: "psychology-of-space",
-    type: "blog",
-  },
-]
+// Blog posts are now fetched from microCMS
+const allBlogPosts: any[] = []
 
 interface SearchDialogProps {
   open: boolean
