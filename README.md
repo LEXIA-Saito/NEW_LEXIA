@@ -42,9 +42,9 @@ Next.js の `useSearchParams` フックを使用する際は、非同期処理�
 
 記事コンテンツは microCMS で管理します。以下の環境変数を `.env` に設定してください。
 
-```
+\`\`\`
 NEXT_PUBLIC_MICROCMS_DOMAIN=<サービスドメイン>
 MICROCMS_API_KEY=<API キー>
-```
+\`\`\`
 
 `lib/microcms.ts` にて microCMS のクライアントを生成しています。エンドポイント名は `posts`、`categories`、`authors` を想定していますが、必要に応じて変更してください。
