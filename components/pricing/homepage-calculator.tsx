@@ -10,6 +10,7 @@ export default function HomepageCalculator() {
   const [cms, setCms] = useState(false)
   const [ssr, setSsr] = useState(false)
   const [login, setLogin] = useState(false)
+  const [form, setForm] = useState(false)
   const [images, setImages] = useState(0)
   const [photos, setPhotos] = useState(0)
   const [videos, setVideos] = useState(0)
@@ -22,9 +23,19 @@ export default function HomepageCalculator() {
   const cmsCost = cms ? 10000 : 0
   const ssrCost = ssr ? 20000 : 0
   const loginCost = login ? 10000 : 0
+  const formCost = form ? 10000 : 0
   const planningCost = pages * 5000 + images * 1000 + photos * 1000 + videos * 5000
 
-  const subtotal = pageCost + directionCost + planningCost + cmsCost + ssrCost + loginCost + codingCost + designCost
+  const subtotal =
+    pageCost +
+    directionCost +
+    planningCost +
+    cmsCost +
+    ssrCost +
+    loginCost +
+    formCost +
+    codingCost +
+    designCost
   const managementCost = Math.ceil(subtotal * 0.1)
   const total = subtotal + managementCost
 
@@ -106,6 +117,13 @@ export default function HomepageCalculator() {
             <Checkbox checked={login} onCheckedChange={() => setLogin(!login)} />
           </TableCell>
           <TableCell className="text-right">{loginCost.toLocaleString()}</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className="flex items-center gap-2">
+            お問い合わせフォーム導入
+            <Checkbox checked={form} onCheckedChange={() => setForm(!form)} />
+          </TableCell>
+          <TableCell className="text-right">{formCost.toLocaleString()}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell>コーディング費用</TableCell>
