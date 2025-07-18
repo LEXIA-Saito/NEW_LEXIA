@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowUpRight, ChevronLeft, ChevronRight, Quote, ExternalLink, Filter } from "lucide-react"
+import { ArrowUpRight, Quote, Filter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Chip } from "@/components/ui/chip"
 import SectionIcon from "@/components/section-icon"
@@ -22,39 +22,9 @@ const categories = [
 
 // Projects will be fetched from microCMS
 
-// Featured testimonials for carousel
-const testimonials = [
-  {
-    id: 1,
-    quote:
-      "I've partnered with many design agencies, but LEXIA stands out for their user-centric approach and innovative web solutions. They consistently deliver products that exceed user expectations and drive engagement.",
-    author: "Amelia Rodriguez",
-    role: "SaaS Product Manager",
-    image: "/testimonials/person-3.png", // Placeholder: Consider updating image
-  },
-  {
-    id: 2,
-    quote:
-      "LEXIA took our startup's vision and crafted a website that perfectly balances aesthetics and user experience. Their attention to detail and collaborative approach were key to our successful launch.",
-    author: "Sarah Johnson",
-    role: "Startup Founder",
-    image: "/testimonials/person-1.png", // Placeholder: Consider updating image
-  },
-  {
-    id: 3,
-    quote:
-      "Partnering with LEXIA for our e-commerce platform was seamless. They understood our brand and built a site that our customers find intuitive and engaging, significantly boosting sales.",
-    author: "Michael Chen",
-    role: "E-commerce Business Owner",
-    image: "/testimonials/person-2.png", // Placeholder: Consider updating image
-  },
-]
-
 export default function Work() {
   const [projects, setProjects] = useState<any[]>([])
   const [activeCategory, setActiveCategory] = useState("all")
-  const [currentTestimonial, setCurrentTestimonial] = useState(0)
-  const [direction, setDirection] = useState(0)
   const [activeFilters, setActiveFilters] = useState<string[]>([])
   const [showFilterMenu, setShowFilterMenu] = useState(false)
 
@@ -89,30 +59,7 @@ export default function Work() {
   // Featured projects for the showcase
   const featuredProjects = projects.filter((project) => project.featured)
 
-  const goToPrevious = () => {
-    setDirection(-1)
-    setCurrentTestimonial((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))
-  }
 
-  const goToNext = () => {
-    setDirection(1)
-    setCurrentTestimonial((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))
-  }
-
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-  }
 
   const toggleFilter = (filter: string) => {
     setActiveFilters((prev) => (prev.includes(filter) ? prev.filter((f) => f !== filter) : [...prev, filter]))
@@ -239,110 +186,6 @@ export default function Work() {
         ))}
       </div>
 
-      {/* Testimonials Carousel */}
-      <div className="mb-24">
-        <div className="text-center mb-12">
-          <motion.h3
-            className="text-2xl font-light text-neutral-900 dark:text-neutral-100"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            variants={fadeIn}
-          >
-            {t('ourWork.clientsSay')}
-          </motion.h3>
-        </div>
-
-        <div className="relative max-w-3xl mx-auto">
-          <div className="overflow-hidden">
-            <div className="relative h-[250px] md:h-[200px]">
-              <AnimatePresence initial={false} custom={direction}>
-                <motion.div
-                  key={currentTestimonial}
-                  custom={direction}
-                  variants={variants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{
-                    x: { type: "spring", stiffness: 300, damping: 30 },
-                    opacity: { duration: 0.2 },
-                  }}
-                  className="absolute w-full"
-                >
-                  <motion.div
-                    className="bg-neutral-50 dark:bg-neutral-800 p-6 md:p-8 rounded-lg text-center"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Quote className="h-6 w-6 text-neutral-300 dark:text-neutral-600 mx-auto mb-4" />
-                    <p className="text-neutral-700 dark:text-neutral-300 italic mb-6">
-                      "{testimonials[currentTestimonial].quote}"
-                    </p>
-                    <div className="flex items-center justify-center">
-                      <div className="relative w-10 h-10 rounded-full overflow-hidden mr-3">
-                        <Image
-                          src={testimonials[currentTestimonial].image || "/placeholder.svg"}
-                          alt={testimonials[currentTestimonial].author}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="text-left">
-                        <p className="font-medium text-neutral-900 dark:text-neutral-100 text-sm">
-                          {testimonials[currentTestimonial].author}
-                        </p>
-                        <p className="text-neutral-500 dark:text-neutral-400 text-xs">
-                          {testimonials[currentTestimonial].role}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-
-          <div className="flex justify-center mt-6 gap-2">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  setDirection(index > currentTestimonial ? 1 : -1)
-                  setCurrentTestimonial(index)
-                }}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === currentTestimonial
-                    ? "bg-neutral-900 dark:bg-neutral-100 w-6"
-                    : "bg-neutral-300 dark:bg-neutral-600"
-                }`}
-                aria-label={`Go to testimonial ${index + 1}`}
-              />
-            ))}
-          </div>
-
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 bg-white dark:bg-neutral-800 shadow-md rounded-full h-10 w-10"
-            onClick={goToPrevious}
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </Button>
-
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 bg-white dark:bg-neutral-800 shadow-md rounded-full h-10 w-10"
-            onClick={goToNext}
-            aria-label="Next testimonial"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </Button>
-        </div>
-      </div>
 
       {/* Portfolio Gallery */}
       <div>
