@@ -36,6 +36,9 @@ export default function AboutLexiaPage() {
             <p className="text-neutral-700 dark:text-neutral-300 mb-2">代表: 齋藤雅人</p>
             <p className="text-neutral-700 dark:text-neutral-300 mb-2">所在地: 愛知県碧南市川端町1-45</p>
             <p className="text-neutral-700 dark:text-neutral-300 mb-2">連絡先: 090-1742-3456 / lexia0web@gmail.com</p>
+            <p className="text-neutral-700 dark:text-neutral-300 mb-2">
+              代表の齋藤雅人は生まれも育ちも愛知県碧南市。WEB制作歴5年の経験を生かし、地域の中小企業や個人事業主のホームページ制作をサポートしています。
+            </p>
           </section>
 
           <section className="space-y-8">
