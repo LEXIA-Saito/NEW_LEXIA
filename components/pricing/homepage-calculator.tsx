@@ -15,6 +15,7 @@ export default function HomepageCalculator() {
   const [photos, setPhotos] = useState(0)
   const [videos, setVideos] = useState(0)
   const [designRevisions, setDesignRevisions] = useState(1)
+  const [discount, setDiscount] = useState(0)
 
   const pageCost = pages * 10000
   const directionCost = 50000
@@ -37,7 +38,7 @@ export default function HomepageCalculator() {
     codingCost +
     designCost
   const managementCost = Math.ceil(subtotal * 0.1)
-  const total = subtotal + managementCost
+  const total = subtotal + managementCost - discount
 
   return (
     <Table>
@@ -145,6 +146,19 @@ export default function HomepageCalculator() {
         <TableRow>
           <TableCell>プロジェクト管理費</TableCell>
           <TableCell className="text-right">{managementCost.toLocaleString()}</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className="flex items-center gap-2">
+            割引
+            <Input
+              type="number"
+              min={0}
+              value={discount}
+              onChange={(e) => setDiscount(parseInt(e.target.value) || 0)}
+              className="w-20"
+            />
+          </TableCell>
+          <TableCell className="text-right">-{discount.toLocaleString()}</TableCell>
         </TableRow>
       </TableBody>
       <TableFooter>
