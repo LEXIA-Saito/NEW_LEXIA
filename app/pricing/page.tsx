@@ -6,10 +6,22 @@ import Footer from "@/components/footer"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import HomepageCalculator from "@/components/pricing/homepage-calculator"
 import HomepageRunningCost from "@/components/pricing/homepage-running-cost"
-import GeneralPricingTable from "@/components/pricing/general-pricing-table"
+import GeneralPricingTable, {
+  PricingItem,
+} from "@/components/pricing/general-pricing-table"
 
 export default function PricingPage() {
   const [tab, setTab] = useState("homepage")
+
+  const ecItems: PricingItem[] = [
+    { name: "ディレクション費用", cost: 50000 },
+    { name: "デザイン費用", cost: 100000 },
+    { name: "コーディング費用", cost: 100000 },
+    { name: "システム開発費用", cost: 200000 },
+    { name: "CMS・管理画面構築費用", cost: 100000 },
+    { name: "テスト・調整費用", cost: 50000 },
+    { name: "SEO・マーケ対策費用", cost: 50000 },
+  ]
 
   return (
     <>
@@ -20,20 +32,22 @@ export default function PricingPage() {
             料金計算
           </h1>
           <Tabs value={tab} onValueChange={setTab} className="w-full">
-            <TabsList className="flex flex-wrap justify-center mb-4">
-              <TabsTrigger value="homepage">ホームページ制作</TabsTrigger>
-              <TabsTrigger value="ec">ECサイト制作</TabsTrigger>
-              <TabsTrigger value="system">システム開発</TabsTrigger>
-              <TabsTrigger value="design">デザイン制作</TabsTrigger>
-              <TabsTrigger value="pc">PC教室</TabsTrigger>
-              <TabsTrigger value="ai">AI活用サポート</TabsTrigger>
-            </TabsList>
+            <div className="overflow-x-auto mb-4">
+              <TabsList className="flex w-max">
+                <TabsTrigger value="homepage">ホームページ制作</TabsTrigger>
+                <TabsTrigger value="ec">ECサイト制作</TabsTrigger>
+                <TabsTrigger value="system">システム開発</TabsTrigger>
+                <TabsTrigger value="design">デザイン制作</TabsTrigger>
+                <TabsTrigger value="pc">PC教室</TabsTrigger>
+                <TabsTrigger value="ai">AI活用サポート</TabsTrigger>
+              </TabsList>
+            </div>
             <TabsContent value="homepage">
               <HomepageCalculator />
               <HomepageRunningCost />
             </TabsContent>
             <TabsContent value="ec">
-              <GeneralPricingTable />
+              <GeneralPricingTable items={ecItems} note="料金は一例で変化する場合があります。" />
             </TabsContent>
             <TabsContent value="system">
               <GeneralPricingTable />
