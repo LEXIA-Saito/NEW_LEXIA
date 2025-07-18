@@ -53,3 +53,4 @@ MICROCMS_API_KEY=<API キー>
 ## 料金シミュレーション
 
 初期費用とランニングコストの計算方法については [docs/pricing.md](docs/pricing.md) にまとめています。
+システム開発向けの詳細な料金計算例は [docs/dev-pricing.md](docs/dev-pricing.md) を参照してください。
