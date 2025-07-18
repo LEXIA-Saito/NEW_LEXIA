@@ -3,73 +3,48 @@
 import { useState } from "react"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
-import { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell } from "@/components/ui/table"
-import { Checkbox } from "@/components/ui/checkbox"
-
-const services = [
-  { id: "corporate", name: "コーポレートサイト(5ページ)", price: 300000 },
-  { id: "ec", name: "ECサイト", price: 500000 },
-  { id: "lp", name: "ランディングページ", price: 150000 },
-  { id: "seo", name: "SEO対策", price: 50000 },
-  { id: "maintenance", name: "保守管理(月額)", price: 10000 },
-]
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import HomepageCalculator from "@/components/pricing/homepage-calculator"
 
 export default function PricingPage() {
-  const [selected, setSelected] = useState<string[]>([])
-
-  const toggle = (id: string) => {
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
-    )
-  }
-
-  const total = selected.reduce((sum, id) => {
-    const service = services.find((s) => s.id === id)
-    return sum + (service?.price || 0)
-  }, 0)
+  const [tab, setTab] = useState("homepage")
 
   return (
     <>
       <Navigation />
       <main className="min-h-screen bg-white dark:bg-neutral-900">
-        <div className="container mx-auto px-4 py-24 md:py-32 max-w-4xl">
+        <div className="container mx-auto px-4 py-24 md:py-32 max-w-5xl">
           <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-8 text-center">
             料金計算
           </h1>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-12" />
-                <TableHead>サービス</TableHead>
-                <TableHead className="text-right">料金(円)</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {services.map((s) => (
-                <TableRow key={s.id}>
-                  <TableCell>
-                    <Checkbox
-                      checked={selected.includes(s.id)}
-                      onCheckedChange={() => toggle(s.id)}
-                    />
-                  </TableCell>
-                  <TableCell>{s.name}</TableCell>
-                  <TableCell className="text-right">
-                    {s.price.toLocaleString()}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell />
-                <TableHead className="text-right">合計</TableHead>
-                <TableCell className="text-right font-medium">
-                  {total.toLocaleString()} 円
-                </TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
+          <Tabs value={tab} onValueChange={setTab} className="w-full">
+            <TabsList className="flex flex-wrap justify-center mb-4">
+              <TabsTrigger value="homepage">ホームページ制作</TabsTrigger>
+              <TabsTrigger value="ec">ECサイト制作</TabsTrigger>
+              <TabsTrigger value="system">システム開発</TabsTrigger>
+              <TabsTrigger value="design">デザイン制作</TabsTrigger>
+              <TabsTrigger value="pc">PC教室</TabsTrigger>
+              <TabsTrigger value="ai">AI活用サポート</TabsTrigger>
+            </TabsList>
+            <TabsContent value="homepage">
+              <HomepageCalculator />
+            </TabsContent>
+            <TabsContent value="ec">
+              <p className="p-4 text-center">準備中</p>
+            </TabsContent>
+            <TabsContent value="system">
+              <p className="p-4 text-center">準備中</p>
+            </TabsContent>
+            <TabsContent value="design">
+              <p className="p-4 text-center">準備中</p>
+            </TabsContent>
+            <TabsContent value="pc">
+              <p className="p-4 text-center">準備中</p>
+            </TabsContent>
+            <TabsContent value="ai">
+              <p className="p-4 text-center">準備中</p>
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
       <Footer />
