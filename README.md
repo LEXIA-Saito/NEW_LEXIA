@@ -49,3 +49,7 @@ MICROCMS_API_KEY=<API キー>
 \`\`\`
 
 `lib/microcms.ts` にて microCMS のクライアントを生成しています。利用するエンドポイントは `posts`、`categories`、`authors`、`projects` です。`service` というエンドポイントは存在しないため、呼び出しは行っていません。
+
+## 料金シミュレーション
+
+初期費用とランニングコストの計算方法については [docs/pricing.md](docs/pricing.md) にまとめています。
