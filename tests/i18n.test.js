@@ -3,8 +3,8 @@ const ja = require('../locales/ja.json');
 const en = require('../locales/en.json');
 
 assert.strictEqual(ja['hero.viewWork'], '制作実績を見る');
-assert.strictEqual(ja['hero.connectLinkedIn'], 'LinkedInでつながる');
+assert.strictEqual(ja['hero.contact'], 'お問い合わせフォームへ');
 assert.strictEqual(en['hero.viewWork'], 'View Work');
-assert.strictEqual(en['hero.connectLinkedIn'], 'Connect on LinkedIn');
+assert.strictEqual(en['hero.contact'], 'Contact Form');
 
 console.log('i18n JSON tests passed');
