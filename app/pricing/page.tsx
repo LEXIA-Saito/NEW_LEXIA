@@ -9,6 +9,7 @@ import HomepageRunningCost from "@/components/pricing/homepage-running-cost"
 import GeneralPricingTable, {
   PricingItem,
 } from "@/components/pricing/general-pricing-table"
+import PcClassPricingTable from "@/components/pricing/pc-class-pricing-table"
 
 export default function PricingPage() {
   const [tab, setTab] = useState("homepage")
@@ -56,7 +57,7 @@ export default function PricingPage() {
               <GeneralPricingTable />
             </TabsContent>
             <TabsContent value="pc">
-              <GeneralPricingTable />
+              <PcClassPricingTable />
             </TabsContent>
             <TabsContent value="ai">
               <GeneralPricingTable />
