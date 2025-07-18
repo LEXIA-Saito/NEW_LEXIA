@@ -13,7 +13,7 @@ import Footer from "@/components/footer"
 import { BlogListSchema } from "@/components/schema/blog-list-schema"
 import { blogPosts as staticBlogPosts } from "@/lib/blog-data"
 import { categoryData } from "@/lib/category-data"
-import { NewsletterSubscription } from "@/components/newsletter-subscription"
+import { InstagramContactCTA } from "@/components/instagram-contact-cta"
 import { ReadingTime } from "@/components/reading-time"
 import { getAllSeries } from "@/lib/blog-utils"
 
@@ -478,9 +478,9 @@ export default function BlogPage() {
           )}
         </div>
 
-        {/* Add the newsletter section here */}
+        {/* Instagram contact CTA section */}
         <div className="max-w-3xl mx-auto px-4 mt-20 mb-20">
-          <NewsletterSubscription />
+          <InstagramContactCTA />
         </div>
       </main>
       <Footer />
