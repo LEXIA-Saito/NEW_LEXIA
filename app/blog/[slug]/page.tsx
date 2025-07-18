@@ -10,7 +10,7 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { BlogSchema } from "@/components/schema/blog-schema"
 import { Button } from "@/components/ui/button"
-import { blogPosts } from "@/lib/blog-data"
+import { blogPosts as staticBlogPosts } from "@/lib/blog-data"
 import { NewsletterSubscription } from "@/components/newsletter-subscription"
 import { ReadingTime } from "@/components/reading-time"
 import { SeriesNavigation } from "@/components/series-navigation"
@@ -19,13 +19,21 @@ import { AuthorProfile } from "@/components/author-profile"
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const [isLoaded, setIsLoaded] = useState(false)
-
-  // Find the blog post by slug
-  const post = blogPosts.find((post) => post.slug === params.slug)
+  const [post, setPost] = useState<any | null>(null)
+  const [allPosts, setAllPosts] = useState<any[]>(staticBlogPosts)
 
   useEffect(() => {
-    setIsLoaded(true)
-  }, [])
+    Promise.all([
+      fetch(`/api/posts/${params.slug}`).then((res) => (res.ok ? res.json() : null)),
+      fetch("/api/posts").then((res) => (res.ok ? res.json() : [])),
+    ])
+      .then(([p, all]) => {
+        setPost(p)
+        setAllPosts(all)
+      })
+      .catch((e) => console.error(e))
+      .finally(() => setIsLoaded(true))
+  }, [params.slug])
 
   if (!post && isLoaded) {
     return (
@@ -48,12 +56,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   }
 
   // Find related posts (same category, excluding current post)
-  const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug && p.category === post.category).slice(0, 3)
+  const relatedPosts = allPosts.filter((p) => p.slug !== post.slug && p.category === post.category).slice(0, 3)
 
   // Find next and previous posts
-  const currentIndex = blogPosts.findIndex((p) => p.slug === post.slug)
-  const prevPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null
-  const nextPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null
+  const currentIndex = allPosts.findIndex((p) => p.slug === post.slug)
+  const prevPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null
+  const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null
 
   return (
     <>

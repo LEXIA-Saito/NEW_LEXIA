@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { BlogListSchema } from "@/components/schema/blog-list-schema"
-import { blogPosts } from "@/lib/blog-data"
+import { blogPosts as staticBlogPosts } from "@/lib/blog-data"
 import { categoryData } from "@/lib/category-data"
 import { NewsletterSubscription } from "@/components/newsletter-subscription"
 import { ReadingTime } from "@/components/reading-time"
@@ -25,6 +25,7 @@ export default function BlogPage() {
   const [activeSeries, setActiveSeries] = useState<string | null>(null)
   const [showFilters, setShowFilters] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [blogPosts, setBlogPosts] = useState<any[]>(staticBlogPosts)
 
   // Extract unique years and authors for filtering
   const years = Array.from(new Set(blogPosts.map((post) => new Date(post.date).getFullYear().toString()))).sort(
@@ -61,7 +62,11 @@ export default function BlogPage() {
     .slice(0, 3)
 
   useEffect(() => {
-    setIsLoaded(true)
+    fetch("/api/posts")
+      .then((res) => res.json())
+      .then((data) => setBlogPosts(data))
+      .catch((e) => console.error(e))
+      .finally(() => setIsLoaded(true))
   }, [])
 
   const clearFilters = () => {
