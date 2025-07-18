@@ -6,6 +6,7 @@ import Footer from "@/components/footer"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import HomepageCalculator from "@/components/pricing/homepage-calculator"
 import HomepageRunningCost from "@/components/pricing/homepage-running-cost"
+import GeneralPricingTable from "@/components/pricing/general-pricing-table"
 
 export default function PricingPage() {
   const [tab, setTab] = useState("homepage")
@@ -32,19 +33,19 @@ export default function PricingPage() {
               <HomepageRunningCost />
             </TabsContent>
             <TabsContent value="ec">
-              <p className="p-4 text-center">準備中</p>
+              <GeneralPricingTable />
             </TabsContent>
             <TabsContent value="system">
-              <p className="p-4 text-center">準備中</p>
+              <GeneralPricingTable />
             </TabsContent>
             <TabsContent value="design">
-              <p className="p-4 text-center">準備中</p>
+              <GeneralPricingTable />
             </TabsContent>
             <TabsContent value="pc">
-              <p className="p-4 text-center">準備中</p>
+              <GeneralPricingTable />
             </TabsContent>
             <TabsContent value="ai">
-              <p className="p-4 text-center">準備中</p>
+              <GeneralPricingTable />
             </TabsContent>
           </Tabs>
         </div>
