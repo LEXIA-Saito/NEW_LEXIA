@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
@@ -20,96 +20,7 @@ const categories = [
   { id: "seo", name: t("categories.seo") },
 ]
 
-// Portfolio projects data with categories and testimonials
-const projects = [
-  {
-    id: 1,
-    title: t("project.ecommerce.title"),
-    description: t("project.ecommerce.body"),
-    image: "/portfolio/house-1.png", // Placeholder: replace with web design project image
-    slug: "ecommerce-platform-refresh",
-    categories: ["ecommerce", "webapp", "seo"],
-    tags: t("project.ecommerce.tags"),
-    featured: true,
-    testimonial: {
-      quote: t("project.ecommerce.quote"),
-      author: "Sarah Johnson",
-      role: "スタートアップ創業者",
-      image: "/testimonials/person-1.png", // Placeholder: consider updating image for new role
-    },
-    location: "Fashion E-commerce",
-    year: "2023",
-  },
-  {
-    id: 2,
-    title: t("project.startup.title"),
-    description: t("project.startup.body"),
-    image: "/portfolio/house-2.png", // Placeholder: replace with web design project image
-    slug: "startup-landing-page",
-    categories: ["corporate", "branding"],
-    featured: true,
-    location: "Tech Startup",
-    year: "2022",
-  },
-  {
-    id: 3,
-    title: t("project.saas.title"),
-    description: t("project.saas.body"),
-    image: "/portfolio/house-3.png", // Placeholder: replace with web design project image
-    slug: "saas-product-website",
-    categories: ["webapp", "corporate", "seo"],
-    featured: false,
-    location: "Software Solutions",
-    year: "2023",
-  },
-  {
-    id: 4,
-    title: t("project.corporate.title"),
-    description: t("project.corporate.body"),
-    image: "/portfolio/house-4.png", // Placeholder: replace with web design project image
-    slug: "corporate-portal-redesign",
-    categories: ["corporate", "webapp"],
-    featured: true,
-    testimonial: {
-      quote:
-        "LEXIA's redesign of our corporate website has completely transformed our online presence. The thoughtful UX has improved lead generation, and we're proud to direct clients to our new site.",
-      author: "David Okafor",
-      role: "Head of Digital",
-      image: "/testimonials/person-4.png", // Placeholder: consider updating image for new role
-    },
-    location: "Financial Services",
-    year: "2022",
-  },
-  {
-    id: 5,
-    title: t("project.portfolio.title"),
-    description: t("project.portfolio.body"),
-    image: "/portfolio/house-5.png", // Placeholder: replace with web design project image
-    slug: "portfolio-site-for-creatives",
-    categories: ["branding", "corporate"],
-    featured: false,
-    location: "Design Agency",
-    year: "2021",
-  },
-  {
-    id: 6,
-    title: t("project.booking.title"),
-    description: t("project.booking.body"),
-    image: "/portfolio/house-6.png", // Placeholder: replace with web design project image
-    slug: "online-booking-system",
-    categories: ["webapp", "ecommerce"],
-    featured: true,
-    testimonial: {
-      quote:
-        "Partnering with LEXIA for our e-commerce platform was seamless. They understood our brand and built a site that our customers find intuitive and engaging, significantly boosting sales.",
-      author: "Michael Chen",
-      role: "E-commerce Business Owner",
-      image: "/testimonials/person-2.png", // Placeholder: consider updating image for new role
-    },
-    location: "Travel & Tourism",
-    year: "2022",
-  },
-]
+// Projects will be fetched from microCMS
 
 // Featured testimonials for carousel
 const testimonials = [
@@ -140,11 +51,22 @@ const testimonials = [
 ]
 
 export default function Work() {
+  const [projects, setProjects] = useState<any[]>([])
   const [activeCategory, setActiveCategory] = useState("all")
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
   const [direction, setDirection] = useState(0)
   const [activeFilters, setActiveFilters] = useState<string[]>([])
   const [showFilterMenu, setShowFilterMenu] = useState(false)
+
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((res) => res.json())
+      .then((data) => setProjects(data))
+      .catch((e) => {
+        console.error(e)
+        setProjects([])
+      })
+  }, [])
 
   // Filter projects based on active category and filters
   const filteredProjects = projects.filter((project) => {
@@ -223,6 +145,9 @@ export default function Work() {
 
       {/* Featured Projects Showcase */}
       <div className="mb-24">
+        {featuredProjects.length === 0 && (
+          <p className="text-center text-neutral-500 mb-8">投稿がありません</p>
+        )}
         {featuredProjects.slice(0, 2).map((project, index) => (
           <motion.div
             key={project.id}
@@ -516,6 +441,11 @@ export default function Work() {
             initial="hidden"
             animate="visible"
           >
+            {filteredProjects.length === 0 && (
+              <p className="col-span-3 text-center text-neutral-500">
+                投稿がありません
+              </p>
+            )}
             {filteredProjects.map((project) => (
               <motion.div
                 layout

@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
 import SectionIcon from "@/components/section-icon"
@@ -9,10 +10,19 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { t } from "@/lib/i18n"
 
-// Blog posts are now managed via microCMS
-const blogPosts: any[] = []
-
 export default function Blog() {
+  const [blogPosts, setBlogPosts] = useState<any[]>([])
+
+  useEffect(() => {
+    fetch("/api/posts")
+      .then((res) => res.json())
+      .then((data) => setBlogPosts(data))
+      .catch((e) => {
+        console.error(e)
+        setBlogPosts([])
+      })
+  }, [])
+
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
@@ -42,6 +52,11 @@ export default function Blog() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {blogPosts.length === 0 && (
+          <p className="col-span-3 text-center text-neutral-500">
+            投稿がありません
+          </p>
+        )}
         {blogPosts.map((post, index) => (
           <motion.div
             key={post.id}

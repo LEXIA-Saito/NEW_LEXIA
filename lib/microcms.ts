@@ -23,3 +23,12 @@ export const getAuthors = async () => {
   const res = await microcmsClient.get({ endpoint: 'authors' })
   return res.contents as any[]
 }
+
+export const getProjects = async () => {
+  const res = await microcmsClient.get({ endpoint: 'projects' })
+  return res.contents as any[]
+}
+
+export const getProject = async (slug: string) => {
+  return microcmsClient.get({ endpoint: 'projects', contentId: slug })
+}
