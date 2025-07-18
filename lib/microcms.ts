@@ -1,9 +1,11 @@
 import { createClient } from 'microcms-js-sdk'
 
 export const microcmsClient = createClient({
-  // Vercel 環境変数との互換性を考慮して複数の名称を参照
+  // 対応するサービスドメインを環境変数から取得
+  // 以前は `LEXIA_MICROCMS_SERVICE_DOMAIN` を参照していましたが
+  // 誤解を招くため `LEXIA_MICROCMS_DOMAIN` に統一しました
   serviceDomain:
-    process.env.LEXIA_MICROCMS_SERVICE_DOMAIN ||
+    process.env.LEXIA_MICROCMS_DOMAIN ||
     process.env.NEXT_PUBLIC_MICROCMS_DOMAIN ||
     '',
   apiKey:
