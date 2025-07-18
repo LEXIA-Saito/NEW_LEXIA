@@ -14,7 +14,18 @@ export const microcmsClient = createClient({
 
 export const getPosts = async () => {
   const res = await microcmsClient.get({ endpoint: 'posts' })
-  return res.contents as any[]
+  return (res.contents as any[]).map((post) => ({
+    ...post,
+    category:
+      typeof post.category === 'object' && post.category?.name
+        ? post.category.name
+        : post.category ?? '',
+    author:
+      typeof post.author === 'object' && post.author?.name
+        ? post.author.name
+        : post.author ?? '',
+    image: post.image?.url ?? post.image ?? '',
+  }))
 }
 
 export const getPost = async (slug: string) => {
