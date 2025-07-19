@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell } from "@/components/ui/table"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface PcClassItem {
   name: string
@@ -11,6 +12,16 @@ interface PcClassItem {
   oneOnOne: number
   oneToTwo: number
   oneToFive: number
+}
+
+type MethodKey = "visit" | "remote" | "oneOnOne" | "oneToTwo" | "oneToFive"
+
+const METHOD_LABELS: Record<MethodKey, string> = {
+  visit: "出張",
+  remote: "リモート",
+  oneOnOne: "マンツーマン",
+  oneToTwo: "1対2",
+  oneToFive: "1対5",
 }
 
 const items: PcClassItem[] = [
@@ -23,14 +34,28 @@ const items: PcClassItem[] = [
 
 export default function PcClassPricingTable() {
   const [billing, setBilling] = useState<"session" | "month">("session")
+  const [method, setMethod] = useState<MethodKey>("visit")
 
   const factor = billing === "month" ? 4 : 1
   const suffix = billing === "month" ? "月額" : "1回"
 
   return (
     <>
-      <div className="mb-4 flex justify-end">
-        <ToggleGroup type="single" value={billing} onValueChange={(val) => val && setBilling(val as "session" | "month")}>
+      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <Select value={method} onValueChange={(v) => setMethod(v as MethodKey)}>
+          <SelectTrigger className="w-32">
+            <SelectValue placeholder="受講方法" />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.entries(METHOD_LABELS).map(([key, label]) => (
+              <SelectItem key={key} value={key}>
+                {label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <ToggleGroup type="single" value={billing} onValueChange={(val) => val && setBilling(val as "session" | "month")}
+          className="self-end sm:self-auto">
           <ToggleGroupItem value="session">1回</ToggleGroupItem>
           <ToggleGroupItem value="month">月額</ToggleGroupItem>
         </ToggleGroup>
@@ -39,22 +64,14 @@ export default function PcClassPricingTable() {
         <TableHeader>
           <TableRow>
             <TableHead>内容</TableHead>
-            <TableHead className="text-right">出張({suffix})</TableHead>
-            <TableHead className="text-right">リモート({suffix})</TableHead>
-            <TableHead className="text-right">マンツーマン({suffix})</TableHead>
-            <TableHead className="text-right">1対2({suffix})</TableHead>
-            <TableHead className="text-right">1対5({suffix})</TableHead>
+            <TableHead className="text-right">{METHOD_LABELS[method]}({suffix})</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {items.map((item) => (
             <TableRow key={item.name}>
               <TableCell>{item.name}</TableCell>
-              <TableCell className="text-right">{(item.visit * factor).toLocaleString()}円</TableCell>
-              <TableCell className="text-right">{(item.remote * factor).toLocaleString()}円</TableCell>
-              <TableCell className="text-right">{(item.oneOnOne * factor).toLocaleString()}円</TableCell>
-              <TableCell className="text-right">{(item.oneToTwo * factor).toLocaleString()}円</TableCell>
-              <TableCell className="text-right">{(item.oneToFive * factor).toLocaleString()}円</TableCell>
+              <TableCell className="text-right">{(item[method] * factor).toLocaleString()}円</TableCell>
             </TableRow>
           ))}
         </TableBody>
