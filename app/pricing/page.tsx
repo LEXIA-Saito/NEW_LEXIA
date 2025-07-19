@@ -9,6 +9,7 @@ import HomepageRunningCost from "@/components/pricing/homepage-running-cost"
 import GeneralPricingTable, {
   PricingItem,
 } from "@/components/pricing/general-pricing-table"
+import SystemCalculator from "@/components/pricing/system-calculator"
 import DesignCalculator from "@/components/pricing/design-calculator"
 import PcClassPricingTable from "@/components/pricing/pc-class-pricing-table"
 
@@ -64,7 +65,7 @@ export default function PricingPage() {
               <GeneralPricingTable items={ecItems} note="料金は一例で変化する場合があります。" />
             </TabsContent>
             <TabsContent value="system">
-              <GeneralPricingTable />
+              <SystemCalculator />
             </TabsContent>
             <TabsContent value="design">
               <DesignCalculator />
