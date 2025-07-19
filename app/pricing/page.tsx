@@ -9,6 +9,7 @@ import HomepageRunningCost from "@/components/pricing/homepage-running-cost"
 import GeneralPricingTable, {
   PricingItem,
 } from "@/components/pricing/general-pricing-table"
+import EcCalculator from "@/components/pricing/ec-calculator"
 import SystemCalculator from "@/components/pricing/system-calculator"
 import DesignCalculator from "@/components/pricing/design-calculator"
 import PcClassPricingTable from "@/components/pricing/pc-class-pricing-table"
@@ -16,15 +17,6 @@ import PcClassPricingTable from "@/components/pricing/pc-class-pricing-table"
 export default function PricingPage() {
   const [tab, setTab] = useState("homepage")
 
-  const ecItems: PricingItem[] = [
-    { name: "ディレクション費用", cost: 50000 },
-    { name: "デザイン費用", cost: 100000 },
-    { name: "コーディング費用", cost: 100000 },
-    { name: "システム開発費用", cost: 200000 },
-    { name: "CMS・管理画面構築費用", cost: 100000 },
-    { name: "テスト・調整費用", cost: 50000 },
-    { name: "SEO・マーケ対策費用", cost: 50000 },
-  ]
 
   const aiSupportItems: PricingItem[] = [
     { name: "初期コンサルティング", cost: 100000 },
@@ -62,7 +54,7 @@ export default function PricingPage() {
               <HomepageRunningCost />
             </TabsContent>
             <TabsContent value="ec">
-              <GeneralPricingTable items={ecItems} note="料金は一例で変化する場合があります。" />
+              <EcCalculator />
             </TabsContent>
             <TabsContent value="system">
               <SystemCalculator />
