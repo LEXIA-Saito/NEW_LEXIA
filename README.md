@@ -54,3 +54,4 @@ MICROCMS_API_KEY=<API キー>
 
 初期費用とランニングコストの計算方法については [docs/pricing.md](docs/pricing.md) にまとめています。
 システム開発向けの詳細な料金計算例は [docs/dev-pricing.md](docs/dev-pricing.md) を参照してください。
+Web 制作単価表は [pricing.json](pricing.json) を編集するだけでシミュレーターへ反映されます。

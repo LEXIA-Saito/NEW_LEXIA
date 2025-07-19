@@ -1,0 +1,11 @@
+{
+  "direction": { "base": 50000, "per5p": 6000 },
+  "design":    { "top": 100000, "sub": 12000 },
+  "coding":    { "top": 100000, "sub": 10000 },
+  "cms":       { "base": 200000, "extraPerPage": 8000 },
+  "ec":        { "base": 120000, "per10items": 2000 },
+  "system":    { "base": 180000, "perFunction": 60000 },
+  "seo":       { "base": 50000,  "perKeyword": 5000 },
+  "qaPercent": 0.13,
+  "tax": 0.10
+}
