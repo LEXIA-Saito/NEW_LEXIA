@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { Chip } from "@/components/ui/chip"
 
 export default function PricingCTA() {
   return (
@@ -13,6 +14,7 @@ export default function PricingCTA() {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
+        <Chip className="mb-4">料金シミュレーション</Chip>
         <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-6">
           料金シミュレーションはこちら
         </h2>

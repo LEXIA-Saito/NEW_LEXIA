@@ -6,9 +6,8 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Search, Instagram, Linkedin } from "lucide-react"
+import { Menu, X, Instagram, Linkedin } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { SearchDialog } from "@/components/search-dialog"
 import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
 
 // Japanese navigation items
@@ -26,7 +25,6 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("hero")
-  const [searchOpen, setSearchOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,16 +125,6 @@ export default function Navigation() {
                 ))}
               </ul>
             </nav>
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.7 }}
-              onClick={() => setSearchOpen(true)}
-              className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-              aria-label="プロジェクトを検索"
-            >
-              <Search className="h-5 w-5" />
-            </motion.button>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.8 }}>
               <ThemeToggle />
             </motion.div>
@@ -167,16 +155,6 @@ export default function Navigation() {
           </div>
 
           <div className="flex items-center space-x-4 md:hidden">
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.3 }}
-              onClick={() => setSearchOpen(true)}
-              className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-              aria-label="プロジェクトを検索"
-            >
-              <Search className="h-5 w-5" />
-            </motion.button>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.4 }}>
               <ThemeToggle />
             </motion.div>
@@ -273,7 +251,6 @@ export default function Navigation() {
         )}
       </AnimatePresence>
 
-      <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
     </>
   )
 }
