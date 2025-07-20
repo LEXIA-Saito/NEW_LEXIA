@@ -25,7 +25,7 @@ const teamMembers = [
     name: "齋藤李保",
     role: "経理",
     bio: "会社の資金管理や請求業務を担い、LEXIAの安定運営を支える縁の下の力持ちです。",
-    image: "/team/person-2.png",
+    image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/ui_kit/manager-desk.svg",
     linkedin: "",
     email: "",
     slug: "riho-saito",
