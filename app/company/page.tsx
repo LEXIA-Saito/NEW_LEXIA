@@ -136,7 +136,7 @@ export default function CompanyPage() {
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">チーム紹介</h2>
+            <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">チーム</h2>
             <ul className="list-disc pl-5 text-neutral-700 dark:text-neutral-300 space-y-1">
               <li>代表: 齋藤雅人</li>
               <li>経理: 齋藤李保</li>
