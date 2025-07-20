@@ -27,7 +27,7 @@ export default function Home() {
         <OurProcess />
       </section>
 
-      <section className="py-24 md:py-32">
+      <section id="pricing" className="py-24 md:py-32">
         <PricingCTA />
       </section>
 
