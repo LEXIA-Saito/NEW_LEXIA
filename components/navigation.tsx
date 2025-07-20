@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Search, Instagram } from "lucide-react"
+import { Menu, X, Search, Instagram, Linkedin } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { SearchDialog } from "@/components/search-dialog"
 import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
@@ -15,6 +15,7 @@ import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
 export const navItems = [
   { name: "事業概要", href: "#about" },
   { name: "制作工程", href: "#process" },
+  { name: "料金詳細", href: "#pricing" },
   { name: "制作実績", href: "#work" },
   { name: "チーム", href: "#team" },
   { name: "ブログ", href: "#blog" },
@@ -32,7 +33,7 @@ export default function Navigation() {
       setIsScrolled(window.scrollY > 10)
 
       // Determine active section based on scroll position
-      const sections = ["contact", "blog", "team", "work", "process", "about", "hero"]
+      const sections = ["contact", "blog", "team", "work", "pricing", "process", "about", "hero"]
       for (const section of sections) {
         const element = document.getElementById(section)
         if (element) {
@@ -151,6 +152,18 @@ export default function Navigation() {
             >
               <Instagram className="h-5 w-5" />
             </motion.a>
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 1.0 }}
+              href="https://www.linkedin.com/in/lexia-saito/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="h-5 w-5" />
+            </motion.a>
           </div>
 
           <div className="flex items-center space-x-4 md:hidden">
@@ -244,6 +257,15 @@ export default function Navigation() {
                   className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
                 >
                   <Instagram className="h-6 w-6" />
+                </Link>
+                <Link
+                  href="https://www.linkedin.com/in/lexia-saito/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="ml-4 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                >
+                  <Linkedin className="h-6 w-6" />
                 </Link>
               </div>
             </nav>
