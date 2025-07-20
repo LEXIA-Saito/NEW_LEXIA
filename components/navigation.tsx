@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Instagram, Linkedin } from "lucide-react"
+import { Menu, X, Instagram, Linkedin, Share2 } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
 
@@ -128,30 +128,39 @@ export default function Navigation() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.8 }}>
               <ThemeToggle />
             </motion.div>
-            <motion.a
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.9 }}
-              href="https://www.instagram.com/lexia_web/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-              aria-label="Instagram"
+              className="relative group"
             >
-              <Instagram className="h-5 w-5" />
-            </motion.a>
-            <motion.a
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 1.0 }}
-              href="https://www.linkedin.com/in/lexia-saito/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="h-5 w-5" />
-            </motion.a>
+              <Share2
+                className="h-5 w-5 text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-neutral-100"
+                aria-label="SNS"
+              />
+              <div
+                className="absolute left-1/2 top-full mt-2 -translate-x-1/2 hidden group-hover:flex space-x-2"
+              >
+                <a
+                  href="https://www.instagram.com/lexia_web/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/lexia-saito/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </a>
+              </div>
+            </motion.div>
           </div>
 
           <div className="flex items-center space-x-4 md:hidden">
