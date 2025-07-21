@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
 import SectionIcon from "@/components/section-icon"
 import { ExternalLink, Mail } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { t } from "@/lib/i18n"
 
@@ -32,8 +33,15 @@ export default function Contact() {
             </h2>
           </div>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
-            愛知県碧南市のWEB制作事業 LEXIA では、5年の経験を生かし、碧南市・刈谷市・安城市・高浜市・西尾市の中小企業や個人事業主向けに格安でホームページ制作をご提供しています。ご質問・ご相談はメール、または LinkedIn から承ります。
+            愛知県碧南市のWEB制作事業 LEXIA では、碧南市・刈谷市・安城市・高浜市・西尾市の中小企業や個人事業主向けに格安でホームページ制作をご提供しています。ご質問・ご相談はメールまたはお問い合わせフォームから承ります。
           </p>
+          <div className="mt-8">
+            <Link href="/contact">
+              <Button className="rounded-full px-8 py-6 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900">
+                お問い合わせフォームへ
+              </Button>
+            </Link>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">

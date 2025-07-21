@@ -7,7 +7,6 @@ import Team from "@/components/sections/team"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Hero from "@/components/sections/hero"
-import ContactCTA from "@/components/sections/contact-cta"
 import PricingCTA from "@/components/sections/pricing-cta"
 
 export default function Home() {
@@ -46,11 +45,6 @@ export default function Home() {
       <section id="contact" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800">
         <Contact />
       </section>
-
-      <section className="py-24 md:py-32">
-        <ContactCTA />
-      </section>
-
       <Footer />
     </main>
   )
