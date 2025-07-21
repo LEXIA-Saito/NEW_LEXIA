@@ -1,6 +1,6 @@
 {
   "ourWork.title": "制作実績",
-  "ourWork.subtitle": "注目プロジェクト",
+  "ourWork.subtitle": "実績ハイライト",
   "project.ecommerce.title": "JA.life WEBサイト構築",
   "project.ecommerce.body": "JA.lifeのWEBサイトは、衣食住のうちの住を提供する上での安心感と信頼を重視したコンセプトで、制作させていただきました。",
   "project.ecommerce.quote": "ユーザー体験が向上しました。",
@@ -34,7 +34,7 @@
   "categories.webapp": "Webアプリ",
   "categories.branding": "ブランディング",
   "categories.seo": "SEO最適化",
-  "ourWork.explorePortfolio": "ポートフォリオを見る",
+  "ourWork.explorePortfolio": "全ての実績を見る",
   "ourWork.viewAllCategories": "すべてのカテゴリーを見る",
   "ourWork.filter.recent": "最新(2023)",
   "ourWork.filter.japan": "日本市場向け",
