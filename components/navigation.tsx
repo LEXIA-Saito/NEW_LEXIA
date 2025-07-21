@@ -25,6 +25,7 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("hero")
+  const [snsOpen, setSnsOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -132,14 +133,16 @@ export default function Navigation() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.9 }}
-              className="relative group"
+              className="relative"
+              onMouseEnter={() => setSnsOpen(true)}
+              onMouseLeave={() => setSnsOpen(false)}
             >
               <Share2
-                className="h-5 w-5 text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-neutral-100"
+                className={`h-5 w-5 transition-colors ${snsOpen ? "text-neutral-900 dark:text-neutral-100" : "text-neutral-500 dark:text-neutral-400"}`}
                 aria-label="SNS"
               />
               <div
-                className="absolute left-1/2 top-full mt-2 -translate-x-1/2 hidden group-hover:flex space-x-2"
+                className={`absolute left-1/2 top-full mt-2 -translate-x-1/2 ${snsOpen ? "flex" : "hidden"} space-x-2`}
               >
                 <a
                   href="https://www.instagram.com/lexia_web/"
