@@ -17,9 +17,9 @@ export default function PricingCTA() {
       >
         <Image
           src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/ui_kit/interface-change-setting.svg"
-          alt=""
-          width={120}
-          height={120}
+          alt="料金計算を表すイラスト"
+          width={200}
+          height={200}
           className="mx-auto mb-6"
         />
         <Chip className="mb-4">料金詳細</Chip>
