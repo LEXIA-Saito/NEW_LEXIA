@@ -4,7 +4,12 @@ import Link from "next/link"
 import Image from "next/image"
 import React from "react"
 import { motion } from "framer-motion"
-import { LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
+import {
+  LOGO_URL,
+  LOGO_WHITE_URL,
+  LOGO_TEXT_URL,
+  LOGO_TEXT_WHITE_URL,
+} from "@/lib/config"
 import { footerIcons, getRandomSpinDuration } from "@/lib/footerIcons"
 
 export default function Footer() {
@@ -55,7 +60,7 @@ export default function Footer() {
             variants={fadeIn}
           >
             {/* LEXIA Logo */}
-            <div className="mb-8">
+            <div className="mb-8 flex items-center">
               <Image
                 src={LOGO_URL}
                 alt="LEXIA"
@@ -64,11 +69,25 @@ export default function Footer() {
                 className="mb-4 h-6 w-auto block dark:hidden"
               />
               <Image
+                src={LOGO_TEXT_URL}
+                alt="LEXIA text"
+                width={120}
+                height={24}
+                className="mb-4 ml-2 h-6 w-auto block dark:hidden"
+              />
+              <Image
                 src={LOGO_WHITE_URL}
                 alt="LEXIA"
                 width={120}
                 height={24}
                 className="mb-4 h-6 w-auto hidden dark:block"
+              />
+              <Image
+                src={LOGO_TEXT_WHITE_URL}
+                alt="LEXIA text"
+                width={120}
+                height={24}
+                className="mb-4 ml-2 h-6 w-auto hidden dark:block"
               />
             </div>
 
