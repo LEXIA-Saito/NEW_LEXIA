@@ -78,7 +78,7 @@ export default function Footer() {
             </p>
           </motion.div>
 
-          {/* Center Section - LEGEND AXIA LEXIA Logo */}
+          {/* Center Section */}
           <motion.div
             className="lg:col-span-1 flex flex-col items-center justify-start"
             initial="hidden"
@@ -87,10 +87,7 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.2 }}
             variants={fadeIn}
           >
-            <div className="text-center mb-8">
-              <div className="text-xs tracking-widest mb-2">LEGEND AXIA</div>
-              <div className="text-4xl font-bold tracking-wider">LEXIA</div>
-            </div>
+            {/* Text removed */}
           </motion.div>
 
           {/* Menu Section */}
