@@ -142,7 +142,6 @@ export default function CompanyPage() {
               <li>経理: 齋藤李保</li>
               <li>制作メンバー: アシスタント数名</li>
             </ul>
-            <Link href="/authors" className="text-neutral-900 dark:text-neutral-100 underline">チームメンバーを見る</Link>
           </section>
 
           <section className="space-y-2">

@@ -9,8 +9,6 @@ export async function GET(
     const post = await getPost(params.slug)
     console.log('取得した記事データ:', {
       title: post.title,
-      authorType: typeof post.author,
-      authorValue: post.author,
     })
     return NextResponse.json(post)
   } catch (e) {
