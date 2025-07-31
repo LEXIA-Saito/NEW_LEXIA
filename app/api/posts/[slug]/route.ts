@@ -7,10 +7,14 @@ export async function GET(
 ) {
   try {
     const post = await getPost(params.slug)
+    const response = {
+      ...post,
+      date: post.publishedAt ?? (post as any).date,
+    }
     console.log('取得した記事データ:', {
-      title: post.title,
+      title: response.title,
     })
-    return NextResponse.json(post)
+    return NextResponse.json(response)
   } catch (e) {
     console.error(e)
     return NextResponse.json({ error: "not found" }, { status: 404 })
