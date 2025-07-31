@@ -16,46 +16,9 @@ import { ReadingTime } from "@/components/reading-time"
 import { SeriesNavigation } from "@/components/series-navigation"
 import { SocialShare } from "@/components/social-share"
 import { AuthorProfile } from "@/components/author-profile"
+import { processAuthorData } from "@/lib/author-utils"
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  // 著者リンク生成関数
-  const generateAuthorLink = (authorData: any): string => {
-    try {
-      if (!authorData) return "#"
-      let authorName = ""
-      let authorSlug = ""
-      if (typeof authorData === "string" && authorData.trim()) {
-        authorName = authorData.trim()
-        authorSlug = authorName.toLowerCase().replace(/\s+/g, "-")
-      } else if (typeof authorData === "object" && authorData !== null) {
-        if (authorData.slug) return "/authors/" + authorData.slug
-        if (authorData.name) {
-          authorName = authorData.name.trim()
-          authorSlug = authorName.toLowerCase().replace(/\s+/g, "-")
-        }
-      } else if (Array.isArray(authorData) && authorData.length > 0) {
-        return generateAuthorLink(authorData[0])
-      }
-      if (authorSlug) return "/authors/" + authorSlug
-      return "#"
-    } catch (error) {
-      console.warn("著者リンク生成エラー:", error)
-      return "#"
-    }
-  }
-
-  // 著者名取得関数
-  const getAuthorName = (authorData: any): string => {
-    if (!authorData) return "投稿者未設定"
-    if (typeof authorData === "string") return authorData
-    if (typeof authorData === "object" && authorData !== null) {
-      return authorData.name || authorData.displayName || "著者名未設定"
-    }
-    if (Array.isArray(authorData) && authorData[0]) {
-      return getAuthorName(authorData[0])
-    }
-    return "投稿者未設定"
-  }
   const [isLoaded, setIsLoaded] = useState(false)
   const [post, setPost] = useState<any | null>(null)
   const [allPosts, setAllPosts] = useState<any[]>(staticBlogPosts)
@@ -101,6 +64,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   }
 
   const category = getCategory(post.category)
+
+  const authorInfo = processAuthorData(post.author)
 
   // Find related posts (same category, excluding current post)
   const relatedPosts = allPosts.filter((p) => {
@@ -151,10 +116,10 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 <div className="flex items-center">
                   <User className="h-4 w-4 mr-2" />
                   <Link
-                    href={generateAuthorLink(post.author)}
+                    href={authorInfo.link}
                     className="hover:text-neutral-900 dark:hover:text-neutral-100 hover:underline"
                   >
-                    {getAuthorName(post.author)}
+                    {authorInfo.name}
                   </Link>
                 </div>
                 <ReadingTime minutes={post.readingTime} />
@@ -238,7 +203,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 ))}
               </div>
 
-              <AuthorProfile authorName={post.author} />
+              <AuthorProfile authorName={authorInfo.name} />
             </motion.div>
 
             {relatedPosts.length > 0 && (
