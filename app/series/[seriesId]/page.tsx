@@ -37,8 +37,7 @@ export default function SeriesPage({ params }: { params: { seriesId: string } })
     (post) =>
       searchQuery === "" ||
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.author.toLowerCase().includes(searchQuery.toLowerCase()),
+      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
   useEffect(() => {
@@ -131,8 +130,6 @@ export default function SeriesPage({ params }: { params: { seriesId: string } })
                       <div className="md:col-span-2">
                         <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm mb-2">
                           <span>{post.date}</span>
-                          <span className="mx-2">•</span>
-                          <span>{post.author}</span>
                           <span className="mx-2">•</span>
                           <ReadingTime minutes={post.readingTime} />
                         </div>

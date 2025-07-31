@@ -22,10 +22,6 @@ export const getPosts = async () => {
       typeof post.category === 'object' && post.category?.name
         ? post.category.name
         : post.category ?? '',
-    author:
-      typeof post.author === 'object' && post.author?.name
-        ? post.author.name
-        : post.author ?? '',
     image: post.image?.url ?? post.image ?? '',
   }))
 }
@@ -35,18 +31,14 @@ export const getPost = async (slug: string) => {
     endpoint: 'posts',
     contentId: slug,
     queries: {
-      depth: 2,
+      fields:
+        'title,content,publishedAt,slug,category,featuredImage',
     },
   })
 }
 
 export const getCategories = async () => {
   const res = await microcmsClient.get({ endpoint: 'categories' })
-  return res.contents as any[]
-}
-
-export const getAuthors = async () => {
-  const res = await microcmsClient.get({ endpoint: 'authors' })
   return res.contents as any[]
 }
 

@@ -7,7 +7,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "test": "node ./tests/i18n.test.js && node ./tests/dev-pricing.test.js && node ./tests/design-pricing.test.js && node ./tests/web-pricing.test.js && node ./tests/process-author.test.js"
+    "test": "node ./tests/i18n.test.js && node ./tests/dev-pricing.test.js && node ./tests/design-pricing.test.js && node ./tests/web-pricing.test.js"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",

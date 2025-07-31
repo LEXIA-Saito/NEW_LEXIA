@@ -15,11 +15,6 @@ export function BlogSchema({ post }: BlogSchemaProps) {
     image: post.image ? `${SITE_URL}${post.image}` : undefined,
     datePublished: new Date(post.date).toISOString(),
     dateModified: post.dateModified ? new Date(post.dateModified).toISOString() : new Date(post.date).toISOString(),
-    author: {
-      "@type": "Person",
-      name: post.author,
-      url: `${SITE_URL}/team`,
-    },
     publisher: {
       "@type": "Organization",
       name: "LEXIA",

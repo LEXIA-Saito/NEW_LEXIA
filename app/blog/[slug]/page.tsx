@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { ArrowLeft, Calendar, User } from "lucide-react"
+import { ArrowLeft, Calendar } from "lucide-react"
 import { Chip } from "@/components/ui/chip"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
@@ -15,8 +15,6 @@ import { InstagramContactCTA } from "@/components/instagram-contact-cta"
 import { ReadingTime } from "@/components/reading-time"
 import { SeriesNavigation } from "@/components/series-navigation"
 import { SocialShare } from "@/components/social-share"
-import { AuthorProfile } from "@/components/author-profile"
-import { processAuthorData } from "@/lib/author-utils"
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -65,7 +63,6 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
   const category = getCategory(post.category)
 
-  const authorInfo = processAuthorData(post.author)
 
   // Find related posts (same category, excluding current post)
   const relatedPosts = allPosts.filter((p) => {
@@ -113,15 +110,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                   <Calendar className="h-4 w-4 mr-2" />
                   <time dateTime={new Date(post.date).toISOString()}>{post.date}</time>
                 </div>
-                <div className="flex items-center">
-                  <User className="h-4 w-4 mr-2" />
-                  <Link
-                    href={authorInfo.link}
-                    className="hover:text-neutral-900 dark:hover:text-neutral-100 hover:underline"
-                  >
-                    {authorInfo.name}
-                  </Link>
-                </div>
+
                 <ReadingTime minutes={post.readingTime} />
 
                 <div className="relative ml-auto">
@@ -203,7 +192,6 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 ))}
               </div>
 
-              <AuthorProfile authorName={authorInfo.name} />
             </motion.div>
 
             {relatedPosts.length > 0 && (
