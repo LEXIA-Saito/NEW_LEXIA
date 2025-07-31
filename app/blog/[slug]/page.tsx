@@ -74,6 +74,19 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     return []
   }
 
+  const renderContent = (input: any) => {
+    if (!input) return null
+    if (typeof input === 'string' && /<[^>]+>/.test(input)) {
+      return <div dangerouslySetInnerHTML={{ __html: input }} />
+    }
+    const paragraphs = normalizeContent(input)
+    return paragraphs.map((paragraph, index) => (
+      <p key={index} className="mb-6 text-neutral-700 dark:text-neutral-300">
+        {paragraph}
+      </p>
+    ))
+  }
+
 
   // Find related posts (same category, excluding current post)
   const relatedPosts = allPosts.filter((p) => {
@@ -155,20 +168,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               </div>
 
               <div className="prose prose-lg dark:prose-invert max-w-none">
-                {normalizeContent(post.content).map((paragraph, index) => (
-                  <p key={index} className="mb-6 text-neutral-700 dark:text-neutral-300">
-                    {paragraph}
-                  </p>
-                ))}
+                {renderContent(post.content)}
 
                 {post.sections?.map((section, sectionIndex) => (
                   <div key={sectionIndex} className="mt-12">
                     <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-4">{section.title}</h2>
-                    {normalizeContent(section.content).map((paragraph, paraIndex) => (
-                      <p key={paraIndex} className="mb-6 text-neutral-700 dark:text-neutral-300">
-                        {paragraph}
-                      </p>
-                    ))}
+                    {renderContent(section.content)}
                     {section.image && (
                       <div className="relative aspect-[16/9] rounded-lg overflow-hidden my-8">
                         <Image
