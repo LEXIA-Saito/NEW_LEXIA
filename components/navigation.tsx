@@ -8,12 +8,7 @@ import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Instagram, Linkedin, Share2 } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
-import {
-  LOGO_URL,
-  LOGO_WHITE_URL,
-  LOGO_TEXT_URL,
-  LOGO_TEXT_WHITE_URL,
-} from "@/lib/config"
+import { LOGO_URL, LOGO_WHITE_URL, LOGO_TEXT_URL, LOGO_TEXT_WHITE_URL } from "@/lib/config"
 
 // Japanese navigation items
 export const navItems = [
@@ -82,34 +77,36 @@ export default function Navigation() {
         <div className="container mx-auto px-4 flex justify-between items-center">
           <Link href="/" className="flex items-center" aria-label="LEXIA">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
-              <Image
-                src={LOGO_URL}
-                alt="LEXIA"
-                width={120}
-                height={24}
-                className="h-6 w-auto block dark:hidden"
-              />
-              <Image
-                src={LOGO_TEXT_URL}
-                alt="LEXIA text"
-                width={120}
-                height={24}
-                className="h-6 w-auto ml-2 block dark:hidden"
-              />
-              <Image
-                src={LOGO_WHITE_URL}
-                alt="LEXIA"
-                width={120}
-                height={24}
-                className="h-6 w-auto hidden dark:block"
-              />
-              <Image
-                src={LOGO_TEXT_WHITE_URL}
-                alt="LEXIA text"
-                width={120}
-                height={24}
-                className="h-6 w-auto ml-2 hidden dark:block"
-              />
+              <div className="flex items-center">
+                <Image
+                  src={LOGO_URL || "/placeholder.svg"}
+                  alt="LEXIA"
+                  width={120}
+                  height={24}
+                  className="h-6 w-auto block dark:hidden"
+                />
+                <Image
+                  src={LOGO_TEXT_URL || "/placeholder.svg"}
+                  alt="LEXIA text"
+                  width={120}
+                  height={24}
+                  className="h-6 w-auto ml-2 block dark:hidden"
+                />
+                <Image
+                  src={LOGO_WHITE_URL || "/placeholder.svg"}
+                  alt="LEXIA"
+                  width={120}
+                  height={24}
+                  className="h-6 w-auto hidden dark:block"
+                />
+                <Image
+                  src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
+                  alt="LEXIA text"
+                  width={120}
+                  height={24}
+                  className="h-6 w-auto ml-2 hidden dark:block"
+                />
+              </div>
             </motion.div>
           </Link>
 
@@ -280,7 +277,6 @@ export default function Navigation() {
           </motion.div>
         )}
       </AnimatePresence>
-
     </>
   )
 }
