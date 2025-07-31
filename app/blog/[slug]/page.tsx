@@ -55,8 +55,20 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     return null // Prevent flash of unstyled content
   }
 
+  // category型安全化（文字列・配列・null対応）
+  const getCategory = (cat: any) => {
+    if (typeof cat === "string") return cat
+    if (Array.isArray(cat) && cat.length > 0) return cat[0]
+    return "uncategorized"
+  }
+
+  const category = getCategory(post.category)
+
   // Find related posts (same category, excluding current post)
-  const relatedPosts = allPosts.filter((p) => p.slug !== post.slug && p.category === post.category).slice(0, 3)
+  const relatedPosts = allPosts.filter((p) => {
+    const pCategory = getCategory(p.category)
+    return p.slug !== post.slug && pCategory === category
+  }).slice(0, 3)
 
   // Find next and previous posts
   const currentIndex = allPosts.findIndex((p) => p.slug === post.slug)
@@ -81,8 +93,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
           <article className="max-w-3xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <Link href={`/categories/${post.category.toLowerCase()}`}>
-                <Chip className="mb-4">{post.category}</Chip>
+              <Link href={`/categories/${category.toLowerCase()}`}>
+                <Chip className="mb-4">{category}</Chip>
               </Link>
 
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-neutral-900 dark:text-neutral-100 mb-6">
