@@ -31,7 +31,13 @@ export const getPosts = async () => {
 }
 
 export const getPost = async (slug: string) => {
-  return microcmsClient.get({ endpoint: 'posts', contentId: slug })
+  return microcmsClient.get({
+    endpoint: 'posts',
+    contentId: slug,
+    queries: {
+      depth: 2,
+    },
+  })
 }
 
 export const getCategories = async () => {
