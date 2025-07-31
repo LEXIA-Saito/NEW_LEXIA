@@ -18,6 +18,8 @@ export const getPosts = async () => {
   const res = await microcmsClient.get({ endpoint: 'posts' })
   return (res.contents as any[]).map((post) => ({
     ...post,
+    date: post.publishedAt,
+    dateModified: post.updatedAt ?? post.publishedAt,
     category:
       typeof post.category === 'object' && post.category?.name
         ? post.category.name
@@ -27,14 +29,19 @@ export const getPosts = async () => {
 }
 
 export const getPost = async (slug: string) => {
-  return microcmsClient.get({
+  const raw = await microcmsClient.get({
     endpoint: 'posts',
     contentId: slug,
     queries: {
-      fields:
-        'title,content,publishedAt,slug,category,featuredImage',
+      fields: 'title,content,publishedAt,slug,category,featuredImage',
     },
   })
+
+  return {
+    ...raw,
+    date: raw.publishedAt,
+    dateModified: raw.updatedAt ?? raw.publishedAt,
+  } as any
 }
 
 export const getCategories = async () => {
