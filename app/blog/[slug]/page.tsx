@@ -93,9 +93,13 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
           <article className="max-w-3xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <Link href={`/categories/${category.toLowerCase()}`}>
-                <Chip className="mb-4">{category}</Chip>
-              </Link>
+              {category && category !== "uncategorized" ? (
+                <Link href={`/categories/${category.toLowerCase()}`}>
+                  <Chip className="mb-4">{category}</Chip>
+                </Link>
+              ) : (
+                <Chip className="mb-4">カテゴリー未設定</Chip>
+              )}
 
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-neutral-900 dark:text-neutral-100 mb-6">
                 {post.title}
