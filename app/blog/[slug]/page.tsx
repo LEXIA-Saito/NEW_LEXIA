@@ -63,6 +63,17 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
   const category = getCategory(post.category)
 
+  const normalizeContent = (input: any): string[] => {
+    if (Array.isArray(input)) return input
+    if (typeof input === 'string') {
+      return input
+        .split(/\r?\n+/)
+        .map((p) => p.trim())
+        .filter(Boolean)
+    }
+    return []
+  }
+
 
   // Find related posts (same category, excluding current post)
   const relatedPosts = allPosts.filter((p) => {
@@ -144,7 +155,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               </div>
 
               <div className="prose prose-lg dark:prose-invert max-w-none">
-                {post.content.map((paragraph, index) => (
+                {normalizeContent(post.content).map((paragraph, index) => (
                   <p key={index} className="mb-6 text-neutral-700 dark:text-neutral-300">
                     {paragraph}
                   </p>
@@ -153,7 +164,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 {post.sections?.map((section, sectionIndex) => (
                   <div key={sectionIndex} className="mt-12">
                     <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-4">{section.title}</h2>
-                    {section.content.map((paragraph, paraIndex) => (
+                    {normalizeContent(section.content).map((paragraph, paraIndex) => (
                       <p key={paraIndex} className="mb-6 text-neutral-700 dark:text-neutral-300">
                         {paragraph}
                       </p>
