@@ -33,14 +33,14 @@ export const getPost = async (slug: string) => {
     endpoint: 'posts',
     contentId: slug,
     queries: {
-      fields:
-        'title,content,publishedAt,slug,category,featuredImage',
+      fields: 'title,content,publishedAt,slug,category,image',
     },
   })
   return {
     ...raw,
     date: raw.publishedAt,
     dateModified: raw.updatedAt ?? raw.publishedAt,
+    image: (raw as any).image?.url ?? (raw as any).image ?? '',
   }
 }
 
