@@ -29,8 +29,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
       post.tags?.some((tag) => tag.toLowerCase().replace(/\s+/g, "-") === tagSlug) &&
       (searchQuery === "" ||
         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.author.toLowerCase().includes(searchQuery.toLowerCase())),
+        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase())),
   )
 
   useEffect(() => {
@@ -111,8 +110,6 @@ export default function TagPage({ params }: { params: { tag: string } }) {
                   <div className="p-6">
                     <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm mb-3">
                       <span>{post.date}</span>
-                      <span className="mx-2">•</span>
-                      <span>{post.author}</span>
                     </div>
                     <Link href={`/blog/${post.slug}`}>
                       <h2 className="text-xl font-medium text-neutral-900 dark:text-neutral-100 mb-3 hover:underline">

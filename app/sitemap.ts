@@ -1,13 +1,12 @@
 import type { MetadataRoute } from "next"
 import { blogPosts } from "@/lib/blog-data"
 import { categoryData } from "@/lib/category-data"
-import { authorData } from "@/lib/author-data"
 import { projectsData } from "@/lib/projects-data"
 import { SITE_URL } from "../lib/config"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Main pages
-  const routes = ["", "/blog", "/categories", "/tags", "/authors", "/projects", "/about", "/contact"].map((route) => ({
+  const routes = ["", "/blog", "/categories", "/tags", "/projects", "/about", "/contact"].map((route) => ({
     url: `${SITE_URL}${route}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
@@ -30,13 +29,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  // Author pages
-  const authorRoutes = authorData.map((author) => ({
-    url: `${SITE_URL}/authors/${author.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }))
 
   // Project pages
   const projectRoutes = projectsData.map((project) => ({
@@ -61,5 +53,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }))
 
-  return [...routes, ...blogRoutes, ...categoryRoutes, ...authorRoutes, ...projectRoutes, ...tagRoutes]
+  return [...routes, ...blogRoutes, ...categoryRoutes, ...projectRoutes, ...tagRoutes]
 }

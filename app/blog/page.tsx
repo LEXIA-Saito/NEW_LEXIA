@@ -21,18 +21,16 @@ export default function BlogPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [activeCategory, setActiveCategory] = useState("All")
   const [activeYear, setActiveYear] = useState<string | null>(null)
-  const [activeAuthor, setActiveAuthor] = useState<string | null>(null)
   const [activeSeries, setActiveSeries] = useState<string | null>(null)
   const [showFilters, setShowFilters] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [blogPosts, setBlogPosts] = useState<any[]>(staticBlogPosts)
 
-  // Extract unique years and authors for filtering
+  // Extract unique years for filtering
   const years = Array.from(new Set(blogPosts.map((post) => new Date(post.date).getFullYear().toString()))).sort(
     (a, b) => Number.parseInt(b) - Number.parseInt(a),
   )
 
-  const authors = Array.from(new Set(blogPosts.map((post) => post.author))).sort()
 
   // Get all series
   const allSeries = getAllSeries(blogPosts)
@@ -42,18 +40,15 @@ export default function BlogPage() {
     const matchesSearch =
       searchQuery === "" ||
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.author.toLowerCase().includes(searchQuery.toLowerCase())
+      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
 
     const matchesCategory = activeCategory === "All" || post.category === activeCategory
 
     const matchesYear = activeYear === null || new Date(post.date).getFullYear().toString() === activeYear
 
-    const matchesAuthor = activeAuthor === null || post.author === activeAuthor
-
     const matchesSeries = activeSeries === null || (post.series && post.series.id === activeSeries)
 
-    return matchesSearch && matchesCategory && matchesYear && matchesAuthor && matchesSeries
+    return matchesSearch && matchesCategory && matchesYear && matchesSeries
   })
 
   // Get featured posts (most recent 3 posts)
@@ -72,7 +67,6 @@ export default function BlogPage() {
   const clearFilters = () => {
     setActiveCategory("All")
     setActiveYear(null)
-    setActiveAuthor(null)
     setActiveSeries(null)
     setSearchQuery("")
   }
@@ -158,8 +152,6 @@ export default function BlogPage() {
                       <Calendar className="h-4 w-4 mr-1" />
                       <span>{post.date}</span>
                       <span className="mx-2">•</span>
-                      <span>{post.author}</span>
-                      <span className="mx-2">•</span>
                       <ReadingTime minutes={post.readingTime} />
                     </div>
                     <Link href={`/blog/${post.slug}`}>
@@ -215,19 +207,16 @@ export default function BlogPage() {
                   <span>Filters</span>
                   {(activeCategory !== "All" ||
                     activeYear !== null ||
-                    activeAuthor !== null ||
                     activeSeries !== null) && (
                     <span className="ml-1 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 rounded-full w-5 h-5 flex items-center justify-center text-xs">
                       {(activeCategory !== "All" ? 1 : 0) +
                         (activeYear !== null ? 1 : 0) +
-                        (activeAuthor !== null ? 1 : 0) +
                         (activeSeries !== null ? 1 : 0)}
                     </span>
                   )}
                 </Button>
                 {(activeCategory !== "All" ||
                   activeYear !== null ||
-                  activeAuthor !== null ||
                   activeSeries !== null) && (
                   <Button variant="ghost" onClick={clearFilters} className="flex items-center gap-2 rounded-full">
                     <X className="h-4 w-4" />
@@ -303,34 +292,6 @@ export default function BlogPage() {
                     </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-sm font-medium mb-3">Author</h3>
-                    <div className="space-y-2">
-                      <button
-                        onClick={() => setActiveAuthor(null)}
-                        className={`block w-full text-left px-3 py-2 rounded-md ${
-                          activeAuthor === null
-                            ? "bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900"
-                            : "hover:bg-neutral-100 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300"
-                        }`}
-                      >
-                        All Authors
-                      </button>
-                      {authors.map((author) => (
-                        <button
-                          key={author}
-                          onClick={() => setActiveAuthor(author)}
-                          className={`block w-full text-left px-3 py-2 rounded-md ${
-                            activeAuthor === author
-                              ? "bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900"
-                              : "hover:bg-neutral-100 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300"
-                          }`}
-                        >
-                          {author}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
 
                   <div>
                     <h3 className="text-sm font-medium mb-3">Series</h3>
@@ -439,8 +400,6 @@ export default function BlogPage() {
                     <div className="p-6">
                       <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm mb-3">
                         <span>{post.date}</span>
-                        <span className="mx-2">•</span>
-                        <span>{post.author}</span>
                         <span className="mx-2">•</span>
                         <ReadingTime minutes={post.readingTime} />
                       </div>
