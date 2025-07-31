@@ -57,8 +57,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
   // category型安全化（文字列・配列・null対応）
   const getCategory = (cat: any) => {
-    if (typeof cat === "string") return cat
-    if (Array.isArray(cat) && cat.length > 0) return cat[0]
+    if (typeof cat === "string" && cat) return cat
+    if (Array.isArray(cat) && cat.length > 0 && cat[0]) return cat[0]
     return "uncategorized"
   }
 
