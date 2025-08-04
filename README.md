@@ -48,7 +48,7 @@ LEXIA_MICROCMS_DOMAIN=<サービスドメイン>
 MICROCMS_API_KEY=<API キー>
 \`\`\`
 
-`lib/microcms.ts` にて microCMS のクライアントを生成しています。利用するエンドポイントは `posts`、`categories`、`authors`、`projects` です。`service` というエンドポイントは存在しないため、呼び出しは行っていません。
+`lib/microcms.ts` にて microCMS のクライアントを生成しています。利用するエンドポイントは `projects` のみです。`service` というエンドポイントは存在しないため、呼び出しは行っていません。
 
 ## 料金シミュレーション
 

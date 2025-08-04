@@ -17,7 +17,6 @@ export const navItems = [
   { name: "料金詳細", href: "#pricing" },
   { name: "制作実績", href: "#work" },
   { name: "チーム", href: "#team" },
-  { name: "ブログ", href: "#blog" },
   { name: "お問い合わせ", href: "#contact" },
 ]
 
@@ -32,7 +31,7 @@ export default function Navigation() {
       setIsScrolled(window.scrollY > 10)
 
       // Determine active section based on scroll position
-      const sections = ["contact", "blog", "team", "work", "pricing", "process", "about", "hero"]
+      const sections = ["contact", "team", "work", "pricing", "process", "about", "hero"]
       for (const section of sections) {
         const element = document.getElementById(section)
         if (element) {

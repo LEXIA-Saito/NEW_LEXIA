@@ -2,7 +2,6 @@ import About from "@/components/sections/about"
 import OurProcess from "@/components/sections/OurProcess"
 import Work from "@/components/sections/OurWork"
 import Contact from "@/components/sections/contact"
-import Blog from "@/components/sections/blog"
 import Team from "@/components/sections/team"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
@@ -38,9 +37,6 @@ export default function Home() {
         <Team />
       </section>
 
-      <section id="blog" className="py-24 md:py-32">
-        <Blog />
-      </section>
 
       <section id="contact" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800">
         <Contact />

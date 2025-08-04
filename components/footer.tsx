@@ -23,7 +23,6 @@ export default function Footer() {
     { name: "制作工程", href: "#process" },
     { name: "制作実績", href: "/projects" },
     { name: "チーム", href: "#team" },
-    { name: "ブログ", href: "/blog" },
     { name: "お問い合わせ", href: "/contact" },
   ]
 
