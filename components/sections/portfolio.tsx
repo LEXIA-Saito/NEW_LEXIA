@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
@@ -16,89 +16,44 @@ const categories = [
   { id: "exterior", name: "Exterior" },
 ]
 
-// Portfolio projects data with categories
-const projects = [
-  {
-    id: 1,
-    title: "Minimalist Villa",
-    description: "A contemporary villa with clean lines and natural materials",
-    image: "/portfolio/house-1.png",
-    slug: "minimalist-villa",
-    categories: ["residential", "exterior"],
-  },
-  {
-    id: 2,
-    title: "Urban Apartment",
-    description: "Modern apartment renovation in the heart of the city",
-    image: "/portfolio/house-2.png",
-    slug: "urban-apartment",
-    categories: ["residential", "interior"],
-  },
-  {
-    id: 3,
-    title: "Coastal Retreat",
-    description: "Beachfront home designed to embrace the natural surroundings",
-    image: "/portfolio/house-3.png",
-    slug: "coastal-retreat",
-    categories: ["residential", "exterior"],
-  },
-  {
-    id: 4,
-    title: "Office Complex",
-    description: "Contemporary office space designed for collaboration",
-    image: "/portfolio/house-4.png",
-    slug: "office-complex",
-    categories: ["commercial", "interior"],
-  },
-  {
-    id: 5,
-    title: "Garden House",
-    description: "Sustainable home integrated with its garden landscape",
-    image: "/portfolio/house-5.png",
-    slug: "garden-house",
-    categories: ["residential", "exterior"],
-  },
-  {
-    id: 6,
-    title: "Retail Space",
-    description: "Modern retail environment focused on customer experience",
-    image: "/portfolio/house-6.png",
-    slug: "retail-space",
-    categories: ["commercial", "interior"],
-  },
-  {
-    id: 7,
-    title: "Courtyard House",
-    description: "Traditional home centered around a peaceful courtyard",
-    image: "/portfolio/house-7.png",
-    slug: "courtyard-house",
-    categories: ["residential", "exterior"],
-  },
-  {
-    id: 8,
-    title: "Restaurant Design",
-    description: "Elegant dining space with attention to acoustics and ambiance",
-    image: "/portfolio/house-8.png",
-    slug: "restaurant-design",
-    categories: ["commercial", "interior"],
-  },
-  {
-    id: 9,
-    title: "Forest Retreat",
-    description: "Secluded home nestled among trees with minimal environmental impact",
-    image: "/portfolio/house-9.png",
-    slug: "forest-retreat",
-    categories: ["residential", "exterior"],
-  },
-]
+interface Project {
+  id: string
+  title: string
+  description: string
+  image: string
+  slug: string
+  categories: string[]
+}
+
+// Fetch projects from microCMS API
+const useProjects = () => {
+  const [projects, setProjects] = useState<Project[]>([])
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch("/api/projects")
+        if (!res.ok) throw new Error("Failed to load projects")
+        const data = await res.json()
+        setProjects(data)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    fetchProjects()
+  }, [])
+
+  return projects
+}
 
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState("all")
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const projects = useProjects()
 
   // Filter projects based on active category
   const filteredProjects =
-    activeCategory === "all" ? projects : projects.filter((project) => project.categories.includes(activeCategory))
+    activeCategory === "all" ? projects : projects.filter((project) => project.categories?.includes(activeCategory))
 
   return (
     <div className="container mx-auto px-4">

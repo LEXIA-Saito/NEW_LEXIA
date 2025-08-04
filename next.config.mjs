@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Ensure three.js modules are properly transpiled and served with the correct MIME type
+  transpilePackages: ["three", "@react-three/fiber"],
   eslint: {
     ignoreDuringBuilds: true,
   },
