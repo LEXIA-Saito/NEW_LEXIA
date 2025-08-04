@@ -11,20 +11,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Add headers to ensure proper MIME types for JavaScript modules
-  async headers() {
-    return [
-      {
-        source: '/_next/static/chunks/:path*.js',
-        headers: [
-          {
-            key: 'Content-Type',
-            value: 'application/javascript; charset=utf-8',
-          },
-        ],
-      },
-    ]
-  },
   webpack(config) {
     // Bundle all three.js related modules together
     config.optimization = {
@@ -41,12 +27,6 @@ const nextConfig = {
         },
       },
     }
-
-    // Ensure proper handling of ES modules
-    config.resolve.extensionAlias = {
-      '.js': ['.js', '.ts', '.tsx'],
-    }
-
     return config
   },
 }

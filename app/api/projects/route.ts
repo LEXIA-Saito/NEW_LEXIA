@@ -3,32 +3,19 @@ import { getProjects } from "@/lib/microcms"
 
 export async function GET() {
   try {
-    console.log("Fetching projects from microCMS...")
-
+    console.log("API Route: Fetching projects...")
     const projects = await getProjects()
-
-    console.log(`Successfully fetched ${projects.length} projects`)
+    console.log(`API Route: Retrieved ${projects.length} projects`)
 
     return NextResponse.json(projects, {
       headers: {
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
       },
     })
-  } catch (error: any) {
-    console.error("Error in projects API route:", error)
-
-    // エラーの詳細をログに出力
-    if (error.response) {
-      console.error("Response status:", error.response.status)
-      console.error("Response data:", error.response.data)
-    }
-
+  } catch (error) {
+    console.error("API Route Error:", error)
     return NextResponse.json(
-      {
-        error: "Failed to fetch projects",
-        message: error.message,
-        details: process.env.NODE_ENV === "development" ? error.stack : undefined,
-      },
+      { error: "Failed to fetch projects", details: error instanceof Error ? error.message : "Unknown error" },
       { status: 500 },
     )
   }

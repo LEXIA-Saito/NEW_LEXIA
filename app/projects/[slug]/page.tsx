@@ -15,7 +15,6 @@ import { VRViewer } from "@/components/vr-viewer"
 export default function ProjectPage({ params }: { params: { slug: string } }) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [activeImage, setActiveImage] = useState(0)
-  const [showVRViewer, setShowVRViewer] = useState(false)
 
   // Get project info
   const projectSlug = params.slug.toLowerCase()
@@ -59,19 +58,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
   }
 
   if (!isLoaded) {
-    return (
-      <>
-        <Navigation />
-        <main className="min-h-screen bg-white dark:bg-neutral-900">
-          <div className="container mx-auto px-4 py-24 md:py-32">
-            <div className="flex items-center justify-center">
-              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </>
-    )
+    return null // Prevent flash of unstyled content
   }
 
   return (
@@ -92,7 +79,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
           <div className="max-w-4xl mx-auto mb-16">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <Chip>{project.category}</Chip>
+                <Chip>{project.category}</Chip>
               <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
                 {project.title}
               </h1>
@@ -172,28 +159,9 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           {project.hasVirtualTour && (
             <div className="mb-16">
               <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6">Virtual Tour</h2>
-              {showVRViewer ? (
-                <div className="aspect-[16/9] rounded-lg overflow-hidden">
-                  <VRViewer imageUrl={project.virtualTourImage} onClose={() => setShowVRViewer(false)} />
-                </div>
-              ) : (
-                <div
-                  className="aspect-[16/9] rounded-lg overflow-hidden relative cursor-pointer group"
-                  onClick={() => setShowVRViewer(true)}
-                >
-                  <Image
-                    src={project.virtualTourImage || "/placeholder.svg"}
-                    alt={`${project.title} - Virtual Tour`}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/20 transition-colors">
-                    <div className="bg-white/90 dark:bg-neutral-900/90 px-6 py-3 rounded-lg backdrop-blur-sm">
-                      <span className="text-neutral-900 dark:text-neutral-100 font-medium">Click to start VR tour</span>
-                    </div>
-                  </div>
-                </div>
-              )}
+              <div className="aspect-[16/9] rounded-lg overflow-hidden">
+                <VRViewer imageUrl={project.virtualTourImage} />
+              </div>
             </div>
           )}
 
