@@ -14,46 +14,26 @@ export const microcmsClient = createClient({
     '',
 })
 
-export const getPosts = async () => {
-  const res = await microcmsClient.get({ endpoint: 'posts' })
-  return (res.contents as any[]).map((post) => ({
-    ...post,
-    date: post.publishedAt,
-    dateModified: post.updatedAt ?? post.publishedAt,
-    category:
-      typeof post.category === 'object' && post.category?.name
-        ? post.category.name
-        : post.category ?? '',
-    image: post.image?.url ?? post.image ?? '',
+export const getProjects = async () => {
+  const res = await microcmsClient.get({ endpoint: 'projects' })
+  return (res.contents as any[]).map((project) => ({
+    id: project.id,
+    slug: project.slug || project.id,
+    title: project.title,
+    description: project.description,
+    image: project.image?.url ?? project.image ?? '',
+    categories: project.categories || [],
+    featured: project.featured ?? false,
+    year: project.year ?? '',
+    tags: project.tags || [],
+    location: project.location ?? '',
   }))
 }
 
-export const getPost = async (slug: string) => {
-  const raw = await microcmsClient.get({
-    endpoint: 'posts',
-    contentId: slug,
-    queries: {
-      fields: 'title,content,publishedAt,slug,category,image',
-    },
-  })
+export const getProject = async (slug: string) => {
+  const raw = await microcmsClient.get({ endpoint: 'projects', contentId: slug })
   return {
     ...raw,
-    date: raw.publishedAt,
-    dateModified: raw.updatedAt ?? raw.publishedAt,
     image: (raw as any).image?.url ?? (raw as any).image ?? '',
   }
-}
-
-export const getCategories = async () => {
-  const res = await microcmsClient.get({ endpoint: 'categories' })
-  return res.contents as any[]
-}
-
-export const getProjects = async () => {
-  const res = await microcmsClient.get({ endpoint: 'projects' })
-  return res.contents as any[]
-}
-
-export const getProject = async (slug: string) => {
-  return microcmsClient.get({ endpoint: 'projects', contentId: slug })
 }

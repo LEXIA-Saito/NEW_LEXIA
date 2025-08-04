@@ -79,7 +79,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
           <div className="max-w-4xl mx-auto mb-16">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <Chip href={`/categories/${project.category.toLowerCase()}`}>{project.category}</Chip>
+                <Chip>{project.category}</Chip>
               <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
                 {project.title}
               </h1>

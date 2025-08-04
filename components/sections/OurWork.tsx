@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowUpRight, Quote, Filter } from "lucide-react"
+import { ArrowUpRight, Filter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Chip } from "@/components/ui/chip"
 import SectionIcon from "@/components/section-icon"
@@ -137,42 +137,16 @@ export default function Work() {
                 <h3 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100 mb-3">{project.title}</h3>
                 <p className="text-lg text-neutral-700 dark:text-neutral-300 mb-6">{project.description}</p>
 
-                {project.testimonial && (
-                  <div className="bg-neutral-50 dark:bg-neutral-800 p-6 rounded-lg mb-6 transform transition-transform duration-300 hover:scale-[1.01]">
-                    <Quote className="h-6 w-6 text-neutral-300 dark:text-neutral-600 mb-2" />
-                    <p className="text-neutral-700 dark:text-neutral-300 italic leading-relaxed mb-4">"{project.testimonial.quote}"</p>
-                    <div className="flex items-center">
-                      <div className="relative w-10 h-10 rounded-full overflow-hidden mr-3">
-                        <Image
-                          src={project.testimonial.image || "/placeholder.svg"}
-                          alt={project.testimonial.author}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div>
-                        <p className="font-medium text-neutral-900 dark:text-neutral-100 text-sm">
-                          {project.testimonial.author}
-                        </p>
-                        <p className="text-neutral-500 dark:text-neutral-400 text-xs">{project.testimonial.role}</p>
-                      </div>
-                    </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {(project.tags?.length ? project.tags : project.categories).map((tag: string) => (
+                      <span
+                        key={tag}
+                        className="text-xs px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
-                )}
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {(project.tags
-                    ? project.tags.split(" • ")
-                    : project.categories
-                  ).map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
 
                 <Link href={`/projects/${project.slug}`}>
                   <Button className="rounded-full bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 group">
@@ -338,16 +312,6 @@ export default function Work() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="text-center mt-12">
-          <Link href="/categories">
-            <Button asChild variant="outline" className="rounded-full group">
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <span>{t('ourWork.viewAllCategories')}</span>
-                <ArrowUpRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </motion.button>
-            </Button>
-          </Link>
-        </div>
       </div>
     </div>
   )
