@@ -40,7 +40,7 @@ Next.js の `useSearchParams` フックを使用する際は、非同期処理�
 
 ## microCMS 設定
 
-記事コンテンツは microCMS で管理します。以下の環境変数を `.env` に設定してください。
+ブログ記事は microCMS で管理します。以下の環境変数を `.env` に設定してください。
 
 \`\`\`
 NEXT_PUBLIC_MICROCMS_DOMAIN=<サービスドメイン>
@@ -48,7 +48,7 @@ LEXIA_MICROCMS_DOMAIN=<サービスドメイン>
 MICROCMS_API_KEY=<API キー>
 \`\`\`
 
-`lib/microcms.ts` にて microCMS のクライアントを生成しています。利用するエンドポイントは `projects` のみです。`service` というエンドポイントは存在しないため、呼び出しは行っていません。
+現在、実績データはすべてハードコーディングされており、microCMS は使用していません。
 
 ## 料金シミュレーション
 

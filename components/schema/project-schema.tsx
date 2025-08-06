@@ -12,8 +12,8 @@ export function ProjectSchema({ project }: ProjectSchemaProps) {
     "@type": "CreativeWork", // Changed from ArchitectureProject
     name: project.title,
     description: project.description,
-    image: project.coverImage ? `${SITE_URL}${project.coverImage}` : undefined,
-    datePublished: new Date(project.year, 0).toISOString(),
+    image: project.image ? `${SITE_URL}${project.image}` : undefined,
+    datePublished: new Date(parseInt(project.year, 10), 0).toISOString(),
     author: {
       "@type": "Organization",
       name: "LEXIA",
@@ -21,9 +21,9 @@ export function ProjectSchema({ project }: ProjectSchemaProps) {
     },
     locationCreated: {
       "@type": "Place",
-      name: project.location, // This now refers to client industry/type
+      name: project.location,
     },
-    genre: project.category, // This now refers to web design categories
+    genre: project.categories?.[0],
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `${SITE_URL}/projects/${project.slug}`,

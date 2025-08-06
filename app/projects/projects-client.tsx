@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import Image from "next/image"
+import { projectsData } from "@/lib/projects-data"
 
 interface Project {
   id: string
@@ -52,50 +53,12 @@ const categories = [
 ]
 
 export default function ProjectsClient() {
-  const [projects, setProjects] = useState<Project[]>([])
-  const [filteredProjects, setFilteredProjects] = useState<Project[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [projects] = useState<Project[]>(projectsData)
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projectsData)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedYear, setSelectedYear] = useState("all")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
-
-  // プロジェクトデータの取得
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-
-        const response = await fetch("/api/projects", {
-          cache: "no-store",
-        })
-
-        if (!response.ok) {
-          throw new Error(`API request failed: ${response.status}`)
-        }
-
-        const projectsData = await response.json()
-
-        if (!Array.isArray(projectsData)) {
-          throw new Error("Invalid data format received from API")
-        }
-
-        setProjects(projectsData)
-        setFilteredProjects(projectsData)
-      } catch (error) {
-        console.error("Failed to fetch projects:", error)
-        setError(`プロジェクトデータの取得に失敗しました: ${error instanceof Error ? error.message : "不明なエラー"}`)
-        setProjects([])
-        setFilteredProjects([])
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchProjects()
-  }, [])
 
   // フィルタリング処理
   useEffect(() => {
@@ -128,67 +91,6 @@ export default function ProjectsClient() {
   const availableYears = Array.from(new Set(projects.map((p) => p.year).filter(Boolean)))
     .sort()
     .reverse()
-
-  if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-light tracking-tight text-neutral-900 dark:text-neutral-100 mb-4">
-              プロジェクト実績
-            </h1>
-            <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-3xl mx-auto">
-              LEXIAが手がけたWEBサイト制作、システム開発、デザイン制作の実績をご紹介します
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(9)].map((_, index) => (
-              <div key={index} className="animate-pulse">
-                <div className="bg-neutral-200 dark:bg-neutral-700 aspect-video rounded-lg mb-4"></div>
-                <div className="space-y-2">
-                  <div className="h-4 bg-neutral-200 dark:bg-neutral-700 rounded w-3/4"></div>
-                  <div className="h-3 bg-neutral-200 dark:bg-neutral-700 rounded w-full"></div>
-                  <div className="h-3 bg-neutral-200 dark:bg-neutral-700 rounded w-2/3"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-light tracking-tight text-neutral-900 dark:text-neutral-100 mb-4">
-              プロジェクト実績
-            </h1>
-            <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-3xl mx-auto">
-              LEXIAが手がけたWEBサイト制作、システム開発、デザイン制作の実績をご紹介します
-            </p>
-          </div>
-
-          <div className="text-center py-20">
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 mb-6 max-w-2xl mx-auto">
-              <p className="text-yellow-800 dark:text-yellow-200 mb-4">{error}</p>
-              <div className="text-sm text-yellow-700 dark:text-yellow-300">
-                <p className="mb-2">解決方法:</p>
-                <ul className="text-left space-y-1">
-                  <li>• microCMSで「projects」エンドポイントが作成されているか確認</li>
-                  <li>• 環境変数が正しく設定されているか確認</li>
-                  <li>• microCMSにプロジェクトデータが登録されているか確認</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="container mx-auto px-4 py-8">
