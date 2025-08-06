@@ -1,19 +1,22 @@
 import { createClient } from "microcms-js-sdk"
 
 // 環境変数の存在チェック
-const serviceDomain = process.env.LEXIA_MICROCMS_DOMAIN
-const apiKey = process.env.LEXIA_MICROCMS_API_KEY
+const serviceDomain = process.env.LEXIA_MICROCMS_DOMAIN || process.env.NEXT_PUBLIC_MICROCMS_DOMAIN
+const apiKey = process.env.LEXIA_MICROCMS_API_KEY || process.env.MICROCMS_API_KEY
 
 console.log("microCMS configuration check:")
-console.log("LEXIA_MICROCMS_DOMAIN:", serviceDomain ? "✓ Set" : "✗ Missing")
-console.log("LEXIA_MICROCMS_API_KEY:", apiKey ? "✓ Set" : "✗ Missing")
+console.log("LEXIA_MICROCMS_DOMAIN:", process.env.LEXIA_MICROCMS_DOMAIN ? "✓ Set" : "✗ Missing")
+console.log("LEXIA_MICROCMS_API_KEY:", process.env.LEXIA_MICROCMS_API_KEY ? "✓ Set" : "✗ Missing")
+console.log("NEXT_PUBLIC_MICROCMS_DOMAIN:", process.env.NEXT_PUBLIC_MICROCMS_DOMAIN ? "✓ Set" : "✗ Missing")
+console.log("MICROCMS_API_KEY:", process.env.MICROCMS_API_KEY ? "✓ Set" : "✗ Missing")
+console.log("Using serviceDomain:", serviceDomain)
 
 if (!serviceDomain) {
-  console.error("LEXIA_MICROCMS_DOMAIN is not set. Please add it to your environment variables.")
+  console.error("microCMS domain is not set. Please add LEXIA_MICROCMS_DOMAIN or NEXT_PUBLIC_MICROCMS_DOMAIN to your environment variables.")
 }
 
 if (!apiKey) {
-  console.error("LEXIA_MICROCMS_API_KEY is not set. Please add it to your environment variables.")
+  console.error("microCMS API key is not set. Please add LEXIA_MICROCMS_API_KEY or MICROCMS_API_KEY to your environment variables.")
 }
 
 let client: any = null
@@ -25,11 +28,15 @@ if (serviceDomain && apiKey) {
       apiKey,
     })
     console.log("microCMS client initialized successfully")
+    console.log("Client will connect to:", `https://${serviceDomain}.microcms.io`)
   } catch (error) {
     console.error("Failed to initialize microCMS client:", error)
   }
 } else {
   console.error("microCMS configuration is missing. Please check your environment variables.")
+  console.error("Required: serviceDomain and apiKey")
+  console.error("serviceDomain:", serviceDomain || "MISSING")
+  console.error("apiKey:", apiKey ? "SET" : "MISSING")
 }
 
 export interface Project {
@@ -50,13 +57,14 @@ export interface Project {
 export async function getProjects(): Promise<Project[]> {
   if (!client) {
     console.error("microCMS client is not initialized. Check environment variables:")
-    console.error("LEXIA_MICROCMS_DOMAIN:", serviceDomain ? "✓" : "✗")
-    console.error("LEXIA_MICROCMS_API_KEY:", apiKey ? "✓" : "✗")
+    console.error("serviceDomain:", serviceDomain || "MISSING")
+    console.error("apiKey:", apiKey ? "SET" : "MISSING")
     return []
   }
 
   try {
     console.log("Fetching projects from microCMS...")
+    console.log("Endpoint URL:", `https://${serviceDomain}.microcms.io/api/v1/projects`)
 
     const response = await client.get({
       endpoint: "projects",
@@ -65,10 +73,18 @@ export async function getProjects(): Promise<Project[]> {
       },
     })
 
-    console.log("microCMS response:", response)
+    console.log("microCMS response received")
+    console.log("Response type:", typeof response)
+    console.log("Response keys:", response ? Object.keys(response) : "null")
 
-    if (!response || !response.contents) {
+    if (!response) {
+      console.warn("No response from microCMS")
+      return []
+    }
+
+    if (!response.contents) {
       console.warn("No contents found in microCMS response")
+      console.log("Full response:", JSON.stringify(response, null, 2))
       return []
     }
 
@@ -91,10 +107,27 @@ export async function getProjects(): Promise<Project[]> {
     return projects
   } catch (error: any) {
     console.error("Error fetching projects from microCMS:", error)
+    console.error("Error type:", typeof error)
+    console.error("Error message:", error.message)
 
     if (error.response) {
-      console.error("Response status:", error.response.status)
-      console.error("Response data:", error.response.data)
+      console.error("HTTP Response status:", error.response.status)
+      console.error("HTTP Response statusText:", error.response.statusText)
+      console.error("HTTP Response data:", error.response.data)
+      console.error("HTTP Response headers:", error.response.headers)
+    }
+
+    if (error.request) {
+      console.error("Request details:", error.request)
+    }
+
+    // 404エラーの場合の詳細情報
+    if (error.response?.status === 404) {
+      console.error("404 Error Details:")
+      console.error("- Check if the 'projects' endpoint exists in your microCMS service")
+      console.error("- Verify the service domain is correct:", serviceDomain)
+      console.error("- Ensure the API key has proper permissions")
+      console.error("- Check if the microCMS service is active")
     }
 
     return []
@@ -175,4 +208,38 @@ export async function getProject(slug: string): Promise<Project | null> {
 
     return null
   }
+}
+
+// フォールバック用のダミーデータ
+export function getFallbackProjects(): Project[] {
+  return [
+    {
+      id: "fallback-1",
+      slug: "sample-project-1",
+      title: "サンプルプロジェクト 1",
+      description: "これはサンプルプロジェクトです。microCMSの設定が完了するまでの間、このデータが表示されます。",
+      image: "/placeholder.svg?height=400&width=600",
+      categories: ["Web開発"],
+      featured: true,
+      year: "2024",
+      tags: ["Next.js", "TypeScript", "Tailwind CSS"],
+      location: "愛知県碧南市",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: "fallback-2",
+      slug: "sample-project-2",
+      title: "サンプルプロジェクト 2",
+      description: "これはサンプルプロジェクトです。microCMSの設定が完了するまでの間、このデータが表示されます。",
+      image: "/placeholder.svg?height=400&width=600",
+      categories: ["デザイン"],
+      featured: false,
+      year: "2024",
+      tags: ["UI/UX", "Figma", "Adobe Creative Suite"],
+      location: "愛知県碧南市",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+  ]
 }
