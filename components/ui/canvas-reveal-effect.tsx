@@ -1,8 +1,6 @@
 "use client"
 import { cn } from "@/lib/utils"
-import { Canvas, useFrame, useThree } from "@react-three/fiber"
-import React, { useMemo, useRef } from "react"
-import { THREE } from "@/lib/three"
+import React, { useMemo, useRef, useState, useEffect } from "react"
 
 export const CanvasRevealEffect = ({
   animationSpeed = 0.4,
@@ -12,10 +10,6 @@ export const CanvasRevealEffect = ({
   dotSize,
   showGradient = true,
 }: {
-  /**
-   * 0.1 - slower
-   * 1.0 - faster
-   */
   animationSpeed?: number
   opacities?: number[]
   colors?: number[][]
@@ -23,6 +17,21 @@ export const CanvasRevealEffect = ({
   dotSize?: number
   showGradient?: boolean
 }) => {
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  if (!isClient) {
+    return (
+      <div className={cn("h-full relative bg-white w-full", containerClassName)}>
+        <div className="h-full w-full bg-gradient-to-br from-neutral-100 to-neutral-200" />
+        {showGradient && <div className="absolute inset-0 bg-gradient-to-t from-gray-950 to-[84%]" />}
+      </div>
+    )
+  }
+
   return (
     <div className={cn("h-full relative bg-white w-full", containerClassName)}>
       <div className="h-full w-full">
@@ -61,6 +70,31 @@ const DotMatrix: React.FC<DotMatrixProps> = ({
   shader = "",
   center = ["x", "y"],
 }) => {
+  const [Canvas, setCanvas] = useState<any>(null)
+  const [useFrame, setUseFrame] = useState<any>(null)
+  const [useThree, setUseThree] = useState<any>(null)
+  const [THREE, setTHREE] = useState<any>(null)
+
+  useEffect(() => {
+    const loadDependencies = async () => {
+      try {
+        // React Three Fiberを動的にインポート
+        const fiber = await import('@react-three/fiber')
+        setCanvas(fiber.Canvas)
+        setUseFrame(fiber.useFrame)
+        setUseThree(fiber.useThree)
+
+        // Three.jsを動的にインポート
+        const three = await import('three')
+        setTHREE(three)
+      } catch (error) {
+        console.warn('Failed to load 3D dependencies:', error)
+      }
+    }
+
+    loadDependencies()
+  }, [])
+
   const uniforms = React.useMemo(() => {
     let colorsArray = [colors[0], colors[0], colors[0], colors[0], colors[0], colors[0]]
     if (colors.length === 2) {
@@ -89,8 +123,26 @@ const DotMatrix: React.FC<DotMatrixProps> = ({
     }
   }, [colors, opacities, totalSize, dotSize])
 
+  // 3D依存関係が読み込まれていない場合はフォールバック表示
+  if (!Canvas || !useFrame || !useThree || !THREE) {
+    return (
+      <div className="h-full w-full relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-50 to-blue-50 opacity-50" />
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(0,255,255,0.3) 1px, transparent 0)`,
+          backgroundSize: `${totalSize * 4}px ${totalSize * 4}px`,
+          animation: 'pulse 2s ease-in-out infinite'
+        }} />
+      </div>
+    )
+  }
+
   return (
     <Shader
+      Canvas={Canvas}
+      useFrame={useFrame}
+      useThree={useThree}
+      THREE={THREE}
       source={`
         precision mediump float;
         in vec2 fragCoord;
@@ -144,21 +196,28 @@ type Uniforms = {
     type: string
   }
 }
+
 const ShaderMaterial = ({
   source,
   uniforms,
   maxFps = 60,
+  useFrame,
+  useThree,
+  THREE
 }: {
   source: string
   hovered?: boolean
   maxFps?: number
   uniforms: Uniforms
+  useFrame: any
+  useThree: any
+  THREE: any
 }) => {
   const { size } = useThree()
-  const ref = useRef<THREE.Mesh>()
+  const ref = useRef<any>()
   let lastFrameTime = 0
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock }: any) => {
     if (!ref.current) return
     const timestamp = clock.getElapsedTime()
     if (timestamp - lastFrameTime < 1 / maxFps) {
@@ -211,11 +270,10 @@ const ShaderMaterial = ({
     preparedUniforms["u_time"] = { value: 0, type: "1f" }
     preparedUniforms["u_resolution"] = {
       value: new THREE.Vector2(size.width * 2, size.height * 2),
-    } // Initialize u_resolution
+    }
     return preparedUniforms
   }
 
-  // Shader material
   const material = useMemo(() => {
     const materialObject = new THREE.ShaderMaterial({
       vertexShader: `
@@ -240,23 +298,39 @@ const ShaderMaterial = ({
     })
 
     return materialObject
-  }, [size.width, size.height, source])
+  }, [size.width, size.height, source, THREE])
 
   return (
-    <mesh ref={ref as any}>
+    <mesh ref={ref}>
       <planeGeometry args={[2, 2]} />
       <primitive object={material} attach="material" />
     </mesh>
   )
 }
 
-const Shader: React.FC<ShaderProps> = ({ source, uniforms, maxFps = 60 }) => {
+const Shader: React.FC<ShaderProps> = ({ 
+  source, 
+  uniforms, 
+  maxFps = 60, 
+  Canvas, 
+  useFrame, 
+  useThree, 
+  THREE 
+}) => {
   return (
-    <Canvas className="absolute inset-0  h-full w-full">
-      <ShaderMaterial source={source} uniforms={uniforms} maxFps={maxFps} />
+    <Canvas className="absolute inset-0 h-full w-full">
+      <ShaderMaterial 
+        source={source} 
+        uniforms={uniforms} 
+        maxFps={maxFps}
+        useFrame={useFrame}
+        useThree={useThree}
+        THREE={THREE}
+      />
     </Canvas>
   )
 }
+
 interface ShaderProps {
   source: string
   uniforms: {
@@ -266,4 +340,8 @@ interface ShaderProps {
     }
   }
   maxFps?: number
+  Canvas?: any
+  useFrame?: any
+  useThree?: any
+  THREE?: any
 }

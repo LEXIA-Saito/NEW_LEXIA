@@ -209,37 +209,3 @@ export async function getProject(slug: string): Promise<Project | null> {
     return null
   }
 }
-
-// フォールバック用のダミーデータ
-export function getFallbackProjects(): Project[] {
-  return [
-    {
-      id: "fallback-1",
-      slug: "sample-project-1",
-      title: "サンプルプロジェクト 1",
-      description: "これはサンプルプロジェクトです。microCMSの設定が完了するまでの間、このデータが表示されます。",
-      image: "/placeholder.svg?height=400&width=600",
-      categories: ["Web開発"],
-      featured: true,
-      year: "2024",
-      tags: ["Next.js", "TypeScript", "Tailwind CSS"],
-      location: "愛知県碧南市",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: "fallback-2",
-      slug: "sample-project-2",
-      title: "サンプルプロジェクト 2",
-      description: "これはサンプルプロジェクトです。microCMSの設定が完了するまでの間、このデータが表示されます。",
-      image: "/placeholder.svg?height=400&width=600",
-      categories: ["デザイン"],
-      featured: false,
-      year: "2024",
-      tags: ["UI/UX", "Figma", "Adobe Creative Suite"],
-      location: "愛知県碧南市",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-  ]
-}

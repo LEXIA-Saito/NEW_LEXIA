@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { ArrowRight, ExternalLink } from "lucide-react"
+import { ArrowRight, ExternalLink } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -47,6 +47,7 @@ export default function OurWork() {
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [dataSource, setDataSource] = useState<string>("")
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -64,21 +65,24 @@ export default function OurWork() {
         console.log("API Response status:", response.status)
 
         if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}))
-          console.error("API Error:", errorData)
           throw new Error(`API request failed: ${response.status} ${response.statusText}`)
         }
 
         const projectsData = await response.json()
         console.log("Received projects data:", projectsData)
 
+        // データソースを記録
+        const source = response.headers.get("X-Data-Source") || "unknown"
+        setDataSource(source)
+
+        // レスポンスが配列かどうかをチェック
         if (!Array.isArray(projectsData)) {
           console.error("Invalid data format received:", projectsData)
           throw new Error("Invalid data format received from API")
         }
 
         if (projectsData.length === 0) {
-          setError("プロジェクトデータが見つかりません。microCMSにプロジェクトを追加してください。")
+          setError("プロジェクトデータが見つかりません。")
         } else {
           // 注目プロジェクトを優先し、最大6件まで表示
           const sortedProjects = projectsData
@@ -89,7 +93,7 @@ export default function OurWork() {
             })
             .slice(0, 6)
           setProjects(sortedProjects)
-          console.log(`Displaying ${sortedProjects.length} projects`)
+          console.log(`Displaying ${sortedProjects.length} projects (source: ${source})`)
         }
       } catch (error) {
         console.error("Failed to fetch projects:", error)
@@ -213,6 +217,17 @@ export default function OurWork() {
           >
             私たちが手がけた代表的なプロジェクトをご紹介します
           </motion.p>
+          {dataSource && (
+            <motion.p
+              className="text-xs text-neutral-500 dark:text-neutral-400 mt-2"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              データソース: {dataSource === "microcms" ? "microCMS" : dataSource === "fallback" ? "フォールバック" : dataSource}
+            </motion.p>
+          )}
         </div>
 
         {projects.length > 0 ? (
@@ -230,7 +245,7 @@ export default function OurWork() {
                     <Card className="group hover:shadow-xl transition-all duration-300 overflow-hidden border-0 bg-white dark:bg-neutral-800">
                       <div className="aspect-video relative overflow-hidden">
                         <Image
-                          src={project.image || "/placeholder.jpg"}
+                          src={project.image || "/placeholder.svg?height=400&width=600"}
                           alt={project.title}
                           fill
                           className="object-cover group-hover:scale-110 transition-transform duration-500"

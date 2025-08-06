@@ -1,149 +1,169 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { X, MousePointer, RotateCcw } from "lucide-react"
-import { THREE } from "@/lib/three"
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
-import { motion } from "framer-motion"
+import { useState, useRef, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { RotateCcw, ZoomIn, ZoomOut, Move } from 'lucide-react'
 
 interface VRViewerProps {
-  imageUrl: string
-  onClose: () => void
+  imageUrl?: string
 }
 
-export function VRViewer({ imageUrl, onClose }: VRViewerProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [showInstructions, setShowInstructions] = useState(true)
-  const controlsRef = useRef<OrbitControls | null>(null)
+export function VRViewer({ imageUrl = "/vr/minimalist-villa-360.png" }: VRViewerProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [rotation, setRotation] = useState({ x: 0, y: 0 })
+  const [zoom, setZoom] = useState(1)
+  const [isDragging, setIsDragging] = useState(false)
+  const [lastMouse, setLastMouse] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
-    if (!containerRef.current) return
+    const canvas = canvasRef.current
+    if (!canvas) return
 
-    // Create scene
-    const scene = new THREE.Scene()
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
 
-    // Create camera
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-    camera.position.set(0, 0, 0.1)
-
-    // Create renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true })
-    renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight)
-    containerRef.current.appendChild(renderer.domElement)
-
-    // Create sphere geometry
-    const geometry = new THREE.SphereGeometry(5, 60, 40)
-    geometry.scale(-1, 1, 1) // Invert the sphere
-
-    // Load texture
-    const textureLoader = new THREE.TextureLoader()
-    textureLoader.crossOrigin = "anonymous"
-
-    const texture = textureLoader.load(
-      imageUrl,
-      () => {
-        setIsLoading(false)
-        setTimeout(() => setShowInstructions(false), 3000)
-      },
-      undefined,
-      (err) => console.error("Error loading texture:", err),
-    )
-    texture.colorSpace = THREE.SRGBColorSpace
-
-    // Create material
-    const material = new THREE.MeshBasicMaterial({ map: texture })
-
-    // Create mesh
-    const sphere = new THREE.Mesh(geometry, material)
-    scene.add(sphere)
-
-    // Add controls
-    const controls = new OrbitControls(camera, renderer.domElement)
-    controlsRef.current = controls
-    controls.enableZoom = false
-    controls.enablePan = false
-    controls.rotateSpeed = 0.5
-    controls.autoRotate = true
-    controls.autoRotateSpeed = 0.5
-
-    // Handle resize
-    const handleResize = () => {
-      if (!containerRef.current) return
-      camera.aspect = containerRef.current.clientWidth / containerRef.current.clientHeight
-      camera.updateProjectionMatrix()
-      renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight)
+    const img = new Image()
+    img.crossOrigin = "anonymous"
+    
+    img.onload = () => {
+      setIsLoaded(true)
+      drawPanorama(ctx, img, canvas.width, canvas.height)
     }
 
-    window.addEventListener("resize", handleResize)
-
-    // Animation loop
-    const animate = () => {
-      requestAnimationFrame(animate)
-      controls.update()
-      renderer.render(scene, camera)
+    img.onerror = () => {
+      // フォールバック: グラデーション背景を描画
+      ctx.fillStyle = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      
+      // テキストを描画
+      ctx.fillStyle = '#ffffff'
+      ctx.font = '24px sans-serif'
+      ctx.textAlign = 'center'
+      ctx.fillText('360° Virtual Tour', canvas.width / 2, canvas.height / 2)
+      ctx.font = '16px sans-serif'
+      ctx.fillText('Interactive panoramic view', canvas.width / 2, canvas.height / 2 + 30)
+      setIsLoaded(true)
     }
 
-    animate()
+    img.src = imageUrl
+  }, [imageUrl, rotation, zoom])
 
-    // Cleanup
-    return () => {
-      if (containerRef.current) {
-        containerRef.current.removeChild(renderer.domElement)
-      }
-      window.removeEventListener("resize", handleResize)
-    }
-  }, [imageUrl])
+  const drawPanorama = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, width: number, height: number) => {
+    ctx.clearRect(0, 0, width, height)
+    
+    // 簡単なパノラマ効果をシミュレート
+    const offsetX = (rotation.y * width) / 360
+    const offsetY = (rotation.x * height) / 180
+    
+    ctx.save()
+    ctx.scale(zoom, zoom)
+    ctx.translate(-offsetX, -offsetY)
+    
+    // 画像を描画
+    ctx.drawImage(img, 0, 0, width, height)
+    
+    // 継ぎ目を隠すために画像を繰り返し描画
+    ctx.drawImage(img, width, 0, width, height)
+    ctx.drawImage(img, -width, 0, width, height)
+    
+    ctx.restore()
+  }
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true)
+    setLastMouse({ x: e.clientX, y: e.clientY })
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return
+
+    const deltaX = e.clientX - lastMouse.x
+    const deltaY = e.clientY - lastMouse.y
+
+    setRotation(prev => ({
+      x: Math.max(-90, Math.min(90, prev.x + deltaY * 0.5)),
+      y: (prev.y + deltaX * 0.5) % 360
+    }))
+
+    setLastMouse({ x: e.clientX, y: e.clientY })
+  }
+
+  const handleMouseUp = () => {
+    setIsDragging(false)
+  }
 
   const resetView = () => {
-    if (controlsRef.current) {
-      controlsRef.current.reset()
-    }
+    setRotation({ x: 0, y: 0 })
+    setZoom(1)
+  }
+
+  const zoomIn = () => {
+    setZoom(prev => Math.min(3, prev + 0.2))
+  }
+
+  const zoomOut = () => {
+    setZoom(prev => Math.max(0.5, prev - 0.2))
   }
 
   return (
-    <div className="relative w-full h-full" ref={containerRef}>
-      <motion.button
-        onClick={onClose}
-        className="absolute top-4 right-4 z-10 bg-white/80 dark:bg-neutral-900/80 rounded-full p-2 backdrop-blur-sm"
-        aria-label="Close VR viewer"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        <X className="h-5 w-5 text-neutral-900 dark:text-neutral-100" />
-      </motion.button>
+    <div className="relative w-full h-full bg-neutral-900 rounded-lg overflow-hidden">
+      <canvas
+        ref={canvasRef}
+        width={800}
+        height={400}
+        className="w-full h-full cursor-grab active:cursor-grabbing"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      />
+      
+      {/* コントロールパネル */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 bg-black/50 backdrop-blur-sm rounded-lg p-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={resetView}
+          className="text-white hover:bg-white/20"
+        >
+          <RotateCcw className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={zoomOut}
+          className="text-white hover:bg-white/20"
+        >
+          <ZoomOut className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={zoomIn}
+          className="text-white hover:bg-white/20"
+        >
+          <ZoomIn className="h-4 w-4" />
+        </Button>
+      </div>
 
-      <motion.button
-        onClick={resetView}
-        className="absolute top-4 left-4 z-10 bg-white/80 dark:bg-neutral-900/80 rounded-full p-2 backdrop-blur-sm"
-        aria-label="Reset view"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        <RotateCcw className="h-5 w-5 text-neutral-900 dark:text-neutral-100" />
-      </motion.button>
+      {/* 操作説明 */}
+      <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-sm rounded-lg p-3 text-white text-sm">
+        <div className="flex items-center gap-2 mb-1">
+          <Move className="h-4 w-4" />
+          <span>Drag to look around</span>
+        </div>
+        <div>Zoom: {Math.round(zoom * 100)}%</div>
+      </div>
 
-      {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-neutral-900/50 backdrop-blur-sm">
+      {/* ローディング状態 */}
+      {!isLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-neutral-900">
           <div className="text-white text-center">
-            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
-            <p className="mt-4">Loading VR experience...</p>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
+            <p>Loading Virtual Tour...</p>
           </div>
         </div>
-      )}
-
-      {showInstructions && !isLoading && (
-        <motion.div
-          className="absolute inset-0 pointer-events-none flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <div className="bg-black/70 text-white px-6 py-4 rounded-lg backdrop-blur-sm flex items-center">
-            <MousePointer className="h-5 w-5 mr-2" />
-            <span>Click and drag to look around</span>
-          </div>
-        </motion.div>
       )}
     </div>
   )
