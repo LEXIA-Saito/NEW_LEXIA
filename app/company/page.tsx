@@ -18,7 +18,7 @@ export default function CompanyPage() {
       <Navigation />
       <main className="min-h-screen bg-white dark:bg-neutral-900">
         <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0">
+          <div className="absolute inset-0 pointer-events-none select-none">
             <LexiaLogoParticles />
           </div>
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-white animate-bounce">
