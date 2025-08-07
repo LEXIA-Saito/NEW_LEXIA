@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Search, Grid, List, ExternalLink } from "lucide-react"
+import { Search, Grid, List, ExternalLink, ArrowLeft } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -95,6 +95,17 @@ export default function ProjectsClient() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-6xl mx-auto">
+        {/* Back to Top Button */}
+        <div className="mb-8">
+          <Link
+            href="/"
+            className="inline-flex items-center text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 group transition-colors duration-300"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
+            トップページに戻る
+          </Link>
+        </div>
+
         {/* ヘッダー */}
         <div className="text-center mb-12">
           <motion.h1
@@ -315,6 +326,34 @@ export default function ProjectsClient() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-center mt-20"
+        >
+          <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-neutral-100 mb-6">
+            あなたのプロジェクトも、<br />
+            ここに並べませんか？
+          </h2>
+          <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-8 max-w-2xl mx-auto">
+            LEXIAと一緒に、あなたのビジネスを次のレベルへ
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/contact">
+              <Button size="lg" className="px-8 py-4 text-lg rounded-full bg-neutral-900 hover:bg-neutral-800 text-white">
+                プロジェクトを相談する
+              </Button>
+            </Link>
+            <Link href="/">
+              <Button variant="outline" size="lg" className="px-8 py-4 text-lg rounded-full border-2 border-neutral-300 hover:border-neutral-400">
+                トップページに戻る
+              </Button>
+            </Link>
+          </div>
+        </motion.div>
       </div>
     </div>
   )
