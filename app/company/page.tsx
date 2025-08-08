@@ -149,7 +149,8 @@ export default function CompanyPage() {
                   href: "/services/movie",
                   icon: Film,
                   title: "動画制作",
-                  description: "撮影から編集まで一貫して対応します。",
+                  description:
+                    "Rfilmと提携し、企画から撮影・編集まで一貫対応します。",
                 },
                 {
                   href: "/services/pc",
