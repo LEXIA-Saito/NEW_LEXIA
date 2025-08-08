@@ -15,6 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/services/design",
     "/pricing",
     "/team/masato-saito",
+    "/team/riho-saito",
+    "/team/assistant",
     "/contact",
   ].map((route) => ({
     url: `${SITE_URL}${route}`,

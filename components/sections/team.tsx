@@ -30,6 +30,16 @@ const teamMembers = [
     email: "",
     slug: "riho-saito",
   },
+  {
+    id: 3,
+    name: "アシスタント",
+    role: "アシスタント",
+    bio: "日々の業務をサポートし、チームが円滑に動くよう支援しています。",
+    image: "/placeholder-user.jpg",
+    linkedin: "",
+    email: "",
+    slug: "assistant",
+  },
 ]
 
 export default function Team() {
