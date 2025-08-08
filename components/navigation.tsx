@@ -33,7 +33,11 @@ export const navItems = [
   {
     name: "チーム",
     href: "#team",
-    subItems: [{ name: "齋藤雅人", href: "/team/masato-saito" }],
+    subItems: [
+      { name: "齋藤雅人", href: "/team/masato-saito" },
+      { name: "齋藤李保", href: "/team/riho-saito" },
+      { name: "アシスタント", href: "/team/assistant" },
+    ],
   },
   { name: "お問い合わせ", href: "#contact", subItems: [] },
 ]

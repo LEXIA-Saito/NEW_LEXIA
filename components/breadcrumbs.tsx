@@ -19,6 +19,8 @@ const nameMap: Record<string, string> = {
   contact: 'お問い合わせ',
   team: 'チーム',
   'masato-saito': '齋藤雅人',
+  'riho-saito': '齋藤李保',
+  assistant: 'アシスタント',
 }
 
 function segmentToLabel(seg: string): string {
