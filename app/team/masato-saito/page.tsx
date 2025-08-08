@@ -155,7 +155,7 @@ export default function MasatoSaitoProfile() {
             <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4">齋藤雅人</h1>
             <Breadcrumbs />
             <p className="text-neutral-700 dark:text-neutral-300 mb-4">
-              最新の制作技術を駆使し、WEB制作歴5年の経験を基にクライアントの期待を超える成果を追求します。生まれも育ちも愛知県碧南市で、地域密着の視点から価値あるサイトを届けます。
+              最新の制作技術を駆使し、WEB制作歴5年の経験を基にクライアントの期待を超える成果を追求します。愛知県安城市生まれ、愛知県碧南市育ちで、地域密着の視点から価値あるサイトを届けます。
             </p>
             <div className="flex justify-center gap-4">
               <Link
