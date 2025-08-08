@@ -12,12 +12,30 @@ import { LOGO_URL, LOGO_WHITE_URL, LOGO_TEXT_URL, LOGO_TEXT_WHITE_URL } from "@/
 
 // Japanese navigation items
 export const navItems = [
-  { name: "事業概要", href: "#about" },
-  { name: "制作工程", href: "/company/process" },
-  { name: "料金詳細", href: "#pricing" },
-  { name: "制作実績", href: "#work" },
-  { name: "チーム", href: "#team" },
-  { name: "お問い合わせ", href: "#contact" },
+  {
+    name: "事業概要",
+    href: "#about",
+    subItems: [
+      { name: "制作工程", href: "/company/process" },
+      { name: "WEB制作", href: "/services/web" },
+      { name: "デザイン制作", href: "/services/design" },
+      { name: "システム開発", href: "/services/system" },
+      { name: "動画制作", href: "/services/movie" },
+      { name: "PC教室", href: "/services/pc" },
+    ],
+  },
+  {
+    name: "料金詳細",
+    href: "#pricing",
+    subItems: [{ name: "料金シミュレーション", href: "#pricing" }],
+  },
+  { name: "制作実績", href: "#work", subItems: [] },
+  {
+    name: "チーム",
+    href: "#team",
+    subItems: [{ name: "齋藤正人", href: "/team/masato-saito" }],
+  },
+  { name: "お問い合わせ", href: "#contact", subItems: [] },
 ]
 
 export default function Navigation() {
@@ -25,13 +43,14 @@ export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("hero")
   const [snsOpen, setSnsOpen] = useState(false)
+  const [megaMenuOpen, setMegaMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
 
       // Determine active section based on scroll position
-      const sections = ["contact", "team", "work", "pricing", "process", "about", "hero"]
+      const sections = ["contact", "team", "work", "pricing", "about", "hero"]
       for (const section of sections) {
         const element = document.getElementById(section)
         if (element) {
@@ -65,150 +84,215 @@ export default function Navigation() {
 
   return (
     <>
-      <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"
-        }`}
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+      <div
+        className="fixed top-0 left-0 right-0 z-50"
+        onMouseEnter={() => setMegaMenuOpen(true)}
+        onMouseLeave={() => setMegaMenuOpen(false)}
       >
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <Link href="/" className="flex items-center" aria-label="LEXIA">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
-              <div className="flex items-center">
-                <Image
-                  src={LOGO_URL || "/placeholder.svg"}
-                  alt="LEXIA"
-                  width={120}
-                  height={24}
-                  className="h-6 w-auto block dark:hidden"
-                />
-                <Image
-                  src={LOGO_TEXT_URL || "/placeholder.svg"}
-                  alt="LEXIA text"
-                  width={120}
-                  height={24}
-                  className="h-6 w-auto ml-2 block dark:hidden"
-                />
-                <Image
-                  src={LOGO_WHITE_URL || "/placeholder.svg"}
-                  alt="LEXIA"
-                  width={120}
-                  height={24}
-                  className="h-6 w-auto hidden dark:block"
-                />
-                <Image
-                  src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
-                  alt="LEXIA text"
-                  width={120}
-                  height={24}
-                  className="h-6 w-auto ml-2 hidden dark:block"
-                />
-              </div>
-            </motion.div>
-          </Link>
+        <motion.header
+          className={`transition-all duration-300 ${
+            isScrolled
+              ? "bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm py-3"
+              : "bg-transparent py-5"
+          }`}
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <div className="container mx-auto px-4 flex justify-between items-center">
+            <Link href="/" className="flex items-center" aria-label="LEXIA">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <div className="flex items-center">
+                  <Image
+                    src={LOGO_URL || "/placeholder.svg"}
+                    alt="LEXIA"
+                    width={120}
+                    height={24}
+                    className="h-6 w-auto block dark:hidden"
+                  />
+                  <Image
+                    src={LOGO_TEXT_URL || "/placeholder.svg"}
+                    alt="LEXIA text"
+                    width={120}
+                    height={24}
+                    className="h-6 w-auto ml-2 block dark:hidden"
+                  />
+                  <Image
+                    src={LOGO_WHITE_URL || "/placeholder.svg"}
+                    alt="LEXIA"
+                    width={120}
+                    height={24}
+                    className="h-6 w-auto hidden dark:block"
+                  />
+                  <Image
+                    src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
+                    alt="LEXIA text"
+                    width={120}
+                    height={24}
+                    className="h-6 w-auto ml-2 hidden dark:block"
+                  />
+                </div>
+              </motion.div>
+            </Link>
 
-          <div className="hidden md:flex items-center space-x-8">
-            <nav>
-              <ul className="flex space-x-8">
-                {navItems.map((item, index) => (
-                  <motion.li
-                    key={item.name}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 * index }}
+            <div className="hidden md:flex items-center space-x-8">
+              <nav>
+                <ul className="flex space-x-8">
+                  {navItems.map((item, index) => (
+                    <motion.li
+                      key={item.name}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: 0.1 * index }}
+                    >
+                      <Link
+                        href={item.href}
+                        className={`text-sm transition-colors relative ${
+                          activeSection === item.href.substring(1)
+                            ? "text-neutral-900 dark:text-neutral-100"
+                            : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                        }`}
+                        onClick={(e) => handleNavigation(e, item.href)}
+                      >
+                        {item.name}
+                        {activeSection === item.href.substring(1) && (
+                          <motion.span
+                            layoutId="activeSection"
+                            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-neutral-900 dark:bg-neutral-100"
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
+              </nav>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.8 }}
+              >
+                <ThemeToggle />
+              </motion.div>
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.9 }}
+                className="relative"
+                onClick={() => setSnsOpen((prev) => !prev)}
+                aria-label="SNS"
+              >
+                <Share2
+                  className={`h-5 w-5 transition-colors ${
+                    snsOpen
+                      ? "text-neutral-900 dark:text-neutral-100"
+                      : "text-neutral-500 dark:text-neutral-400"
+                  }`}
+                />
+                <div
+                  className={`absolute left-1/2 top-full mt-2 -translate-x-1/2 ${
+                    snsOpen ? "flex" : "hidden"
+                  } space-x-2`}
+                >
+                  <a
+                    href="https://www.instagram.com/lexia_web/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                    aria-label="Instagram"
                   >
+                    <Instagram className="h-5 w-5" />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/lexia-saito/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin className="h-5 w-5" />
+                  </a>
+                </div>
+              </motion.button>
+            </div>
+
+            <div className="flex items-center space-x-4 md:hidden">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.4 }}
+              >
+                <ThemeToggle />
+              </motion.div>
+              <motion.a
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.5 }}
+                href="https://www.instagram.com/lexia_web/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
+              </motion.a>
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.6 }}
+                className="text-neutral-900 dark:text-neutral-100"
+                onClick={() => setMobileMenuOpen(true)}
+                aria-label="メニューを開く"
+              >
+                <Menu />
+              </motion.button>
+            </div>
+          </div>
+        </motion.header>
+
+        <AnimatePresence>
+          {megaMenuOpen && (
+            <motion.div
+              className="hidden md:block bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="container mx-auto px-4 py-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8">
+                {navItems.map((item) => (
+                  <div key={item.name}>
                     <Link
                       href={item.href}
-                      className={`text-sm transition-colors relative ${
-                        activeSection === item.href.substring(1)
-                          ? "text-neutral-900 dark:text-neutral-100"
-                          : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-                      }`}
-                      onClick={(e) => handleNavigation(e, item.href)}
+                      className="font-medium text-neutral-900 dark:text-neutral-100 hover:underline"
                     >
                       {item.name}
-                      {activeSection === item.href.substring(1) && (
-                        <motion.span
-                          layoutId="activeSection"
-                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-neutral-900 dark:bg-neutral-100"
-                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                        />
-                      )}
                     </Link>
-                  </motion.li>
+                    {item.subItems && item.subItems.length > 0 && (
+                      <ul className="mt-2 space-y-2">
+                        {item.subItems.map((sub) => (
+                          <li key={sub.name}>
+                            <Link
+                              href={sub.href}
+                              className="text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                            >
+                              {sub.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 ))}
-              </ul>
-            </nav>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.8 }}>
-              <ThemeToggle />
-            </motion.div>
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.9 }}
-              className="relative"
-              onClick={() => setSnsOpen((prev) => !prev)}
-              aria-label="SNS"
-            >
-              <Share2
-                className={`h-5 w-5 transition-colors ${snsOpen ? "text-neutral-900 dark:text-neutral-100" : "text-neutral-500 dark:text-neutral-400"}`}
-              />
-              <div
-                className={`absolute left-1/2 top-full mt-2 -translate-x-1/2 ${snsOpen ? "flex" : "hidden"} space-x-2`}
-              >
-                <a
-                  href="https://www.instagram.com/lexia_web/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="h-5 w-5" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/lexia-saito/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </a>
               </div>
-            </motion.button>
-          </div>
-
-          <div className="flex items-center space-x-4 md:hidden">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.4 }}>
-              <ThemeToggle />
             </motion.div>
-            <motion.a
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.5 }}
-              href="https://www.instagram.com/lexia_web/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-              aria-label="Instagram"
-            >
-              <Instagram className="h-5 w-5" />
-            </motion.a>
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.6 }}
-              className="text-neutral-900 dark:text-neutral-100"
-              onClick={() => setMobileMenuOpen(true)}
-              aria-label="メニューを開く"
-            >
-              <Menu />
-            </motion.button>
-          </div>
-        </div>
-      </motion.header>
+          )}
+        </AnimatePresence>
+      </div>
 
       <AnimatePresence>
         {mobileMenuOpen && (
