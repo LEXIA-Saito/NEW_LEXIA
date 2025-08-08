@@ -1,5 +1,4 @@
 import About from "@/components/sections/about"
-import OurProcess from "@/components/sections/OurProcess"
 import Work from "@/components/sections/OurWork"
 import Contact from "@/components/sections/contact"
 import Team from "@/components/sections/team"
@@ -19,10 +18,6 @@ export default function Home() {
 
       <section id="about" className="py-24 md:py-32">
         <About />
-      </section>
-
-      <section id="process" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800">
-        <OurProcess />
       </section>
 
       <section id="pricing" className="py-24 md:py-32">

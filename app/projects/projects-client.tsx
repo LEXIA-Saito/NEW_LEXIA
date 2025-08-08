@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Search, Grid, List, ExternalLink, ArrowLeft } from 'lucide-react'
+import { Search, Grid, List, ExternalLink } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
+import Breadcrumbs from "@/components/breadcrumbs"
 import Image from "next/image"
 import { projectsData } from "@/lib/projects-data"
 
@@ -95,17 +96,6 @@ export default function ProjectsClient() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-6xl mx-auto">
-        {/* Back to Top Button */}
-        <div className="mb-8">
-          <Link
-            href="/"
-            className="inline-flex items-center text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 group transition-colors duration-300"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
-            トップページに戻る
-          </Link>
-        </div>
-
         {/* ヘッダー */}
         <div className="text-center mb-12">
           <motion.h1
@@ -116,6 +106,7 @@ export default function ProjectsClient() {
           >
             プロジェクト実績
           </motion.h1>
+          <Breadcrumbs />
           <motion.p
             className="text-lg text-neutral-700 dark:text-neutral-300 max-w-3xl mx-auto mb-2"
             initial={{ opacity: 0, y: 20 }}
@@ -345,11 +336,6 @@ export default function ProjectsClient() {
             <Link href="/contact">
               <Button size="lg" className="px-8 py-4 text-lg rounded-full bg-neutral-900 hover:bg-neutral-800 text-white">
                 プロジェクトを相談する
-              </Button>
-            </Link>
-            <Link href="/">
-              <Button variant="outline" size="lg" className="px-8 py-4 text-lg rounded-full border-2 border-neutral-300 hover:border-neutral-400">
-                トップページに戻る
               </Button>
             </Link>
           </div>

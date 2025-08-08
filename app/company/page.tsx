@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
+import Breadcrumbs from "@/components/breadcrumbs"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
@@ -168,12 +169,19 @@ export default function CompanyPage() {
 
         {/* Summary */}
         <section className="container mx-auto px-4 py-24 space-y-8" data-testid="company-summary" id="summary">
+          <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4">会社概要</h1>
+          <Breadcrumbs />
           <div className="space-y-2 text-neutral-700 dark:text-neutral-300">
             <p>LEXIAは愛知県碧南市の制作＆システム開発チーム。</p>
             <p>中小〜中堅企業の課題を“伝わる設計と実装”で解決。</p>
             <p>要件整理からUI実装、運用改善までワンストップ対応。</p>
             <p>Next.jsとTailwindで素早く美しいフロントを実現。</p>
             <p>5年の制作実績と迅速な改善が評価されています。</p>
+            <p>
+              <Link href="/services/web#process" className="underline">
+                制作工程を見る
+              </Link>
+            </p>
           </div>
           <CTAButtons />
         </section>

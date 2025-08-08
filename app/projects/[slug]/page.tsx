@@ -2,7 +2,8 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, Calendar, MapPin, Tag } from "lucide-react"
+import { Calendar, MapPin, Tag } from "lucide-react"
+import Breadcrumbs from "@/components/breadcrumbs"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { Chip } from "@/components/ui/chip"
@@ -22,11 +23,11 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-6">
                 Project Not Found
               </h1>
+              <Breadcrumbs />
               <p className="text-neutral-700 dark:text-neutral-300 mb-8">
                 The project you are looking for does not exist or has been moved.
               </p>
               <Link href="/projects" className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline">
-                <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Projects
               </Link>
             </div>
@@ -47,21 +48,12 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
       <Navigation />
       <main className="min-h-screen bg-white dark:bg-neutral-900">
         <div className="container mx-auto px-4 py-24 md:py-32 max-w-4xl">
-          <div className="mb-8">
-            <Link
-              href="/projects"
-              className="inline-flex items-center text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 group"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
-              Back to Projects
-            </Link>
-          </div>
-
           <div className="mb-12">
             {project.categories[0] && <Chip>{project.categories[0]}</Chip>}
-            <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-6">
+            <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-4">
               {project.title}
             </h1>
+            <Breadcrumbs />
             <p className="text-lg text-neutral-700 dark:text-neutral-300 mb-6">{project.description}</p>
             <div className="flex flex-wrap gap-4 text-neutral-700 dark:text-neutral-300">
               {project.year && (

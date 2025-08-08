@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
+import Breadcrumbs from "@/components/breadcrumbs"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import HomepageCalculator from "@/components/pricing/homepage-calculator"
 import HomepageRunningCost from "@/components/pricing/homepage-running-cost"
@@ -35,6 +36,7 @@ export default function PricingPage() {
           <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4 text-center">
             料金計算・サービス別料金表
           </h1>
+          <Breadcrumbs />
           <p className="text-center text-neutral-700 dark:text-neutral-300 mb-8">
             このページではAI活用サポートをはじめ、各サービスの料金目安を紹介します。
           </p>
