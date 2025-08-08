@@ -220,18 +220,18 @@ export default function CompanyPage() {
         {/* Company Data */}
         <section className="container mx-auto px-4 py-24 space-y-8" data-testid="company-data" id="data">
           <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">会社データ</h2>
-          <div className="grid md:grid-cols-2 gap-4 text-neutral-700 dark:text-neutral-300">
-            <div className="font-medium">事業名</div>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-neutral-700 dark:text-neutral-300">
+            <div className="font-semibold text-neutral-900 dark:text-neutral-100">事業名</div>
             <div>LEXIA</div>
-            <div className="font-medium">設立</div>
+            <div className="font-semibold text-neutral-900 dark:text-neutral-100">設立</div>
             <div>2022年3月26日</div>
-            <div className="font-medium">代表</div>
+            <div className="font-semibold text-neutral-900 dark:text-neutral-100">代表</div>
             <div>齋藤雅人</div>
-            <div className="font-medium">所在地</div>
+            <div className="font-semibold text-neutral-900 dark:text-neutral-100">所在地</div>
             <div>愛知県碧南市川端町1-45</div>
-            <div className="font-medium">連絡先</div>
+            <div className="font-semibold text-neutral-900 dark:text-neutral-100">連絡先</div>
             <div>090-1742-3456 / lexia0web@gmail.com</div>
-            <div className="font-medium">事業内容</div>
+            <div className="font-semibold text-neutral-900 dark:text-neutral-100">事業内容</div>
             <div>WEB制作・システム開発・デザイン</div>
           </div>
         </section>
