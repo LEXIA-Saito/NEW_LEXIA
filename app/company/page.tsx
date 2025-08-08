@@ -7,6 +7,8 @@ import Footer from "@/components/footer"
 import ContactForm from "@/components/contact-form"
 import { motion } from "framer-motion"
 import LexiaLogoParticles from "@/components/lexia-logo-particles"
+import { Card } from "@/components/ui/card"
+import { Globe, Cpu, Film, Laptop, Palette } from "lucide-react"
 
 export default function CompanyPage() {
   const fadeIn = {
@@ -127,12 +129,66 @@ export default function CompanyPage() {
             </div>
           </section>
 
-          <section className="space-y-2">
-            <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">サービス内容</h2>
-            <ul className="list-disc pl-5 text-neutral-700 dark:text-neutral-300 space-y-1">
-              <li>WEB制作（コーポレートサイト、EC、LPなど）</li>
-              <li>システム開発・WEBアプリ開発</li>
-            </ul>
+          <section className="space-y-8">
+            <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">サービス紹介</h2>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {[
+                {
+                  href: "/services/web",
+                  icon: Globe,
+                  title: "WEB制作",
+                  description: "コーポレートサイト、EC、LPなどをトータルで制作します。",
+                },
+                {
+                  href: "/services/system",
+                  icon: Cpu,
+                  title: "システム開発",
+                  description: "業務効率化やWEBアプリ開発を支援します。",
+                },
+                {
+                  href: "/services/movie",
+                  icon: Film,
+                  title: "動画制作",
+                  description: "撮影から編集まで一貫して対応します。",
+                },
+                {
+                  href: "/services/pc",
+                  icon: Laptop,
+                  title: "PC教室",
+                  description: "初心者から応用まで丁寧にサポートします。",
+                },
+                {
+                  href: "/services/design",
+                  icon: Palette,
+                  title: "デザイン各種",
+                  description: "ロゴ・バナー・印刷物など幅広く対応します。",
+                },
+              ].map((service, index) => {
+                const Icon = service.icon
+                return (
+                  <motion.div
+                    key={service.title}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    variants={fadeIn}
+                  >
+                    <Link href={service.href} className="block h-full">
+                      <Card className="p-6 h-full hover:shadow-lg transition-shadow">
+                        <Icon className="w-8 h-8 text-neutral-900 dark:text-neutral-100 mb-4" />
+                        <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
+                          {service.title}
+                        </h3>
+                        <p className="text-neutral-700 dark:text-neutral-300 text-sm">
+                          {service.description}
+                        </p>
+                      </Card>
+                    </Link>
+                  </motion.div>
+                )
+              })}
+            </div>
           </section>
 
           <section className="space-y-2">
