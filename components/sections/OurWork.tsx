@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowRight, ExternalLink, Calendar, Building, Code, TrendingUp, Clock } from 'lucide-react'
+import { ArrowRight, ExternalLink, Building, Code, Clock } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -131,17 +131,16 @@ const projectsData: Project[] = [
   {
     id: "6",
     slug: "cotnas",
-    title: "COTNAS様（保険）",
-    description: "西尾市を拠点とする保険会社のWebサイトリニューアル。信頼性と親しみやすさを両立。",
+    title: "COTNAS様",
+    description: "西尾市を拠点とする企業のコーポレートサイト制作。信頼性と親しみやすさを両立。",
     image: "/placeholder.svg?height=400&width=640&text=COTNAS",
     categories: ["website"],
     featured: false,
     year: "2025",
-    tags: ["Webリニューアル"],
+    tags: ["コーポレートサイト制作"],
     location: "愛知県西尾市",
     client: "COTNAS様",
-    industry: "保険",
-    services: ["Webリニューアル"],
+    services: ["コーポレートサイト制作"],
     isComingSoon: true
   }
 ]
@@ -164,13 +163,13 @@ const containerVariants = {
 }
 
 const cardVariants = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     y: 60,
     scale: 0.9
   },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     scale: 1,
     transition: {
@@ -179,51 +178,10 @@ const cardVariants = {
       damping: 15,
       duration: 0.6
     }
-  },
-  hover: {
-    y: -8,
-    scale: 1.02,
-    transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 25
-    }
   }
 }
-
-const imageVariants = {
-  hover: {
-    scale: 1.1,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
-  }
-}
-
-const overlayVariants = {
-  hidden: { opacity: 0 },
-  hover: { 
-    opacity: 1,
-    transition: { duration: 0.3 }
-  }
-}
-
-const badgeVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: { 
-    opacity: 1, 
-    scale: 1,
-    transition: {
-      duration: 0.3,
-      ease: "easeOut"
-    }
-  }
-}
-
 export default function OurWork() {
   const [activeFilter, setActiveFilter] = useState<string>("all")
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null)
 
   const filteredProjects = activeFilter === "all" 
     ? projectsData
@@ -301,125 +259,106 @@ export default function OurWork() {
         >
           <AnimatePresence mode="wait">
             {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                variants={cardVariants}
-                whileHover="hover"
-                onHoverStart={() => setHoveredCard(project.id)}
-                onHoverEnd={() => setHoveredCard(null)}
-                className="group"
-              >
+              <motion.div key={project.id} variants={cardVariants}>
                 {project.isComingSoon ? (
-                  <Card className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-default aspect-[16/10]">
-                    {/* Coming Soon Badge */}
-                    <motion.div
-                      variants={badgeVariants}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
-                      className="absolute top-3 right-3 z-10"
-                    >
-                      <Badge className="bg-blue-600 text-white text-xs px-2 py-0.5 rounded">
-                        <Clock className="w-3 h-3 mr-1" />
-                        Coming Soon
-                      </Badge>
-                    </motion.div>
-
-                    {/* Image */}
-                    <div className="relative aspect-[16/10] overflow-hidden">
+                  <Card className="group hover:shadow-xl transition-all duration-300 overflow-hidden border-0 bg-white dark:bg-neutral-800 cursor-not-allowed">
+                    <div className="relative overflow-hidden aspect-video">
                       <Image
                         src={project.image || "/placeholder.svg"}
                         alt={project.title}
                         fill
-                        className="object-cover opacity-60"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover grayscale opacity-60"
                       />
-                      <div className="absolute inset-0 bg-neutral-900/40" />
+                      <div className="absolute inset-0 bg-black/60" />
+                      <Badge className="absolute top-4 left-4 bg-blue-600 text-white">
+                        <Clock className="w-3 h-3 mr-1" />Coming Soon
+                      </Badge>
                     </div>
-
-                    <CardContent className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="outline" className="text-xs border-white/30 text-white">
-                          {project.year}
-                        </Badge>
-                        <span className="text-xs opacity-80">{project.location}</span>
+                    <CardContent className="p-6">
+                      <div className="flex items-center gap-2 mb-3">
+                        {project.year && (
+                          <Badge variant="outline" className="text-xs">
+                            {project.year}
+                          </Badge>
+                        )}
+                        {project.location && (
+                          <Badge variant="outline" className="text-xs">
+                            {project.location}
+                          </Badge>
+                        )}
                       </div>
-                      <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
-                      <p className="text-sm opacity-90 line-clamp-2">{project.description}</p>
-                      <div className="flex flex-wrap gap-1 mt-3">
-                        {project.tags.slice(0, 2).map((tag) => (
-                          <span key={tag} className="text-xs px-2 py-1 bg-white/20 rounded text-white">
+                      <h3 className="text-xl font-medium text-neutral-900 dark:text-neutral-100 mb-3 line-clamp-2">
+                        {project.title}
+                      </h3>
+                      <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed mb-4 line-clamp-2">
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-1">
+                        {project.tags.slice(0, 4).map((tag) => (
+                          <Badge key={tag} variant="secondary" className="text-xs">
                             {tag}
-                          </span>
+                          </Badge>
                         ))}
+                        {project.tags.length > 4 && (
+                          <Badge variant="secondary" className="text-xs">
+                            +{project.tags.length - 4}
+                          </Badge>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
                 ) : (
                   <Link href={project.url || `/projects/${project.slug}`} target={project.url ? "_blank" : "_self"}>
-                    <Card className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 aspect-[16/10]">
-                      {/* Featured Badge */}
-                      {project.featured && (
-                        <motion.div
-                          variants={badgeVariants}
-                          initial="hidden"
-                          whileInView="visible"
-                          viewport={{ once: true }}
-                          className="absolute top-3 left-3 z-10"
-                        >
-                          <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold px-3 py-1">
+                    <Card className="group hover:shadow-xl transition-all duration-300 overflow-hidden border-0 bg-white dark:bg-neutral-800">
+                      <div className="relative overflow-hidden aspect-video">
+                        <Image
+                          src={project.image || "/placeholder.svg"}
+                          alt={project.title}
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        {project.featured && (
+                          <Badge className="absolute top-4 left-4 bg-yellow-500 text-yellow-900 hover:bg-yellow-500">
                             注目
                           </Badge>
-                        </motion.div>
-                      )}
-
-                      {/* Image */}
-                      <div className="relative aspect-[16/10] overflow-hidden">
-                        <motion.div variants={imageVariants}>
-                          <Image
-                            src={project.image || "/placeholder.svg"}
-                            alt={project.title}
-                            fill
-                            className="object-cover"
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          />
-                        </motion.div>
-
-                        {/* Gradient Overlay - 常に表示 */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-
-                        {/* External Link Icon */}
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ 
-                            opacity: hoveredCard === project.id ? 1 : 0,
-                            scale: hoveredCard === project.id ? 1 : 0.8
-                          }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute bottom-4 right-4"
-                        >
-                          <div className="bg-white dark:bg-neutral-800 rounded-full p-3 shadow-lg">
+                        )}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                        <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="bg-white dark:bg-neutral-800 rounded-full p-2">
                             <ExternalLink className="h-4 w-4 text-neutral-900 dark:text-neutral-100" />
                           </div>
-                        </motion.div>
-                      </div>
-
-                      {/* Card Content - オーバーレイ表示 */}
-                      <CardContent className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge variant="outline" className="text-xs border-white/30 text-white">
-                            {project.year}
-                          </Badge>
-                          <span className="text-xs opacity-80">{project.location}</span>
                         </div>
-                        <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
-                        <p className="text-sm opacity-90 line-clamp-2">{project.description}</p>
-                        <div className="flex flex-wrap gap-1 mt-3">
-                          {project.tags.slice(0, 2).map((tag) => (
-                            <span key={tag} className="text-xs px-2 py-1 bg-white/20 rounded text-white">
+                      </div>
+                      <CardContent className="p-6">
+                        <div className="flex items-center gap-2 mb-3">
+                          {project.year && (
+                            <Badge variant="outline" className="text-xs">
+                              {project.year}
+                            </Badge>
+                          )}
+                          {project.location && (
+                            <Badge variant="outline" className="text-xs">
+                              {project.location}
+                            </Badge>
+                          )}
+                        </div>
+                        <h3 className="text-xl font-medium text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+                          {project.title}
+                        </h3>
+                        <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed mb-4 line-clamp-2">
+                          {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-1">
+                          {project.tags.slice(0, 4).map((tag) => (
+                            <Badge key={tag} variant="secondary" className="text-xs">
                               {tag}
-                            </span>
+                            </Badge>
                           ))}
+                          {project.tags.length > 4 && (
+                            <Badge variant="secondary" className="text-xs">
+                              +{project.tags.length - 4}
+                            </Badge>
+                          )}
                         </div>
                       </CardContent>
                     </Card>
