@@ -13,7 +13,7 @@ import { LOGO_URL, LOGO_WHITE_URL, LOGO_TEXT_URL, LOGO_TEXT_WHITE_URL } from "@/
 // Japanese navigation items
 export const navItems = [
   { name: "事業概要", href: "#about" },
-  { name: "制作工程", href: "#process" },
+  { name: "制作工程", href: "/company/process" },
   { name: "料金詳細", href: "#pricing" },
   { name: "制作実績", href: "#work" },
   { name: "チーム", href: "#team" },
