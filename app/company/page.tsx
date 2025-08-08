@@ -117,7 +117,7 @@ export default function CompanyPage() {
       q: "進め方は？",
       a: (
         <>
-          要件整理→設計→開発→検証→公開の流れで進行します。<Link href="/services/web" className="text-primary underline">制作工程の流れを見る</Link>で詳しく解説しています。
+          要件整理→設計→開発→検証→公開の流れで進行します。<Link href="/company/process" className="text-primary underline">制作工程の流れを見る</Link>で詳しく解説しています。
         </>
       ),
     },
@@ -178,7 +178,7 @@ export default function CompanyPage() {
             <p>Next.jsとTailwindで素早く美しいフロントを実現。</p>
             <p>5年の制作実績と迅速な改善が評価されています。</p>
             <p>
-              <Link href="/services/web#process" className="underline">
+              <Link href="/company/process" className="underline">
                 制作工程を見る
               </Link>
             </p>
