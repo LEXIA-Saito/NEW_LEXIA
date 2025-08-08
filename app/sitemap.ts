@@ -4,7 +4,19 @@ import { SITE_URL } from "../lib/config"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Main pages
-  const routes = ["", "/projects", "/company", "/services", "/pricing", "/team", "/contact"].map((route) => ({
+  const routes = [
+    "",
+    "/projects",
+    "/company",
+    "/services/web",
+    "/services/system",
+    "/services/movie",
+    "/services/pc",
+    "/services/design",
+    "/pricing",
+    "/team/masato-saito",
+    "/contact",
+  ].map((route) => ({
     url: `${SITE_URL}${route}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,

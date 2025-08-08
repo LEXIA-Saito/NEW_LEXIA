@@ -5,7 +5,8 @@ import Footer from "@/components/footer"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowLeft, Mail, Linkedin, ExternalLink } from "lucide-react"
+import { Mail, Linkedin, ExternalLink } from "lucide-react"
+import Breadcrumbs from "@/components/breadcrumbs"
 import { Chip } from "@/components/ui/chip"
 import {
   Table,
@@ -141,16 +142,6 @@ export default function MasatoSaitoProfile() {
       <Navigation />
       <main className="min-h-screen bg-white dark:bg-neutral-900">
         <div className="container mx-auto px-4 py-24 md:py-32">
-          <div className="mb-8">
-            <Link
-              href="/"
-              className="inline-flex items-center text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 group"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
-              ホームへ戻る
-            </Link>
-          </div>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -161,9 +152,8 @@ export default function MasatoSaitoProfile() {
               <Image src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/saito_profile/saito_profile.webp" alt="齋藤雅人" fill className="object-cover" />
             </div>
             <Chip className="mb-2">代表・WEBディレクター</Chip>
-            <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4">
-              齋藤雅人
-            </h1>
+            <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4">齋藤雅人</h1>
+            <Breadcrumbs />
             <p className="text-neutral-700 dark:text-neutral-300 mb-4">
               最新の制作技術を駆使し、WEB制作歴5年の経験を基にクライアントの期待を超える成果を追求します。生まれも育ちも愛知県碧南市で、地域密着の視点から価値あるサイトを届けます。
             </p>
