@@ -171,12 +171,11 @@ export default function CompanyPage() {
         <section className="container mx-auto px-4 py-24 space-y-8" data-testid="company-summary" id="summary">
           <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4">会社概要</h1>
           <Breadcrumbs />
-          <div className="space-y-2 text-neutral-700 dark:text-neutral-300">
-            <p>LEXIAは愛知県碧南市の制作＆システム開発チーム。</p>
-            <p>中小〜中堅企業の課題を“伝わる設計と実装”で解決。</p>
-            <p>要件整理からUI実装、運用改善までワンストップ対応。</p>
-            <p>Next.jsとTailwindで素早く美しいフロントを実現。</p>
-            <p>5年の制作実績と迅速な改善が評価されています。</p>
+          <div className="space-y-2 text-neutral-700 dark:text-neutral-300 text-center">
+            <p>
+              LEXIAは愛知県碧南市のWEB制作事業です。中小から中堅企業の課題を伝わる設計と実装で解決します。
+              要件定義からUI実装、運用改善までワンストップで対応します。最新の技術とAIを駆使した制作を行って、業界最安最速でWEB制作を行います。
+            </p>
             <p>
               <Link href="/company/process" className="underline">
                 制作工程を見る
