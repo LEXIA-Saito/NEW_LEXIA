@@ -1,7 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
-import { Noto_Sans_JP } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import TypewriterEffect from "@/components/typewriter-effect"
 import { Analytics } from "@vercel/analytics/next"
@@ -9,8 +8,6 @@ import GoogleAnalytics from "@/components/google-analytics"
 import CookieConsent from "@/components/cookie-consent"
 import "./globals.css"
 
-
-const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "500"] })
 
 const siteDescription =
   "愛知県碧南市のホームページ制作・WEB制作ならLEXIA｜システム開発・AI活用・デザインまで一貫対応。制作実績多数、無料相談実施中。最新技術×地元視点で成果にコミット。中部・全国対応可";
@@ -57,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className="scroll-smooth">
-      <body className={`${notoSansJP.className} antialiased`}>
+      <body className="antialiased font-sans">
         <ThemeProvider defaultTheme="light" storageKey="lexia-theme">
           <TypewriterEffect />
           {children}

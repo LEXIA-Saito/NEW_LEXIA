@@ -97,7 +97,7 @@ export default function Frame() {
                   onMouseLeave={() => setHoveredIndex(null)}
                   onClick={() => setActiveIndex(index)}
                 >
-                  <div className="text-sm font-[var(--www-mattmannucci-me-geist-regular-font-family)] leading-5 whitespace-nowrap flex items-center justify-center h-full">
+                  <div className="text-sm font-sans leading-5 whitespace-nowrap flex items-center justify-center h-full">
                     {tab}
                   </div>
                 </div>
