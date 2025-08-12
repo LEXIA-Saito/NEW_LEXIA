@@ -14,6 +14,7 @@ import EcCalculator from "@/components/pricing/ec-calculator"
 import SystemCalculator from "@/components/pricing/system-calculator"
 import DesignCalculator from "@/components/pricing/design-calculator"
 import PcClassPricingTable from "@/components/pricing/pc-class-pricing-table"
+import { SITE_URL } from "@/lib/config"
 
 export default function PricingPage() {
   const [tab, setTab] = useState("homepage")
@@ -27,6 +28,26 @@ export default function PricingPage() {
     { name: "運用サポート・改善提案(月額)", cost: 50000 },
     { name: "データ分析・レポーティング", cost: 100000 },
   ]
+
+  const offers = [
+    { name: "ホームページ制作", price: "100000" },
+    { name: "ECサイト制作", price: "120000" },
+    { name: "システム開発", price: "180000" },
+    { name: "デザイン制作", price: "100000" },
+    { name: "PC教室", price: "5000" },
+    { name: "AI活用サポート", price: "100000" },
+  ]
+
+  const offersJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": offers.map((offer) => ({
+      "@type": "Offer",
+      name: offer.name,
+      price: offer.price,
+      priceCurrency: "JPY",
+      url: `${SITE_URL.replace(/\/$/, "")}/pricing`,
+    })),
+  }
 
   return (
     <>
@@ -77,6 +98,10 @@ export default function PricingPage() {
         </div>
       </main>
       <Footer />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(offersJsonLd) }}
+      />
     </>
   )
 }

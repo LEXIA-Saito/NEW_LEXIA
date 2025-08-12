@@ -9,6 +9,29 @@ import GoogleAnalytics from "@/components/google-analytics"
 import CookieConsent from "@/components/cookie-consent"
 import "./globals.css"
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "LEXIA",
+  url: SITE_URL,
+  logo: `${SITE_URL.replace(/\/$/, "")}/favicon/lexia_logo_square.png`,
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "JP",
+    addressRegion: "愛知県",
+    addressLocality: "碧南市",
+    streetAddress: "川端町1-45",
+  },
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: "+81-0000-000-000",
+      email: "lexia0web@gmail.com",
+      contactType: "customer service",
+    },
+  ],
+}
+
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "500"] })
 
@@ -66,6 +89,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className="scroll-smooth">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+      </head>
       <body className={`${notoSansJP.className} antialiased`}>
         <ThemeProvider defaultTheme="light" storageKey="lexia-theme">
           <TypewriterEffect />
