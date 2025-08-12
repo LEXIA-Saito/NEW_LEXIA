@@ -6,6 +6,21 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Hero from "@/components/sections/hero"
 import PricingCTA from "@/components/sections/pricing-cta"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "碧南のホームページ制作・Web制作会社 | LEXIA",
+  description:
+    "碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAにお任せください。",
+  keywords:
+    "碧南 ホームページ制作, 碧南 Web制作会社, 愛知県 ホームページ作成, 小規模企業 ホームページ制作, モバイル最適化 Web制作",
+  openGraph: {
+    title: "碧南のホームページ制作・Web制作会社 | LEXIA",
+    description:
+      "碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAにお任せください。",
+    type: "website",
+  },
+}
 
 export default function Home() {
   return (
