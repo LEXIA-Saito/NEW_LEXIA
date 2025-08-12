@@ -7,13 +7,8 @@ import TypewriterEffect from "@/components/typewriter-effect"
 import { Analytics } from "@vercel/analytics/next"
 import GoogleAnalytics from "@/components/google-analytics"
 import CookieConsent from "@/components/cookie-consent"
-import fs from "fs"
-import path from "path"
-
-const criticalCSS = fs.readFileSync(
-  path.join(process.cwd(), "styles/critical.css"),
-  "utf8"
-)
+import { Suspense } from "react"
+import "@/styles/globals.css"
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -38,11 +33,16 @@ const organizationJsonLd = {
   ],
 }
 
-
-const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "500"] })
+const notoSansJP = Noto_Sans_JP({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  preload: true,
+  variable: "--font-noto-sans-jp",
+})
 
 const siteDescription =
-  "愛知県碧南市のホームページ制作・WEB制作ならLEXIA｜システム開発・AI活用・デザインまで一貫対応。制作実績多数、無料相談実施中。最新技術×地元視点で成果にコミット。中部・全国対応可";
+  "愛知県碧南市のホームページ制作・WEB制作ならLEXIA｜システム開発・AI活用・デザインまで一貫対応。制作実績多数、無料相談実施中。最新技術×地元視点で成果にコミット。中部・全国対応可"
 
 export const metadata: Metadata = {
   title: "LEXIA | 価値を伝わるカタチに",
@@ -85,7 +85,7 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
   },
-    generator: 'v0.dev'
+  generator: "v0.dev",
 }
 
 export default function RootLayout({
@@ -96,16 +96,22 @@ export default function RootLayout({
   return (
     <html lang="ja" className="scroll-smooth">
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-        <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
         <link
           rel="preload"
+          href="/_next/static/media/noto-sans-jp-latin-400-normal.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
+        {/* Removed problematic onLoad string, using standard CSS loading instead */}
+        <link
+          rel="stylesheet"
           href="/deferred.css"
-          as="style"
-          onLoad="this.rel='stylesheet'"
+          media="print"
+          onLoad={(e) => {
+            ;(e.target as HTMLLinkElement).media = "all"
+          }}
         />
         <noscript>
           <link rel="stylesheet" href="/deferred.css" />
@@ -113,16 +119,15 @@ export default function RootLayout({
       </head>
       <body className={`${notoSansJP.className} antialiased`}>
         <ThemeProvider defaultTheme="light" storageKey="lexia-theme">
-          <TypewriterEffect />
-          {children}
-          <Analytics />
-          <GoogleAnalytics />
-          <CookieConsent />
+          <Suspense fallback={null}>
+            <TypewriterEffect />
+            {children}
+            <Analytics />
+            <GoogleAnalytics />
+            <CookieConsent />
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>
   )
 }
-
-
-import './globals.css'

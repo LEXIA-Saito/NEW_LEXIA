@@ -9,6 +9,18 @@
     "start": "next start",
     "test": "node ./tests/i18n.test.js && node ./tests/dev-pricing.test.js && node ./tests/design-pricing.test.js && node ./tests/web-pricing.test.js"
   },
+  "browserslist": {
+    "production": [
+      "defaults",
+      "not IE 11",
+      "not OperaMini all",
+      "last 2 Chrome versions",
+      "last 2 Firefox versions",
+      "last 2 iOS Safari versions",
+      "last 2 Safari versions",
+      "last 2 Edge versions"
+    ]
+  },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
     "@hookform/resolvers": "^3.9.1",

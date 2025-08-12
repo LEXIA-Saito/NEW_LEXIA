@@ -10,6 +10,9 @@ import type { Metadata } from "next"
 import Script from "next/script"
 import { SITE_URL, LOGO_URL } from "@/lib/config"
 
+export const dynamic = "force-static"
+export const revalidate = 3600 // Revalidate every hour
+
 export const metadata: Metadata = {
   title: "碧南のホームページ制作・Web制作会社 | LEXIA",
   description:
@@ -39,8 +42,7 @@ export default function Home() {
     name: "LEXIA",
     url: SITE_URL,
     logo: LOGO_URL,
-    description:
-      "愛知県碧南市のWEB制作・システム開発。要件整理からUI実装、運用改善まで一貫対応。",
+    description: "愛知県碧南市のWEB制作・システム開発。要件整理からUI実装、運用改善まで一貫対応。",
     telephone: "090-1742-3456",
     email: "lexia0web@gmail.com",
     address: {
@@ -51,10 +53,7 @@ export default function Home() {
       streetAddress: "川端町1-45",
     },
     areaServed: ["Japan"],
-    sameAs: [
-      "https://www.instagram.com/lexia_web",
-      "https://x.com/lexia_web",
-    ],
+    sameAs: ["https://www.instagram.com/lexia_web", "https://x.com/lexia_web"],
   }
 
   return (
@@ -81,7 +80,6 @@ export default function Home() {
         <Team />
       </section>
 
-
       <section id="contact" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800">
         <Contact />
       </section>
@@ -89,6 +87,7 @@ export default function Home() {
       <Script
         id="home-jsonld"
         type="application/ld+json"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
     </main>

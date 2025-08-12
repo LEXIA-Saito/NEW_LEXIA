@@ -12,10 +12,7 @@ import { t } from "@/lib/i18n"
 export default function Hero() {
   const controls = useAnimation()
   const { scrollY } = useScroll()
-  const randomDurations = React.useMemo(
-    () => footerIcons.map(() => getRandomSpinDuration()),
-    []
-  )
+  const randomDurations = React.useMemo(() => footerIcons.map(() => getRandomSpinDuration()), [])
 
   React.useEffect(() => {
     return scrollY.on("change", (y) => {
@@ -28,14 +25,14 @@ export default function Hero() {
   }, [controls, scrollY])
 
   return (
-    <div className="hero-wrapper">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 bg-white dark:bg-neutral-900">
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <ParticlesBackground className="absolute inset-0 h-full w-full" title="" subtitle="" />
       </div>
 
-      <div className="hero-inner">
+      <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-20 text-center max-w-4xl mx-auto">
         <motion.h1
-          className="hero-title"
+          className="font-light text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight mb-6 text-neutral-900 dark:text-neutral-100"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -44,7 +41,7 @@ export default function Hero() {
         </motion.h1>
 
         <motion.p
-          className="hero-subtitle"
+          className="text-lg sm:text-xl md:text-2xl mb-12 text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -53,28 +50,32 @@ export default function Hero() {
         </motion.p>
 
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <Link href="#work">
+          <Link href="#work" className="w-full sm:w-auto">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="outline"
-                className="rounded-full px-6 py-6 text-base border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 w-full sm:w-auto group"
+                size="lg"
+                className="rounded-full px-8 py-4 text-lg min-h-[48px] min-w-[200px] border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 w-full sm:w-auto group transition-all duration-200 bg-transparent"
               >
                 {t("hero.viewWork")}
-                <ArrowDown className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-y-1" />
+                <ArrowDown className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-y-1" />
               </Button>
             </motion.div>
           </Link>
 
-          <Link href="/contact">
+          <Link href="/contact" className="w-full sm:w-auto">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="rounded-full px-6 py-6 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 w-full sm:w-auto group">
+              <Button
+                size="lg"
+                className="rounded-full px-8 py-4 text-lg min-h-[48px] min-w-[200px] bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 w-full sm:w-auto group transition-all duration-200"
+              >
                 {t("hero.contact")}
-                <ExternalLink className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+                <ExternalLink className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
               </Button>
             </motion.div>
           </Link>
@@ -82,38 +83,40 @@ export default function Hero() {
       </div>
 
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.8, repeat: Number.POSITIVE_INFINITY, repeatType: "reverse" }}
       >
-        <Link href="#about" aria-label="Scroll down">
+        <Link
+          href="#about"
+          aria-label="下にスクロール"
+          className="block p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors duration-200"
+        >
           <ArrowDown className="h-6 w-6 text-neutral-400 dark:text-neutral-500" />
         </Link>
       </motion.div>
 
-      <motion.div
-        className="absolute bottom-4 right-4 flex space-x-2"
-        animate={controls}
-      >
+      <motion.div className="absolute bottom-4 right-4 flex space-x-2 z-20" animate={controls}>
         {footerIcons.map((icon, index) => (
           <motion.span
             key={index}
             animate={{ rotate: 360 }}
             transition={{
-              repeat: Infinity,
+              repeat: Number.POSITIVE_INFINITY,
               duration: randomDurations[index],
               ease: "linear",
             }}
+            className="block"
           >
             <img
-              src={icon.light}
+              src={icon.light || "/placeholder.svg"}
               alt=""
               aria-hidden="true"
               className="w-4 h-4 block dark:hidden"
             />
             <img
-              src={icon.dark}
+              src={icon.dark || "/placeholder.svg"}
               alt=""
               aria-hidden="true"
               className="w-4 h-4 hidden dark:block"

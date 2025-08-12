@@ -43,12 +43,12 @@ export default function CompanyClient() {
         <Button className="w-full sm:w-auto">お問い合わせ</Button>
       </Link>
       <Link href="/projects">
-        <Button variant="outline" className="w-full sm:w-auto">
+        <Button variant="outline" className="w-full sm:w-auto bg-transparent">
           制作実績一覧を見る
         </Button>
       </Link>
       <Link href="/pricing">
-        <Button variant="outline" className="w-full sm:w-auto">
+        <Button variant="outline" className="w-full sm:w-auto bg-transparent">
           料金を確認する
         </Button>
       </Link>
@@ -109,7 +109,11 @@ export default function CompanyClient() {
       q: "費用の考え方は？",
       a: (
         <>
-          規模や機能に応じてお見積もりします。<Link href="/pricing" className="text-primary underline">料金ページで詳細を確認する</Link>をご覧ください。
+          規模や機能に応じてお見積もりします。
+          <Link href="/pricing" className="text-primary underline">
+            料金ページで詳細を確認する
+          </Link>
+          をご覧ください。
         </>
       ),
     },
@@ -117,7 +121,11 @@ export default function CompanyClient() {
       q: "進め方は？",
       a: (
         <>
-          要件整理→設計→開発→検証→公開の流れで進行します。<Link href="/company/process" className="text-primary underline">制作工程の流れを見る</Link>で詳しく解説しています。
+          要件整理→設計→開発→検証→公開の流れで進行します。
+          <Link href="/company/process" className="text-primary underline">
+            制作工程の流れを見る
+          </Link>
+          で詳しく解説しています。
         </>
       ),
     },
@@ -161,7 +169,14 @@ export default function CompanyClient() {
             <LexiaLogoParticles />
           </div>
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-white animate-bounce">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-label="scroll down">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              aria-label="scroll down"
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m0 0l-6-6m6 6l6-6" />
             </svg>
           </div>
@@ -206,7 +221,9 @@ export default function CompanyClient() {
                   >
                     <Card className="p-6 h-full">
                       <Icon className="w-8 h-8 text-neutral-900 dark:text-neutral-100 mb-4" />
-                      <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">{value.title}</h3>
+                      <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
+                        {value.title}
+                      </h3>
                       <p className="text-neutral-700 dark:text-neutral-300 text-sm">{value.description}</p>
                     </Card>
                   </motion.div>
@@ -253,7 +270,9 @@ export default function CompanyClient() {
                   >
                     <Card className="p-6 h-full">
                       <Icon className="w-8 h-8 text-neutral-900 dark:text-neutral-100 mb-4" />
-                      <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">{item.title}</h3>
+                      <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
+                        {item.title}
+                      </h3>
                       <p className="text-neutral-700 dark:text-neutral-300 mb-4 text-sm">{item.description}</p>
                       <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-1">対応技術: {item.tech}</p>
                       <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-1">成果指標: {item.metric}</p>
@@ -302,10 +321,17 @@ export default function CompanyClient() {
                   <Link href={`/projects/${project.slug}`} className="block h-full">
                     <Card className="overflow-hidden h-full">
                       <div className="relative w-full aspect-[4/3]">
-                        <Image src={project.image} alt={project.title} fill className="object-cover" />
+                        <Image
+                          src={project.image || "/placeholder.svg"}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                        />
                       </div>
                       <div className="p-4">
-                        <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-1">{project.title}</h3>
+                        <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-1">
+                          {project.title}
+                        </h3>
                         <p className="text-sm text-neutral-700 dark:text-neutral-300">
                           {project.description.substring(0, 40)}…
                         </p>
@@ -356,7 +382,12 @@ export default function CompanyClient() {
         </section>
       </main>
       <Footer />
-      <Script id="company-jsonld" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <Script
+        id="company-jsonld"
+        type="application/ld+json"
+        strategy="lazyOnload"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </>
   )
 }
