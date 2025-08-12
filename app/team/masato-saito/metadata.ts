@@ -10,6 +10,7 @@ const image = `${SITE_URL.replace(/\/$/, "")}/og/og_ceo.jpg`
 export const metadata: Metadata = {
   title,
   description,
+  alternates: { canonical: url },
   openGraph: {
     title,
     description,

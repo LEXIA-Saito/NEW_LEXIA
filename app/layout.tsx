@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   description:
     "愛知県碧南市のホームページ制作・WEB制作ならLEXIA｜システム開発・AI活用・デザインまで一貫対応。制作実績多数、無料相談実施中。最新技術×地元視点で成果にコミット。中部・全国対応可",
   metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: SITE_URL,
+  },
   openGraph: {
     title: "LEXIA | 価値を伝わるカタチに",
     description:
@@ -46,6 +49,12 @@ export const metadata: Metadata = {
     ],
     apple: "/favicon/apple-touch-icon.png",
     shortcut: "/favicon/lexia_logo_square.png",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LEXIA | 価値を伝わるカタチに",
+    description: siteDescription,
+    images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
   },
     generator: 'v0.dev'
 }
