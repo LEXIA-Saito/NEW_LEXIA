@@ -83,6 +83,13 @@ export const projectsData: Project[] = [
       "人材派遣と不動産の2事業を展開する企業のWebサイト。事業の多様性を分かりやすく表現し、求職者と顧客双方にアプローチ。",
     // Updated image to use hardcoded image
     image: "/images/projects/ck_hero.jpg",
+    // Added slideshow images for Chubu Kaihatsu
+    images: [
+      "/images/projects/ck_hero.jpg",
+      "/images/projects/ck_haken.jpg",
+      "/images/projects/ck_cycle.jpg",
+      "/images/projects/ck_form.jpg",
+    ],
     categories: ["website"],
     featured: true,
     year: "2023",
