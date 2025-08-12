@@ -15,7 +15,7 @@ const teamMembers = [
     name: "齋藤雅人",
     role: "代表・WEBディレクター",
     bio: "最新の制作技術を駆使してクライアントの期待を超え、WEB上に価値を見出す制作を実現します。",
-    image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/saito_profile/saito_profile.webp",
+    image: "/images/saito_profile.webp",
     linkedin: "https://www.linkedin.com/in/lexia-saito/",
     email: "msms12120614@gmail.com",
     slug: "masato-saito",
@@ -58,16 +58,14 @@ export default function Team() {
           transition={{ duration: 0.6 }}
           variants={fadeIn}
         >
-          <Chip>{t('team.chip')}</Chip>
+          <Chip>{t("team.chip")}</Chip>
           <div className="flex flex-col items-center mt-4 mb-6">
             <SectionIcon index={3} className="mb-4" />
             <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100">
-              {t('team.heading')}
+              {t("team.heading")}
             </h2>
           </div>
-          <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
-            {t('team.intro')}
-          </p>
+          <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">{t("team.intro")}</p>
         </motion.div>
       </div>
 
@@ -138,11 +136,7 @@ export default function Team() {
         transition={{ duration: 0.6, delay: 0.6 }}
         variants={fadeIn}
         className="text-center mt-12"
-      >
-        
-      </motion.div>
-
-      
+      ></motion.div>
     </div>
   )
 }

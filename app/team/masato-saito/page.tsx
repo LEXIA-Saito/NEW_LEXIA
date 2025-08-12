@@ -8,14 +8,7 @@ import { motion } from "framer-motion"
 import { Mail, Linkedin, ExternalLink } from "lucide-react"
 import Breadcrumbs from "@/components/breadcrumbs"
 import { Chip } from "@/components/ui/chip"
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-} from "@/components/ui/table"
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table"
 
 export default function MasatoSaitoProfile() {
   const qualifications = [
@@ -23,117 +16,103 @@ export default function MasatoSaitoProfile() {
       no: 1,
       name: "Google アナリティクス認定資格",
       provider: "Google",
-      evidence:
-        "https://skillshop.credential.net/32cb0472-08eb-4cb0-a397-0ee66cd3061c#acc.ERNX8itG",
+      evidence: "https://skillshop.credential.net/32cb0472-08eb-4cb0-a397-0ee66cd3061c#acc.ERNX8itG",
     },
     {
       no: 2,
       name: "コンバージョン最適化認定資格試験",
       provider: "Google",
-      evidence:
-        "https://skillshop.credential.net/4064cb8b-8082-459f-8e59-8222694e91bc#acc.Rm4TUPGI",
+      evidence: "https://skillshop.credential.net/4064cb8b-8082-459f-8e59-8222694e91bc#acc.Rm4TUPGI",
     },
     {
       no: 3,
       name: "AIを活用したパフォーマンス広告の認定資格",
       provider: "Google",
-      evidence:
-        "https://skillshop.credential.net/5decfe3e-c5fd-46dd-8628-370f1a4c35f8#acc.evltk7nA",
+      evidence: "https://skillshop.credential.net/5decfe3e-c5fd-46dd-8628-370f1a4c35f8#acc.evltk7nA",
     },
-  {
-    no: 4,
-    name: "インバウンドマーケティング認定資格",
-    provider: "HubSpot Academy",
-    evidence: "https://app-na2.hubspot.com/academy/achievements/szzz05jb/ja/1/-/",
-  },
-  {
-    no: 5,
-    name: "ソーシャルメディアマーケティング認定資格",
-    provider: "HubSpot Academy",
-    evidence:
-      "https://app-na2.hubspot.com/academy/achievements/q7vxjrt4/ja/1/-/-",
-  },
-  {
-    no: 6,
-    name: "インバウンド認定資格",
-    provider: "HubSpot Academy",
-    evidence: "https://app-na2.hubspot.com/academy/achievements/tsc1yz5h/ja/1/-/",
-  },
-  {
-    no: 7,
-    name: "フリクションレスセールス認定資格",
-    provider: "HubSpot Academy",
-    evidence: "https://app-na2.hubspot.com/academy/achievements/pf4v135z/ja/1/-/",
-  },
+    {
+      no: 4,
+      name: "インバウンドマーケティング認定資格",
+      provider: "HubSpot Academy",
+      evidence: "https://app-na2.hubspot.com/academy/achievements/szzz05jb/ja/1/-/",
+    },
+    {
+      no: 5,
+      name: "ソーシャルメディアマーケティング認定資格",
+      provider: "HubSpot Academy",
+      evidence: "https://app-na2.hubspot.com/academy/achievements/q7vxjrt4/ja/1/-/-",
+    },
+    {
+      no: 6,
+      name: "インバウンド認定資格",
+      provider: "HubSpot Academy",
+      evidence: "https://app-na2.hubspot.com/academy/achievements/tsc1yz5h/ja/1/-/",
+    },
+    {
+      no: 7,
+      name: "フリクションレスセールス認定資格",
+      provider: "HubSpot Academy",
+      evidence: "https://app-na2.hubspot.com/academy/achievements/pf4v135z/ja/1/-/",
+    },
     {
       no: 8,
       name: "Data Science Tools（DS0105EN）",
       provider: "IBM / Cognitive Class",
-      evidence:
-        "https://courses.cognitiveclass.ai/certificates/730adef9c7af426bbb10ac188eb3879f",
+      evidence: "https://courses.cognitiveclass.ai/certificates/730adef9c7af426bbb10ac188eb3879f",
     },
     {
       no: 9,
       name: "Data Science Methodology（DS0103EN）",
       provider: "IBM / Cognitive Class",
-      evidence:
-        "https://courses.cognitiveclass.ai/certificates/0e14469b2bc34f6e97df22d4d6a6f39e",
+      evidence: "https://courses.cognitiveclass.ai/certificates/0e14469b2bc34f6e97df22d4d6a6f39e",
     },
     {
       no: 10,
       name: "Data Science 101（DS0101EN）",
       provider: "IBM / Cognitive Class",
-      evidence:
-        "https://courses.cognitiveclass.ai/certificates/40225d1628b945d69fc49bc598173220",
+      evidence: "https://courses.cognitiveclass.ai/certificates/40225d1628b945d69fc49bc598173220",
     },
     {
       no: 11,
       name: "Data Science Foundations – Level 2 (V2)",
       provider: "IBM / Credly",
-      evidence:
-        "https://www.credly.com/badges/a3e9242a-bc70-40be-a9a6-88412c7aa68e/public_url",
+      evidence: "https://www.credly.com/badges/a3e9242a-bc70-40be-a9a6-88412c7aa68e/public_url",
     },
     {
       no: 12,
       name: "Deep Learning Fundamentals（ML0115EN）",
       provider: "IBM / Cognitive Class",
-      evidence:
-        "https://courses.cognitiveclass.ai/certificates/23f3f8d8c8624cbfa9e48662b0eda5bf",
+      evidence: "https://courses.cognitiveclass.ai/certificates/23f3f8d8c8624cbfa9e48662b0eda5bf",
     },
     {
       no: 13,
       name: "Deep Learning with TensorFlow（ML0120EN）",
       provider: "IBM / Cognitive Class",
-      evidence:
-        "https://courses.cognitiveclass.ai/certificates/a0f516d166be4e528687e67d6252f2c4",
+      evidence: "https://courses.cognitiveclass.ai/certificates/a0f516d166be4e528687e67d6252f2c4",
     },
     {
       no: 14,
       name: "Accelerating Deep Learning with GPUs（ML0122ENv3）",
       provider: "IBM / Cognitive Class",
-      evidence:
-        "https://courses.cognitiveclass.ai/certificates/876eee6671a943a3a3aedacae0d66f80",
+      evidence: "https://courses.cognitiveclass.ai/certificates/876eee6671a943a3a3aedacae0d66f80",
     },
     {
       no: 15,
       name: "Deep Learning（Credlyバッジ）",
       provider: "IBM",
-      evidence:
-        "https://www.credly.com/badges/5610114e-2780-4610-b18f-dc997f0214a4/public_url",
+      evidence: "https://www.credly.com/badges/5610114e-2780-4610-b18f-dc997f0214a4/public_url",
     },
     {
       no: 16,
       name: "オフライン販売促進の認定資格",
       provider: "Google",
-      evidence:
-        "https://skillshop.credential.net/fe542ad1-d431-4a8f-9dd2-481922de271d#acc.hXES5HOF",
+      evidence: "https://skillshop.credential.net/fe542ad1-d431-4a8f-9dd2-481922de271d#acc.hXES5HOF",
     },
     {
       no: 17,
       name: "キャンペーン マネージャー 360 認定資格試験",
       provider: "Google",
-      evidence:
-        "https://skillshop.credential.net/fbc2d357-1bd6-44e9-8407-b1640c5a0a80#acc.BiNpVYsM",
+      evidence: "https://skillshop.credential.net/fbc2d357-1bd6-44e9-8407-b1640c5a0a80#acc.BiNpVYsM",
     },
   ]
 
@@ -149,7 +128,14 @@ export default function MasatoSaitoProfile() {
             className="text-center mb-12"
           >
             <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
-              <Image src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/saito_profile/saito_profile.webp" alt="齋藤雅人" fill className="object-cover" />
+              <Image
+                src="/images/saito_profile.webp"
+                alt="齋藤雅人"
+                fill
+                className="object-cover"
+                priority
+                sizes="128px"
+              />
             </div>
             <Chip className="mb-2">代表・WEBディレクター</Chip>
             <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4">齋藤雅人</h1>
@@ -227,9 +213,7 @@ export default function MasatoSaitoProfile() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-12"
           >
-            <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6 text-center">
-              取得バッジ
-            </h2>
+            <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6 text-center">取得バッジ</h2>
             <div className="flex flex-wrap justify-center gap-4">
               <div className="academy-badge">
                 <a
@@ -273,48 +257,40 @@ export default function MasatoSaitoProfile() {
                   />
                 </a>
               </div>
-                <div className="academy-badge">
-                  <a
-                    href="https://app-na2.hubspot.com/academy/achievements/pf4v135z/ja/1/-/"
-                    title="フリクションレスセールス認定コース"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img
-                      src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/26256c557ab94317b4b35c43eaf466e8.png"
-                      width="200"
-                      alt="フリクションレスセールス認定コース バッジ"
-                    />
-                  </a>
-                </div>
-                <div className="academy-badge">
-                  <div
-                    data-iframe-width="200"
-                    data-iframe-height="360"
-                    data-share-badge-id="5610114e-2780-4610-b18f-dc997f0214a4"
-                    data-share-badge-host="https://www.credly.com"
-                  ></div>
-                  <script
-                    type="text/javascript"
-                    async
-                    src="//cdn.credly.com/assets/utilities/embed.js"
-                  ></script>
-                </div>
-                <div className="academy-badge">
-                  <div
-                    data-iframe-width="200"
-                    data-iframe-height="360"
-                    data-share-badge-id="a3e9242a-bc70-40be-a9a6-88412c7aa68e"
-                    data-share-badge-host="https://www.credly.com"
-                  ></div>
-                  <script
-                    type="text/javascript"
-                    async
-                    src="//cdn.credly.com/assets/utilities/embed.js"
-                  ></script>
-                </div>
+              <div className="academy-badge">
+                <a
+                  href="https://app-na2.hubspot.com/academy/achievements/pf4v135z/ja/1/-/"
+                  title="フリクションレスセールス認定コース"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/26256c557ab94317b4b35c43eaf466e8.png"
+                    width="200"
+                    alt="フリクションレスセールス認定コース バッジ"
+                  />
+                </a>
               </div>
-            </motion.div>
+              <div className="academy-badge">
+                <div
+                  data-iframe-width="200"
+                  data-iframe-height="360"
+                  data-share-badge-id="5610114e-2780-4610-b18f-dc997f0214a4"
+                  data-share-badge-host="https://www.credly.com"
+                ></div>
+                <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+              </div>
+              <div className="academy-badge">
+                <div
+                  data-iframe-width="200"
+                  data-iframe-height="360"
+                  data-share-badge-id="a3e9242a-bc70-40be-a9a6-88412c7aa68e"
+                  data-share-badge-host="https://www.credly.com"
+                ></div>
+                <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </main>
       <Footer />

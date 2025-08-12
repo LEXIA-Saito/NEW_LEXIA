@@ -26,11 +26,11 @@ export default function About() {
           variants={fadeIn}
           className="text-center mb-16"
         >
-          <Chip>{t('about.chip')}</Chip>
+          <Chip>{t("about.chip")}</Chip>
           <div className="flex flex-col items-center mt-4 mb-6">
             <SectionIcon index={0} className="mb-4" />
             <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100">
-              {t('about.heading')}
+              {t("about.heading")}
             </h2>
           </div>
         </motion.div>
@@ -43,13 +43,13 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.2 }}
             variants={fadeIn}
           >
-            <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-4">{t('about.listen.title')}</h3>
-            <p className="text-neutral-700 dark:text-neutral-300 mb-6">
-              {t('about.listen.body')}
-            </p>
+            <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-4">
+              {t("about.listen.title")}
+            </h3>
+            <p className="text-neutral-700 dark:text-neutral-300 mb-6">{t("about.listen.body")}</p>
             <Link href="/company">
               <Button className="rounded-full px-6 py-4 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 group">
-                {t('about.learnProcess')}
+                {t("about.learnProcess")}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </Link>
@@ -64,10 +64,12 @@ export default function About() {
             className="relative aspect-[4/3] rounded-lg overflow-hidden"
           >
             <Image
-              src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lexia_visual/sandy_beach_lexia.webp"
+              src="/images/sandy_beach_lexia.webp"
               alt="LEXIA team discussing with clients"
               fill
               className="object-cover"
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
           </motion.div>
@@ -103,17 +105,15 @@ export default function About() {
             className="order-2 md:order-1"
           >
             <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-4">
-              {t('about.ideas.title')}
+              {t("about.ideas.title")}
             </h3>
-            <p className="text-neutral-700 dark:text-neutral-300 mb-6">
-              {t('about.ideas.body')}
-            </p>
+            <p className="text-neutral-700 dark:text-neutral-300 mb-6">{t("about.ideas.body")}</p>
             <ul className="space-y-2 text-neutral-700 dark:text-neutral-300 mb-6 list-disc pl-5">
-              <li>{t('about.services.web')}</li>
-              <li>{t('about.services.system')}</li>
-              <li>{t('about.services.movie')}</li>
-              <li>{t('about.services.pc')}</li>
-              <li>{t('about.services.design')}</li>
+              <li>{t("about.services.web")}</li>
+              <li>{t("about.services.system")}</li>
+              <li>{t("about.services.movie")}</li>
+              <li>{t("about.services.pc")}</li>
+              <li>{t("about.services.design")}</li>
             </ul>
             <div className="flex flex-wrap gap-2">
               <div className="flex flex-col items-start">
