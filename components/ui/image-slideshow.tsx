@@ -26,7 +26,7 @@ export function ImageSlideshow({ images, alt, className = "", interval = 3000 }:
 
   if (images.length === 0) {
     return (
-      <div className={`bg-gray-200 dark:bg-gray-700 ${className}`}>
+      <div className={`bg-gray-200 dark:bg-gray-700 w-full h-full ${className}`}>
         <div className="flex items-center justify-center h-full text-gray-500">No Image</div>
       </div>
     )
@@ -45,7 +45,7 @@ export function ImageSlideshow({ images, alt, className = "", interval = 3000 }:
   }
 
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative overflow-hidden w-full h-full ${className}`}>
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
