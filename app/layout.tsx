@@ -8,6 +8,7 @@ import { Analytics } from "@vercel/analytics/next"
 import GoogleAnalytics from "@/components/google-analytics"
 import CookieConsent from "@/components/cookie-consent"
 import { Suspense } from "react"
+import Script from "next/script"
 import "@/styles/globals.css"
 
 const organizationJsonLd = {
@@ -103,21 +104,15 @@ export default function RootLayout({
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
-        {/* Removed problematic onLoad string, using standard CSS loading instead */}
-        <link
-          rel="stylesheet"
-          href="/deferred.css"
-          media="print"
-          onLoad={(e) => {
-            ;(e.target as HTMLLinkElement).media = "all"
-          }}
-        />
-        <noscript>
-          <link rel="stylesheet" href="/deferred.css" />
-        </noscript>
+        <link rel="stylesheet" href="/deferred.css" />
       </head>
       <body className={`${notoSansJP.className} antialiased`}>
+        <Script
+          id="organization-jsonld"
+          type="application/ld+json"
+          strategy="lazyOnload"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <ThemeProvider defaultTheme="light" storageKey="lexia-theme">
           <Suspense fallback={null}>
             <TypewriterEffect />
