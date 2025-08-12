@@ -4,12 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import React from "react"
 import { motion } from "framer-motion"
-import {
-  LOGO_URL,
-  LOGO_WHITE_URL,
-  LOGO_TEXT_URL,
-  LOGO_TEXT_WHITE_URL,
-} from "@/lib/config"
+import { LOGO_URL, LOGO_WHITE_URL, LOGO_TEXT_URL, LOGO_TEXT_WHITE_URL } from "@/lib/config"
 import { footerIcons, getRandomSpinDuration } from "@/lib/footerIcons"
 
 export default function Footer() {
@@ -23,6 +18,7 @@ export default function Footer() {
     { name: "制作工程", href: "/company/process" },
     { name: "制作実績", href: "/projects" },
     { name: "チーム", href: "#team" },
+    { name: "理念", href: "/company#principles" },
     { name: "お問い合わせ", href: "/contact" },
   ]
 
@@ -39,11 +35,7 @@ export default function Footer() {
     "M12 2l1.5 4.5h4.5l-3.5 2.5 1.5 4.5-3.5-2.5-3.5 2.5 1.5-4.5-3.5-2.5h4.5z",
   ]
 
-  const randomDurations = React.useMemo(
-    () => footerIcons.map(() => getRandomSpinDuration()),
-    []
-  )
-
+  const randomDurations = React.useMemo(() => footerIcons.map(() => getRandomSpinDuration()), [])
 
   return (
     <footer className="bg-neutral-100 dark:bg-[#04070d] text-neutral-900 dark:text-white py-16">
@@ -61,28 +53,28 @@ export default function Footer() {
             {/* LEXIA Logo */}
             <div className="mb-8 flex items-center">
               <Image
-                src={LOGO_URL}
+                src={LOGO_URL || "/placeholder.svg"}
                 alt="LEXIA"
                 width={120}
                 height={24}
                 className="mb-4 h-6 w-auto block dark:hidden"
               />
               <Image
-                src={LOGO_TEXT_URL}
+                src={LOGO_TEXT_URL || "/placeholder.svg"}
                 alt="LEXIA text"
                 width={120}
                 height={24}
                 className="mb-4 ml-2 h-6 w-auto block dark:hidden"
               />
               <Image
-                src={LOGO_WHITE_URL}
+                src={LOGO_WHITE_URL || "/placeholder.svg"}
                 alt="LEXIA"
                 width={120}
                 height={24}
                 className="mb-4 h-6 w-auto hidden dark:block"
               />
               <Image
-                src={LOGO_TEXT_WHITE_URL}
+                src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
                 alt="LEXIA text"
                 width={120}
                 height={24}
@@ -121,10 +113,7 @@ export default function Footer() {
             <ul className="space-y-3 text-transparent">
               {menuItems.map((item) => (
                 <li className="text-sm leading-relaxed text-black" key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="space-y-3 text-black"
-                  >
+                  <Link href={item.href} className="space-y-3 text-black">
                     {item.name}
                   </Link>
                 </li>
@@ -175,20 +164,20 @@ export default function Footer() {
               className="w-6 h-6 flex items-center justify-center"
               animate={{ rotate: 360 }}
               transition={{
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 duration: randomDurations[index],
                 ease: "linear",
               }}
             >
               <Image
-                src={icon.light}
+                src={icon.light || "/placeholder.svg"}
                 alt="footer icon"
                 width={24}
                 height={24}
                 className="block dark:hidden"
               />
               <Image
-                src={icon.dark}
+                src={icon.dark || "/placeholder.svg"}
                 alt="footer icon"
                 width={24}
                 height={24}
@@ -197,7 +186,6 @@ export default function Footer() {
             </motion.span>
           ))}
         </div>
-
       </div>
     </footer>
   )
