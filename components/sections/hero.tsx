@@ -110,12 +110,14 @@ export default function Hero() {
           >
             <img
               src={icon.light}
-              alt="decorative icon"
+              alt=""
+              aria-hidden="true"
               className="w-4 h-4 block dark:hidden"
             />
             <img
               src={icon.dark}
-              alt="decorative icon"
+              alt=""
+              aria-hidden="true"
               className="w-4 h-4 hidden dark:block"
             />
           </motion.span>
