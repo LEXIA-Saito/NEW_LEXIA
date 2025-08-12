@@ -7,7 +7,13 @@ import TypewriterEffect from "@/components/typewriter-effect"
 import { Analytics } from "@vercel/analytics/next"
 import GoogleAnalytics from "@/components/google-analytics"
 import CookieConsent from "@/components/cookie-consent"
-import "./globals.css"
+import fs from "fs"
+import path from "path"
+
+const criticalCSS = fs.readFileSync(
+  path.join(process.cwd(), "styles/critical.css"),
+  "utf8"
+)
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -94,6 +100,16 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
+        <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
+        <link
+          rel="preload"
+          href="/deferred.css"
+          as="style"
+          onLoad="this.rel='stylesheet'"
+        />
+        <noscript>
+          <link rel="stylesheet" href="/deferred.css" />
+        </noscript>
       </head>
       <body className={`${notoSansJP.className} antialiased`}>
         <ThemeProvider defaultTheme="light" storageKey="lexia-theme">
