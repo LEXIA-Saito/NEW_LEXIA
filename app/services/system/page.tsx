@@ -2,18 +2,27 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
 import type { Metadata } from "next"
+import { SITE_URL } from "@/lib/config"
 
 export const metadata: Metadata = {
   title: "システム開発サービス | 碧南のWebアプリ開発はLEXIA",
   description:
     "碧南での予約・顧客管理などのWebシステム開発やDX支援を提供します。",
-  keywords:
-    "碧南 システム開発, Webアプリ開発 碧南, 社内ツール開発 愛知, DX支援 Webシステム",
+  alternates: {
+    canonical: `${SITE_URL.replace(/\/$/, "")}/services/system`,
+  },
   openGraph: {
     title: "システム開発サービス | 碧南のWebアプリ開発はLEXIA",
     description:
       "碧南での予約・顧客管理などのWebシステム開発やDX支援を提供します。",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "システム開発サービス | 碧南のWebアプリ開発はLEXIA",
+    description:
+      "碧南での予約・顧客管理などのWebシステム開発やDX支援を提供します。",
+    images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
   },
 }
 

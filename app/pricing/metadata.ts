@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 
+const title = "料金計算・サービス別料金表 | LEXIA"
 const description =
-  "LEXIAアシスタント｜日々の業務を支え、スムーズなコミュニケーションと作業効率化に貢献します"
-const title = "アシスタント | LEXIAサポートメンバー"
-const url = `${SITE_URL.replace(/\/$/, "")}/team/assistant`
+  "AI活用サポートをはじめ、各サービスの料金目安を紹介します。"
+const url = `${SITE_URL.replace(/\/$/, "")}/pricing`
 const image = `${SITE_URL.replace(/\/$/, "")}/og/og-image.png`
 
 export const metadata: Metadata = {
@@ -14,16 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title,
     description,
-    type: "profile",
-    url,
-    siteName: "LEXIA",
-    images: [
-      {
-        url: image,
-        width: 1200,
-        height: 630,
-      },
-    ],
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",

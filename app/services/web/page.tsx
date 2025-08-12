@@ -3,18 +3,27 @@ import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
 import OurProcess from "@/components/sections/OurProcess"
 import type { Metadata } from "next"
+import { SITE_URL } from "@/lib/config"
 
 export const metadata: Metadata = {
   title: "Web制作サービス | 碧南のホームページ作成はLEXIA",
   description:
     "コーポレートサイトやECサイトなど、Next.jsを活用したWeb制作を碧南で提供します。",
-  keywords:
-    "Web制作, 碧南 Web制作, 碧南 ホームページ作成, コーポレートサイト制作 碧南, ECサイト制作 碧南, Next.js Web制作",
+  alternates: {
+    canonical: `${SITE_URL.replace(/\/$/, "")}/services/web`,
+  },
   openGraph: {
     title: "Web制作サービス | 碧南のホームページ作成はLEXIA",
     description:
       "コーポレートサイトやECサイトなど、Next.jsを活用したWeb制作を碧南で提供します。",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Web制作サービス | 碧南のホームページ作成はLEXIA",
+    description:
+      "コーポレートサイトやECサイトなど、Next.jsを活用したWeb制作を碧南で提供します。",
+    images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
   },
 }
 

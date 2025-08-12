@@ -1,8 +1,30 @@
-"use client"
-
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
+import type { Metadata } from "next"
+import { SITE_URL } from "@/lib/config"
+
+export const metadata: Metadata = {
+  title: "PC教室 | 碧南のパソコンレッスンはLEXIA",
+  description:
+    "初心者からビジネス活用まで目的に合わせたレッスンを提供します。",
+  alternates: {
+    canonical: `${SITE_URL.replace(/\/$/, "")}/services/pc`,
+  },
+  openGraph: {
+    title: "PC教室 | 碧南のパソコンレッスンはLEXIA",
+    description:
+      "初心者からビジネス活用まで目的に合わせたレッスンを提供します。",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PC教室 | 碧南のパソコンレッスンはLEXIA",
+    description:
+      "初心者からビジネス活用まで目的に合わせたレッスンを提供します。",
+    images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
+  },
+}
 
 export default function PcServicePage() {
   return (

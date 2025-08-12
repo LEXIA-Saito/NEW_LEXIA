@@ -1,8 +1,30 @@
-"use client"
-
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
+import type { Metadata } from "next"
+import { SITE_URL } from "@/lib/config"
+
+export const metadata: Metadata = {
+  title: "デザイン制作サービス | 碧南の各種デザインはLEXIA",
+  description:
+    "名刺・チラシなどの印刷物やロゴデザインを碧南で提供します。",
+  alternates: {
+    canonical: `${SITE_URL.replace(/\/$/, "")}/services/design`,
+  },
+  openGraph: {
+    title: "デザイン制作サービス | 碧南の各種デザインはLEXIA",
+    description:
+      "名刺・チラシなどの印刷物やロゴデザインを碧南で提供します。",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "デザイン制作サービス | 碧南の各種デザインはLEXIA",
+    description:
+      "名刺・チラシなどの印刷物やロゴデザインを碧南で提供します。",
+    images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
+  },
+}
 
 export default function DesignServicePage() {
   return (

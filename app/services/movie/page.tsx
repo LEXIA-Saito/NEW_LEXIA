@@ -1,8 +1,30 @@
-"use client"
-
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
+import type { Metadata } from "next"
+import { SITE_URL } from "@/lib/config"
+
+export const metadata: Metadata = {
+  title: "動画制作サービス | 碧南の動画制作はLEXIA",
+  description:
+    "企画から撮影・編集までワンストップで対応します。",
+  alternates: {
+    canonical: `${SITE_URL.replace(/\/$/, "")}/services/movie`,
+  },
+  openGraph: {
+    title: "動画制作サービス | 碧南の動画制作はLEXIA",
+    description:
+      "企画から撮影・編集までワンストップで対応します。",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "動画制作サービス | 碧南の動画制作はLEXIA",
+    description:
+      "企画から撮影・編集までワンストップで対応します。",
+    images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
+  },
+}
 
 export default function MovieServicePage() {
   return (
