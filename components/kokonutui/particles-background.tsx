@@ -207,12 +207,21 @@ export default function ParticlesBackground({
           transition={{ duration: 0.8 }}
           className="text-center space-y-4"
         >
-          <h1 className="text-6xl md:text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-black to-black/70 dark:from-white dark:to-white/70 drop-shadow-sm">
-            {title}
-          </h1>
-          <Link target="_blank" rel="noopener noreferrer"  href="https://kokonutui.com/" className="text-xl md:text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-black/90 to-black/50 dark:from-white/90 dark:to-white/50 flex items-center justify-center">
-            {subtitle}
-          </Link>
+          {title && (
+            <h1 className="text-6xl md:text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-black to-black/70 dark:from-white dark:to-white/70 drop-shadow-sm">
+              {title}
+            </h1>
+          )}
+          {subtitle && (
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://kokonutui.com/"
+              className="text-xl md:text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-black/90 to-black/50 dark:from-white/90 dark:to-white/50 flex items-center justify-center"
+            >
+              {subtitle}
+            </Link>
+          )}
         </motion.div>
       </div>
     </div>
