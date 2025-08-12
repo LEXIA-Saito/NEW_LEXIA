@@ -1,9 +1,22 @@
-"use client"
-
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import ContactForm from "@/components/contact-form"
 import Breadcrumbs from "@/components/breadcrumbs"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "お問い合わせ | Web制作の無料見積もり・相談はLEXIA",
+  description:
+    "ホームページ制作のご相談や無料見積もりは碧南のWEB制作会社LEXIAまで。",
+  keywords:
+    "Web制作 問い合わせ, ホームページ制作 相談, 無料見積もり Web制作",
+  openGraph: {
+    title: "お問い合わせ | Web制作の無料見積もり・相談はLEXIA",
+    description:
+      "ホームページ制作のご相談や無料見積もりは碧南のWEB制作会社LEXIAまで。",
+    type: "website",
+  },
+}
 
 export default function ContactPage() {
   return (
