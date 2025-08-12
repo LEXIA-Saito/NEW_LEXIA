@@ -9,4 +9,3 @@ export async function GET() {
     { name: "動画制作", url: "/services/movie" },
   ])
 }
-
