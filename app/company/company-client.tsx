@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import LexiaLogoParticles from "@/components/lexia-logo-particles"
+import LexiaPrinciples from "@/components/sections/lexia-principles"
 import Script from "next/script"
 import { Lightbulb, Zap, RefreshCcw, ListChecks, Code, LineChart, ChevronDown } from "lucide-react"
 import { projectsData } from "@/lib/projects-data"
@@ -235,104 +236,11 @@ export default function CompanyClient() {
                 )
               })}
             </div>
-
-            {/* LEXIA Principles section */}
-            <div className="mt-16 pt-12 border-t border-neutral-200 dark:border-neutral-700" id="principles">
-              <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-8">LEXIA Principles</h3>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
-                  variants={fadeIn}
-                >
-                  <Card className="p-6 h-full">
-                    <h4 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">L</h4>
-                    <h5 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-                      Lead with Value
-                    </h5>
-                    <p className="text-neutral-700 dark:text-neutral-300 text-sm">
-                      揺るがない価値と確かな提案で、クライアントと社会の未来に道を示す
-                    </p>
-                  </Card>
-                </motion.div>
-
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  variants={fadeIn}
-                >
-                  <Card className="p-6 h-full">
-                    <h4 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">E</h4>
-                    <h5 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-                      Evolve Constantly
-                    </h5>
-                    <p className="text-neutral-700 dark:text-neutral-300 text-sm">
-                      技術・デザイン・思考のすべてを磨き続け、次の可能性を切り開く
-                    </p>
-                  </Card>
-                </motion.div>
-
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  variants={fadeIn}
-                >
-                  <Card className="p-6 h-full">
-                    <h4 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">X</h4>
-                    <h5 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-                      Xperience First
-                    </h5>
-                    <p className="text-neutral-700 dark:text-neutral-300 text-sm">
-                      見る・触れる・使う、その瞬間の感動と記憶に残る体験を最優先する
-                    </p>
-                  </Card>
-                </motion.div>
-
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  variants={fadeIn}
-                >
-                  <Card className="p-6 h-full">
-                    <h4 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">I</h4>
-                    <h5 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-                      Inspire Connection
-                    </h5>
-                    <p className="text-neutral-700 dark:text-neutral-300 text-sm">
-                      人と人、企業と顧客の間に、共感と信頼の架け橋を築く
-                    </p>
-                  </Card>
-                </motion.div>
-
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                  variants={fadeIn}
-                >
-                  <Card className="p-6 h-full">
-                    <h4 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">A</h4>
-                    <h5 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-                      Achieve Together
-                    </h5>
-                    <p className="text-neutral-700 dark:text-neutral-300 text-sm">
-                      志を一つにし、想像を超える成果を共創する
-                    </p>
-                  </Card>
-                </motion.div>
-              </div>
-            </div>
           </div>
         </section>
+
+        {/* LEXIA Principles section */}
+        <LexiaPrinciples />
 
         {/* Company Data */}
         <section className="container mx-auto px-4 py-24 space-y-8" data-testid="company-data" id="data">
