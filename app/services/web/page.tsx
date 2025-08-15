@@ -7,7 +7,6 @@ import { SITE_URL } from "@/lib/config"
 import Image from "next/image"
 import Link from "next/link"
 import ServicesWebHeroCTA from "@/components/cta/services-web-hero-cta"
-import { SITE_URL } from "@/lib/config"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 export const metadata: Metadata = {
