@@ -50,6 +50,7 @@ export default function Navigation() {
   const [activeSection, setActiveSection] = useState("hero")
   const [snsOpen, setSnsOpen] = useState(false)
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
 
   // Map route paths to homepage section ids for active indicator sync
   const routeToSection: Record<string, string> = {
@@ -100,6 +101,16 @@ export default function Navigation() {
     // Close mobile menu if open
     if (mobileMenuOpen) {
       setMobileMenuOpen(false)
+    }
+  }
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const q = searchQuery.trim()
+    if (q) {
+      if (typeof window !== "undefined") {
+        window.location.href = `/projects?query=${encodeURIComponent(q)}`
+      }
     }
   }
 
@@ -192,6 +203,15 @@ export default function Navigation() {
                   ))}
                 </ul>
               </nav>
+              <form onSubmit={handleSearchSubmit} className="hidden md:block">
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="実績を検索"
+                  className="w-40 px-3 py-1.5 rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-sm text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-400/40"
+                />
+              </form>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -358,6 +378,15 @@ export default function Navigation() {
                 ))}
               </ul>
               <div className="mt-8">
+                <form onSubmit={handleSearchSubmit} className="px-6 mb-6 w-full">
+                  <input
+                    type="search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="実績を検索"
+                    className="w-full px-3 py-2 rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-sm text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-400/40"
+                  />
+                </form>
                 <Link
                   href="https://www.instagram.com/lexia_web/"
                   target="_blank"

@@ -14,11 +14,11 @@ export default function ServicesCTA() {
   }
 
   const services = [
-    { href: "/services/web", label: "WEB制作" },
-    { href: "/services/system", label: "システム開発" },
-    { href: "/services/movie", label: "動画制作" },
-    { href: "/services/pc", label: "PC教室" },
-    { href: "/services/design", label: "デザイン各種" },
+    { href: "/services/web", label: "WEB制作", strong: true },
+    { href: "/services/design", label: "デザイン各種", strong: true },
+    { href: "/services/system", label: "システム開発", strong: true },
+    { href: "/services/movie", label: "動画制作", strong: false },
+    { href: "/services/pc", label: "PC教室", strong: false },
   ]
 
   return (
@@ -88,7 +88,12 @@ export default function ServicesCTA() {
         {services.map((s) => (
           <Link key={s.href} href={s.href}>
             <Button
-              className="rounded-full px-6 py-4 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 group"
+              variant={s.strong ? "default" : "outline"}
+              className={
+                s.strong
+                  ? "rounded-full px-6 py-4 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 group"
+                  : "rounded-full px-6 py-4 text-base border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-800 group"
+              }
               onClick={() => trackEvent("cta_click", { location: "home_services_section", label: s.href })}
             >
               {s.label}

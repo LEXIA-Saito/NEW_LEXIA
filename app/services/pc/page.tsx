@@ -69,6 +69,7 @@ export default function PcServicePage() {
     offers: {
       "@type": "Offer",
       priceCurrency: "JPY",
+      price: "5000",
       url: `${SITE_URL.replace(/\/$/, "")}/pricing`,
       availability: "https://schema.org/InStock",
     },

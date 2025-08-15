@@ -140,6 +140,34 @@ export default function Footer() {
               >
                 lexia0web@gmail.com
               </Link>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  const form = e.target as HTMLFormElement
+                  const input = form.querySelector('input[name="q"]') as HTMLInputElement
+                  const q = input?.value?.trim()
+                  if (q) {
+                    window.location.href = `/projects?query=${encodeURIComponent(q)}`
+                  }
+                }}
+                className="mt-6"
+              >
+                <label className="block text-sm mb-2 text-neutral-700 dark:text-neutral-300">実績を検索</label>
+                <div className="flex gap-2">
+                  <input
+                    type="search"
+                    name="q"
+                    placeholder="キーワード"
+                    className="flex-1 px-3 py-2 rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-sm text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-400/40"
+                  />
+                  <button
+                    type="submit"
+                    className="px-4 py-2 rounded-md bg-neutral-900 text-white text-sm hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+                  >
+                    検索
+                  </button>
+                </div>
+              </form>
             </div>
           </motion.div>
         </div>
