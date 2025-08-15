@@ -57,6 +57,7 @@ export default function Navigation() {
     "/pricing": "pricing",
     "/contact": "contact",
     "/team": "team",
+    "/services": "services",
   }
 
   const getSectionFromHref = (href: string) => {

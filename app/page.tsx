@@ -6,6 +6,7 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Hero from "@/components/sections/hero"
 import PricingCTA from "@/components/sections/pricing-cta"
+import ServicesCTA from "@/components/sections/services-cta"
 import type { Metadata } from "next"
 import Script from "next/script"
 import { SITE_URL, LOGO_URL } from "@/lib/config"
@@ -66,6 +67,10 @@ export default function Home() {
 
       <section id="about" className="py-24 md:py-32">
         <About />
+      </section>
+
+      <section id="services" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800">
+        <ServicesCTA />
       </section>
 
       <section id="pricing" className="py-24 md:py-32">
