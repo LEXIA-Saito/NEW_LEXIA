@@ -75,49 +75,7 @@ export default function About() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            variants={fadeIn}
-            className="relative aspect-[4/3] rounded-lg overflow-hidden order-1 md:order-2"
-          >
-            <video
-              src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/movie/lexia_movie_visual.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              className="object-cover w-full h-full"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            variants={fadeIn}
-            className="order-2 md:order-1"
-          >
-            <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-4">
-              {t("about.ideas.title")}
-            </h3>
-            <p className="text-neutral-700 dark:text-neutral-300 mb-6">{t("about.ideas.body")}</p>
-            <ul className="space-y-2 text-neutral-700 dark:text-neutral-300 mb-6 list-disc pl-5">
-              <li>{t("about.services.web")}</li>
-              <li>{t("about.services.system")}</li>
-              <li>{t("about.services.movie")}</li>
-              <li>{t("about.services.pc")}</li>
-              <li>{t("about.services.design")}</li>
-            </ul>
-            {/* 主要サービスの個別ボタンはトップページの services セクションへ移設 */}
-          </motion.div>
-        </div>
+        {/* 主要サービスに関する動画・テキストは services セクションへ移設しました */}
       </div>
     </div>
   )
