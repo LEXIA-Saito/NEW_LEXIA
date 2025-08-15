@@ -16,6 +16,7 @@ export const navItems = [
     name: "事業概要",
     href: "#about",
     subItems: [
+      { name: "サービス一覧", href: "/services" },
       { name: "制作工程", href: "/company/process" },
       { name: "WEB制作", href: "/services/web" },
       { name: "デザイン制作", href: "/services/design" },
@@ -24,6 +25,7 @@ export const navItems = [
       { name: "PC教室", href: "/services/pc" },
     ],
   },
+  { name: "サービス一覧", href: "/services", subItems: [] },
   {
     name: "料金詳細",
     href: "#pricing",

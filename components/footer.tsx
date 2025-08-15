@@ -15,6 +15,7 @@ export default function Footer() {
 
   const menuItems = [
     { name: "事業概要", href: "/company" },
+    { name: "サービス一覧", href: "/services" },
     { name: "制作工程", href: "/company/process" },
     { name: "制作実績", href: "/projects" },
     { name: "チーム", href: "#team" },
