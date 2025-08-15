@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import ProjectsClient from "./projects-client"
 import { SITE_URL } from "@/lib/config"
+import Navigation from "@/components/navigation"
+import Footer from "@/components/footer"
 
 export const metadata: Metadata = {
   title: "制作実績 | 碧南のWeb制作事例 - LEXIA",
@@ -25,5 +27,13 @@ export const metadata: Metadata = {
 }
 
 export default function ProjectsPage() {
-  return <ProjectsClient />
+  return (
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-white dark:bg-neutral-900">
+        <ProjectsClient />
+      </main>
+      <Footer />
+    </>
+  )
 }
