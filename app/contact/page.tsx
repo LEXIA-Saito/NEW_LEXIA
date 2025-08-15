@@ -36,6 +36,14 @@ export default function ContactPage() {
           <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4 text-center">お問い合わせ</h1>
           <Breadcrumbs />
           <ContactForm />
+          <div className="mt-10 text-center">
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">お探しの内容に応じて、以下もご覧ください。</p>
+            <div className="inline-flex flex-wrap gap-3 justify-center">
+              <a href="/services" className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800">サービス一覧</a>
+              <a href="/pricing" className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800">料金を見る</a>
+              <a href="/projects" className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800">制作実績</a>
+            </div>
+          </div>
         </div>
       </main>
       <Footer />

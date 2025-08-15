@@ -96,6 +96,30 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               </div>
             </div>
           )}
+
+          {/* Global CTA: encourage inquiry and browsing */}
+          <div className="mt-16 text-center">
+            <div className="inline-flex flex-wrap gap-3 justify-center">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-md bg-neutral-900 text-white px-5 py-3 text-sm font-medium hover:bg-neutral-800 transition-colors"
+              >
+                このようなサイトを相談する
+              </Link>
+              <Link
+                href="/services/web"
+                className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-5 py-3 text-sm font-medium text-neutral-900 dark:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+              >
+                Web制作サービスを見る
+              </Link>
+              <Link
+                href="/projects"
+                className="inline-flex items-center justify-center rounded-md px-5 py-3 text-sm font-medium text-neutral-900 dark:text-neutral-100 hover:underline"
+              >
+                実績一覧へ戻る
+              </Link>
+            </div>
+          </div>
         </div>
       </main>
       <Footer />
