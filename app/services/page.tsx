@@ -85,10 +85,33 @@ export default function ServicesIndexPage() {
               ))}
             </div>
           </section>
+
+          {/* Global CTA: encourage inquiry or price lookup */}
+          <section className="mt-16 text-center">
+            <div className="inline-flex flex-wrap gap-3 justify-center">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-md bg-neutral-900 text-white px-5 py-3 text-sm font-medium hover:bg-neutral-800 transition-colors"
+              >
+                無料相談する
+              </Link>
+              <Link
+                href="/pricing"
+                className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-5 py-3 text-sm font-medium text-neutral-900 dark:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+              >
+                料金を見る
+              </Link>
+              <Link
+                href="/projects"
+                className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-5 py-3 text-sm font-medium text-neutral-900 dark:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+              >
+                実績を見る
+              </Link>
+            </div>
+          </section>
         </div>
       </main>
       <Footer />
     </>
   )
 }
-

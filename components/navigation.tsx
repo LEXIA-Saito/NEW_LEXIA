@@ -28,10 +28,10 @@ export const navItems = [
   { name: "サービス一覧", href: "/services", subItems: [] },
   {
     name: "料金詳細",
-    href: "#pricing",
-    subItems: [{ name: "料金シミュレーション", href: "#pricing" }],
+    href: "/pricing",
+    subItems: [{ name: "料金シミュレーション", href: "/pricing" }],
   },
-  { name: "制作実績", href: "#work", subItems: [] },
+  { name: "制作実績", href: "/projects", subItems: [] },
   {
     name: "チーム",
     href: "/team",
@@ -41,7 +41,7 @@ export const navItems = [
       { name: "アシスタント", href: "/team/assistant" },
     ],
   },
-  { name: "お問い合わせ", href: "#contact", subItems: [] },
+  { name: "お問い合わせ", href: "/contact", subItems: [] },
 ]
 
 export default function Navigation() {
