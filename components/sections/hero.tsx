@@ -8,6 +8,7 @@ import { ArrowDown, ExternalLink } from "lucide-react"
 import ParticlesBackground from "@/components/kokonutui/particles-background"
 import { footerIcons, getRandomSpinDuration } from "@/lib/footerIcons"
 import { t } from "@/lib/i18n"
+import { trackEvent } from "@/lib/analytics"
 
 export default function Hero() {
   const controls = useAnimation()
@@ -61,6 +62,7 @@ export default function Hero() {
                 variant="outline"
                 size="lg"
                 className="rounded-full px-8 py-4 text-lg min-h-[48px] min-w-[200px] border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 w-full sm:w-auto group transition-all duration-200 bg-transparent"
+                onClick={() => trackEvent("cta_click", { location: "home_hero", label: "view_work" })}
               >
                 {t("hero.viewWork")}
                 <ArrowDown className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-y-1" />
@@ -73,9 +75,23 @@ export default function Hero() {
               <Button
                 size="lg"
                 className="rounded-full px-8 py-4 text-lg min-h-[48px] min-w-[200px] bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 w-full sm:w-auto group transition-all duration-200"
+                onClick={() => trackEvent("cta_click", { location: "home_hero", label: "contact" })}
               >
                 {t("hero.contact")}
                 <ExternalLink className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+              </Button>
+            </motion.div>
+          </Link>
+
+          <Link href="/services" className="w-full sm:w-auto">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                variant="ghost"
+                size="lg"
+                className="rounded-full px-8 py-4 text-lg min-h-[48px] min-w-[200px] text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 w-full sm:w-auto group transition-all duration-200"
+                onClick={() => trackEvent("cta_click", { location: "home_hero", label: "services" })}
+              >
+                サービス一覧
               </Button>
             </motion.div>
           </Link>

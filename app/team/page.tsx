@@ -5,6 +5,7 @@ import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import Image from "next/image"
 import Link from "next/link"
+import Script from "next/script"
 
 export const metadata: Metadata = {
   title: "チーム | LEXIA",
@@ -91,7 +92,26 @@ export default function TeamIndexPage() {
         </div>
       </main>
       <Footer />
+      <Script
+        id="team-jsonld"
+        type="application/ld+json"
+        strategy="lazyOnload"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "LEXIA",
+            url: `${SITE_URL.replace(/\/$/, "")}/team`,
+            member: members.map((m) => ({
+              "@type": "Person",
+              name: m.name,
+              jobTitle: m.role,
+              url: `${SITE_URL.replace(/\/$/, "")}${m.href}`,
+              image: `${SITE_URL.replace(/\/$/, "")}${m.img}`,
+            })),
+          }),
+        }}
+      />
     </>
   )
 }
-
