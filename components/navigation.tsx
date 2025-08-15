@@ -51,6 +51,20 @@ export default function Navigation() {
   const [snsOpen, setSnsOpen] = useState(false)
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
 
+  // Map route paths to homepage section ids for active indicator sync
+  const routeToSection: Record<string, string> = {
+    "/projects": "work",
+    "/pricing": "pricing",
+    "/contact": "contact",
+    "/team": "team",
+  }
+
+  const getSectionFromHref = (href: string) => {
+    if (!href) return null
+    if (href.startsWith("#")) return href.substring(1)
+    return routeToSection[href] || null
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
@@ -155,24 +169,24 @@ export default function Navigation() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3, delay: 0.1 * index }}
                     >
-                      <Link
-                        href={item.href}
-                        className={`text-sm transition-colors relative ${
-                          activeSection === item.href.substring(1)
+                  <Link
+                    href={item.href}
+                    className={`text-sm transition-colors relative ${
+                          activeSection === getSectionFromHref(item.href)
                             ? "text-neutral-900 dark:text-neutral-100"
                             : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
                         }`}
-                        onClick={(e) => handleNavigation(e, item.href)}
-                      >
-                        {item.name}
-                        {activeSection === item.href.substring(1) && (
-                          <motion.span
-                            layoutId="activeSection"
-                            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-neutral-900 dark:bg-neutral-100"
-                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          />
-                        )}
-                      </Link>
+                    onClick={(e) => handleNavigation(e, item.href)}
+                  >
+                    {item.name}
+                    {activeSection === getSectionFromHref(item.href) && (
+                      <motion.span
+                        layoutId="activeSection"
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-neutral-900 dark:bg-neutral-100"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </Link>
                     </motion.li>
                   ))}
                 </ul>
@@ -331,7 +345,7 @@ export default function Navigation() {
                     <Link
                       href={item.href}
                       className={`text-2xl font-light ${
-                        activeSection === item.href.substring(1)
+                        activeSection === getSectionFromHref(item.href)
                           ? "text-neutral-900 dark:text-neutral-100"
                           : "text-neutral-500 dark:text-neutral-400"
                       }`}
