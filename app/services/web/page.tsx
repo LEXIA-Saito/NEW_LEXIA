@@ -60,27 +60,59 @@ export default function WebServicePage() {
     <>
       <Navigation />
       <main className="min-h-screen bg-white dark:bg-neutral-900">
-        <div className="container mx-auto px-4 py-24 md:py-32 max-w-3xl">
-          <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4 text-center">
-            WEB制作
-          </h1>
+        {/* Fullscreen Hero */}
+        <section className="relative min-h-[100svh] w-full">
+          {/* Background image */}
+          <Image
+            src="/images/web-services-hero.png"
+            alt="LEXIAのWeb制作サービス。レスポンシブ対応の美しいサイトを構築"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/10 dark:from-black/70 dark:via-black/40 dark:to-black/10" />
+          {/* Content */}
+          <div className="relative z-10 flex h-full items-end md:items-center">
+            <div className="container mx-auto px-4 w-full pt-24 md:pt-28 pb-12 md:pb-20">
+              <div className="max-w-3xl">
+                <h1 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-4">
+                  WEB制作
+                </h1>
+                <p className="text-neutral-100/90 md:text-lg mb-8">
+                  コーポレート、EC、ランディング、採用、キャンペーンまで。Next.jsを活用し、成果につながるサイトをスピーディに構築します。
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center justify-center rounded-md bg-white text-neutral-900 px-5 py-3 text-sm font-medium shadow-sm hover:bg-neutral-100 transition-colors"
+                  >
+                    無料相談する
+                  </Link>
+                  <Link
+                    href="/pricing"
+                    className="inline-flex items-center justify-center rounded-md bg-neutral-900/80 text-white px-5 py-3 text-sm font-medium ring-1 ring-white/30 hover:bg-neutral-900 transition-colors"
+                  >
+                    料金を見る
+                  </Link>
+                  <Link
+                    href="/projects"
+                    className="inline-flex items-center justify-center rounded-md bg-transparent text-white px-5 py-3 text-sm font-medium ring-1 ring-white/40 hover:bg-white/10 transition-colors"
+                  >
+                    実績を見る
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="container mx-auto px-4 py-16 md:py-24 max-w-3xl">
           <Breadcrumbs />
           <p className="text-neutral-700 dark:text-neutral-300 mb-12">
             ホームページ制作、コーポレート、EC、オンデマンド、ランディング、ポートフォリオ等をトータルでサポートします。
           </p>
-
-          <section className="mb-16">
-            <div className="relative w-full h-64 md:h-80 lg:h-96 rounded-lg overflow-hidden shadow-lg">
-              <Image
-                src="/images/web-services-hero.png"
-                alt="LEXIA Web制作サービス - レスポンシブデザインでPC、タブレット、スマートフォンに対応"
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-              />
-            </div>
-          </section>
 
           <section id="process" className="mt-16">
             <OurProcess />
