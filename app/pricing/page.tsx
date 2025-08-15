@@ -95,6 +95,23 @@ export default function PricingPage() {
               />
             </TabsContent>
           </Tabs>
+          {/* Global CTA at bottom */}
+          <div className="mt-12 text-center">
+            <div className="inline-flex flex-wrap gap-3 justify-center">
+              <a
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-md bg-neutral-900 text-white px-5 py-3 text-sm font-medium hover:bg-neutral-800 transition-colors"
+              >
+                この内容で相談する
+              </a>
+              <a
+                href="/services"
+                className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-5 py-3 text-sm font-medium text-neutral-900 dark:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+              >
+                サービス一覧へ
+              </a>
+            </div>
+          </div>
         </div>
       </main>
       <Footer />
