@@ -18,7 +18,7 @@ export default function Footer() {
     { name: "サービス一覧", href: "/services" },
     { name: "制作工程", href: "/company/process" },
     { name: "制作実績", href: "/projects" },
-    { name: "チーム", href: "#team" },
+    { name: "チーム", href: "/team" },
     { name: "理念", href: "/company#principles" },
     { name: "お問い合わせ", href: "/contact" },
   ]
