@@ -108,6 +108,24 @@ export default function RootLayout({
       </head>
       <body className={`${notoSansJP.className} antialiased`}>
         <Script
+          id="website-jsonld"
+          type="application/ld+json"
+          strategy="lazyOnload"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "LEXIA",
+              url: SITE_URL,
+              potentialAction: {
+                "@type": "SearchAction",
+                target: `${SITE_URL.replace(/\/$/, "")}/projects?query={search_term_string}`,
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
+        <Script
           id="organization-jsonld"
           type="application/ld+json"
           strategy="lazyOnload"

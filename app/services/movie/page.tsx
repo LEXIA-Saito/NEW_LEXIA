@@ -53,6 +53,27 @@ export default function MovieServicePage() {
     })),
   }
 
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "動画制作",
+    serviceType: "VideoProduction",
+    url: `${SITE_URL.replace(/\/$/, "")}/services/movie`,
+    areaServed: "JP",
+    provider: {
+      "@type": "Organization",
+      name: "LEXIA",
+      url: SITE_URL,
+    },
+    brand: { "@type": "Brand", name: "LEXIA" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "JPY",
+      url: `${SITE_URL.replace(/\/$/, "")}/pricing`,
+      availability: "https://schema.org/InStock",
+    },
+  }
+
   return (
     <>
       <Navigation />
@@ -114,6 +135,7 @@ export default function MovieServicePage() {
         </div>
       </main>
       <Footer />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

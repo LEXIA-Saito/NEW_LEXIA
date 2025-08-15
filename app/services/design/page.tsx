@@ -53,6 +53,27 @@ export default function DesignServicePage() {
     })),
   }
 
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "デザイン制作",
+    serviceType: "GraphicDesign",
+    url: `${SITE_URL.replace(/\/$/, "")}/services/design`,
+    areaServed: "JP",
+    provider: {
+      "@type": "Organization",
+      name: "LEXIA",
+      url: SITE_URL,
+    },
+    brand: { "@type": "Brand", name: "LEXIA" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "JPY",
+      url: `${SITE_URL.replace(/\/$/, "")}/pricing`,
+      availability: "https://schema.org/InStock",
+    },
+  }
+
   return (
     <>
       <Navigation />
@@ -114,6 +135,7 @@ export default function DesignServicePage() {
         </div>
       </main>
       <Footer />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

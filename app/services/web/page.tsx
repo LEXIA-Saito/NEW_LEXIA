@@ -7,6 +7,7 @@ import { SITE_URL } from "@/lib/config"
 import Image from "next/image"
 import Link from "next/link"
 import ServicesWebHeroCTA from "@/components/cta/services-web-hero-cta"
+import { SITE_URL } from "@/lib/config"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 export const metadata: Metadata = {
@@ -55,6 +56,27 @@ export default function WebServicePage() {
         text: item.a,
       },
     })),
+  }
+
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "WEB制作",
+    serviceType: "WebDesign",
+    url: `${SITE_URL.replace(/\/$/, "")}/services/web`,
+    areaServed: "JP",
+    provider: {
+      "@type": "Organization",
+      name: "LEXIA",
+      url: SITE_URL,
+    },
+    brand: { "@type": "Brand", name: "LEXIA" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "JPY",
+      url: `${SITE_URL.replace(/\/$/, "")}/pricing`,
+      availability: "https://schema.org/InStock",
+    },
   }
 
   return (
@@ -138,6 +160,7 @@ export default function WebServicePage() {
         </div>
       </main>
       <Footer />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
     </>
   )

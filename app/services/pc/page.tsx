@@ -53,6 +53,27 @@ export default function PcServicePage() {
     })),
   }
 
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "PC教室",
+    serviceType: "ComputerTraining",
+    url: `${SITE_URL.replace(/\/$/, "")}/services/pc`,
+    areaServed: "JP",
+    provider: {
+      "@type": "Organization",
+      name: "LEXIA",
+      url: SITE_URL,
+    },
+    brand: { "@type": "Brand", name: "LEXIA" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "JPY",
+      url: `${SITE_URL.replace(/\/$/, "")}/pricing`,
+      availability: "https://schema.org/InStock",
+    },
+  }
+
   return (
     <>
       <Navigation />
@@ -114,6 +135,7 @@ export default function PcServicePage() {
         </div>
       </main>
       <Footer />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

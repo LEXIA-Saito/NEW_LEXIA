@@ -9,6 +9,8 @@ import { Mail, Linkedin, ExternalLink } from "lucide-react"
 import Breadcrumbs from "@/components/breadcrumbs"
 import { Chip } from "@/components/ui/chip"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table"
+import Script from "next/script"
+import { SITE_URL } from "@/lib/config"
 
 export default function MasatoSaitoProfile() {
   const qualifications = [
@@ -294,6 +296,26 @@ export default function MasatoSaitoProfile() {
         </div>
       </main>
       <Footer />
+      <Script
+        id="person-masato-jsonld"
+        type="application/ld+json"
+        strategy="lazyOnload"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "齋藤雅人",
+            jobTitle: "代表・WEBディレクター",
+            url: `${SITE_URL.replace(/\/$/, "")}/team/masato-saito`,
+            image: `${SITE_URL.replace(/\/$/, "")}/images/saito_profile.webp`,
+            worksFor: { "@type": "Organization", name: "LEXIA", url: SITE_URL },
+            sameAs: [
+              "https://www.linkedin.com/in/lexia-saito/",
+              "https://www.instagram.com/lexia_web/"
+            ],
+          }),
+        }}
+      />
     </>
   )
 }

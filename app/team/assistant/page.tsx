@@ -5,6 +5,8 @@ import Footer from "@/components/footer"
 import Image from "next/image"
 import Breadcrumbs from "@/components/breadcrumbs"
 import { Chip } from "@/components/ui/chip"
+import Script from "next/script"
+import { SITE_URL } from "@/lib/config"
 
 export default function AssistantProfile() {
   return (
@@ -28,6 +30,22 @@ export default function AssistantProfile() {
         </div>
       </main>
       <Footer />
+      <Script
+        id="person-assistant-jsonld"
+        type="application/ld+json"
+        strategy="lazyOnload"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "アシスタント",
+            jobTitle: "アシスタント",
+            url: `${SITE_URL.replace(/\/$/, "")}/team/assistant`,
+            image: `${SITE_URL.replace(/\/$/, "")}/placeholder-user.jpg`,
+            worksFor: { "@type": "Organization", name: "LEXIA", url: SITE_URL },
+          }),
+        }}
+      />
     </>
   )
 }
