@@ -72,33 +72,33 @@ export default function WebServicePage() {
             sizes="100vw"
           />
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/10 dark:from-black/70 dark:via-black/40 dark:to-black/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20 dark:from-black/75 dark:via-black/50 dark:to-black/30" />
           {/* Content */}
-          <div className="relative z-10 flex h-full items-end md:items-center">
-            <div className="container mx-auto px-4 w-full pt-24 md:pt-28 pb-12 md:pb-20">
-              <div className="max-w-3xl">
-                <h1 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-4">
+          <div className="relative z-10 flex h-full items-center justify-center">
+            <div className="container mx-auto px-4 w-full pt-20 md:pt-24">
+              <div className="mx-auto max-w-3xl text-center rounded-xl bg-black/30 backdrop-blur-sm p-6 md:p-8 ring-1 ring-white/10 shadow-lg">
+                <h1 className="text-4xl md:text-6xl font-light tracking-tight text-white mb-4">
                   WEB制作
                 </h1>
-                <p className="text-neutral-100/90 md:text-lg mb-8">
+                <p className="text-neutral-100/95 md:text-xl mb-8">
                   コーポレート、EC、ランディング、採用、キャンペーンまで。Next.jsを活用し、成果につながるサイトをスピーディに構築します。
                 </p>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap justify-center gap-3">
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center rounded-md bg-white text-neutral-900 px-5 py-3 text-sm font-medium shadow-sm hover:bg-neutral-100 transition-colors"
+                    className="inline-flex items-center justify-center rounded-md bg-white text-neutral-900 px-6 py-3 text-sm font-medium shadow-lg shadow-black/30 hover:bg-white/90 transition-colors"
                   >
                     無料相談する
                   </Link>
                   <Link
                     href="/pricing"
-                    className="inline-flex items-center justify-center rounded-md bg-neutral-900/80 text-white px-5 py-3 text-sm font-medium ring-1 ring-white/30 hover:bg-neutral-900 transition-colors"
+                    className="inline-flex items-center justify-center rounded-md bg-neutral-900/90 text-white px-6 py-3 text-sm font-medium ring-1 ring-white/40 shadow-lg hover:bg-neutral-900 transition-colors"
                   >
                     料金を見る
                   </Link>
                   <Link
                     href="/projects"
-                    className="inline-flex items-center justify-center rounded-md bg-transparent text-white px-5 py-3 text-sm font-medium ring-1 ring-white/40 hover:bg-white/10 transition-colors"
+                    className="inline-flex items-center justify-center rounded-md bg-white/10 text-white px-6 py-3 text-sm font-medium ring-1 ring-white/40 hover:bg-white/20 transition-colors"
                   >
                     実績を見る
                   </Link>
