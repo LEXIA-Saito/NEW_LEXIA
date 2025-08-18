@@ -93,7 +93,7 @@ export const projectsData: Project[] = [
     categories: ["website"],
     featured: true,
     year: "2023",
-    tags: ["React", "Node.js", "PostgreSQL", "AWS"],
+    tags: ["STUDIO", "Figma", "JavaScript"],
     location: "愛知県",
     client: "中部開発株式会社様",
     industry: "人材派遣・不動産",
