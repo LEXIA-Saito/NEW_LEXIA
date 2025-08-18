@@ -126,7 +126,7 @@ export const projectsData: Project[] = [
     categories: ["system"],
     featured: false,
     year: "2024",
-    tags: ["Vue.js", "Laravel", "MySQL", "Elasticsearch"],
+    tags: ["STUDIO", "Figma", "JavaScript"],
     location: "愛知県",
     client: "株式会社JA.life様",
     industry: "不動産",
