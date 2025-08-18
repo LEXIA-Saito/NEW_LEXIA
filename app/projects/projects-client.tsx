@@ -94,7 +94,7 @@ export default function ProjectsClient() {
     .reverse()
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 pt-24 md:pt-28">
       <div className="max-w-6xl mx-auto">
         {/* ヘッダー */}
         <div className="text-center mb-12">
