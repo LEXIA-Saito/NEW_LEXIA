@@ -84,11 +84,11 @@ export const projectsData: Project[] = [
     title: "みの建築様 コーポレートサイト",
     description:
       "伝統的な手刻み技術を持つ建築会社のコーポレートサイト。職人の技術力と現代的なデザインを融合し、理想の住まいづくりを提案。",
-    image: "/images/projects/minoken/minoken-gallery.jpg",
-    // Added slideshow images for Minoken - gallery image displayed first
+    image: "/images/projects/minoken/minoken-hero.jpg",
+    // Added slideshow images for Minoken - hero image displayed first
     images: [
-      "/images/projects/minoken/minoken-gallery.jpg",
       "/images/projects/minoken/minoken-hero.jpg",
+      "/images/projects/minoken/minoken-gallery.jpg",
       "/images/projects/minoken/minoken-craftsmanship.jpg",
       "/images/projects/minoken/minoken-interior.jpg",
     ],
