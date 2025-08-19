@@ -77,8 +77,9 @@ export default function ServicesCTA() {
         </motion.div>
       </div>
 
+      {/* Main services */}
       <motion.div
-        className="flex flex-wrap gap-3 justify-center"
+        className="flex flex-wrap gap-3 justify-center mb-8"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -101,13 +102,32 @@ export default function ServicesCTA() {
             </Button>
           </Link>
         ))}
+      </motion.div>
+
+      {/* Separator and Service List link */}
+      <motion.div
+        className="flex flex-col items-center gap-4"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        variants={fadeIn}
+      >
+        <div className="flex items-center gap-4 w-full max-w-md">
+          <div className="flex-1 h-px bg-neutral-300 dark:bg-neutral-700"></div>
+          <span className="text-sm text-neutral-500 dark:text-neutral-400">または</span>
+          <div className="flex-1 h-px bg-neutral-300 dark:bg-neutral-700"></div>
+        </div>
+        
         <Link href="/services">
           <Button
-            variant="outline"
-            className="rounded-full px-6 py-4 text-base border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-800"
+            variant="ghost"
+            className="rounded-full px-8 py-4 text-base text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 group relative"
             onClick={() => trackEvent("cta_click", { location: "home_services_section", label: "/services" })}
           >
-            サービス一覧
+            <span className="relative z-10">すべてのサービスを見る</span>
+            <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 relative z-10" />
+            <div className="absolute inset-0 rounded-full border-2 border-dashed border-neutral-400 dark:border-neutral-600 opacity-50"></div>
           </Button>
         </Link>
       </motion.div>
