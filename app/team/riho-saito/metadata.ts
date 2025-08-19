@@ -5,7 +5,7 @@ const description =
   "LEXIA経理担当・齋藤李保｜会社の資金管理と請求業務を担い、安定運営を支える経理スペシャリスト"
 const title = "齋藤李保 | LEXIA経理"
 const url = `${SITE_URL.replace(/\/$/, "")}/team/riho-saito`
-const image = `${SITE_URL.replace(/\/$/, "")}/og/og-image.png`
+const image = `${SITE_URL.replace(/\/$/, "")}/images/riho-saito-profile.webp`
 
 export const metadata: Metadata = {
   title,
