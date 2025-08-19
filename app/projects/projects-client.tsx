@@ -11,6 +11,7 @@ import Link from "next/link"
 import Breadcrumbs from "@/components/breadcrumbs"
 import Image from "next/image"
 import { projectsData } from "@/lib/projects-data"
+import { ImageSlideshow } from "@/components/ui/image-slideshow"
 
 interface Project {
   id: string
@@ -18,6 +19,7 @@ interface Project {
   title: string
   description: string
   image: string
+  images?: string[]
   categories: string[]
   featured: boolean
   year: string
@@ -239,19 +241,28 @@ export default function ProjectsClient() {
                           viewMode === "list" ? "w-1/3 aspect-video" : "aspect-video"
                         }`}
                       >
-                        <Image
-                          src={project.image || "/placeholder.jpg"}
-                          alt={project.title}
-                          fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
+                        {project.images && project.images.length > 1 ? (
+                          <ImageSlideshow
+                            images={project.images}
+                            alt={project.title}
+                            className="group-hover:scale-110 transition-transform duration-500"
+                            interval={4000}
+                          />
+                        ) : (
+                          <Image
+                            src={project.image || "/placeholder.jpg"}
+                            alt={project.title}
+                            fill
+                            className="object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                        )}
                         {project.featured && (
-                          <Badge className="absolute top-4 left-4 bg-yellow-500 text-yellow-900 hover:bg-yellow-500">
+                          <Badge className="absolute top-4 left-4 bg-yellow-500 text-yellow-900 hover:bg-yellow-500 z-10">
                             注目
                           </Badge>
                         )}
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                        <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                           <div className="bg-white dark:bg-neutral-800 rounded-full p-2">
                             <ExternalLink className="h-4 w-4 text-neutral-900 dark:text-neutral-100" />
                           </div>
