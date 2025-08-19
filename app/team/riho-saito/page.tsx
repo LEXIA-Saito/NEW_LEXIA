@@ -16,7 +16,7 @@ export default function RihoSaitoProfile() {
         <div className="container mx-auto px-4 py-24 md:py-32">
           <div className="text-center mb-12">
             <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
-              <Image src="/placeholder-user.jpg" alt="齋藤李保" fill className="object-cover" />
+              <Image src="/images/riho-saito-profile.webp" alt="齋藤李保" fill className="object-cover" />
             </div>
             <Chip className="mb-2">経理</Chip>
             <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4">
@@ -41,7 +41,7 @@ export default function RihoSaitoProfile() {
             name: "齋藤李保",
             jobTitle: "経理",
             url: `${SITE_URL.replace(/\/$/, "")}/team/riho-saito`,
-            image: `${SITE_URL.replace(/\/$/, "")}/placeholder-user.jpg`,
+            image: `${SITE_URL.replace(/\/$/, "")}/images/riho-saito-profile.webp`,
             worksFor: { "@type": "Organization", name: "LEXIA", url: SITE_URL },
           }),
         }}
