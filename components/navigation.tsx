@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Instagram, Linkedin, Share2 } from "lucide-react"
+import { Menu, X, Instagram, Linkedin, Share2, Phone, Mail } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LOGO_URL, LOGO_WHITE_URL, LOGO_TEXT_URL, LOGO_TEXT_WHITE_URL } from "@/lib/config"
 
@@ -50,6 +50,25 @@ export default function Navigation() {
   const [activeSection, setActiveSection] = useState("hero")
   const [snsOpen, setSnsOpen] = useState(false)
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
+
+  // GA4 event helper (fires only if gtag exists)
+  const gaEvent = (name: string, params: Record<string, any> = {}) => {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      ;(window as any).gtag("event", name, params)
+    }
+  }
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [mobileMenuOpen])
 
   // Map route paths to homepage section ids for active indicator sync
   const routeToSection: Record<string, string> = {
@@ -263,12 +282,37 @@ export default function Navigation() {
               >
                 <Instagram className="h-5 w-5" />
               </motion.a>
+              <motion.a
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.5 }}
+                href="tel:+819017423456"
+                aria-label="今すぐ電話"
+                className="text-neutral-900 dark:text-neutral-100"
+                onClick={() => gaEvent("tel_click", { location: "header", phone: "09017423456" })}
+              >
+                <Phone className="h-5 w-5" />
+              </motion.a>
+              <motion.a
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.55 }}
+                href="/contact"
+                aria-label="お問い合わせ"
+                className="text-neutral-900 dark:text-neutral-100"
+                onClick={() => gaEvent("contact_click", { location: "header", type: "form" })}
+              >
+                <Mail className="h-5 w-5" />
+              </motion.a>
               <motion.button
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.6 }}
                 className="text-neutral-900 dark:text-neutral-100"
-                onClick={() => setMobileMenuOpen(true)}
+                onClick={() => {
+                  setMobileMenuOpen(true)
+                  gaEvent("menu_open", { location: "header" })
+                }}
                 aria-label="メニューを開く"
               >
                 <Menu />
@@ -328,7 +372,10 @@ export default function Navigation() {
           >
             <div className="flex justify-end p-4">
               <button
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => {
+                  setMobileMenuOpen(false)
+                  gaEvent("menu_close", { location: "drawer" })
+                }}
                 className="text-neutral-900 dark:text-neutral-100"
                 aria-label="メニューを閉じる"
               >
@@ -336,8 +383,46 @@ export default function Navigation() {
               </button>
             </div>
 
-            <nav className="flex flex-col items-center justify-center h-full">
-              <ul className="space-y-8 text-center">
+            <nav className="flex flex-col items-center justify-between h-full pt-4 pb-28">
+              {/* Logo + Tagline */}
+              <div className="flex flex-col items-center px-6">
+                <div className="flex items-center">
+                  <Image
+                    src={LOGO_URL || "/placeholder.svg"}
+                    alt="LEXIA"
+                    width={140}
+                    height={28}
+                    className="h-7 w-auto block dark:hidden"
+                  />
+                  <Image
+                    src={LOGO_TEXT_URL || "/placeholder.svg"}
+                    alt="LEXIA text"
+                    width={140}
+                    height={28}
+                    className="h-7 w-auto ml-2 block dark:hidden"
+                  />
+                  <Image
+                    src={LOGO_WHITE_URL || "/placeholder.svg"}
+                    alt="LEXIA"
+                    width={140}
+                    height={28}
+                    className="h-7 w-auto hidden dark:block"
+                  />
+                  <Image
+                    src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
+                    alt="LEXIA text"
+                    width={140}
+                    height={28}
+                    className="h-7 w-auto ml-2 hidden dark:block"
+                  />
+                </div>
+                <p className="mt-4 text-base text-neutral-600 dark:text-neutral-400 text-center px-2">
+                  価値を伝わるカタチに
+                </p>
+              </div>
+
+              {/* Navigation */}
+              <ul className="space-y-8 text-center mt-8">
                 {navItems.map((item, index) => (
                   <motion.li
                     key={item.name}
@@ -352,13 +437,18 @@ export default function Navigation() {
                           ? "text-neutral-900 dark:text-neutral-100"
                           : "text-neutral-500 dark:text-neutral-400"
                       }`}
-                      onClick={(e) => handleNavigation(e, item.href)}
+                      onClick={(e) => {
+                        gaEvent("nav_click", { item: item.name, href: item.href, location: "mobile_menu" })
+                        handleNavigation(e, item.href)
+                      }}
                     >
                       {item.name}
                     </Link>
                   </motion.li>
                 ))}
               </ul>
+
+              {/* SNS */}
               <div className="mt-8">
                 <Link
                   href="https://www.instagram.com/lexia_web/"
@@ -380,6 +470,37 @@ export default function Navigation() {
                 </Link>
               </div>
             </nav>
+
+            {/* Bottom fixed CTA bar */}
+            <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white/95 dark:bg-neutral-900/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:dark:bg-neutral-900/60">
+              <div className="container mx-auto px-4 py-3 flex gap-3 items-center" style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 12px)" }}>
+                <a
+                  href="tel:+819017423456"
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 dark:border-neutral-700 py-3 text-base text-neutral-900 dark:text-neutral-100"
+                  aria-label="今すぐ電話する"
+                  onClick={() => gaEvent("tel_click", { location: "drawer_bottom", phone: "09017423456" })}
+                >
+                  <Phone className="h-5 w-5" /> 今すぐ電話
+                </a>
+                <Link
+                  href="/contact"
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 py-3 text-base"
+                  aria-label="お問い合わせ"
+                  onClick={() => gaEvent("contact_click", { location: "drawer_bottom", type: "form" })}
+                >
+                  <Mail className="h-5 w-5" /> お問い合わせ
+                </Link>
+              </div>
+              <div className="container mx-auto px-4 pb-3 -mt-2 text-center">
+                <a
+                  href="mailto:lexia0web@gmail.com"
+                  className="text-sm text-neutral-500 dark:text-neutral-400 underline"
+                  onClick={() => gaEvent("contact_click", { location: "drawer_bottom", type: "email" })}
+                >
+                  メールで問い合わせ（lexia0web@gmail.com）
+                </a>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
