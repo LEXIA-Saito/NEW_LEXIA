@@ -2,11 +2,10 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
 import OurProcess from "@/components/sections/OurProcess"
+import ServicesWebHero from "@/components/sections/services-web-hero"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
-import Image from "next/image"
 import Link from "next/link"
-import ServicesWebHeroCTA from "@/components/cta/services-web-hero-cta"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 export const metadata: Metadata = {
@@ -83,34 +82,8 @@ export default function WebServicePage() {
     <>
       <Navigation />
       <main className="min-h-screen bg-white dark:bg-neutral-900">
-        {/* Fullscreen Hero */}
-        <section className="relative min-h-[100svh] w-full">
-          {/* Background image */}
-          <Image
-            src="/images/web-services-hero.png"
-            alt="LEXIAのWeb制作サービス。レスポンシブ対応の美しいサイトを構築"
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20 dark:from-black/75 dark:via-black/50 dark:to-black/30" />
-          {/* Content */}
-          <div className="relative z-10 flex h-full items-center justify-center">
-            <div className="container mx-auto px-4 w-full pt-20 md:pt-24">
-              <div className="mx-auto max-w-3xl text-center rounded-xl bg-black/30 backdrop-blur-sm p-6 md:p-8 ring-1 ring-white/10 shadow-lg">
-                <h1 className="text-4xl md:text-6xl font-light tracking-tight text-white mb-4">
-                  WEB制作
-                </h1>
-                <p className="text-neutral-100/95 md:text-xl mb-8">
-                  コーポレート、EC、ランディング、採用、キャンペーンまで。Next.jsを活用し、成果につながるサイトをスピーディに構築します。
-                </p>
-                <ServicesWebHeroCTA />
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Parallax Hero Section */}
+        <ServicesWebHero />
 
         <div className="container mx-auto px-4 py-16 md:py-24 max-w-3xl">
           <div className="mb-2">
