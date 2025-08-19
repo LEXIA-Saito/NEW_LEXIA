@@ -38,7 +38,7 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
-    id: "0",
+    id: "1",
     slug: "jalife-aichi",
     title: "株式会社JA.life様 物件検索サイト",
     description:
@@ -79,7 +79,47 @@ export const projectsData: Project[] = [
     techStack: ["Vue.js", "Laravel", "MySQL", "Elasticsearch", "Redis"],
   },
   {
-    id: "1",
+    id: "2",
+    slug: "minoken",
+    title: "みの建築様 コーポレートサイト",
+    description:
+      "伝統的な手刻み技術を持つ建築会社のコーポレートサイト。職人の技術力と現代的なデザインを融合し、理想の住まいづくりを提案。",
+    image: "/images/projects/minoken/minoken-hero.jpg",
+    // Added slideshow images for Minoken - hero image displayed first
+    images: [
+      "/images/projects/minoken/minoken-hero.jpg",
+      "/images/projects/minoken/minoken-gallery.jpg",
+      "/images/projects/minoken/minoken-craftsmanship.jpg",
+      "/images/projects/minoken/minoken-interior.jpg",
+    ],
+    categories: ["website"],
+    featured: true,
+    year: "2025",
+    tags: ["企業サイト", "伝統×モダン", "職人技術", "施工事例"],
+    location: "愛知県",
+    client: "みの建築様",
+    industry: "建築・リフォーム",
+    services: ["コーポレートサイト制作", "写真撮影", "動画制作"],
+    challenges: ["伝統技術の価値を分かりやすく伝える", "職人技術の可視化", "若い世代への訴求力向上"],
+    solutions: {
+      design: ["施工過程を見せるギャラリー", "職人の手仕事を伝える写真", "温かみのあるビジュアル表現"],
+      tech: ["高速表示の実現", "モバイル最適化", "問い合わせフォーム改善"],
+      growth: ["施工事例の充実", "お客様の声の掲載", "SEO対策"],
+    },
+    kpi: [
+      { metric: "問い合わせ", value: "+250%", improvement: "設計相談増加", icon: "🏗️" },
+      { metric: "滞在時間", value: "+400%", improvement: "サイト滞在時間延長", icon: "⏰" },
+      { metric: "新規顧客", value: "+180%", improvement: "若い世代からの相談増", icon: "👥" },
+    ],
+    testimonial: {
+      text: "私たちの技術と想いを的確に表現していただき、お客様からの信頼度が格段に向上しました。手刻みの価値を多くの方に伝えることができています。",
+      author: "みの建築 代表",
+      rating: 5,
+    },
+    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Sanity CMS", "Vercel"],
+  },
+  {
+    id: "3",
     slug: "asaoka-pack",
     title: "有限会社朝岡パック様 公式ウェブサイト",
     description:
@@ -119,7 +159,7 @@ export const projectsData: Project[] = [
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "Google Analytics"],
   },
   {
-    id: "2",
+    id: "4",
     slug: "chubu-kaihatsu",
     title: "中部開発株式会社様 コーポレートサイト",
     description:
@@ -160,7 +200,7 @@ export const projectsData: Project[] = [
     techStack: ["React", "Node.js", "PostgreSQL", "AWS", "Stripe"],
   },
   {
-    id: "3",
+    id: "5",
     slug: "nakamura-kenko",
     title: "中村健康院様 予約サイト",
     description:
@@ -192,41 +232,9 @@ export const projectsData: Project[] = [
     },
     techStack: ["WordPress", "Coubic API", "PHP", "MySQL", "jQuery"],
   },
+
   {
-    id: "4",
-    slug: "minoken",
-    title: "みの建築様 ブランドサイト",
-    description:
-      "伝統的な手刻み技術を持つ建築会社のブランドサイト。伝統×モダンの融合で、職人技術の価値を現代に伝える。",
-    image: "/placeholder.svg?height=400&width=600&text=みの建築",
-    categories: ["website"],
-    featured: true,
-    year: "2025",
-    tags: ["3D表現", "伝統×モダン", "動画コンテンツ", "職人技術"],
-    location: "愛知県",
-    client: "みの建築様",
-    industry: "建築・リフォーム",
-    services: ["ブランドサイト", "3D表現", "動画制作"],
-    challenges: ["伝統技術の現代的な表現", "職人技術の価値の可視化", "若い世代への訴求力不足"],
-    solutions: {
-      design: ["3D技術による工程可視化", "職人インタビュー動画", "モダンなビジュアル表現"],
-      tech: ["Three.js 3D表現", "パララックススクロール", "動画最適化"],
-      growth: ["Instagram連携", "施工事例の充実", "SEO対策"],
-    },
-    kpi: [
-      { metric: "問い合わせ", value: "+250%", improvement: "設計相談増加", icon: "🏗️" },
-      { metric: "滞在時間", value: "+400%", improvement: "サイト滞在時間延長", icon: "⏰" },
-      { metric: "SNSフォロワー", value: "+180%", improvement: "Instagram フォロワー増", icon: "📸" },
-    ],
-    testimonial: {
-      text: "私たちの技術を現代的に表現していただき、若いお客様からの相談が格段に増えました。伝統技術の価値を再認識できました。",
-      author: "みの建築 代表",
-      rating: 5,
-    },
-    techStack: ["Next.js", "Three.js", "Framer Motion", "Sanity CMS", "Vercel"],
-  },
-  {
-    id: "5",
+    id: "6",
     slug: "namix",
     title: "Namix Lure Works様 パッケージデザイン",
     description:
