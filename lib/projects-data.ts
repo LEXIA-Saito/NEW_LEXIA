@@ -84,11 +84,11 @@ export const projectsData: Project[] = [
     title: "みの建築様 コーポレートサイト",
     description:
       "伝統的な手刻み技術を持つ建築会社のコーポレートサイト。職人の技術力と現代的なデザインを融合し、理想の住まいづくりを提案。",
-    image: "/images/projects/minoken/minoken-hero.jpg",
-    // Added slideshow images for Minoken - hero image displayed first
+    image: "/images/projects/minoken/minoken-gallery.jpg",
+    // Added slideshow images for Minoken - gallery image displayed first
     images: [
-      "/images/projects/minoken/minoken-hero.jpg",
       "/images/projects/minoken/minoken-gallery.jpg",
+      "/images/projects/minoken/minoken-hero.jpg",
       "/images/projects/minoken/minoken-craftsmanship.jpg",
       "/images/projects/minoken/minoken-interior.jpg",
     ],
@@ -124,13 +124,13 @@ export const projectsData: Project[] = [
     title: "中村健康院様 コーポレートサイト・予約システム",
     description:
       "地域密着型整体院のコーポレートサイト。高齢者にも使いやすい大きな文字とボタンのUI/UX設計。Coubic連携で24時間オンライン予約を実現。",
-    image: "/images/projects/nakamura-kenko/nakamura-hero.jpg",
-    // Added slideshow images for Nakamura Kenko - hero image displayed first
+    image: "/images/projects/nakamura-kenko/nakamura-top.jpg",
+    // Added slideshow images for Nakamura Kenko - top page image displayed first
     images: [
+      "/images/projects/nakamura-kenko/nakamura-top.jpg",
       "/images/projects/nakamura-kenko/nakamura-hero.jpg",
       "/images/projects/nakamura-kenko/nakamura-menu.jpg",
       "/images/projects/nakamura-kenko/nakamura-detail.jpg",
-      "/images/projects/nakamura-kenko/nakamura-top.jpg",
     ],
     categories: ["website", "system"],
     featured: true,
