@@ -32,9 +32,52 @@ export interface Project {
     rating: number
   }
   techStack?: string[]
+  url?: string
+  isComingSoon?: boolean
 }
 
 export const projectsData: Project[] = [
+  {
+    id: "0",
+    slug: "jalife-aichi",
+    title: "株式会社JA.life様 物件検索サイト",
+    description:
+      "愛知県の地域密着型不動産会社の物件検索サイト。高速なモバイル表示と直感的な検索機能で、理想の物件探しをサポート。",
+    image: "/images/projects/ja-life/ja-life-hero.jpg",
+    // Added slideshow images for JA.life - hero image displayed first
+    images: [
+      "/images/projects/ja-life/ja-life-hero.jpg",
+      "/images/projects/ja-life/ja-life-project.jpg",
+      "/images/projects/ja-life/ja-life-property.jpg",
+      "/images/projects/ja-life/ja-life-news.jpg",
+    ],
+    categories: ["system", "website"],
+    featured: true,
+    year: "2024",
+    tags: ["物件検索", "高速検索", "モバイル最適化", "地図連動"],
+    location: "愛知県",
+    client: "株式会社JA.life様",
+    url: "https://jalife-aichi.com",
+    industry: "不動産",
+    services: ["物件検索システム", "管理画面開発", "API開発"],
+    challenges: ["大量の物件データの高速検索", "モバイルでの使いやすさ", "リアルタイム在庫管理"],
+    solutions: {
+      design: ["直感的な検索UI", "地図連動表示", "お気に入り機能"],
+      tech: ["Elasticsearch導入", "PWA対応", "リアルタイム同期"],
+      growth: ["SEO対策", "物件アラート機能", "SNSシェア機能"],
+    },
+    kpi: [
+      { metric: "検索速度", value: "0.3秒", improvement: "検索レスポンス向上", icon: "⚡" },
+      { metric: "モバイル利用", value: "+180%", improvement: "スマホ利用者増加", icon: "📱" },
+      { metric: "成約率", value: "+45%", improvement: "物件成約率向上", icon: "🏠" },
+    ],
+    testimonial: {
+      text: "検索機能が格段に向上し、お客様から「使いやすい」との声を多数いただいています。成約率も大幅に改善しました。",
+      author: "JA.life 営業マネージャー",
+      rating: 5,
+    },
+    techStack: ["Vue.js", "Laravel", "MySQL", "Elasticsearch", "Redis"],
+  },
   {
     id: "1",
     slug: "asaoka-pack",
@@ -118,39 +161,6 @@ export const projectsData: Project[] = [
   },
   {
     id: "3",
-    slug: "jalife-aichi",
-    title: "株式会社JA.life様 物件検索サイト",
-    description:
-      "愛知県の地域密着型不動産会社の物件検索サイト。高速なモバイル表示と直感的な検索機能で、理想の物件探しをサポート。",
-    image: "/placeholder.svg?height=400&width=600&text=JA.life",
-    categories: ["system"],
-    featured: false,
-    year: "2024",
-    tags: ["物件検索", "高速検索", "モバイル最適化", "地図連動"],
-    location: "愛知県",
-    client: "株式会社JA.life様",
-    industry: "不動産",
-    services: ["物件検索システム", "管理画面開発", "API開発"],
-    challenges: ["大量の物件データの高速検索", "モバイルでの使いやすさ", "リアルタイム在庫管理"],
-    solutions: {
-      design: ["直感的な検索UI", "地図連動表示", "お気に入り機能"],
-      tech: ["Elasticsearch導入", "PWA対応", "リアルタイム同期"],
-      growth: ["SEO対策", "物件アラート機能", "SNSシェア機能"],
-    },
-    kpi: [
-      { metric: "検索速度", value: "0.3秒", improvement: "検索レスポンス向上", icon: "⚡" },
-      { metric: "モバイル利用", value: "+180%", improvement: "スマホ利用者増加", icon: "📱" },
-      { metric: "成約率", value: "+45%", improvement: "物件成約率向上", icon: "🏠" },
-    ],
-    testimonial: {
-      text: "検索機能が格段に向上し、お客様から「使いやすい」との声を多数いただいています。成約率も大幅に改善しました。",
-      author: "JA.life 営業マネージャー",
-      rating: 4,
-    },
-    techStack: ["Vue.js", "Laravel", "MySQL", "Elasticsearch", "Redis"],
-  },
-  {
-    id: "4",
     slug: "nakamura-kenko",
     title: "中村健康院様 予約サイト",
     description:
@@ -183,7 +193,7 @@ export const projectsData: Project[] = [
     techStack: ["WordPress", "Coubic API", "PHP", "MySQL", "jQuery"],
   },
   {
-    id: "5",
+    id: "4",
     slug: "minoken",
     title: "みの建築様 ブランドサイト",
     description:
@@ -216,7 +226,7 @@ export const projectsData: Project[] = [
     techStack: ["Next.js", "Three.js", "Framer Motion", "Sanity CMS", "Vercel"],
   },
   {
-    id: "6",
+    id: "5",
     slug: "namix",
     title: "Namix Lure Works様 パッケージデザイン",
     description:
