@@ -1,20 +1,56 @@
 import { NextResponse } from "next/server"
 import { Resend } from "resend"
-import { config, validateConfig } from "@/lib/config"
+import { getSecureConfig, validateSecureConfig } from "@/lib/secure-config"
+import { contactRateLimiter, getClientIdentifier, validateContactData } from "@/lib/rate-limiter"
 
 export async function POST(req: Request) {
-  // Use runtime configuration instead of environment variables
-  const configValidation = validateConfig()
-  if (!configValidation.isValid) {
-    console.error("❌ Configuration validation failed:", configValidation.issues)
+  // Security: Rate limiting
+  const clientId = getClientIdentifier(req)
+  const rateLimitResult = contactRateLimiter.isAllowed(clientId)
+  
+  if (!rateLimitResult.allowed) {
     return NextResponse.json({ 
-      error: "サーバー設定エラー",
-      details: process.env.NODE_ENV === 'development' ? configValidation.issues : undefined
+      error: "送信回数の制限に達しました。しばらく時間をおいてから再度お試しください。" 
+    }, { status: 429 })
+  }
+
+  // Use secure configuration instead of basic config
+  let config
+  try {
+    config = getSecureConfig()
+    const validation = validateSecureConfig(config)
+    if (!validation.isValid) {
+      console.error("❌ Secure configuration validation failed:", validation.issues)
+      return NextResponse.json({ 
+        error: "サーバー設定エラー"
+      }, { status: 500 })
+    }
+  } catch (error) {
+    console.error("❌ Failed to load secure configuration:", error)
+    return NextResponse.json({ 
+      error: "設定の読み込みに失敗しました" 
     }, { status: 500 })
   }
 
   const resend = new Resend(config.resend.apiKey)
-  const data = await req.json()
+  let data
+  try {
+    data = await req.json()
+  } catch (error) {
+    return NextResponse.json({ 
+      error: "リクエストデータの形式が正しくありません" 
+    }, { status: 400 })
+  }
+
+  // Security: Validate contact form data
+  const dataValidation = validateContactData(data)
+  if (!dataValidation.valid) {
+    return NextResponse.json({ 
+      error: "入力データに問題があります",
+      details: dataValidation.errors
+    }, { status: 400 })
+  }
+
   const {
     name,
     company,
@@ -72,8 +108,19 @@ URL: ${url}
     await resend.emails.send({
       from: config.resend.from,
       to: [email],
-      subject: "お問い合わせありがとうございます",
-      text: "お問い合わせありがとうございます。内容を確認し、担当者よりご連絡いたします。",
+      subject: "お問い合わせありがとうございます - LEXIA",
+      text: `${name} 様
+
+この度は、LEXIAにお問い合わせいただき、誠にありがとうございます。
+
+お送りいただいた内容を確認いたしました。
+担当者より、2営業日以内にご連絡させていただきます。
+
+今後ともLEXIAをよろしくお願いいたします。
+
+---
+LEXIA チーム
+Email: lexia0web@gmail.com`,
     })
 
     console.log("✅ Emails sent successfully (runtime-config)")
@@ -82,5 +129,9 @@ URL: ${url}
     return NextResponse.json({ error: "メール送信に失敗しました" }, { status: 500 })
   }
 
-  return NextResponse.json({ success: true, source: "runtime-config" })
+  return NextResponse.json({ 
+    success: true, 
+    source: "secure-config-v1",
+    remaining: rateLimitResult.remaining
+  })
 }

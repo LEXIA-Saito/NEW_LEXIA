@@ -4,13 +4,12 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   
-  // Runtime configuration for API keys
+  // Runtime configuration
   publicRuntimeConfig: {
-    // Don't put sensitive data here - this is client-accessible
+    // Public configuration - no sensitive data
   },
   serverRuntimeConfig: {
-    // Server-side only configuration
-    resendApiKey: process.env.RESEND_API_KEY || 're_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ',
+    // Server-side configuration uses secure-config.ts
   },
   
   // Ensure three.js modules are properly transpiled and served with the correct MIME type
@@ -45,6 +44,18 @@ const nextConfig = {
             key: 'X-XSS-Protection',
             value: '1; mode=block',
           },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.resend.com https://vercel.live https://www.google-analytics.com; frame-ancestors 'none';",
+          },
         ],
       },
       {
@@ -52,7 +63,19 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, s-maxage=1, stale-while-revalidate=59',
+            value: 'no-store, no-cache, must-revalidate, private',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow, noarchive, nosnippet',
           },
         ],
       },
