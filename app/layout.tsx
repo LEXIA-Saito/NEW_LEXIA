@@ -97,13 +97,6 @@ export default function RootLayout({
   return (
     <html lang="ja" className="scroll-smooth">
       <head>
-        <link
-          rel="preload"
-          href="/_next/static/media/noto-sans-jp-latin-400-normal.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
         <link rel="stylesheet" href="/deferred.css" />
       </head>
       <body className={`${notoSansJP.className} antialiased`}>
