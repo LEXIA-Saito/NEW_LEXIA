@@ -12,8 +12,13 @@ const nextConfig = {
     // Server-side configuration uses secure-config.ts
   },
   
+  // Build optimizations for faster deployments
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  
   // Ensure three.js modules are properly transpiled and served with the correct MIME type
-  transpilePackages: ["three", "@react-three/fiber"],
+  // transpilePackages: ["three", "@react-three/fiber"], // Removed - not using three.js
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -54,7 +59,7 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.resend.com https://vercel.live https://www.google-analytics.com; frame-ancestors 'none';",
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; media-src 'self' https://*.vercel-storage.com; connect-src 'self' https://api.resend.com https://vercel.live https://www.google-analytics.com; frame-ancestors 'none';",
           },
         ],
       },
@@ -110,17 +115,26 @@ const nextConfig = {
   },
   
   webpack(config) {
-    // Bundle all three.js related modules together
+    // Optimize build performance
     config.optimization = {
       ...config.optimization,
       splitChunks: {
         ...config.optimization?.splitChunks,
+        chunks: 'all',
         cacheGroups: {
           ...(config.optimization?.splitChunks?.cacheGroups ?? {}),
-          three: {
-            test: /[\\/]node_modules[\\/](three|@react-three)[\\/]/,
-            name: 'three',
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
             chunks: 'all',
+            priority: 10,
+          },
+          common: {
+            name: 'common',
+            minChunks: 2,
+            chunks: 'all',
+            priority: 5,
+            reuseExistingChunk: true,
           },
         },
       },

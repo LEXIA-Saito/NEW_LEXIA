@@ -53,6 +53,20 @@ export default function ServicesCTA() {
             playsInline
             preload="metadata"
             className="object-cover w-full h-full"
+            onError={(e) => {
+              console.warn("Video failed to load, hiding video element");
+              (e.target as HTMLVideoElement).style.display = 'none';
+            }}
+          />
+          {/* Fallback background image in case video fails to load */}
+          <div 
+            className="absolute inset-0 bg-gradient-to-br from-neutral-800 via-neutral-700 to-neutral-900"
+            style={{
+              backgroundImage: 'url(/og/og-image.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              opacity: 0.7
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
         </motion.div>
