@@ -91,7 +91,7 @@ ${additionalRequests || '未記入'}`
   try {
     // Send email to LEXIA
     await resend.emails.send({
-      from: "LEXIA <noreply@lexia.com>",
+      from: "LEXIA <noreply@lexia-hp.com>",
       to: ["lexia0web@gmail.com"],
       replyTo: email,
       subject: "【ヒヤリングシート】新しいホームページ制作のご相談",
@@ -100,7 +100,7 @@ ${additionalRequests || '未記入'}`
 
     // Send confirmation email to customer
     await resend.emails.send({
-      from: "LEXIA <noreply@lexia.com>",
+      from: "LEXIA <noreply@lexia-hp.com>",
       to: [email],
       subject: "ヒヤリングシートのご送信ありがとうございます",
       text: `${name} 様

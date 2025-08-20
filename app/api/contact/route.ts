@@ -34,9 +34,9 @@ URL: ${url}
 
   try {
     await resend.emails.send({
-      from: "LEXIA <noreply@lexia.com>",
+      from: "LEXIA <noreply@lexia-hp.com>",
       to: ["lexia0web@gmail.com"],
-      reply_to: email,
+      replyTo: email,
       subject: "新しいお問い合わせ",
       text,
       attachments: attachment ? [
@@ -48,7 +48,7 @@ URL: ${url}
     })
 
     await resend.emails.send({
-      from: "LEXIA <noreply@lexia.com>",
+      from: "LEXIA <noreply@lexia-hp.com>",
       to: [email],
       subject: "お問い合わせありがとうございます",
       text: "お問い合わせありがとうございます。内容を確認し、担当者よりご連絡いたします。",
