@@ -7,6 +7,7 @@ module.exports = {
     env: {
       NODE_ENV: 'development',
       PORT: 3000
+      // RESEND_API_KEY is loaded from .env.local in development
     },
     max_memory_restart: '1G',
     instances: 1,
