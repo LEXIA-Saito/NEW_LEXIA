@@ -21,10 +21,8 @@ export default function InquiryForm() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const purposes = watch("purposes") || []
-  const showOtherPurpose = purposes.includes("other")
-  const contents = watch("contents") || []
-  const showOtherContent = contents.includes("other")
+  const purposes = watch("purposes") || {}
+  const contents = watch("contents") || {}
 
   const onSubmit = async (data: any) => {
     setSubmitting(true)
@@ -253,9 +251,6 @@ export default function InquiryForm() {
                 その他
               </label>
             </div>
-            {showOtherContent && (
-              <Input className="mt-2" placeholder="その他の内容" {...register("otherContent")}/>
-            )}
             {errors.contents && <p className="text-red-500 text-sm mt-1">必須項目です</p>}
           </div>
 

@@ -31,11 +31,11 @@ export async function POST(req: Request) {
     additionalRequests,
   } = data
 
-  // Format purposes array
-  const purposesText = purposes && purposes.length > 0 ? purposes.join(', ') : ''
+  // Format purposes object to array
+  const purposesArray = purposes ? Object.keys(purposes).filter(key => purposes[key]) : []
   
-  // Format contents array
-  const contentsText = contents && contents.length > 0 ? contents.join(', ') : ''
+  // Format contents object to array  
+  const contentsArray = contents ? Object.keys(contents).filter(key => contents[key]) : []
   
   // Reference sites formatting
   const referenceSites = [
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
 
 ■ ホームページについて
 【目的・ゴール】
-選択項目: ${purposesText}
+選択項目: ${purposesArray.join(', ')}
 詳細: ${purposeDetails || '未記入'}
 
 【ターゲット層】
@@ -67,7 +67,7 @@ ${targetAudience || '未記入'}
 ${currentChallenges || '未記入'}
 
 【掲載したい主な内容・必要な機能】
-選択項目: ${contentsText}
+選択項目: ${contentsArray.join(', ')}
 ${otherContent ? `その他詳細: ${otherContent}` : ''}
 
 【デザインのイメージ・雰囲気】
@@ -93,7 +93,7 @@ ${additionalRequests || '未記入'}`
     await resend.emails.send({
       from: "LEXIA <noreply@lexia.com>",
       to: ["lexia0web@gmail.com"],
-      reply_to: email,
+      replyTo: email,
       subject: "【ヒヤリングシート】新しいホームページ制作のご相談",
       text,
     })
