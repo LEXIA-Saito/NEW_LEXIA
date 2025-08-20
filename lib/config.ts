@@ -1,12 +1,60 @@
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://lexia-hp.com/";
+// Runtime configuration
+export const config = {
+  resend: {
+    apiKey: process.env.RESEND_API_KEY || getResendApiKey(),
+    from: "LEXIA <noreply@lexia-hp.com>",
+    to: "lexia0web@gmail.com"
+  },
+  site: {
+    url: process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : process.env.SITE_URL || 'http://localhost:3000'
+  }
+}
 
-export const LOGO_URL =
-  "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/logo/new_lexia_black_logo.svg";
-export const LOGO_WHITE_URL =
-  "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/logo/new_lexia_white_logo.svg";
+function getResendApiKey(): string {
+  // Method 1: Base64 encoded key (obfuscation, not security)
+  const encodedKey = "cmVfQ1dpczJKQV9FZTQ4bXhncGt0NTVUcXg5U254TGpMcFo="
+  
+  try {
+    const decoded = Buffer.from(encodedKey, 'base64').toString('utf-8')
+    if (decoded.startsWith('re_')) {
+      return decoded
+    }
+  } catch (error) {
+    console.warn('Failed to decode API key')
+  }
+  
+  // Method 2: Environment-based fallback
+  if (process.env.NODE_ENV === 'production') {
+    // Production key directly embedded (if acceptable for your security model)
+    return 're_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ'
+  }
+  
+  // Method 3: External service/API call (see below)
+  return fetchApiKeyFromExternalService()
+}
 
-export const LOGO_TEXT_URL =
-  "https://vvst6vh5l5z4xytc.public.blob.vercel-storage.com/logo/logo_text_black.svg";
-export const LOGO_TEXT_WHITE_URL =
-  "https://vvst6vh5l5z4xytc.public.blob.vercel-storage.com/logo/logo_text_white.svg";
+function fetchApiKeyFromExternalService(): string {
+  // This would be implemented to fetch from your own secure API
+  // For now, return the key directly
+  return 're_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ'
+}
+
+// Utility to check if config is valid
+export function validateConfig() {
+  const issues = []
+  
+  if (!config.resend.apiKey || !config.resend.apiKey.startsWith('re_')) {
+    issues.push('Invalid or missing Resend API key')
+  }
+  
+  if (!config.resend.from.includes('@')) {
+    issues.push('Invalid from email address')
+  }
+  
+  return {
+    isValid: issues.length === 0,
+    issues
+  }
+}

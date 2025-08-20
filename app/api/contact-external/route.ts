@@ -1,19 +1,20 @@
 import { NextResponse } from "next/server"
 import { Resend } from "resend"
-import { config, validateConfig } from "@/lib/config"
+import { getExternalConfig } from "@/lib/external-config"
 
 export async function POST(req: Request) {
-  // Use runtime configuration instead of environment variables
-  const configValidation = validateConfig()
-  if (!configValidation.isValid) {
-    console.error("❌ Configuration validation failed:", configValidation.issues)
+  let externalConfig
+  
+  try {
+    externalConfig = await getExternalConfig()
+  } catch (error) {
+    console.error("Failed to load external configuration:", error)
     return NextResponse.json({ 
-      error: "サーバー設定エラー",
-      details: process.env.NODE_ENV === 'development' ? configValidation.issues : undefined
+      error: "設定の読み込みに失敗しました" 
     }, { status: 500 })
   }
 
-  const resend = new Resend(config.resend.apiKey)
+  const resend = new Resend(externalConfig.resendApiKey)
   const data = await req.json()
   const {
     name,
@@ -43,22 +44,22 @@ URL: ${url}
 詳細: ${details}
 希望連絡方法: ${preferredContact ? preferredContact.join(', ') : ''}`
 
-  console.log("📧 Sending contact form submission (runtime-config):", {
+  console.log("📧 Sending contact form submission (external-config):", {
     name,
     email,
     inquiryType,
     services: services.join(', ') + (otherService ? ` (${otherService})` : ''),
     timestamp: new Date().toISOString(),
-    configSource: 'runtime-config'
+    configSource: 'external-service'
   })
 
   try {
     // Send notification email to LEXIA
     await resend.emails.send({
-      from: config.resend.from,
-      to: [config.resend.to],
+      from: externalConfig.emailSettings.from,
+      to: [externalConfig.emailSettings.to],
       replyTo: email,
-      subject: "新しいお問い合わせ",
+      subject: "新しいお問い合わせ (External Config)",
       text,
       attachments: attachment ? [
         {
@@ -70,17 +71,17 @@ URL: ${url}
 
     // Send confirmation email to user
     await resend.emails.send({
-      from: config.resend.from,
+      from: externalConfig.emailSettings.from,
       to: [email],
       subject: "お問い合わせありがとうございます",
       text: "お問い合わせありがとうございます。内容を確認し、担当者よりご連絡いたします。",
     })
 
-    console.log("✅ Emails sent successfully (runtime-config)")
+    console.log("✅ Emails sent successfully (external-config)")
   } catch (e) {
-    console.error("❌ Email sending failed (runtime-config):", e)
+    console.error("❌ Email sending failed (external-config):", e)
     return NextResponse.json({ error: "メール送信に失敗しました" }, { status: 500 })
   }
 
-  return NextResponse.json({ success: true, source: "runtime-config" })
+  return NextResponse.json({ success: true, version: "external-config", source: "external-service" })
 }

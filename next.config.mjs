@@ -4,6 +4,15 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   
+  // Runtime configuration for API keys
+  publicRuntimeConfig: {
+    // Don't put sensitive data here - this is client-accessible
+  },
+  serverRuntimeConfig: {
+    // Server-side only configuration
+    resendApiKey: process.env.RESEND_API_KEY || 're_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ',
+  },
+  
   // Ensure three.js modules are properly transpiled and served with the correct MIME type
   transpilePackages: ["three", "@react-three/fiber"],
   eslint: {
