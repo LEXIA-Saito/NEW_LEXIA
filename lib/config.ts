@@ -1,7 +1,7 @@
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://lexia-hp.com'
 
 export const LOGO_URL = process.env.NEXT_PUBLIC_LOGO_URL || '/favicon/lexia_logo_square.png'
-export const LOGO_WHITE_URL = process.env.NEXT_PUBLIC_LOGO_WHITE_URL || LOGO_URL
+export const LOGO_WHITE_URL = process.env.NEXT_PUBLIC_LOGO_WHITE_URL || '/images/new_lexia_white_logo.svg'
 // Use the newly added brand text logos by default
 export const LOGO_TEXT_URL = process.env.NEXT_PUBLIC_LOGO_TEXT_URL || '/images/logo_text_black.svg'
 export const LOGO_TEXT_WHITE_URL = process.env.NEXT_PUBLIC_LOGO_TEXT_WHITE_URL || '/images/logo_text_white.svg'
