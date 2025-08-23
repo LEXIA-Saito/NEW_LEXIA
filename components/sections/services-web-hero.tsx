@@ -24,7 +24,7 @@ export default function ServicesWebHero() {
     return (
       <section className="relative min-h-[100svh] w-full flex items-center justify-center overflow-hidden">
         <Image
-          src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lexia_visual/hero_cover.webp"
+          src="/images/services-web-hero-new.jpg"
           alt="LEXIAのWeb制作サービス。レスポンシブ対応の美しいサイトを構築"
           fill
           priority
@@ -55,7 +55,7 @@ export default function ServicesWebHero() {
         style={{ y: backgroundY }}
       >
         <Image
-          src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lexia_visual/hero_cover.webp"
+          src="/images/services-web-hero-new.jpg"
           alt="LEXIAのWeb制作サービス。レスポンシブ対応の美しいサイトを構築"
           fill
           priority
