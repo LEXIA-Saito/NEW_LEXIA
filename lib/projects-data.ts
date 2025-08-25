@@ -8,7 +8,7 @@ export interface Project {
   images?: string[]
   categories: string[]
   featured: boolean
-  year: string
+  year?: string
   tags: string[]
   location: string
   client?: string
