@@ -45,13 +45,9 @@ export default function ServicesCTA() {
           variants={fadeIn}
           className="relative aspect-[4/3] rounded-lg overflow-hidden order-1 md:order-2"
         >
-          <video
-            src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/movie/lexia_movie_visual.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
+          <img
+            src="/images/lexia-services-hero.webp"
+            alt="LEXIAのサービス - 地域のデジタル化を推進する価値を伝えるカタチに"
             className="object-cover w-full h-full"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
