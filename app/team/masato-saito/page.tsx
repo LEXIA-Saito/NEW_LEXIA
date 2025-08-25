@@ -118,24 +118,6 @@ export default function MasatoSaitoProfile() {
     },
   ]
 
-  const badges = [
-    {
-      name: "HubSpot Marketing Software Certified",
-      href: "https://academy.hubspot.com/",
-      img: "https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/hubspot-marketing-software-certification.png",
-    },
-    {
-      name: "HubSpot Email Marketing Certified",
-      href: "https://academy.hubspot.com/",
-      img: "https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/hubspot-email-marketing-certification.png",
-    },
-    {
-      name: "Frictionless Sales Certified",
-      href: "https://app-na2.hubspot.com/academy/achievements/pf4v135z/ja/1/-/",
-      img: "https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/frictionless-sales-certification.png",
-    },
-  ]
-
   return (
     <>
       <Navigation />
@@ -234,28 +216,86 @@ export default function MasatoSaitoProfile() {
             className="mt-12"
           >
             <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6 text-center">取得バッジ</h2>
-            <ul className="space-y-4 max-w-md mx-auto">
-              {badges.map((badge) => (
-                <li key={badge.name}>
-                  <a
-                    href={badge.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-sm"
-                  >
-                    <img
-                      src={badge.img}
-                      alt={badge.name}
-                      className="w-12 h-12"
-                    />
-                    <span className="flex-1 text-neutral-900 dark:text-neutral-100">
-                      {badge.name}
-                    </span>
-                    <ExternalLink className="w-4 h-4 text-neutral-500" />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="flex flex-wrap justify-center gap-4">
+              <div className="academy-badge">
+                <a
+                  href="https://app-na2.hubspot.com/academy/achievements/q7vxjrt4/ja/1/-/-"
+                  title="ソーシャル メディア マーケティング認定コース"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/82dab1bc96fd4cb5811d2bb021299270.png"
+                    width="200"
+                    alt="ソーシャル メディア マーケティング認定コース バッジ"
+                  />
+                </a>
+              </div>
+              <div className="academy-badge">
+                <a
+                  href="https://app-na2.hubspot.com/academy/achievements/szzz05jb/ja/1/-/"
+                  title="インバウンドマーケティング認定コース"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/31f535cfa08e485b814211be2d5cea1a.png"
+                    width="200"
+                    alt="インバウンドマーケティング認定コース バッジ"
+                  />
+                </a>
+              </div>
+              <div className="academy-badge">
+                <a
+                  href="https://app-na2.hubspot.com/academy/achievements/tsc1yz5h/ja/1/-/"
+                  title="インバウンド認定コース"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/6ca5a664ad074c19a0143b7a36cad867.png"
+                    width="200"
+                    alt="インバウンド認定コース バッジ"
+                  />
+                </a>
+              </div>
+              <div className="academy-badge">
+                <a
+                  href="https://app-na2.hubspot.com/academy/achievements/pf4v135z/ja/1/-/"
+                  title="フリクションレスセールス認定コース"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://hubspot-credentials-na1.s3.amazonaws.com/prod/badges/user/26256c557ab94317b4b35c43eaf466e8.png"
+                    width="200"
+                    alt="フリクションレスセールス認定コース バッジ"
+                  />
+                </a>
+              </div>
+              <div
+                data-iframe-width="150"
+                data-iframe-height="270"
+                data-share-badge-id="a3e9242a-bc70-40be-a9a6-88412c7aa68e"
+                data-share-badge-host="https://www.credly.com"
+              ></div>
+              <script
+                type="text/javascript"
+                async
+                src="//cdn.credly.com/assets/utilities/embed.js"
+              ></script>
+              <div
+                data-iframe-width="150"
+                data-iframe-height="270"
+                data-share-badge-id="5610114e-2780-4610-b18f-dc997f0214a4"
+                data-share-badge-host="https://www.credly.com"
+              ></div>
+              <script
+                type="text/javascript"
+                async
+                src="//cdn.credly.com/assets/utilities/embed.js"
+              ></script>
+            </div>
           </motion.div>
         </div>
       </main>
