@@ -247,7 +247,11 @@ export const projectsData: Project[] = [
     title: "Namix Lure Works様 パッケージデザイン",
     description:
       "ハンドメイドルアーブランドのパッケージデザイン。職人の技術と製品の魅力を表現し、釣り具店での差別化を実現。",
-    image: "/placeholder.svg?height=400&width=600&text=Namix+Lure",
+    image: "/images/namix_label_s80s_redblack_result.jpg",
+    images: [
+      "/images/namix_label_s80s_redblack_result.jpg",
+      "/images/namix_label_ss175s_goldblack_result.jpg",
+    ],
     categories: ["design"],
     featured: false,
     year: "2023",
