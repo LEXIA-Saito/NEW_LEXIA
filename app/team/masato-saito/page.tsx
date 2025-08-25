@@ -273,28 +273,22 @@ export default function MasatoSaitoProfile() {
                   />
                 </a>
               </div>
-              <div
-                data-iframe-width="150"
-                data-iframe-height="270"
-                data-share-badge-id="a3e9242a-bc70-40be-a9a6-88412c7aa68e"
-                data-share-badge-host="https://www.credly.com"
-              ></div>
-              <script
-                type="text/javascript"
-                async
-                src="//cdn.credly.com/assets/utilities/embed.js"
-              ></script>
-              <div
-                data-iframe-width="150"
-                data-iframe-height="270"
-                data-share-badge-id="5610114e-2780-4610-b18f-dc997f0214a4"
-                data-share-badge-host="https://www.credly.com"
-              ></div>
-              <script
-                type="text/javascript"
-                async
-                src="//cdn.credly.com/assets/utilities/embed.js"
-              ></script>
+              <div className="academy-badge">
+                <Image
+                  src="/images/data-science-foundations-level-2-v2.png"
+                  alt="Data Science Foundations – Level 2 (V2) バッジ"
+                  width={150}
+                  height={150}
+                />
+              </div>
+              <div className="academy-badge">
+                <Image
+                  src="/images/deep-learning.png"
+                  alt="Deep Learning バッジ"
+                  width={150}
+                  height={150}
+                />
+              </div>
             </div>
           </motion.div>
         </div>
