@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { Calendar, MapPin, Tag } from "lucide-react"
+import { MapPin, Tag } from "lucide-react"
 import Breadcrumbs from "@/components/breadcrumbs"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
@@ -56,9 +56,6 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             <Breadcrumbs />
             <p className="text-lg text-neutral-700 dark:text-neutral-300 mb-6">{project.description}</p>
             <div className="flex flex-wrap gap-4 text-neutral-700 dark:text-neutral-300">
-              {project.year && (
-                <span className="flex items-center"><Calendar className="h-4 w-4 mr-2" />{project.year}</span>
-              )}
               {project.location && (
                 <span className="flex items-center"><MapPin className="h-4 w-4 mr-2" />{project.location}</span>
               )}
@@ -70,6 +67,18 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                     <Tag className="h-3 w-3 mr-1" />{tag}
                   </span>
                 ))}
+              </div>
+            )}
+            {project.url && (
+              <div className="mt-6">
+                <Link
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-md bg-neutral-900 text-white px-5 py-3 text-sm font-medium hover:bg-neutral-800 transition-colors"
+                >
+                  サイトを見る
+                </Link>
               </div>
             )}
           </div>
@@ -87,7 +96,6 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                     <div className="relative aspect-[16/9] rounded-lg overflow-hidden mb-4">
                       <Image src={related.image || "/placeholder.svg"} alt={related.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
                     </div>
-                    <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-1">{related.year}</p>
                     <h3 className="text-lg font-medium text-neutral-900 dark:text-neutral-100 group-hover:underline">
                       {related.title}
                     </h3>

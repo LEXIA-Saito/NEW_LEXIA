@@ -13,7 +13,7 @@ export function ProjectSchema({ project }: ProjectSchemaProps) {
     name: project.title,
     description: project.description,
     image: project.image ? `${SITE_URL}${project.image}` : undefined,
-    datePublished: new Date(parseInt(project.year, 10), 0).toISOString(),
+    datePublished: project.year ? new Date(parseInt(project.year, 10), 0).toISOString() : undefined,
     author: {
       "@type": "Organization",
       name: "LEXIA",

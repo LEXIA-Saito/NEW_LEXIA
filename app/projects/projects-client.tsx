@@ -22,7 +22,7 @@ interface Project {
   images?: string[]
   categories: string[]
   featured: boolean
-  year: string
+  year?: string
   tags: string[]
   location: string
 }
@@ -47,12 +47,9 @@ const stripHtmlAndTruncate = (html: string, maxLength = 150): string => {
 
 const categories = [
   { id: "all", name: "すべて" },
-  { id: "website", name: "WEBサイト制作" },
-  { id: "ecommerce", name: "ECサイト" },
-  { id: "system", name: "システム開発" },
-  { id: "design", name: "デザイン制作" },
-  { id: "branding", name: "ブランディング" },
-  { id: "seo", name: "SEO対策" },
+  { id: "website", name: "Webサイト" },
+  { id: "system", name: "システム" },
+  { id: "design", name: "デザイン" },
 ]
 
 export default function ProjectsClient() {
@@ -60,7 +57,6 @@ export default function ProjectsClient() {
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(projectsData)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
-  const [selectedYear, setSelectedYear] = useState("all")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
 
   // フィルタリング処理
@@ -70,11 +66,6 @@ export default function ProjectsClient() {
     // カテゴリフィルター
     if (selectedCategory !== "all") {
       filtered = filtered.filter((project) => project.categories.includes(selectedCategory))
-    }
-
-    // 年フィルター
-    if (selectedYear !== "all") {
-      filtered = filtered.filter((project) => project.year === selectedYear)
     }
 
     // 検索フィルター
@@ -88,12 +79,7 @@ export default function ProjectsClient() {
     }
 
     setFilteredProjects(filtered)
-  }, [projects, selectedCategory, selectedYear, searchQuery])
-
-  // 利用可能な年を取得
-  const availableYears = Array.from(new Set(projects.map((p) => p.year).filter(Boolean)))
-    .sort()
-    .reverse()
+  }, [projects, selectedCategory, searchQuery])
 
   return (
     <div className="container mx-auto px-4 py-8 pt-24 md:pt-28">
@@ -164,20 +150,6 @@ export default function ProjectsClient() {
             </div>
 
             <div className="flex items-center gap-2">
-              {/* 年フィルター */}
-              <select
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(e.target.value)}
-                className="px-3 py-1 border border-neutral-300 dark:border-neutral-700 rounded-md text-sm bg-white dark:bg-neutral-800"
-              >
-                <option value="all">すべての年</option>
-                {availableYears.map((year) => (
-                  <option key={year} value={year}>
-                    {year}年
-                  </option>
-                ))}
-              </select>
-
               {/* ビューモード切り替え */}
               <div className="flex border border-neutral-300 dark:border-neutral-700 rounded-md">
                 <Button
@@ -270,11 +242,6 @@ export default function ProjectsClient() {
                       </div>
                       <CardContent className={`p-6 ${viewMode === "list" ? "flex-1" : ""}`}>
                         <div className="flex items-center gap-2 mb-3">
-                          {project.year && (
-                            <Badge variant="outline" className="text-xs">
-                              {project.year}
-                            </Badge>
-                          )}
                           {project.location && (
                             <Badge variant="outline" className="text-xs">
                               {project.location}
@@ -320,7 +287,6 @@ export default function ProjectsClient() {
                 onClick={() => {
                   setSearchQuery("")
                   setSelectedCategory("all")
-                  setSelectedYear("all")
                 }}
               >
                 フィルターをリセット
