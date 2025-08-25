@@ -43,12 +43,12 @@ export default function ServicesCTA() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
           variants={fadeIn}
-          className="relative aspect-[4/3] rounded-lg overflow-hidden order-1 md:order-2"
+          className="relative aspect-[1024/667] rounded-lg overflow-hidden order-1 md:order-2"
         >
           <img
             src="/images/lexia-services-hero.webp"
             alt="LEXIAのサービス - 地域のデジタル化を推進する価値を伝えるカタチに"
-            className="object-cover w-full h-full"
+            className="object-contain w-full h-full"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
         </motion.div>
