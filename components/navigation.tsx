@@ -19,7 +19,7 @@ export const navItems = [
       { name: "会社概要", href: "/company#summary" },
       { name: "ミッション＆バリュー", href: "/company#mission" },
       { name: "LEXIA Principles", href: "/company#principles" },
-      { name: "事業概要", href: "/company#data" },
+      { name: "事業情報", href: "/company#data" },
       { name: "LEXIAの強み", href: "/company#strengths" },
       { name: "代表＆チーム", href: "/company#team" },
       { name: "実績", href: "/company#achievements" },
