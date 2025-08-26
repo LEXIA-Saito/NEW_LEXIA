@@ -1,22 +1,10 @@
 "use client"
 
 import Script from "next/script"
-import { useEffect, useState } from "react"
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-2L3TMWC2RQ"
 
 export default function GoogleAnalytics() {
-  const [consent, setConsent] = useState(false)
-
-  useEffect(() => {
-    const value = localStorage.getItem("lexia-ga-consent")
-    if (value === "accepted") {
-      setConsent(true)
-    }
-  }, [])
-
-  if (!consent) return null
-
   return (
     <>
       <Script

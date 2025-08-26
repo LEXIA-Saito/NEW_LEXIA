@@ -30,7 +30,7 @@
 
 ## Google Analytics
 
-利用者の同意を得てから GA スクリプトを読み込むよう実装しています。設定方法は [`docs/analytics.md`](docs/analytics.md) を参照してください。
+GA スクリプトは常時読み込まれます。設定方法は [`docs/analytics.md`](docs/analytics.md) を参照してください。
 
 ## 開発メモ
 
