@@ -33,10 +33,6 @@ const CompanyInfoTable: FC = () => {
           </td>
         </tr>
         <tr>
-          <th className="py-2 pr-4 text-left font-semibold text-neutral-900 dark:text-neutral-100 align-top">主要取引先</th>
-          <td className="py-2">中村健康院様、中部開発株式会社様、株式会社JA.life様、有限会社朝岡パック様、みの建築様 ほか</td>
-        </tr>
-        <tr>
           <th className="py-2 pr-4 text-left font-semibold text-neutral-900 dark:text-neutral-100 align-top">電話番号</th>
           <td className="py-2">090-1742-3456</td>
         </tr>
