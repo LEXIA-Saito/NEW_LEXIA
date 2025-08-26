@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { trackEvent } from "@/lib/analytics"
-import { motion } from "framer-motion"
 import { ArrowRight, MessageCircle, Coins, Briefcase } from "lucide-react"
 
 export default function ServicesWebHeroCTA() {
@@ -45,39 +44,26 @@ export default function ServicesWebHeroCTA() {
 
   return (
     <div className="flex flex-wrap justify-center gap-4">
-      {buttons.map((button, index) => {
+      {buttons.map((button) => {
         const Icon = button.icon
         return (
-          <motion.div
+          <Link
             key={button.href}
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-              duration: 0.5, 
-              delay: index * 0.1,
-              type: "spring",
-              stiffness: 200
-            }}
+            href={button.href}
+            onClick={() => trackEvent("cta_click", { location: "services_web_hero", label: button.trackLabel })}
+            className={`
+              inline-flex items-center justify-center gap-2
+              rounded-lg px-6 py-3.5
+              text-sm font-medium
+              transition-all duration-300
+              group
+              ${getButtonStyles(button.variant)}
+            `}
           >
-            <Link
-              href={button.href}
-              onClick={() => trackEvent("cta_click", { location: "services_web_hero", label: button.trackLabel })}
-              className={`
-                inline-flex items-center justify-center gap-2 
-                rounded-lg px-6 py-3.5 
-                text-sm font-medium 
-                transition-all duration-300 
-                group
-                ${getButtonStyles(button.variant)}
-              `}
-            >
-              <Icon className="w-4 h-4" />
-              <span>{button.label}</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
-          </motion.div>
+            <Icon className="w-4 h-4" />
+            <span>{button.label}</span>
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
         )
       })}
     </div>
