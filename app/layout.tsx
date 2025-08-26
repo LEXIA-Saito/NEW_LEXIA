@@ -6,7 +6,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 import TypewriterEffect from "@/components/typewriter-effect"
 import { Analytics } from "@vercel/analytics/next"
 import GoogleAnalytics from "@/components/google-analytics"
-import CookieConsent from "@/components/cookie-consent"
 import { Suspense } from "react"
 import Script from "next/script"
 import "@/styles/globals.css"
@@ -130,7 +129,6 @@ export default function RootLayout({
             {children}
             <Analytics />
             <GoogleAnalytics />
-            <CookieConsent />
           </Suspense>
         </ThemeProvider>
       </body>
