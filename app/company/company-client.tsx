@@ -165,7 +165,7 @@ export default function CompanyClient() {
 
         {/* Summary */}
         <section className="container mx-auto px-4 py-24 space-y-8" data-testid="company-summary" id="summary">
-          <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4">会社概要</h1>
+          <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4">事業概要</h1>
           <Breadcrumbs />
           <div className="space-y-2 text-neutral-700 dark:text-neutral-300 text-center">
             <p>
