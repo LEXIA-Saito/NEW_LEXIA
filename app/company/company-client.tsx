@@ -243,9 +243,9 @@ export default function CompanyClient() {
         {/* LEXIA Principles section */}
         <LexiaPrinciples />
 
-        {/* Company Data */}
-        <section className="container mx-auto px-4 py-24 space-y-8" data-testid="company-data" id="data">
-          <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">会社データ</h2>
+        {/* Business Overview */}
+        <section className="container mx-auto px-4 py-24 space-y-8" data-testid="business-overview" id="data">
+          <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">事業概要</h2>
           <CompanyInfoTable />
         </section>
 
