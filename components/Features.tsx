@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import Link from "next/link"
 import { Zap, ListChecks, LineChart } from "lucide-react"
 import { trackEvent } from "@/lib/analytics"
 
@@ -11,8 +10,6 @@ interface Feature {
   summary: string
   points: string[]
   kpi: string
-  href: string
-  reason: "speed" | "requirements" | "optimization"
 }
 
 export default function Features() {
@@ -45,11 +42,9 @@ export default function Features() {
         "設計から運用を見据えた実装でムダを削減",
       ],
       kpi: "LCP 2.5s以下目標",
-      href: "/company/process",
-      reason: "speed",
     },
     {
-      icon: <ListChecks className="h-8 w-8" aria-hidden="true" />,
+      icon: <ListChecks className="h-8 w-8" aria-hidden="true" />, 
       title: "迷いのない要件整理",
       summary: "聞く→整理→言語化がブレない。",
       points: [
@@ -58,11 +53,9 @@ export default function Features() {
         "要件定義を短期で確定し、仕様変更の揺れを最小化",
       ],
       kpi: "要件定義最短3日",
-      href: "/team",
-      reason: "requirements",
     },
     {
-      icon: <LineChart className="h-8 w-8" aria-hidden="true" />,
+      icon: <LineChart className="h-8 w-8" aria-hidden="true" />, 
       title: "継続的な運用改善",
       summary: "公開“後”こそ本番。数字で育てるサイト運用。",
       points: [
@@ -71,8 +64,6 @@ export default function Features() {
         "CVR改善を継続的に実施",
       ],
       kpi: "CVR +15%継続改善",
-      href: "/team",
-      reason: "optimization",
     },
   ]
 
@@ -112,13 +103,7 @@ export default function Features() {
                 {f.kpi}
               </span>
             </div>
-            <Link
-              href={f.href}
-              className="mt-4 inline-flex items-center text-sm text-neutral-900 dark:text-neutral-100 underline"
-              onClick={() => trackEvent("features_cta_click", { reason: f.reason })}
-            >
-              詳しく見る
-            </Link>
+            {/* 詳しく見る CTA removed as per request */}
           </article>
         ))}
       </div>
