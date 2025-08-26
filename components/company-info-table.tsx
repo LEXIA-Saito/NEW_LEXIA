@@ -7,7 +7,7 @@ const CompanyInfoTable: FC = () => {
     <table className="w-full text-sm text-neutral-700 dark:text-neutral-300">
       <tbody>
         <tr>
-          <th className="py-2 pr-4 text-left font-semibold text-neutral-900 dark:text-neutral-100 align-top">会社名</th>
+          <th className="py-2 pr-4 text-left font-semibold text-neutral-900 dark:text-neutral-100 align-top">事業名</th>
           <td className="py-2">LEXIA（レキシア）</td>
         </tr>
         <tr>
