@@ -16,7 +16,6 @@ export const navItems = [
     name: "事業概要",
     href: "/company",
     subItems: [
-      { name: "会社概要", href: "/company#summary" },
       { name: "ミッション＆バリュー", href: "/company#mission" },
       { name: "LEXIA Principles", href: "/company#principles" },
       { name: "事業情報", href: "/company#data" },
