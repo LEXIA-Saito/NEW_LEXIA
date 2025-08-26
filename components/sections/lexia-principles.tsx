@@ -6,44 +6,18 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { ChevronDown } from "lucide-react"
 
-interface PrincipleData {
-  keyword: string
-  title: string
-  description: string
-  bg: string
+interface Principle {
+  letter: string
+  en: string
+  ja: string
 }
 
-const principles: PrincipleData[] = [
-  {
-    keyword: "Lead",
-    title: "Lead with Value（価値で導く）",
-    description: "価値あるデジタル資産を創出し、クライアントや社会の未来を切り拓く",
-    bg: "bg-cyan-50",
-  },
-  {
-    keyword: "Evolve",
-    title: "Evolve Constantly（常に進化する）",
-    description: "技術・思考を常に磨き、向上心に溢れる生活力の高い人材を育成する",
-    bg: "bg-emerald-50",
-  },
-  {
-    keyword: "Xperience",
-    title: "Xperience by Design（体験をデザインする）",
-    description: "見る・触れる・使う、その瞬間の感動と記憶に残る体験をデザインする",
-    bg: "bg-orange-50",
-  },
-  {
-    keyword: "Inspire",
-    title: "Inspire Connection（つながりを生む）",
-    description: "人と人、企業と顧客の間に情報の架け橋を築く",
-    bg: "bg-violet-50",
-  },
-  {
-    keyword: "Achieve",
-    title: "Achieve Together（共に成し遂げる）",
-    description: "クライアントと共創し、ローカルでも語り継がれる情報を残す",
-    bg: "bg-rose-50",
-  },
+const principles: Principle[] = [
+  { letter: "L", en: "Lead with Value", ja: "価値で導く" },
+  { letter: "E", en: "Evolve Everyday", ja: "常に進化する" },
+  { letter: "X", en: "Xperience Design", ja: "体験をデザインする" },
+  { letter: "I", en: "Inspire Empathy", ja: "共感を育む" },
+  { letter: "A", en: "Advance the Future", ja: "未来を拓く" },
 ]
 
 export default function LexiaPrinciples() {
@@ -52,88 +26,92 @@ export default function LexiaPrinciples() {
 
   useEffect(() => {
     const observers: IntersectionObserver[] = []
-    refs.current.forEach((ref, index) => {
+    refs.current.forEach((ref, idx) => {
       if (!ref) return
-      const observer = new IntersectionObserver(
+      const obs = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
-            setActive(index)
-          }
+          if (entry.isIntersecting) setActive(idx)
         },
         { threshold: 0.6 }
       )
-      observer.observe(ref)
-      observers.push(observer)
+      obs.observe(ref)
+      observers.push(obs)
     })
     return () => observers.forEach((o) => o.disconnect())
   }, [])
 
   return (
     <section id="principles" className="w-full">
-      {/* Intro */}
       <div className="h-screen flex flex-col items-center justify-center text-center bg-white">
-        <h3 className="text-3xl md:text-4xl font-bold text-neutral-900">LEXIA Principles</h3>
+        <h3 className="text-3xl md:text-4xl font-bold text-neutral-900">
+          LEXIA Principles
+        </h3>
         <ChevronDown className="mt-6 h-8 w-8 text-neutral-600 animate-bounce" />
       </div>
 
-      {/* Timeline */}
       {principles.map((p, idx) => (
         <div
-          key={p.keyword}
+          key={p.letter}
           ref={(el) => (refs.current[idx] = el)}
-          className={`${p.bg} min-h-screen flex items-center justify-center transition-colors duration-500`}
+          className={`min-h-screen flex flex-col items-center justify-center transition-colors duration-500 ${
+            idx % 2 ? "bg-black text-white" : "bg-white text-neutral-900"
+          }`}
         >
           <motion.div
-            animate={active === idx ? { scale: 1.2, opacity: 1 } : { scale: 0.8, opacity: 0.3 }}
+            animate={
+              active === idx
+                ? { scale: 1, opacity: 1 }
+                : { scale: 0.8, opacity: 0.3 }
+            }
             transition={{ duration: 0.4 }}
-            className="text-center px-4 max-w-2xl"
+            className="text-center"
           >
-            <div className="text-6xl md:text-7xl font-black mb-6">{p.keyword}</div>
+            <div className="text-8xl md:text-9xl font-black text-emerald-500 mb-8">
+              {p.letter}
+            </div>
             <motion.div
-              animate={active === idx ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              animate={
+                active === idx ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+              }
               transition={{ duration: 0.4, delay: 0.1 }}
+              className="space-y-2"
             >
-              <h4 className="text-xl md:text-2xl font-bold text-neutral-900 mb-4">{p.title}</h4>
-              <p className="text-neutral-700 text-base md:text-lg leading-relaxed">{p.description}</p>
+              <p className="text-xl md:text-2xl font-bold">{p.en}</p>
+              <p className="text-base md:text-lg">{p.ja}</p>
             </motion.div>
           </motion.div>
         </div>
       ))}
 
-      {/* Summary */}
       <div className="min-h-screen flex flex-col items-center justify-center text-center bg-white px-4 py-24 space-y-12">
-        <h4 className="text-2xl md:text-3xl font-bold text-neutral-900">
-          LEXIAはこの5つの原則を基盤としています
-        </h4>
         <motion.div
-          className="grid gap-6 md:grid-cols-5 w-full max-w-5xl"
+          className="flex text-6xl md:text-7xl font-black text-emerald-500"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={{
             hidden: {},
-            visible: {
-              transition: { staggerChildren: 0.1 },
-            },
+            visible: { transition: { staggerChildren: 0.1 } },
           }}
         >
           {principles.map((p) => (
-            <motion.div
-              key={p.keyword}
-              className="p-4 border border-neutral-200 rounded-lg bg-white shadow-sm"
+            <motion.span
+              key={p.letter}
               variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
+                hidden: { opacity: 0, x: -20 },
+                visible: { opacity: 1, x: 0 },
               }}
             >
-              <div className="text-xl font-bold mb-2">{p.keyword}</div>
-              <p className="text-sm text-neutral-700">{p.title}</p>
-            </motion.div>
+              {p.letter}
+            </motion.span>
           ))}
         </motion.div>
-        <Link href="/company" className="mt-8 inline-block">
+        <p className="text-neutral-900 text-xl md:text-2xl">
+          LEXIAは5つのPrinciplesを大切にしています
+        </p>
+        <Link href="/company">
           <button className="px-6 py-3 rounded-md bg-neutral-900 text-white text-sm font-medium hover:bg-neutral-800 transition-colors">
-            Companyページへ
+            私たちについて
           </button>
         </Link>
       </div>
