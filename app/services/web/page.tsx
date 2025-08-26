@@ -1,12 +1,14 @@
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
-import OurProcess from "@/components/sections/OurProcess"
+import dynamic from "next/dynamic"
 import ServicesWebHero from "@/components/sections/services-web-hero"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import Link from "next/link"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+
+const OurProcess = dynamic(() => import("@/components/sections/OurProcess"), { ssr: false })
 
 export const metadata: Metadata = {
   title: "Web制作サービス | 碧南のホームページ作成はLEXIA",
@@ -82,7 +84,6 @@ export default function WebServicePage() {
     <>
       <Navigation />
       <main className="min-h-screen bg-white dark:bg-neutral-900">
-        {/* Parallax Hero Section */}
         <ServicesWebHero />
 
         <div className="container mx-auto px-4 py-16 md:py-24 max-w-3xl">
