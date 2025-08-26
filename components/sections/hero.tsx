@@ -41,14 +41,14 @@ export default function Hero() {
           価値を伝わるカタチに
         </motion.h1>
 
-        <motion.p
-          className="text-lg sm:text-xl md:text-2xl mb-12 text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto leading-relaxed"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          企業のウェブサイトは"顔"であると同時に、ブランド価値を伝える最重要ポイントです。御社のウェブサイトを「成果を生む資産」へと進化させます。
-        </motion.p>
+          <motion.p
+            className="text-lg sm:text-xl md:text-2xl mb-12 text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            企業のウェブサイトは「顔」であると同時に、ブランド価値を伝える最重要ポイントです。御社のウェブサイトを「成果を生む資産」へと進化させます。
+          </motion.p>
 
         <motion.div
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"

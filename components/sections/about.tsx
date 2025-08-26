@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import CompanyInfoTable from "@/components/company-info-table"
 import { t } from "@/lib/i18n"
 
 export default function About() {
@@ -17,7 +18,7 @@ export default function About() {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -35,24 +36,22 @@ export default function About() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
             variants={fadeIn}
+            className="relative aspect-[4/3] rounded-lg overflow-hidden"
           >
-            <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-4">
-              {t("about.listen.title")}
-            </h3>
-            <p className="text-neutral-700 dark:text-neutral-300 mb-6">{t("about.listen.body")}</p>
-            <Link href="/company">
-              <Button className="rounded-full px-6 py-4 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 group">
-                {t("about.learnProcess")}
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
-            </Link>
+            <Image
+              src="/images/hero_cover.jpg"
+              alt="LEXIA office"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
           </motion.div>
 
           <motion.div
@@ -61,22 +60,19 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
             variants={fadeIn}
-            className="relative aspect-[4/3] rounded-lg overflow-hidden"
+            className="flex flex-col"
           >
-            <Image
-              src="/images/sandy_beach_lexia.webp"
-              alt="LEXIA team discussing with clients"
-              fill
-              className="object-cover"
-              priority
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+            <CompanyInfoTable />
+            <Link href="/company" className="mt-8 self-start">
+              <Button className="rounded-full px-6 py-4 text-base bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 group">
+                {t("about.learnProcess")}
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+            </Link>
           </motion.div>
         </div>
-
-        {/* 主要サービスに関する動画・テキストは services セクションへ移設しました */}
       </div>
     </div>
   )
 }
+

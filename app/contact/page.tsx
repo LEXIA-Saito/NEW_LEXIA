@@ -3,6 +3,7 @@ import Footer from "@/components/footer"
 import ContactForm from "@/components/contact-form"
 import Breadcrumbs from "@/components/breadcrumbs"
 import type { Metadata } from "next"
+import Link from "next/link"
 import { SITE_URL } from "@/lib/config"
 
 export const metadata: Metadata = {
@@ -39,9 +40,24 @@ export default function ContactPage() {
           <div className="mt-10 text-center">
             <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">お探しの内容に応じて、以下もご覧ください。</p>
             <div className="inline-flex flex-wrap gap-3 justify-center">
-              <a href="/services" className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800">サービス一覧</a>
-              <a href="/pricing" className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800">料金を見る</a>
-              <a href="/projects" className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800">制作実績</a>
+              <Link
+                href="/services"
+                className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800"
+              >
+                サービス一覧
+              </Link>
+              <Link
+                href="/pricing"
+                className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800"
+              >
+                料金を見る
+              </Link>
+              <Link
+                href="/projects"
+                className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800"
+              >
+                制作実績
+              </Link>
             </div>
           </div>
         </div>
