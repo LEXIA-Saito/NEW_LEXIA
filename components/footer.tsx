@@ -77,10 +77,10 @@ export default function Footer() {
               </div>
             </div>
 
-            <h2 className="text-2xl font-bold mb-6">価値を伝わるカタチに</h2>
-            <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-              企業のウェブサイトは"顔"であると同時に、ブランド価値を伝える最重要ポイントです。御社のウェブサイトを「成果を生む資産」へと進化させます。
-            </p>
+              <h2 className="text-2xl font-bold mb-6">価値を伝わるカタチに</h2>
+              <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
+                企業のウェブサイトは「顔」であると同時に、ブランド価値を伝える最重要ポイントです。御社のウェブサイトを「成果を生む資産」へと進化させます。
+              </p>
           </motion.div>
 
           {/* Menu Section */}
