@@ -12,7 +12,15 @@ interface Feature {
   kpi: string
 }
 
-export default function Features() {
+interface FeaturesProps {
+  id?: string
+  title?: string
+}
+
+export default function Features({
+  id = "features",
+  title = "LEXIAが選ばれる“3つの理由”",
+}: FeaturesProps) {
   const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -21,7 +29,7 @@ export default function Features() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          trackEvent("features_impression", { section_id: "features" })
+          trackEvent("features_impression", { section_id: id })
           observer.disconnect()
         }
       },
@@ -69,16 +77,16 @@ export default function Features() {
 
   return (
     <section
-      id="features"
-      aria-labelledby="features-title"
+      id={id}
+      aria-labelledby={`${id}-title`}
       ref={sectionRef}
       className="container mx-auto px-4 py-24 md:py-32"
     >
       <h2
-        id="features-title"
+        id={`${id}-title`}
         className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 text-center"
       >
-        LEXIAが選ばれる“3つの理由”
+        {title}
       </h2>
       <div className="mt-10 grid gap-8 md:grid-cols-3">
         {features.map((f) => (

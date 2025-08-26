@@ -12,9 +12,10 @@ import LexiaLogoParticles from "@/components/lexia-logo-particles"
 import LexiaPrinciples from "@/components/sections/lexia-principles"
 import CompanyInfoTable from "@/components/company-info-table"
 import Script from "next/script"
-import { Lightbulb, Zap, RefreshCcw, ListChecks, Code, LineChart, ChevronDown } from "lucide-react"
+import { Lightbulb, Zap, RefreshCcw, ChevronDown } from "lucide-react"
 import { projectsData } from "@/lib/projects-data"
 import { useState, type ReactNode } from "react"
+import Features from "@/components/Features"
 
 function FAQItem({ q, a }: { q: string; a: ReactNode }) {
   const [open, setOpen] = useState(false)
@@ -77,33 +78,6 @@ export default function CompanyClient() {
       icon: RefreshCcw,
       title: "出して終わらせない",
       description: "計測→改善のループで継続的に伸ばす。",
-    },
-  ]
-
-  const strengths = [
-    {
-      icon: ListChecks,
-      title: "要件整理",
-      description: "ヒアリングから情報設計まで一気通貫で支援。",
-      tech: "Notion / Figma",
-      metric: "要件定義期間を最短2週",
-      link: { href: "/services/web", label: "Web制作サービスを見る" },
-    },
-    {
-      icon: Code,
-      title: "高速実装",
-      description: "Next.jsとTailwindで高速なUIを実装。",
-      tech: "Next.js / Tailwind CSS",
-      metric: "LCP 2s以内",
-      link: { href: "/services/web", label: "実装サービスの詳細" },
-    },
-    {
-      icon: LineChart,
-      title: "運用改善",
-      description: "計測とABテストで継続的に最適化。",
-      tech: "Google Analytics / A/B Testing",
-      metric: "CVR +20%実績",
-      link: { href: "/services/system", label: "運用改善サービス" },
     },
   ]
 
@@ -250,40 +224,7 @@ export default function CompanyClient() {
         </section>
 
         {/* Strengths */}
-        <section className="py-24 bg-neutral-50 dark:bg-neutral-800" data-testid="strengths" id="strengths">
-          <div className="container mx-auto px-4 space-y-12">
-            <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">LEXIAの強み</h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {strengths.map((item, index) => {
-                const Icon = item.icon
-                return (
-                  <motion.div
-                    key={item.title}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    variants={fadeIn}
-                  >
-                    <Card className="p-6 h-full">
-                      <Icon className="w-8 h-8 text-neutral-900 dark:text-neutral-100 mb-4" />
-                      <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-neutral-700 dark:text-neutral-300 mb-4 text-sm">{item.description}</p>
-                      <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-1">対応技術: {item.tech}</p>
-                      <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-1">成果指標: {item.metric}</p>
-                      <Link href={item.link.href} className="text-primary underline text-sm">
-                        {item.link.label}
-                      </Link>
-                    </Card>
-                  </motion.div>
-                )
-              })}
-            </div>
-            <CTAButtons />
-          </div>
-        </section>
+        <Features id="strengths" title="LEXIAの強み" />
 
         {/* Representative & Team */}
         <section className="container mx-auto px-4 py-24 space-y-8" data-testid="team" id="team">
