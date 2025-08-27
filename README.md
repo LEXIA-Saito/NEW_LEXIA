@@ -50,6 +50,16 @@ MICROCMS_API_KEY=<API キー>
 
 現在、実績データはすべてハードコーディングされており、microCMS は使用していません。
 
+## Google Maps の埋め込み
+
+会社概要ページのアクセスセクションでは Google Maps Embed API を利用しています。地図を表示するには以下の環境変数を設定し、対象ドメインを許可した API キーを用意してください。
+
+```
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=<Google Maps API キー>
+```
+
+API キーは Vercel のダッシュボードなど、ホスティング環境で設定してください。
+
 ## 料金シミュレーション
 
 初期費用とランニングコストの計算方法については [docs/pricing.md](docs/pricing.md) にまとめています。
