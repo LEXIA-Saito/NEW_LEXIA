@@ -1,28 +1,57 @@
 "use client"
 
-import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { motion } from "framer-motion"
-import { ChevronDown } from "lucide-react"
+import { motion, useReducedMotion } from "framer-motion"
 
 interface Principle {
   letter: string
   en: string
   ja: string
+  body: string
+  proof?: string
 }
 
 const principles: Principle[] = [
-  { letter: "L", en: "Lead with Value", ja: "価値で導く" },
-  { letter: "E", en: "Evolve Everyday", ja: "常に進化する" },
-  { letter: "X", en: "Xperience Design", ja: "体験をデザインする" },
-  { letter: "I", en: "Inspire Empathy", ja: "共感を育む" },
-  { letter: "A", en: "Advance the Future", ja: "未来を拓く" },
+  {
+    letter: "L",
+    en: "Lead with Value",
+    ja: "価値で導く",
+    body: "価値あるデジタル資産を創出し、クライアントや社会の未来を切り拓く",
+    proof: "LCP ≤ 2.5s",
+  },
+  {
+    letter: "E",
+    en: "Evolve Constantly",
+    ja: "常に進化する",
+    body: "技術・思考を常に磨く、生活力の高い人材を育成する",
+    proof: "継続改善 +15%",
+  },
+  {
+    letter: "X",
+    en: "Xperience by Design",
+    ja: "体験をデザインする",
+    body: "見る・触れる・使う、その瞬間の感動と記憶に残る体験をデザインする",
+    proof: "体験向上指標 ↑",
+  },
+  {
+    letter: "I",
+    en: "Inspire Connection",
+    ja: "つながりを生む",
+    body: "人と人、企業と顧客の間に情報の架け橋を築く",
+  },
+  {
+    letter: "A",
+    en: "Achieve Together",
+    ja: "共に成し遂げる",
+    body: "クライアントと共創し、ローカルでも語り継がれる成果を残す",
+  },
 ]
 
 export default function LexiaPrinciples() {
   const refs = useRef<(HTMLDivElement | null)[]>([])
   const [active, setActive] = useState(0)
+  const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
     const observers: IntersectionObserver[] = []
@@ -32,7 +61,7 @@ export default function LexiaPrinciples() {
         ([entry]) => {
           if (entry.isIntersecting) setActive(idx)
         },
-        { threshold: 0.6 }
+        { threshold: 0.5 }
       )
       obs.observe(ref)
       observers.push(obs)
@@ -41,79 +70,79 @@ export default function LexiaPrinciples() {
   }, [])
 
   return (
-    <section id="principles" className="w-full">
-      <div className="h-screen flex flex-col items-center justify-center text-center bg-white">
-        <h3 className="text-3xl md:text-4xl font-bold text-neutral-900">
-          LEXIA Principles
-        </h3>
-        <ChevronDown className="mt-6 h-8 w-8 text-neutral-600 animate-bounce" />
-      </div>
-
-      {principles.map((p, idx) => (
-        <div
-          key={p.letter}
-          ref={(el) => (refs.current[idx] = el)}
-          className={`min-h-screen flex flex-col items-center justify-center transition-colors duration-500 ${
-            idx % 2 ? "bg-black text-white" : "bg-white text-neutral-900"
-          }`}
-        >
-          <motion.div
-            animate={
-              active === idx
-                ? { scale: 1, opacity: 1 }
-                : { scale: 0.8, opacity: 0.3 }
-            }
-            transition={{ duration: 0.4 }}
-            className="text-center"
-          >
-            <div className="text-8xl md:text-9xl font-black text-emerald-500 mb-8">
-              {p.letter}
-            </div>
-            <motion.div
-              animate={
-                active === idx ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-              }
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="space-y-2"
+    <section id="principles" className="mx-auto max-w-6xl px-6 py-20">
+      <header className="mb-10 text-center md:text-left">
+        <p className="text-sm tracking-wide text-neutral-500">LEXIA PRINCIPLES</p>
+        <h2 className="text-2xl md:text-3xl font-medium">
+          価値を伝わる体験設計の、5つの約束。
+        </h2>
+      </header>
+      <div className="grid grid-cols-12 gap-6">
+        <aside className="col-span-3 sticky top-24 h-fit">
+          <ul className="space-y-2 text-neutral-400">
+            {principles.map((p, i) => (
+              <li
+                key={p.letter}
+                className={`text-xl font-medium transition-colors ${
+                  active === i ? "text-neutral-900" : ""
+                }`}
+              >
+                {p.letter}
+              </li>
+            ))}
+          </ul>
+        </aside>
+        <main className="col-span-9 space-y-10">
+          {principles.map((p, i) => (
+            <article
+              key={p.letter}
+              ref={(el) => (refs.current[i] = el)}
+              className="p-6 border border-neutral-200 rounded-xl bg-white text-neutral-900 space-y-2"
             >
-              <p className="text-xl md:text-2xl font-bold">{p.en}</p>
-              <p className="text-base md:text-lg">{p.ja}</p>
-            </motion.div>
-          </motion.div>
-        </div>
-      ))}
-
-      <div className="min-h-screen flex flex-col items-center justify-center text-center bg-white px-4 py-24 space-y-12">
+              <h3 className="text-lg font-semibold">{p.ja}</h3>
+              <p className="text-sm text-neutral-500">{p.en}</p>
+              <p className="text-sm leading-relaxed">{p.body}</p>
+              {p.proof && (
+                <p className="text-xs text-neutral-500 pt-2">{p.proof}</p>
+              )}
+            </article>
+          ))}
+        </main>
+      </div>
+      <div className="mt-20 flex flex-col items-center text-center space-y-6">
         <motion.div
-          className="flex text-6xl md:text-7xl font-black text-emerald-500"
-          initial="hidden"
-          whileInView="visible"
+          className="flex text-5xl md:text-6xl font-bold text-neutral-900"
+          initial={{ letterSpacing: "0.6em" }}
+          whileInView={{ letterSpacing: shouldReduceMotion ? "0.6em" : "0" }}
+          transition={{ duration: 1 }}
           viewport={{ once: true }}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.1 } },
-          }}
         >
           {principles.map((p) => (
-            <motion.span
-              key={p.letter}
-              variants={{
-                hidden: { opacity: 0, x: -20 },
-                visible: { opacity: 1, x: 0 },
-              }}
-            >
+            <span key={p.letter} className="mx-1">
               {p.letter}
-            </motion.span>
+            </span>
           ))}
         </motion.div>
-        <p className="text-neutral-900 text-xl md:text-2xl">
-          LEXIAは5つのPrinciplesを大切にしています
-        </p>
-        <Link href="/company">
-          <button className="px-6 py-3 rounded-md bg-neutral-900 text-white text-sm font-medium hover:bg-neutral-800 transition-colors">
-            私たちについて
-          </button>
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Link
+            href="/company/process"
+            className="px-6 py-3 rounded-lg bg-neutral-900 text-white text-sm"
+          >
+            制作工程
+          </Link>
+          <Link
+            href="/projects"
+            className="px-6 py-3 rounded-lg border border-neutral-900 text-neutral-900 text-sm"
+          >
+            実績
+          </Link>
+          <Link
+            href="/contact"
+            className="px-6 py-3 rounded-lg border border-neutral-900 text-neutral-900 text-sm"
+          >
+            お問い合わせ
+          </Link>
+        </div>
       </div>
     </section>
   )
