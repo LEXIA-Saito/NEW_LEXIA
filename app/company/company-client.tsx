@@ -314,16 +314,31 @@ export default function CompanyClient() {
             TEL: 090-1742-3456
           </p>
           <div className="w-full h-64 md:h-96">
-            <iframe
-              title="LEXIA所在地"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.397843751322!2d136.994!3d34.881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6004d05cd901!2z44CSNDc2LTAwMTMg5oSb55-l55yM5a6d5biC6ZW35bed5Yy65bed5pys55S677yR77yR77yS!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              loading="lazy"
-              decoding="async"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+            {process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ? (
+              <iframe
+                title="LEXIA所在地"
+                src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=${encodeURIComponent(
+                  '愛知県碧南市川端町1-45',
+                )}`}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            ) : (
+              <p className="text-neutral-700 dark:text-neutral-300">
+                <a
+                  href="https://maps.google.com/?q=愛知県碧南市川端町1-45"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  Googleマップで場所を開く
+                </a>
+              </p>
+            )}
           </div>
         </section>
       </main>
