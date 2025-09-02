@@ -136,6 +136,7 @@ export default function MasatoSaitoProfile() {
                 fill
                 className="object-cover"
                 priority
+                fetchPriority="high"
                 sizes="128px"
               />
             </div>

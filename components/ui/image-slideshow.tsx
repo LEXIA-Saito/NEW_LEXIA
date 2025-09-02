@@ -72,6 +72,7 @@ export function ImageSlideshow({ images, alt, className = "", interval = 3000 }:
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority={currentIndex === 0}
+            fetchPriority={currentIndex === 0 ? "high" : undefined}
           />
         </motion.div>
       </AnimatePresence>
