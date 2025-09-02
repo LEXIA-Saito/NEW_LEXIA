@@ -30,7 +30,10 @@ export default function ProjectsPage() {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen bg-white dark:bg-neutral-900">
+      <main
+        className="min-h-screen bg-white dark:bg-neutral-900"
+        style={{ paddingTop: "var(--header-height)" }}
+      >
         <ProjectsClient />
       </main>
       <Footer />

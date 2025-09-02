@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
@@ -62,6 +62,7 @@ export default function Navigation() {
   const [activeSection, setActiveSection] = useState("hero")
   const [snsOpen, setSnsOpen] = useState(false)
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
+  const headerRef = useRef<HTMLElement>(null)
 
   // GA4 event helper (fires only if gtag exists)
   const gaEvent = (name: string, params: Record<string, any> = {}) => {
@@ -119,6 +120,25 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Update CSS variable with current header height
+  useEffect(() => {
+    const updateHeight = () => {
+      const height = headerRef.current?.offsetHeight || 0
+      document.documentElement.style.setProperty("--header-height", `${height}px`)
+    }
+
+    updateHeight()
+
+    const resizeObserver = new ResizeObserver(updateHeight)
+    if (headerRef.current) resizeObserver.observe(headerRef.current)
+    window.addEventListener("resize", updateHeight)
+
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener("resize", updateHeight)
+    }
+  }, [isScrolled])
+
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     // If we're not on the homepage and the link is an anchor, navigate to home first
     if (typeof window !== "undefined" && !window.location.pathname.match(/^\/$|^\/index$/)) {
@@ -144,6 +164,7 @@ export default function Navigation() {
         onMouseLeave={() => setMegaMenuOpen(false)}
       >
         <motion.header
+          ref={headerRef}
           className={`transition-all duration-300 ${
             isScrolled
               ? "bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm py-3"
