@@ -130,12 +130,14 @@ export default function Hero() {
               alt=""
               aria-hidden="true"
               className="w-4 h-4 block dark:hidden"
+              loading="lazy"
             />
             <img
               src={icon.dark || "/placeholder.svg"}
               alt=""
               aria-hidden="true"
               className="w-4 h-4 hidden dark:block"
+              loading="lazy"
             />
           </motion.span>
         ))}
