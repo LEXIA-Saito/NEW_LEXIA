@@ -188,6 +188,8 @@ export default function Navigation() {
                     width={120}
                     height={24}
                     className="h-6 w-auto block dark:hidden"
+                    priority
+                    fetchPriority="high"
                   />
                   <Image
                     src={LOGO_TEXT_URL || "/placeholder.svg"}
@@ -195,6 +197,8 @@ export default function Navigation() {
                     width={120}
                     height={24}
                     className="h-6 w-auto ml-2 block dark:hidden"
+                    priority
+                    fetchPriority="high"
                   />
                   <Image
                     src={LOGO_WHITE_URL || "/placeholder.svg"}
@@ -202,6 +206,8 @@ export default function Navigation() {
                     width={120}
                     height={24}
                     className="h-6 w-auto hidden dark:block"
+                    priority
+                    fetchPriority="high"
                   />
                   <Image
                     src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
@@ -209,6 +215,8 @@ export default function Navigation() {
                     width={120}
                     height={24}
                     className="h-6 w-auto ml-2 hidden dark:block"
+                    priority
+                    fetchPriority="high"
                   />
                 </div>
               </motion.div>

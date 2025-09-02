@@ -9,6 +9,7 @@ export default function ServicesWebHero() {
         alt="LEXIAのWeb制作サービス。レスポンシブ対応の美しいサイトを構築"
         fill
         priority
+        fetchPriority="high"
         className="object-cover"
         sizes="100vw"
       />
