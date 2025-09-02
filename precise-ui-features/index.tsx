@@ -22,9 +22,11 @@ export default function Frame() {
       const hoveredElement = tabRefs.current[hoveredIndex]
       if (hoveredElement) {
         const { offsetLeft, offsetWidth } = hoveredElement
-        setHoverStyle({
-          left: `${offsetLeft}px`,
-          width: `${offsetWidth}px`,
+        requestAnimationFrame(() => {
+          setHoverStyle({
+            left: `${offsetLeft}px`,
+            width: `${offsetWidth}px`,
+          })
         })
       }
     }
@@ -34,24 +36,26 @@ export default function Frame() {
     const activeElement = tabRefs.current[activeIndex]
     if (activeElement) {
       const { offsetLeft, offsetWidth } = activeElement
-      setActiveStyle({
-        left: `${offsetLeft}px`,
-        width: `${offsetWidth}px`,
+      requestAnimationFrame(() => {
+        setActiveStyle({
+          left: `${offsetLeft}px`,
+          width: `${offsetWidth}px`,
+        })
       })
     }
   }, [activeIndex])
 
   useEffect(() => {
-    requestAnimationFrame(() => {
-      const firstTabElement = tabRefs.current[0]
-      if (firstTabElement) {
-        const { offsetLeft, offsetWidth } = firstTabElement
+    const firstTabElement = tabRefs.current[0]
+    if (firstTabElement) {
+      const { offsetLeft, offsetWidth } = firstTabElement
+      requestAnimationFrame(() => {
         setActiveStyle({
           left: `${offsetLeft}px`,
           width: `${offsetWidth}px`,
         })
-      }
-    })
+      })
+    }
   }, [])
 
   const toggleDarkMode = () => {

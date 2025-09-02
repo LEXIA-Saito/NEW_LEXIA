@@ -99,8 +99,12 @@ export default function Navigation() {
   }
 
   useEffect(() => {
+    let lastKnownSection = "hero"
+    let lastIsScrolled = false
+    let ticking = false
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
+      lastIsScrolled = window.scrollY > 10
 
       // Determine active section based on scroll position
       const sections = ["contact", "team", "work", "pricing", "services", "about", "hero"]
@@ -109,14 +113,23 @@ export default function Navigation() {
         if (element) {
           const rect = element.getBoundingClientRect()
           if (rect.top <= 100) {
-            setActiveSection(section)
+            lastKnownSection = section
             break
           }
         }
       }
+
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(lastIsScrolled)
+          setActiveSection(lastKnownSection)
+          ticking = false
+        })
+        ticking = true
+      }
     }
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -124,7 +137,9 @@ export default function Navigation() {
   useEffect(() => {
     const updateHeight = () => {
       const height = headerRef.current?.offsetHeight || 0
-      document.documentElement.style.setProperty("--header-height", `${height}px`)
+      requestAnimationFrame(() => {
+        document.documentElement.style.setProperty("--header-height", `${height}px`)
+      })
     }
 
     updateHeight()
