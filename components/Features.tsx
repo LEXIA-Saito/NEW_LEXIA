@@ -15,11 +15,13 @@ interface Feature {
 interface FeaturesProps {
   id?: string
   title?: string
+  className?: string
 }
 
 export default function Features({
   id = "features",
   title = "LEXIAが選ばれる“3つの理由”",
+  className = "",
 }: FeaturesProps) {
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -80,7 +82,7 @@ export default function Features({
       id={id}
       aria-labelledby={`${id}-title`}
       ref={sectionRef}
-      className="container mx-auto px-4 py-24 md:py-32"
+      className={`container mx-auto px-4 py-24 md:py-32 ${className}`}
     >
       <h2
         id={`${id}-title`}

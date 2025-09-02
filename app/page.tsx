@@ -66,29 +66,29 @@ export default function Home() {
         <Hero />
       </section>
 
-      <section id="about" className="py-24 md:py-32">
+      <section id="about" className="py-24 md:py-32 below-fold">
         <About />
       </section>
 
-      <section id="services" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800">
+      <section id="services" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
         <ServicesCTA />
       </section>
 
-      <Features />
+      <Features className="below-fold" />
 
-      <section id="pricing" className="py-24 md:py-32">
+      <section id="pricing" className="py-24 md:py-32 below-fold">
         <PricingCTA />
       </section>
 
-      <section id="work" className="py-24 md:py-32">
+      <section id="work" className="py-24 md:py-32 below-fold">
         <Work />
       </section>
 
-      <section id="team" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800">
+      <section id="team" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
         <Team />
       </section>
 
-      <section id="contact" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800">
+      <section id="contact" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
         <Contact />
       </section>
       <Footer />
