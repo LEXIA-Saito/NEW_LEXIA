@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowRight, ExternalLink, Building, Code, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -50,10 +50,13 @@ const cardVariants = {
 export default function OurWork() {
   const [activeFilter, setActiveFilter] = useState<string>("all")
 
-  const filteredProjects =
-    activeFilter === "all"
-      ? projectsData
-      : projectsData.filter((project) => project.categories.includes(activeFilter) || project.year === activeFilter)
+  // 選択中のフィルターに応じて表示するプロジェクトを計算
+  const filteredProjects = useMemo(() => {
+    if (activeFilter === "all") return projectsData
+    return projectsData.filter(
+      (project) => project.categories.includes(activeFilter) || project.year === activeFilter,
+    )
+  }, [activeFilter])
 
   return (
     <section className="py-20 bg-white dark:bg-neutral-900">
@@ -82,6 +85,7 @@ export default function OurWork() {
         >
           <Button
             variant={activeFilter === "all" ? "default" : "outline"}
+            type="button"
             onClick={() => setActiveFilter("all")}
             className="rounded-full px-6 transition-all duration-300"
           >
@@ -89,6 +93,7 @@ export default function OurWork() {
           </Button>
           <Button
             variant={activeFilter === "website" ? "default" : "outline"}
+            type="button"
             onClick={() => setActiveFilter("website")}
             className="rounded-full px-6 transition-all duration-300"
           >
@@ -97,6 +102,7 @@ export default function OurWork() {
           </Button>
           <Button
             variant={activeFilter === "system" ? "default" : "outline"}
+            type="button"
             onClick={() => setActiveFilter("system")}
             className="rounded-full px-6 transition-all duration-300"
           >
@@ -105,6 +111,7 @@ export default function OurWork() {
           </Button>
           <Button
             variant={activeFilter === "design" ? "default" : "outline"}
+            type="button"
             onClick={() => setActiveFilter("design")}
             className="rounded-full px-6 transition-all duration-300"
           >
