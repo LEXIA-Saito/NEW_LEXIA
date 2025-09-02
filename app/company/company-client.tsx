@@ -55,11 +55,13 @@ export default function CompanyClient() {
           料金を確認する
         </Button>
       </Link>
-      <Link href="#principles">
-        <Button variant="outline" className="w-full sm:w-auto bg-transparent">
-          理念を見る
-        </Button>
-      </Link>
+      <Button
+        variant="outline"
+        className="w-full sm:w-auto bg-transparent"
+        asChild
+      >
+        <Link href="#principles">理念を見る</Link>
+      </Button>
     </div>
   )
 
