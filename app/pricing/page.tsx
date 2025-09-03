@@ -6,7 +6,6 @@ import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import HomepageCalculator from "@/components/pricing/homepage-calculator"
-import HomepageRunningCost from "@/components/pricing/homepage-running-cost"
 import GeneralPricingTable, {
   PricingItem,
 } from "@/components/pricing/general-pricing-table"
@@ -74,7 +73,6 @@ export default function PricingPage() {
             </div>
             <TabsContent value="homepage">
               <HomepageCalculator />
-              <HomepageRunningCost />
             </TabsContent>
             <TabsContent value="ec">
               <EcCalculator />
