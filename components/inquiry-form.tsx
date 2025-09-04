@@ -24,7 +24,7 @@ export default function InquiryForm() {
   const purposes = watch("purposes") || {}
   const contents = watch("contents") || {}
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: Record<string, any>) => {
     setSubmitting(true)
     setError(null)
 
@@ -299,44 +299,44 @@ export default function InquiryForm() {
             <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
               差し支えなければ、おおよそのご予算をお聞かせください。ご予算に応じて最適なプランをご提案します。
             </p>
-            <RadioGroup className="grid grid-cols-1 sm:grid-cols-2 gap-2" {...register("budget")}>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="~5" id="budget-5" />
-                <Label htmlFor="budget-5">~5万円</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="5-10" id="budget-10" />
-                <Label htmlFor="budget-10">5~10万円</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="10-15" id="budget-15" />
-                <Label htmlFor="budget-15">10~15万円</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="15-30" id="budget-30" />
-                <Label htmlFor="budget-30">15~30万円</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="30-50" id="budget-50" />
-                <Label htmlFor="budget-50">30~50万円</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="50-100" id="budget-100" />
-                <Label htmlFor="budget-100">50~100万円</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="100+" id="budget-plus" />
-                <Label htmlFor="budget-plus">100万～</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="consultation" id="budget-consultation" />
-                <Label htmlFor="budget-consultation">具体的な相談がしたい</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="other" id="budget-other" />
-                <Label htmlFor="budget-other">その他</Label>
-              </div>
-            </RadioGroup>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <label className="flex items-center gap-2">
+                <input type="radio" value="~5" {...register("budget")} />
+                ~5万円
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="5-10" {...register("budget")} />
+                5~10万円
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="10-15" {...register("budget")} />
+                10~15万円
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="15-30" {...register("budget")} />
+                15~30万円
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="30-50" {...register("budget")} />
+                30~50万円
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="50-100" {...register("budget")} />
+                50~100万円
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="100+" {...register("budget")} />
+                100万～
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="consultation" {...register("budget")} />
+                具体的な相談がしたい
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="other" {...register("budget")} />
+                その他
+              </label>
+            </div>
           </div>
 
           <div>
@@ -347,32 +347,32 @@ export default function InquiryForm() {
             <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
               ホームページを公開するためのサーバーやドメインについてです。
             </p>
-            <RadioGroup className="space-y-2" {...register("serverDomain")}>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="have-both" id="server-both" />
-                <Label htmlFor="server-both">既に持っている</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="have-none" id="server-none" />
-                <Label htmlFor="server-none">持っていない</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="will-get" id="server-get" />
-                <Label htmlFor="server-get">これから取得する</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="server-only" id="server-only" />
-                <Label htmlFor="server-only">サーバーのみ持っている</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="domain-only" id="domain-only" />
-                <Label htmlFor="domain-only">ドメインのみ持っている</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="need-consultation" id="server-consultation" />
-                <Label htmlFor="server-consultation">よくわからない・相談したい</Label>
-              </div>
-            </RadioGroup>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2">
+                <input type="radio" value="have-both" {...register("serverDomain")} />
+                既に持っている
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="have-none" {...register("serverDomain")} />
+                持っていない
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="will-get" {...register("serverDomain")} />
+                これから取得する
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="server-only" {...register("serverDomain")} />
+                サーバーのみ持っている
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="domain-only" {...register("serverDomain")} />
+                ドメインのみ持っている
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="need-consultation" {...register("serverDomain")} />
+                よくわからない・相談したい
+              </label>
+            </div>
           </div>
 
           <div>
@@ -383,24 +383,24 @@ export default function InquiryForm() {
             <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
               ホームページに使用するロゴデータや写真素材についてです。
             </p>
-            <RadioGroup className="space-y-2" {...register("materials")}>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="all-ready" id="materials-all" />
-                <Label htmlFor="materials-all">全て準備してある</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="partial-ready" id="materials-partial" />
-                <Label htmlFor="materials-partial">一部準備してある</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="will-prepare" id="materials-prepare" />
-                <Label htmlFor="materials-prepare">これから用意する</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="need-help" id="materials-help" />
-                <Label htmlFor="materials-help">全くない・依頼したい</Label>
-              </div>
-            </RadioGroup>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2">
+                <input type="radio" value="all-ready" {...register("materials")} />
+                全て準備してある
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="partial-ready" {...register("materials")} />
+                一部準備してある
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="will-prepare" {...register("materials")} />
+                これから用意する
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" value="need-help" {...register("materials")} />
+                全くない・依頼したい
+              </label>
+            </div>
           </div>
 
           <div>

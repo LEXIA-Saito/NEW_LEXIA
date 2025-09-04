@@ -82,6 +82,7 @@ export default function LexiaLogoParticles() {
     }
 
     function createInitialParticles() {
+      if (!canvas) return
       const baseParticleCount = 7000
       const particleCount = Math.floor(
         baseParticleCount * Math.sqrt((canvas.width * canvas.height) / (1920 * 1080)),
@@ -153,6 +154,7 @@ export default function LexiaLogoParticles() {
     animate()
 
     const handleResize = () => {
+      if (!canvas) return
       updateCanvasSize()
       createTextImage()
       particles = []
@@ -190,19 +192,23 @@ export default function LexiaLogoParticles() {
     }
 
     window.addEventListener("resize", handleResize)
-    canvas.addEventListener("mousemove", handleMouseMove)
-    canvas.addEventListener("touchmove", handleTouchMove, { passive: false })
-    canvas.addEventListener("mouseleave", handleMouseLeave)
-    canvas.addEventListener("touchstart", handleTouchStart)
-    canvas.addEventListener("touchend", handleTouchEnd)
+    if (canvas) {
+      canvas.addEventListener("mousemove", handleMouseMove)
+      canvas.addEventListener("touchmove", handleTouchMove, { passive: false })
+      canvas.addEventListener("mouseleave", handleMouseLeave)
+      canvas.addEventListener("touchstart", handleTouchStart)
+      canvas.addEventListener("touchend", handleTouchEnd)
+    }
 
     return () => {
       window.removeEventListener("resize", handleResize)
-      canvas.removeEventListener("mousemove", handleMouseMove)
-      canvas.removeEventListener("touchmove", handleTouchMove)
-      canvas.removeEventListener("mouseleave", handleMouseLeave)
-      canvas.removeEventListener("touchstart", handleTouchStart)
-      canvas.removeEventListener("touchend", handleTouchEnd)
+      if (canvas) {
+        canvas.removeEventListener("mousemove", handleMouseMove)
+        canvas.removeEventListener("touchmove", handleTouchMove)
+        canvas.removeEventListener("mouseleave", handleMouseLeave)
+        canvas.removeEventListener("touchstart", handleTouchStart)
+        canvas.removeEventListener("touchend", handleTouchEnd)
+      }
       cancelAnimationFrame(animationFrameId)
     }
   }, [isMobile])
