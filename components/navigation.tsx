@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Instagram, Linkedin, Share2, Phone, Mail } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LOGO_URL, LOGO_WHITE_URL, LOGO_TEXT_URL, LOGO_TEXT_WHITE_URL } from "@/lib/config"
+import { trackEvent } from "@/lib/analytics"
 
 // Japanese navigation items
 export const navItems = [
@@ -64,12 +65,7 @@ export default function Navigation() {
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
 
-  // GA4 event helper (fires only if gtag exists)
-  const gaEvent = (name: string, params: Record<string, any> = {}) => {
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      ;(window as any).gtag("event", name, params)
-    }
-  }
+
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -345,7 +341,7 @@ export default function Navigation() {
                 href="tel:+819017423456"
                 aria-label="今すぐ電話"
                 className="text-neutral-900 dark:text-neutral-100"
-                onClick={() => gaEvent("tel_click", { location: "header", phone: "09017423456" })}
+                onClick={() => trackEvent("tel_click", { location: "header", phone: "09017423456" })}
               >
                 <Phone className="h-5 w-5" />
               </motion.a>
@@ -356,7 +352,7 @@ export default function Navigation() {
                 href="/contact"
                 aria-label="お問い合わせ"
                 className="text-neutral-900 dark:text-neutral-100"
-                onClick={() => gaEvent("contact_click", { location: "header", type: "form" })}
+                onClick={() => trackEvent("contact_click", { location: "header", type: "form" })}
               >
                 <Mail className="h-5 w-5" />
               </motion.a>
@@ -367,7 +363,7 @@ export default function Navigation() {
                 className="text-neutral-900 dark:text-neutral-100"
                 onClick={() => {
                   setMobileMenuOpen(true)
-                  gaEvent("menu_open", { location: "header" })
+                  trackEvent("menu_open", { location: "header" })
                 }}
                 aria-label="メニューを開く"
               >
@@ -430,7 +426,7 @@ export default function Navigation() {
               <button
                 onClick={() => {
                   setMobileMenuOpen(false)
-                  gaEvent("menu_close", { location: "drawer" })
+                  trackEvent("menu_close", { location: "drawer" })
                 }}
                 className="text-neutral-900 dark:text-neutral-100"
                 aria-label="メニューを閉じる"
@@ -494,7 +490,7 @@ export default function Navigation() {
                           : "text-neutral-500 dark:text-neutral-400"
                       }`}
                       onClick={(e) => {
-                        gaEvent("nav_click", { item: item.name, href: item.href, location: "mobile_menu" })
+                        trackEvent("nav_click", { item: item.name, href: item.href, location: "mobile_menu" })
                         handleNavigation(e, item.href)
                       }}
                     >
@@ -534,7 +530,7 @@ export default function Navigation() {
                   href="tel:+819017423456"
                   className="flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 dark:border-neutral-700 py-3 text-base text-neutral-900 dark:text-neutral-100"
                   aria-label="今すぐ電話する"
-                  onClick={() => gaEvent("tel_click", { location: "drawer_bottom", phone: "09017423456" })}
+                  onClick={() => trackEvent("tel_click", { location: "drawer_bottom", phone: "09017423456" })}
                 >
                   <Phone className="h-5 w-5" /> 今すぐ電話
                 </a>
@@ -542,7 +538,7 @@ export default function Navigation() {
                   href="/contact"
                   className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 py-3 text-base"
                   aria-label="お問い合わせ"
-                  onClick={() => gaEvent("contact_click", { location: "drawer_bottom", type: "form" })}
+                  onClick={() => trackEvent("contact_click", { location: "drawer_bottom", type: "form" })}
                 >
                   <Mail className="h-5 w-5" /> お問い合わせ
                 </Link>
@@ -551,7 +547,7 @@ export default function Navigation() {
                 <a
                   href="mailto:lexia0web@gmail.com"
                   className="text-sm text-neutral-500 dark:text-neutral-400 underline"
-                  onClick={() => gaEvent("contact_click", { location: "drawer_bottom", type: "email" })}
+                  onClick={() => trackEvent("contact_click", { location: "drawer_bottom", type: "email" })}
                 >
                   メールで問い合わせ（lexia0web@gmail.com）
                 </a>

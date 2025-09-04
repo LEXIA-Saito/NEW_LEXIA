@@ -6,23 +6,12 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-interface Attachment {
-  name: string
-  content: string
-  type: string
-}
 
 export default function InquiryForm() {
-  const { register, handleSubmit, watch, formState: { errors, isSubmitSuccessful } } = useForm()
+  const { register, handleSubmit, formState: { errors, isSubmitSuccessful } } = useForm()
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
-  const purposes = watch("purposes") || {}
-  const contents = watch("contents") || {}
 
   const onSubmit = async (data: Record<string, any>) => {
     setSubmitting(true)
@@ -35,46 +24,50 @@ export default function InquiryForm() {
         body: JSON.stringify(data)
       })
       if (!res.ok) throw new Error("Request failed")
-    } catch (e) {
+    } catch {
       setError("送信に失敗しました")
+    } finally {
       setSubmitting(false)
-      return
     }
-
-    setSubmitting(false)
   }
+
+  const sectionHeaderClass = "text-xl font-medium text-neutral-900 dark:text-neutral-100 mb-6 border-b border-neutral-200 dark:border-neutral-800 pb-2"
+  const requiredLabelClass = "flex items-center gap-1"
+  const optionalLabelClass = "text-neutral-500 text-sm ml-2"
+  const errorClass = "text-red-500 text-sm mt-1"
+  const descriptionClass = "text-sm text-neutral-600 dark:text-neutral-400 mb-3"
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       {/* お客様情報 */}
       <section>
-        <h2 className="text-xl font-medium text-neutral-900 dark:text-neutral-100 mb-6 border-b border-neutral-200 dark:border-neutral-800 pb-2">
+        <h2 className={sectionHeaderClass}>
           お客様情報
         </h2>
         
         <div className="space-y-6">
           <div>
-            <Label className="flex items-center gap-1">
+            <Label className={requiredLabelClass}>
               お名前（担当者様）
               <span className="text-red-500 text-sm">必須</span>
             </Label>
             <Input {...register("name", { required: true })} placeholder="歴史有 太郎" />
-            {errors.name && <p className="text-red-500 text-sm mt-1">必須項目です</p>}
+            {errors.name && <p className={errorClass}>必須項目です</p>}
           </div>
 
           <div>
-            <Label className="flex items-center gap-1">
+            <Label className={requiredLabelClass}>
               おなまえ（ふりがな）
               <span className="text-red-500 text-sm">必須</span>
             </Label>
             <Input {...register("nameKana", { required: true })} placeholder="れきしあ たろう" />
-            {errors.nameKana && <p className="text-red-500 text-sm mt-1">必須項目です</p>}
+            {errors.nameKana && <p className={errorClass}>必須項目です</p>}
           </div>
 
           <div>
             <Label>
               会社名・団体名
-              <span className="text-neutral-500 text-sm ml-2">任意</span>
+              <span className={optionalLabelClass}>任意</span>
             </Label>
             <Input {...register("company")} placeholder="LEXIA" />
           </div>
@@ -82,33 +75,33 @@ export default function InquiryForm() {
           <div>
             <Label>
               役職・部署名
-              <span className="text-neutral-500 text-sm ml-2">任意</span>
+              <span className={optionalLabelClass}>任意</span>
             </Label>
             <Input {...register("position")} placeholder="CEO" />
           </div>
 
           <div>
-            <Label className="flex items-center gap-1">
+            <Label className={requiredLabelClass}>
               メールアドレス
               <span className="text-red-500 text-sm">必須</span>
             </Label>
             <Input type="email" {...register("email", { required: true })} placeholder="info@lexia.com" />
-            {errors.email && <p className="text-red-500 text-sm mt-1">必須項目です</p>}
+            {errors.email && <p className={errorClass}>必須項目です</p>}
           </div>
 
           <div>
-            <Label className="flex items-center gap-1">
+            <Label className={requiredLabelClass}>
               電話番号
               <span className="text-red-500 text-sm">必須</span>
             </Label>
             <Input {...register("phone", { required: true })} placeholder="09012345678" />
-            {errors.phone && <p className="text-red-500 text-sm mt-1">必須項目です</p>}
+            {errors.phone && <p className={errorClass}>必須項目です</p>}
           </div>
 
           <div>
             <Label>
               既存のウェブサイト・既にお持ちの場合
-              <span className="text-neutral-500 text-sm ml-2">任意</span>
+              <span className={optionalLabelClass}>任意</span>
             </Label>
             <Input {...register("existingWebsite")} placeholder="lexia@lexia.com" />
           </div>
@@ -117,17 +110,17 @@ export default function InquiryForm() {
 
       {/* 制作されたいホームページについて */}
       <section>
-        <h2 className="text-xl font-medium text-neutral-900 dark:text-neutral-100 mb-6 border-b border-neutral-200 dark:border-neutral-800 pb-2">
+        <h2 className={sectionHeaderClass}>
           制作されたいホームページについて
         </h2>
 
         <div className="space-y-6">
           <div>
-            <Label className="flex items-center gap-1">
+            <Label className={requiredLabelClass}>
               ホームページの目的・ゴール
               <span className="text-red-500 text-sm">必須</span>
             </Label>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
+            <p className={descriptionClass}>
               ホームページを通じて何を達成したいか、具体的に教えてください。
             </p>
             <div className="space-y-2">
@@ -156,13 +149,13 @@ export default function InquiryForm() {
                 その他
               </label>
             </div>
-            {errors.purposes && <p className="text-red-500 text-sm mt-1">必須項目です</p>}
+            {errors.purposes && <p className={errorClass}>必須項目です</p>}
           </div>
 
           <div>
             <Label>
               ホームページの目的・ゴール自由記述
-              <span className="text-neutral-500 text-sm ml-2">任意</span>
+              <span className={optionalLabelClass}>任意</span>
             </Label>
             <Textarea {...register("purposeDetails")} placeholder="見た人が誰かに紹介しちゃうようなサイトにしたい" />
           </div>
@@ -251,15 +244,15 @@ export default function InquiryForm() {
                 その他
               </label>
             </div>
-            {errors.contents && <p className="text-red-500 text-sm mt-1">必須項目です</p>}
+            {errors.contents && <p className={errorClass}>必須項目です</p>}
           </div>
 
           <div>
             <Label>
               デザインのイメージ・雰囲気
-              <span className="text-neutral-500 text-sm ml-2">任意</span>
+              <span className={optionalLabelClass}>任意</span>
             </Label>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">
+            <p className={descriptionClass.replace("mb-3", "mb-2")}>
               イメージしているサイトの雰囲気やデザインを教えてください<br />
               言葉で表現しにくい場合は、後述の参考サイトでカバーできます。
             </p>
@@ -269,9 +262,9 @@ export default function InquiryForm() {
           <div>
             <Label>
               参考サイト
-              <span className="text-neutral-500 text-sm ml-2">任意</span>
+              <span className={optionalLabelClass}>任意</span>
             </Label>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
+            <p className={descriptionClass.replace("mb-3", "mb-4")}>
               イメージに近いサイト、デザインや構成が好きなサイト、逆に苦手なサイトなどがあれば教えてください。
             </p>
             
@@ -294,9 +287,9 @@ export default function InquiryForm() {
           <div>
             <Label>
               ご予算感
-              <span className="text-neutral-500 text-sm ml-2">任意</span>
+              <span className={optionalLabelClass}>任意</span>
             </Label>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
+            <p className={descriptionClass}>
               差し支えなければ、おおよそのご予算をお聞かせください。ご予算に応じて最適なプランをご提案します。
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -406,9 +399,9 @@ export default function InquiryForm() {
           <div>
             <Label>
               その他ご要望・ご質問など
-              <span className="text-neutral-500 text-sm ml-2">任意</span>
+              <span className={optionalLabelClass}>任意</span>
             </Label>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">
+            <p className={descriptionClass.replace("mb-3", "mb-2")}>
               上記以外に伝えたいこと、事前に聞いておきたいことなどがあればご自由にご記入ください。
             </p>
             <Textarea {...register("additionalRequests")} rows={4} />
