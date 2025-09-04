@@ -316,32 +316,31 @@ export default function CompanyClient() {
             TEL: 090-1742-3456
           </p>
           <div className="w-full h-64 md:h-96">
-            {process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ? (
-              <iframe
-                title="LEXIA所在地"
-                src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=${encodeURIComponent(
-                  '愛知県碧南市川端町1-45',
-                )}`}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-              />
-            ) : (
-              <p className="text-neutral-700 dark:text-neutral-300">
-                <a
-                  href="https://maps.google.com/?q=愛知県碧南市川端町1-45"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline"
-                >
-                  Googleマップで場所を開く
-                </a>
-              </p>
-            )}
+            <iframe
+              title="LEXIA所在地"
+              src={
+                process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+                  ? `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=${encodeURIComponent('愛知県碧南市川端町1-45')}`
+                  : `https://maps.google.com/maps?q=${encodeURIComponent('愛知県碧南市川端町1-45')}&output=embed`
+              }
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
           </div>
+          <p className="text-neutral-700 dark:text-neutral-300">
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent('愛知県碧南市川端町1-45')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              Googleマップで場所を開く
+            </a>
+          </p>
         </section>
       </main>
       <Footer />
