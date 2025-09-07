@@ -37,7 +37,7 @@ const members = [
     name: "齋藤李保",
     role: "デザイナー",
     href: "/team/riho-saito",
-    img: "/placeholder-user.jpg",
+    img: "/images/riho-saito-profile.webp",
   },
   {
     name: "アシスタント",
