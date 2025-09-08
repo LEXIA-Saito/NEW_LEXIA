@@ -216,7 +216,7 @@ export const projectsData: Project[] = [
     categories: ["website"],
     featured: true,
     year: "2023",
-    tags: ["企業サイト", "2事業統合", "求人機能", "物件検索"],
+    tags: ["企業サイト", "求人機能", "物件検索"],
     location: "愛知県",
     client: "中部開発株式会社様",
     industry: "人材派遣・不動産",
