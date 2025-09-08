@@ -326,18 +326,6 @@ export default function Navigation() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.5 }}
-                href="https://www.instagram.com/lexia_web/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-5 w-5" />
-              </motion.a>
-              <motion.a
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.5 }}
                 href="tel:+819017423456"
                 aria-label="今すぐ電話"
                 className="text-neutral-900 dark:text-neutral-100"
