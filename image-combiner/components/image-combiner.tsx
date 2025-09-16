@@ -5,7 +5,6 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Upload, Download, Sparkles, ImageIcon, Edit, Zap, Shuffle } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Dithering } from "@paper-design/shaders-react"
 
 type Mode = "text-to-image" | "image-editing"
 
@@ -122,7 +121,6 @@ export function ImageCombiner() {
   const [useUrls, setUseUrls] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState(false)
   const [generatedImage, setGeneratedImage] = useState<GeneratedImage | null>(null)
-  const [showAnimation, setShowAnimation] = useState(false)
   const [progress, setProgress] = useState(0)
   const [imageLoaded, setImageLoaded] = useState(false)
   const [prompt, setPrompt] = useState(
@@ -326,25 +324,8 @@ export function ImageCombiner() {
         : image1 && image2 && prompt.trim().length > 0
 
   return (
-    <div className="h-screen flex flex-col bg-background overflow-hidden relative">
-      <div className="fixed inset-0 z-0">
-        <Dithering
-          colorBack="#00000000"
-          colorFront="#614B00"
-          speed={0.43}
-          shape="wave"
-          type="4x4"
-          pxSize={3}
-          scale={1.13}
-          style={{
-            backgroundColor: "#000000",
-            height: "100vh",
-            width: "100vw",
-          }}
-        />
-      </div>
-
-      <div className="relative z-10 flex-1 flex items-center justify-center p-6">
+    <div className="relative flex h-screen flex-col overflow-hidden">
+      <div className="relative z-10 flex flex-1 items-center justify-center p-6">
         <div className="max-w-6xl w-full">
           <div className="bg-black/70 backdrop-blur-sm border-0 p-8 h-full rounded-xl">
             <div className="mb-8">

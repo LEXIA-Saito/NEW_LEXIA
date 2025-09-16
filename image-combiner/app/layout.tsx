@@ -27,8 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="font-mono antialiased">
-        <Suspense fallback={null}>{children}</Suspense>
+      <body className="font-mono antialiased relative">
+        <div className="animated-dot-background" aria-hidden="true" />
+        <Suspense fallback={null}>
+          <div className="relative z-10 flex min-h-screen flex-col">{children}</div>
+        </Suspense>
       </body>
     </html>
   )
