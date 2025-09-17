@@ -1,19 +1,96 @@
 "use client"
 
 import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 
+type InquiryFormValues = {
+  name: string
+  nameKana: string
+  company: string
+  position: string
+  email: string
+  phone: string
+  existingWebsite: string
+  purposes: string[]
+  purposeDetails: string
+  targetAudience: string
+  currentChallenges: string
+  contents: string[]
+  designImage: string
+  referencesite1: string
+  referencesite1Details: string
+  referencesite2: string
+  referencesite2Details: string
+  referencesite3: string
+  referencesite3Details: string
+  budget: string
+  serverDomain: string
+  materials: string
+  additionalRequests: string
+}
+
+const PURPOSE_OPTIONS = [
+  { value: "lead-generation", label: "集客・見込み顧客獲得" },
+  { value: "sales", label: "商品・サービスの販売" },
+  { value: "branding", label: "ブランディング・認知度向上" },
+  { value: "recruitment", label: "採用活動" },
+  { value: "information", label: "情報提供・発信" },
+  { value: "other", label: "その他" }
+] as const
+
+const CONTENT_OPTIONS = [
+  { value: "company-overview", label: "会社概要" },
+  { value: "business-services", label: "事業・サービス紹介" },
+  { value: "product-list", label: "商品一覧" },
+  { value: "customer-voice", label: "お客様の声" },
+  { value: "case-studies", label: "実績紹介" },
+  { value: "blog-news", label: "ブログ・お知らせ" },
+  { value: "contact-form", label: "お問い合わせフォーム" },
+  { value: "recruitment", label: "採用情報" },
+  { value: "faq", label: "よくある質問" },
+  { value: "document-download", label: "資料ダウンロード" },
+  { value: "member-login", label: "会員登録・ログイン" },
+  { value: "reservation-system", label: "予約システム" },
+  { value: "other", label: "その他" }
+] as const
+
 export default function InquiryForm() {
-  const { register, handleSubmit, formState: { errors, isSubmitSuccessful } } = useForm()
+  const { register, handleSubmit, control, formState: { errors, isSubmitSuccessful } } = useForm<InquiryFormValues>({
+    defaultValues: {
+      name: "",
+      nameKana: "",
+      company: "",
+      position: "",
+      email: "",
+      phone: "",
+      existingWebsite: "",
+      purposes: [],
+      purposeDetails: "",
+      targetAudience: "",
+      currentChallenges: "",
+      contents: [],
+      designImage: "",
+      referencesite1: "",
+      referencesite1Details: "",
+      referencesite2: "",
+      referencesite2Details: "",
+      referencesite3: "",
+      referencesite3Details: "",
+      budget: "",
+      serverDomain: "",
+      materials: "",
+      additionalRequests: ""
+    }
+  })
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const onSubmit = async (data: Record<string, any>) => {
+  const onSubmit = async (data: InquiryFormValues) => {
     setSubmitting(true)
     setError(null)
 
@@ -44,15 +121,15 @@ export default function InquiryForm() {
         <h2 className={sectionHeaderClass}>
           お客様情報
         </h2>
-        
+
         <div className="space-y-6">
           <div>
             <Label className={requiredLabelClass}>
               お名前（担当者様）
               <span className="text-red-500 text-sm">必須</span>
             </Label>
-            <Input {...register("name", { required: true })} placeholder="歴史有 太郎" />
-            {errors.name && <p className={errorClass}>必須項目です</p>}
+            <Input {...register("name", { required: "必須項目です" })} placeholder="歴史有 太郎" />
+            {errors.name && <p className={errorClass}>{errors.name.message}</p>}
           </div>
 
           <div>
@@ -60,8 +137,8 @@ export default function InquiryForm() {
               おなまえ（ふりがな）
               <span className="text-red-500 text-sm">必須</span>
             </Label>
-            <Input {...register("nameKana", { required: true })} placeholder="れきしあ たろう" />
-            {errors.nameKana && <p className={errorClass}>必須項目です</p>}
+            <Input {...register("nameKana", { required: "必須項目です" })} placeholder="れきしあ たろう" />
+            {errors.nameKana && <p className={errorClass}>{errors.nameKana.message}</p>}
           </div>
 
           <div>
@@ -85,8 +162,8 @@ export default function InquiryForm() {
               メールアドレス
               <span className="text-red-500 text-sm">必須</span>
             </Label>
-            <Input type="email" {...register("email", { required: true })} placeholder="info@lexia.com" />
-            {errors.email && <p className={errorClass}>必須項目です</p>}
+            <Input type="email" {...register("email", { required: "必須項目です" })} placeholder="info@lexia.com" />
+            {errors.email && <p className={errorClass}>{errors.email.message}</p>}
           </div>
 
           <div>
@@ -94,8 +171,8 @@ export default function InquiryForm() {
               電話番号
               <span className="text-red-500 text-sm">必須</span>
             </Label>
-            <Input {...register("phone", { required: true })} placeholder="09012345678" />
-            {errors.phone && <p className={errorClass}>必須項目です</p>}
+            <Input {...register("phone", { required: "必須項目です" })} placeholder="09012345678" />
+            {errors.phone && <p className={errorClass}>{errors.phone.message}</p>}
           </div>
 
           <div>
@@ -123,33 +200,40 @@ export default function InquiryForm() {
             <p className={descriptionClass}>
               ホームページを通じて何を達成したいか、具体的に教えてください。
             </p>
-            <div className="space-y-2">
-              <label className="flex items-center gap-2">
-                <Checkbox value="lead-generation" {...register("purposes", { required: true })} />
-                集客・見込み顧客獲得
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="sales" {...register("purposes", { required: true })} />
-                商品・サービスの販売
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="branding" {...register("purposes", { required: true })} />
-                ブランディング・認知度向上
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="recruitment" {...register("purposes", { required: true })} />
-                採用活動
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="information" {...register("purposes", { required: true })} />
-                情報提供・発信
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="other" {...register("purposes", { required: true })} />
-                その他
-              </label>
-            </div>
-            {errors.purposes && <p className={errorClass}>必須項目です</p>}
+            <Controller
+              name="purposes"
+              control={control}
+              rules={{ validate: (value) => (value?.length ?? 0) > 0 || "必須項目です" }}
+              render={({ field }) => {
+                const selected = field.value ?? []
+
+                return (
+                  <div className="space-y-2">
+                    {PURPOSE_OPTIONS.map((option) => {
+                      const isChecked = selected.includes(option.value)
+
+                      return (
+                        <label key={option.value} className="flex items-center gap-2">
+                          <Checkbox
+                            checked={isChecked}
+                            onCheckedChange={(checked) => {
+                              const shouldSelect = checked === true
+                              const next = shouldSelect
+                                ? Array.from(new Set([...selected, option.value]))
+                                : selected.filter((item) => item !== option.value)
+                              field.onChange(next)
+                              field.onBlur()
+                            }}
+                          />
+                          {option.label}
+                        </label>
+                      )
+                    })}
+                  </div>
+                )
+              }}
+            />
+            {errors.purposes && <p className={errorClass}>{errors.purposes.message}</p>}
           </div>
 
           <div>
@@ -190,61 +274,40 @@ export default function InquiryForm() {
             <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
               具体的にどのようなページや機能が必要か教えてください。
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <label className="flex items-center gap-2">
-                <Checkbox value="company-overview" {...register("contents", { required: true })} />
-                会社概要
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="business-services" {...register("contents", { required: true })} />
-                事業・サービス紹介
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="product-list" {...register("contents", { required: true })} />
-                商品一覧
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="customer-voice" {...register("contents", { required: true })} />
-                お客様の声
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="case-studies" {...register("contents", { required: true })} />
-                実績紹介
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="blog-news" {...register("contents", { required: true })} />
-                ブログ・お知らせ
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="contact-form" {...register("contents", { required: true })} />
-                お問い合わせフォーム
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="recruitment" {...register("contents", { required: true })} />
-                採用情報
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="faq" {...register("contents", { required: true })} />
-                よくある質問
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="document-download" {...register("contents", { required: true })} />
-                資料ダウンロード
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="member-login" {...register("contents", { required: true })} />
-                会員登録・ログイン
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="reservation-system" {...register("contents", { required: true })} />
-                予約システム
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox value="other" {...register("contents", { required: true })} />
-                その他
-              </label>
-            </div>
-            {errors.contents && <p className={errorClass}>必須項目です</p>}
+            <Controller
+              name="contents"
+              control={control}
+              rules={{ validate: (value) => (value?.length ?? 0) > 0 || "必須項目です" }}
+              render={({ field }) => {
+                const selected = field.value ?? []
+
+                return (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {CONTENT_OPTIONS.map((option) => {
+                      const isChecked = selected.includes(option.value)
+
+                      return (
+                        <label key={option.value} className="flex items-center gap-2">
+                          <Checkbox
+                            checked={isChecked}
+                            onCheckedChange={(checked) => {
+                              const shouldSelect = checked === true
+                              const next = shouldSelect
+                                ? Array.from(new Set([...selected, option.value]))
+                                : selected.filter((item) => item !== option.value)
+                              field.onChange(next)
+                              field.onBlur()
+                            }}
+                          />
+                          {option.label}
+                        </label>
+                      )
+                    })}
+                  </div>
+                )
+              }}
+            />
+            {errors.contents && <p className={errorClass}>{errors.contents.message}</p>}
           </div>
 
           <div>
@@ -267,7 +330,7 @@ export default function InquiryForm() {
             <p className={descriptionClass.replace("mb-3", "mb-4")}>
               イメージに近いサイト、デザインや構成が好きなサイト、逆に苦手なサイトなどがあれば教えてください。
             </p>
-            
+
             <div className="space-y-4">
               <div>
                 <Input {...register("referencesite1")} placeholder="https://lexia-hp.com/" />

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -16,15 +16,67 @@ interface Attachment {
   type: string
 }
 
+type ContactFormValues = {
+  name: string
+  company: string
+  email: string
+  phone: string
+  inquiryType: string
+  services: string[]
+  otherService: string
+  budget: string
+  due: string
+  url: string
+  details: string
+  attachment?: FileList
+  privacy: boolean
+  preferredContact: string[]
+}
+
+const INQUIRY_TYPE_OPTIONS = [
+  { value: "new", label: "新規制作依頼" },
+  { value: "update", label: "修正・更新依頼" },
+  { value: "question", label: "相談・質問" }
+] as const
+
+const SERVICE_OPTIONS = [
+  { value: "corporate", label: "コーポレートサイト" },
+  { value: "ec", label: "ECサイト" },
+  { value: "lp", label: "ランディングページ" },
+  { value: "recruit", label: "採用サイト" },
+  { value: "other", label: "その他" }
+] as const
+
+const CONTACT_METHOD_OPTIONS = [
+  { value: "email", label: "メール" },
+  { value: "phone", label: "電話" }
+] as const
+
 export default function ContactForm() {
-  const { register, handleSubmit, watch, formState: { errors, isSubmitSuccessful } } = useForm()
+  const { register, handleSubmit, watch, control, formState: { errors, isSubmitSuccessful } } = useForm<ContactFormValues>({
+    defaultValues: {
+      name: "",
+      company: "",
+      email: "",
+      phone: "",
+      inquiryType: "",
+      services: [],
+      otherService: "",
+      budget: "",
+      due: "",
+      url: "",
+      details: "",
+      privacy: false,
+      preferredContact: []
+    }
+  })
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const services = watch("services") || []
   const showOther = services.includes("other")
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: ContactFormValues) => {
     setSubmitting(true)
     setError(null)
 
@@ -65,8 +117,8 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
         <Label>お名前 *</Label>
-        <Input {...register("name", { required: true })} />
-        {errors.name && <p className="text-red-500 text-sm mt-1">必須項目です</p>}
+        <Input {...register("name", { required: "必須項目です" })} />
+        {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
       </div>
       <div>
         <Label>会社名</Label>
@@ -74,8 +126,8 @@ export default function ContactForm() {
       </div>
       <div>
         <Label>メールアドレス *</Label>
-        <Input type="email" {...register("email", { required: true })} />
-        {errors.email && <p className="text-red-500 text-sm mt-1">必須項目です</p>}
+        <Input type="email" {...register("email", { required: "必須項目です" })} />
+        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
       </div>
       <div>
         <Label>電話番号</Label>
@@ -83,58 +135,98 @@ export default function ContactForm() {
       </div>
       <div>
         <Label>お問い合わせ種別 *</Label>
-        <RadioGroup className="flex flex-col gap-2" {...register("inquiryType", { required: true })}>
-          <div className="flex items-center gap-2">
-            <RadioGroupItem value="new" id="new" />
-            <Label htmlFor="new">新規制作依頼</Label>
-          </div>
-          <div className="flex items-center gap-2">
-            <RadioGroupItem value="update" id="update" />
-            <Label htmlFor="update">修正・更新依頼</Label>
-          </div>
-          <div className="flex items-center gap-2">
-            <RadioGroupItem value="question" id="question" />
-            <Label htmlFor="question">相談・質問</Label>
-          </div>
-        </RadioGroup>
-        {errors.inquiryType && <p className="text-red-500 text-sm mt-1">必須項目です</p>}
+        <Controller
+          name="inquiryType"
+          control={control}
+          rules={{ required: "必須項目です" }}
+          render={({ field }) => (
+            <RadioGroup
+              className="flex flex-col gap-2"
+              value={field.value || undefined}
+              onValueChange={(value) => {
+                field.onChange(value)
+                field.onBlur()
+              }}
+            >
+              {INQUIRY_TYPE_OPTIONS.map((option) => (
+                <div key={option.value} className="flex items-center gap-2">
+                  <RadioGroupItem value={option.value} id={option.value} />
+                  <Label htmlFor={option.value}>{option.label}</Label>
+                </div>
+              ))}
+            </RadioGroup>
+          )}
+        />
+        {errors.inquiryType && <p className="text-red-500 text-sm mt-1">{errors.inquiryType.message}</p>}
       </div>
       <div>
         <Label>ご希望の制作内容 *</Label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <label className="flex items-center gap-2">
-            <Checkbox value="corporate" {...register("services", { required: true })} />コーポレートサイト
-          </label>
-          <label className="flex items-center gap-2">
-            <Checkbox value="ec" {...register("services", { required: true })} />ECサイト
-          </label>
-          <label className="flex items-center gap-2">
-            <Checkbox value="lp" {...register("services", { required: true })} />ランディングページ
-          </label>
-          <label className="flex items-center gap-2">
-            <Checkbox value="recruit" {...register("services", { required: true })} />採用サイト
-          </label>
-          <label className="flex items-center gap-2">
-            <Checkbox value="other" {...register("services", { required: true })} />その他
-          </label>
-        </div>
+        <Controller
+          name="services"
+          control={control}
+          rules={{ validate: (value) => (value?.length ?? 0) > 0 || "必須項目です" }}
+          render={({ field }) => {
+            const selected = field.value ?? []
+
+            return (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {SERVICE_OPTIONS.map((option) => {
+                  const isChecked = selected.includes(option.value)
+
+                  return (
+                    <label key={option.value} className="flex items-center gap-2">
+                      <Checkbox
+                        checked={isChecked}
+                        onCheckedChange={(checked) => {
+                          const shouldSelect = checked === true
+                          const next = shouldSelect
+                            ? Array.from(new Set([...selected, option.value]))
+                            : selected.filter((item) => item !== option.value)
+                          field.onChange(next)
+                          field.onBlur()
+                        }}
+                      />
+                      {option.label}
+                    </label>
+                  )
+                })}
+              </div>
+            )
+          }}
+        />
         {showOther && (
           <Input className="mt-2" placeholder="その他の内容" {...register("otherService")}/>
         )}
-        {errors.services && <p className="text-red-500 text-sm mt-1">必須項目です</p>}
+        {errors.services && <p className="text-red-500 text-sm mt-1">{errors.services.message}</p>}
       </div>
       <div>
         <Label>予算感</Label>
-        <Select {...register("budget") as any}>
-          <SelectTrigger>
-            <SelectValue placeholder="選択してください" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="~50">〜50万円</SelectItem>
-            <SelectItem value="50-100">50〜100万円</SelectItem>
-            <SelectItem value="100-">100万円以上</SelectItem>
-          </SelectContent>
-        </Select>
+        <Controller
+          name="budget"
+          control={control}
+          render={({ field }) => (
+            <Select
+              value={field.value || undefined}
+              onValueChange={(value) => {
+                field.onChange(value)
+              }}
+              onOpenChange={(open) => {
+                if (!open) {
+                  field.onBlur()
+                }
+              }}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="選択してください" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="~50">〜50万円</SelectItem>
+                <SelectItem value="50-100">50〜100万円</SelectItem>
+                <SelectItem value="100-">100万円以上</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        />
       </div>
       <div>
         <Label>希望納期</Label>
@@ -153,21 +245,60 @@ export default function ContactForm() {
         <Input type="file" accept="image/*,application/pdf" {...register("attachment")} />
       </div>
       <div>
-        <label className="flex items-center gap-2">
-          <Checkbox {...register("privacy", { required: true })} />プライバシーポリシーに同意します
-        </label>
-        {errors.privacy && <p className="text-red-500 text-sm mt-1">必須項目です</p>}
+        <Controller
+          name="privacy"
+          control={control}
+          rules={{ validate: (value) => value || "必須項目です" }}
+          render={({ field }) => (
+            <label className="flex items-center gap-2">
+              <Checkbox
+                checked={field.value}
+                onCheckedChange={(checked) => {
+                  field.onChange(checked === true)
+                }}
+                onBlur={field.onBlur}
+                ref={field.ref}
+              />
+              プライバシーポリシーに同意します
+            </label>
+          )}
+        />
+        {errors.privacy && <p className="text-red-500 text-sm mt-1">{errors.privacy.message}</p>}
       </div>
       <div>
         <Label>希望連絡方法</Label>
-        <div className="flex gap-4">
-          <label className="flex items-center gap-2">
-            <Checkbox value="email" {...register("preferredContact")} />メール
-          </label>
-          <label className="flex items-center gap-2">
-            <Checkbox value="phone" {...register("preferredContact")} />電話
-          </label>
-        </div>
+        <Controller
+          name="preferredContact"
+          control={control}
+          render={({ field }) => {
+            const selected = field.value ?? []
+
+            return (
+              <div className="flex gap-4">
+                {CONTACT_METHOD_OPTIONS.map((option) => {
+                  const isChecked = selected.includes(option.value)
+
+                  return (
+                    <label key={option.value} className="flex items-center gap-2">
+                      <Checkbox
+                        checked={isChecked}
+                        onCheckedChange={(checked) => {
+                          const shouldSelect = checked === true
+                          const next = shouldSelect
+                            ? Array.from(new Set([...selected, option.value]))
+                            : selected.filter((item) => item !== option.value)
+                          field.onChange(next)
+                          field.onBlur()
+                        }}
+                      />
+                      {option.label}
+                    </label>
+                  )
+                })}
+              </div>
+            )
+          }}
+        />
       </div>
       {error && <p className="text-red-500 text-sm">{error}</p>}
       {isSubmitSuccessful && !error && (
