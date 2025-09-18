@@ -17,6 +17,10 @@ interface CyberBackgroundProps {
   mouseRadius?: number
   /** 影響強度（0〜1目安）: 粒子速度に足されるバイアス量 */
   mouseStrength?: number
+  /** 靡きプリセット: subtle | medium | strong */
+  swayPreset?: "subtle" | "medium" | "strong"
+  /** 影響モード: blend=ベクトル補間, swirl=渦（直交方向） */
+  swayMode?: "blend" | "swirl"
 }
 
 function createNoise() {
@@ -121,8 +125,10 @@ export default function ParticlesBackground({
   noiseIntensity = 0.003,
   particleSize = { min: 0.5, max: 2 },
   className,
-  mouseRadius = 160,
-  mouseStrength = 0.08,
+  mouseRadius,
+  mouseStrength,
+  swayPreset = "strong",
+  swayMode = "blend",
 }: CyberBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const noise = createNoise()
@@ -160,6 +166,35 @@ export default function ParticlesBackground({
       maxLife: 100 + Math.random() * 50,
     }))
 
+    // プリセットに応じた係数
+    const preset = (() => {
+      switch (swayPreset) {
+        case "subtle":
+          return { baseSpeed: 1.6, swayBoost: 2.0, radius: 200, strength: 0.12, maxSpeed: 2.6 }
+        case "medium":
+          return { baseSpeed: 1.4, swayBoost: 2.3, radius: 230, strength: 0.18, maxSpeed: 2.8 }
+        case "strong":
+        default:
+          return { baseSpeed: 1.3, swayBoost: 2.5, radius: 260, strength: 0.22, maxSpeed: 3.0 }
+      }
+    })()
+
+    const effectiveRadius = (mouseRadius ?? preset.radius)
+    const effectiveStrength = (mouseStrength ?? preset.strength)
+
+    // ユーティリティ
+    const len = (x: number, y: number) => Math.hypot(x, y)
+    const normalize = (x: number, y: number) => {
+      const l = Math.hypot(x, y) || 1
+      return { x: x / l, y: y / l }
+    }
+    const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v))
+    const smoothstep = (edge0: number, edge1: number, x: number) => {
+      const t = clamp((x - edge0) / (edge1 - edge0), 0, 1)
+      return t * t * (3 - 2 * t)
+    }
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t
+
     const animate = () => {
       if (reducedMotionRef.current) {
         // 動きを抑制：クリアのみでループを止める
@@ -184,27 +219,64 @@ export default function ParticlesBackground({
 
         const opacity = Math.sin((particle.life / particle.maxLife) * Math.PI) * 0.15
 
-        const n = noise.simplex3(particle.x * noiseIntensity, particle.y * noiseIntensity, Date.now() * 0.0001)
-
+        // ノイズベースの方向
+        const n = noise.simplex3(
+          particle.x * noiseIntensity,
+          particle.y * noiseIntensity,
+          Date.now() * 0.0001,
+        )
         const angle = n * Math.PI * 4
-        particle.velocity.x = Math.cos(angle) * 2
-        particle.velocity.y = Math.sin(angle) * 2
+        const baseDir = { x: Math.cos(angle), y: Math.sin(angle) }
+        const baseVec = { x: baseDir.x * preset.baseSpeed, y: baseDir.y * preset.baseSpeed }
 
-        // マウス（ポインタ）による靡き効果：半径内で押しのけるような微バイアス
+        // マウス（ポインタ）による靡き効果：blend/swirl 方式
         const mx = pointerRef.current.x
         const my = pointerRef.current.y
+        let finalVx = baseVec.x
+        let finalVy = baseVec.y
         if (mx !== -9999 && my !== -9999) {
           const dx = particle.x - mx
           const dy = particle.y - my
-          const dist = Math.hypot(dx, dy)
-          if (dist > 0 && dist < mouseRadius) {
-            const influence = (1 - dist / mouseRadius) * mouseStrength
-            const nx = dx / dist
-            const ny = dy / dist
-            particle.velocity.x += nx * influence * 6 // 係数で程よく強める
-            particle.velocity.y += ny * influence * 6
+          const dist = len(dx, dy)
+          if (dist > 0 && dist < effectiveRadius) {
+            const falloff = 1 - dist / effectiveRadius
+            // なめらかな重み
+            const w = smoothstep(0, 1, falloff)
+            const away = normalize(dx, dy)
+            let targetX = away.x
+            let targetY = away.y
+            if (swayMode === "swirl") {
+              // 渦：away の直交方向（右回り）
+              const tmp = targetX
+              targetX = -targetY
+              targetY = tmp
+            }
+            // 目標速度ベクトル（外向き/渦方向）
+            const swaySpeed = preset.swayBoost
+            const targetVx = targetX * swaySpeed
+            const targetVy = targetY * swaySpeed
+
+            // ベクトル補間（base→target）
+            finalVx = baseVec.x * (1 - w) + targetVx * w
+            finalVy = baseVec.y * (1 - w) + targetVy * w
+
+            // 速度量も base→swayBoost で補間し、強さ係数も反映
+            const targetSpeed = lerp(preset.baseSpeed, preset.swayBoost, w) * (1 + effectiveStrength)
+            const nrm = normalize(finalVx, finalVy)
+            finalVx = nrm.x * targetSpeed
+            finalVy = nrm.y * targetSpeed
           }
         }
+        // 上限クランプ
+        const sp = len(finalVx, finalVy)
+        const maxSp = preset.maxSpeed
+        if (sp > maxSp) {
+          const k = maxSp / sp
+          finalVx *= k
+          finalVy *= k
+        }
+        particle.velocity.x = finalVx
+        particle.velocity.y = finalVy
 
         particle.x += particle.velocity.x
         particle.y += particle.velocity.y
