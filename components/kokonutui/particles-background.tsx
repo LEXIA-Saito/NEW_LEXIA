@@ -13,6 +13,10 @@ interface CyberBackgroundProps {
   noiseIntensity?: number
   particleSize?: { min: number; max: number }
   className?: string
+  /** 影響半径（px）: マウス周辺で粒子が靡く範囲 */
+  mouseRadius?: number
+  /** 影響強度（0〜1目安）: 粒子速度に足されるバイアス量 */
+  mouseStrength?: number
 }
 
 function createNoise() {
@@ -117,9 +121,16 @@ export default function ParticlesBackground({
   noiseIntensity = 0.003,
   particleSize = { min: 0.5, max: 2 },
   className,
+  mouseRadius = 160,
+  mouseStrength = 0.08,
 }: CyberBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const noise = createNoise()
+  const rafRef = useRef<number | null>(null)
+  const reducedMotionRef = useRef<boolean>(false)
+
+  // ポインタ位置（ビューポート座標）
+  const pointerRef = useRef<{ x: number; y: number }>({ x: -9999, y: -9999 })
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -129,16 +140,18 @@ export default function ParticlesBackground({
     if (!ctx) return
 
     const resizeCanvas = () => {
-      const container = canvas.parentElement
-      if (!container) return
-
-      canvas.width = container.clientWidth
-      canvas.height = container.clientHeight
+      // ビューポートに対して固定なので、ウィンドウサイズに合わせる
+      canvas.width = Math.max(1, Math.floor(window.innerWidth))
+      canvas.height = Math.max(1, Math.floor(window.innerHeight))
     }
 
     resizeCanvas()
 
-    const particles: Particle[] = Array.from({ length: particleCount }, () => ({
+    // 端末幅に応じて粒子数をスケール（モバイル軽量化）
+    const mobileScale = window.innerWidth < 768 ? 0.5 : 1
+    const effectiveParticleCount = Math.max(100, Math.floor(particleCount * mobileScale))
+
+    const particles: Particle[] = Array.from({ length: effectiveParticleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       size: Math.random() * (particleSize.max - particleSize.min) + particleSize.min,
@@ -148,10 +161,17 @@ export default function ParticlesBackground({
     }))
 
     const animate = () => {
+      if (reducedMotionRef.current) {
+        // 動きを抑制：クリアのみでループを止める
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        return
+      }
+
       const isDark = document.documentElement.classList.contains("dark")
       const scheme = isDark ? COLOR_SCHEME.dark : COLOR_SCHEME.light
 
-      ctx.fillStyle = isDark ? "rgba(0, 0, 0, 0.1)" : "rgba(255, 255, 255, 0.1)"
+      // 軽いトレイルを残す半透明フィル
+      ctx.fillStyle = isDark ? "rgba(0, 0, 0, 0.10)" : "rgba(255, 255, 255, 0.10)"
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       for (const particle of particles) {
@@ -170,6 +190,22 @@ export default function ParticlesBackground({
         particle.velocity.x = Math.cos(angle) * 2
         particle.velocity.y = Math.sin(angle) * 2
 
+        // マウス（ポインタ）による靡き効果：半径内で押しのけるような微バイアス
+        const mx = pointerRef.current.x
+        const my = pointerRef.current.y
+        if (mx !== -9999 && my !== -9999) {
+          const dx = particle.x - mx
+          const dy = particle.y - my
+          const dist = Math.hypot(dx, dy)
+          if (dist > 0 && dist < mouseRadius) {
+            const influence = (1 - dist / mouseRadius) * mouseStrength
+            const nx = dx / dist
+            const ny = dy / dist
+            particle.velocity.x += nx * influence * 6 // 係数で程よく強める
+            particle.velocity.y += ny * influence * 6
+          }
+        }
+
         particle.x += particle.velocity.x
         particle.y += particle.velocity.y
 
@@ -184,46 +220,115 @@ export default function ParticlesBackground({
         ctx.fill()
       }
 
-      requestAnimationFrame(animate)
+      rafRef.current = requestAnimationFrame(animate)
     }
 
-    animate()
+    // prefers-reduced-motion を尊重して開始制御
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)")
+    reducedMotionRef.current = !!mql.matches
+    if (!reducedMotionRef.current) {
+      animate()
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+    }
+
+    const updateReducedMotion = () => {
+      const enabled = !!mql.matches
+      const wasReduced = reducedMotionRef.current
+      reducedMotionRef.current = enabled
+      if (!enabled && (wasReduced || !rafRef.current)) {
+        rafRef.current = requestAnimationFrame(animate)
+      } else if (enabled && rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+        rafRef.current = null
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+      }
+    }
+    try {
+      mql.addEventListener("change", updateReducedMotion)
+    } catch {
+      // Safari 旧仕様 fallback
+      // @ts-ignore
+      mql.addListener && mql.addListener(updateReducedMotion)
+    }
 
     const handleResize = () => {
       resizeCanvas()
     }
 
+    const handlePointerMove = (e: PointerEvent) => {
+      pointerRef.current = { x: e.clientX, y: e.clientY }
+    }
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches && e.touches.length > 0) {
+        const t = e.touches[0]
+        pointerRef.current = { x: t.clientX, y: t.clientY }
+      }
+    }
+    const handlePointerLeave = () => {
+      pointerRef.current = { x: -9999, y: -9999 }
+    }
+
+    const handleVisibility = () => {
+      if (document.visibilityState === "hidden" && rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+        rafRef.current = null
+      } else if (document.visibilityState === "visible" && !rafRef.current && !reducedMotionRef.current) {
+        rafRef.current = requestAnimationFrame(animate)
+      }
+    }
+
     window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
+    window.addEventListener("pointermove", handlePointerMove)
+    window.addEventListener("pointerleave", handlePointerLeave)
+    window.addEventListener("touchmove", handleTouchMove, { passive: true })
+    document.addEventListener("visibilitychange", handleVisibility)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      window.removeEventListener("pointermove", handlePointerMove)
+      window.removeEventListener("pointerleave", handlePointerLeave)
+      window.removeEventListener("touchmove", handleTouchMove)
+      document.removeEventListener("visibilitychange", handleVisibility)
+      try {
+        mql.removeEventListener("change", updateReducedMotion)
+      } catch {
+        // @ts-ignore
+        mql.removeListener && mql.removeListener(updateReducedMotion)
+      }
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
   }, [particleCount, noiseIntensity, particleSize, noise])
 
   return (
-    <div className={cn("relative w-full h-screen overflow-hidden", "bg-white dark:bg-black", className)}>
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
-      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center space-y-4"
-        >
-          {title && (
-            <h1 className="text-6xl md:text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-black to-black/70 dark:from-white dark:to-white/70 drop-shadow-sm">
-              {title}
-            </h1>
-          )}
-          {subtitle && (
-            <Link
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://kokonutui.com/"
-              className="text-xl md:text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-black/90 to-black/50 dark:from-white/90 dark:to-white/50 flex items-center justify-center"
-            >
-              {subtitle}
-            </Link>
-          )}
-        </motion.div>
-      </div>
+    <div className="fixed inset-0 w-screen h-[100dvh] overflow-hidden z-0">
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" />
+      {(title || subtitle) && (
+        <div className={cn("relative z-10 flex h-full w-full flex-col items-center justify-center", className)}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center space-y-4"
+          >
+            {title && (
+              <h1 className="text-6xl md:text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-black to-black/70 dark:from-white dark:to-white/70 drop-shadow-sm">
+                {title}
+              </h1>
+            )}
+            {subtitle && (
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://kokonutui.com/"
+                className="text-xl md:text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-black/90 to-black/50 dark:from-white/90 dark:to-white/50 flex items-center justify-center"
+              >
+                {subtitle}
+              </Link>
+            )}
+          </motion.div>
+        </div>
+      )}
     </div>
   )
 }
