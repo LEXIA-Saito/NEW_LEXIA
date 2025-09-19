@@ -142,12 +142,14 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <ThemeProvider defaultTheme="light" storageKey="lexia-theme">
-          <Suspense fallback={null}>
-            <TypewriterEffect />
-            {children}
-            <Analytics />
-            <GoogleAnalytics />
-          </Suspense>
+          <div className="isolate">
+            <Suspense fallback={null}>
+              <TypewriterEffect />
+              {children}
+              <Analytics />
+              <GoogleAnalytics />
+            </Suspense>
+          </div>
         </ThemeProvider>
       </body>
     </html>

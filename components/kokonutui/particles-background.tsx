@@ -205,9 +205,8 @@ export default function ParticlesBackground({
       const isDark = document.documentElement.classList.contains("dark")
       const scheme = isDark ? COLOR_SCHEME.dark : COLOR_SCHEME.light
 
-      // 軽いトレイルを残す半透明フィル
-      ctx.fillStyle = isDark ? "rgba(0, 0, 0, 0.10)" : "rgba(255, 255, 255, 0.10)"
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      // 半透明全面塗り（ベール蓄積）をやめて、完全にクリアする方式に変更
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       for (const particle of particles) {
         particle.life += 1
@@ -373,7 +372,7 @@ export default function ParticlesBackground({
   }, [particleCount, noiseIntensity, particleSize, noise])
 
   return (
-    <div className="fixed inset-0 w-screen h-[100dvh] overflow-hidden z-0">
+    <div className="fixed inset-0 w-screen h-[100dvh] overflow-hidden -z-10">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" />
       {(title || subtitle) && (
         <div className={cn("relative z-10 flex h-full w-full flex-col items-center justify-center", className)}>
