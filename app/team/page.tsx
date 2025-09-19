@@ -41,9 +41,9 @@ const members = [
   },
   {
     name: "アシスタント",
-    role: "制作サポート",
-    href: "/team/assistant",
-    img: "/placeholder-user.jpg",
+    role: "AI Assistant",
+    bio: "LexiaのAIアシスタント。チームの作業を支援し、効率的なワークフローを提供します。",
+    img: "/placeholder-user.svg",
   },
 ]
 

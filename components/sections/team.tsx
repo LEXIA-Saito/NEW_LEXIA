@@ -35,7 +35,7 @@ const teamMembers = [
     name: "アシスタント",
     role: "アシスタント",
     bio: "日々の業務をサポートし、チームが円滑に動くよう支援しています。",
-    image: "/placeholder-user.jpg",
+    image: "/placeholder-user.svg",
     linkedin: "",
     email: "",
     slug: "assistant",
