@@ -97,13 +97,13 @@ function createNoise() {
 const COLOR_SCHEME = {
   light: {
     particle: {
-      color: "rgba(0, 0, 0, 0.07)",
+      color: "rgba(0, 0, 0, 0.15)",
     },
     background: "rgba(255, 255, 255, 0.12)",
   },
   dark: {
     particle: {
-      color: "rgba(255, 255, 255, 0.07)",
+      color: "rgba(255, 255, 255, 0.15)",
     },
     background: "rgba(0, 0, 0, 0.12)",
   },
@@ -216,7 +216,7 @@ export default function ParticlesBackground({
           particle.y = Math.random() * canvas.height
         }
 
-        const opacity = Math.sin((particle.life / particle.maxLife) * Math.PI) * 0.15
+        const opacity = Math.sin((particle.life / particle.maxLife) * Math.PI) * 0.3
 
         // ノイズベースの方向
         const n = noise.simplex3(

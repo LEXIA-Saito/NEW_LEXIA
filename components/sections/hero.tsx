@@ -27,7 +27,7 @@ export default function Hero() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 bg-white dark:bg-neutral-900">
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
+      <div className="absolute inset-0 opacity-60 pointer-events-none">
         <ParticlesBackground className="absolute inset-0 h-full w-full" title="" subtitle="" />
       </div>
 
