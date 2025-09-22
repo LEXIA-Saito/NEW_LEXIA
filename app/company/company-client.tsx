@@ -321,7 +321,7 @@ export default function CompanyClient() {
               src={
                 process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
                   ? `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=${encodeURIComponent('愛知県碧南市川端町1-45')}`
-                  : `https://maps.google.com/maps?q=${encodeURIComponent('愛知県碧南市川端町1-45')}&output=embed`
+                  : 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3273.5372830014103!2d136.99312047575168!3d34.86785227286076!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6004912fde7e69e1%3A0xacdd229f402ed916!2sLEXIA!5e0!3m2!1sja!2sjp!4v1758245732121!5m2!1sja!2sjp'
               }
               width="100%"
               height="100%"
