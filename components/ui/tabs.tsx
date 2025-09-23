@@ -14,7 +14,8 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+      "relative inline-flex h-12 items-center justify-center gap-1 rounded-full border border-neutral-200/70 bg-white/80 p-1 text-neutral-500 shadow-inner backdrop-blur-sm",
+      "dark:border-neutral-700/80 dark:bg-neutral-900/60 dark:text-neutral-400",
       className
     )}
     {...props}
@@ -29,7 +30,12 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
+      "group relative inline-flex items-center justify-center whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium text-neutral-600 transition-all duration-200",
+      "hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white",
+      "data-[state=inactive]:hover:bg-neutral-100/80",
+      "data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-500 data-[state=active]:via-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-indigo-500/20",
+      "dark:text-neutral-300 dark:hover:text-white dark:data-[state=inactive]:hover:bg-neutral-800/60 dark:focus-visible:ring-offset-neutral-900",
+      "disabled:pointer-events-none disabled:opacity-50",
       className
     )}
     {...props}
