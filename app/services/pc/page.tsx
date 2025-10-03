@@ -151,14 +151,14 @@ export default function PcServicePage() {
             <h2 className="sr-only">料金のご案内</h2>
             <p className="text-neutral-800 dark:text-neutral-200 leading-relaxed">
               料金プランについては
-              <Link href="/pricing" className="mx-1 underline underline-offset-4 decoration-neutral-400 hover:decoration-neutral-600">
+              <Link href="https://lexia-hp.com/pricing" className="mx-1 underline underline-offset-4 decoration-neutral-400 hover:decoration-neutral-600">
                 こちらのページ
               </Link>
               にてご案内しています。
             </p>
             <div className="mt-4">
               <Link
-                href="/pricing"
+                href="https://lexia-hp.com/pricing"
                 className="inline-flex items-center justify-center rounded-md bg-neutral-900 text-white px-5 py-3 text-sm md:text-base font-medium hover:bg-neutral-800 transition-colors"
                 aria-label="料金ページを見る"
               >
