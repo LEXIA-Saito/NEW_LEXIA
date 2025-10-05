@@ -158,7 +158,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               <p className="mt-4">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2 text-white transition-colors hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200"
+                  className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2 text-white dark:bg-neutral-100 dark:text-neutral-900"
                 >
                   制作の相談をする
                   <span aria-hidden="true">→</span>

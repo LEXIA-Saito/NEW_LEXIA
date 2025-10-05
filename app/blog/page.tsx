@@ -89,13 +89,13 @@ export default async function BlogIndexPage() {
               posts.map((post) => (
                 <article
                   key={post.slug}
-                  className="group flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/80 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-neutral-900 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900/70 dark:hover:border-neutral-100"
+                  className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/80 p-8 shadow-sm dark:border-neutral-800 dark:bg-neutral-900/70"
                 >
                   <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
                     <span>{post.category}</span>
                     <span>{post.readingTime}</span>
                   </div>
-                  <h2 className="mt-4 text-2xl font-semibold text-neutral-900 transition-colors group-hover:text-neutral-600 dark:text-neutral-100 dark:group-hover:text-neutral-300">
+                  <h2 className="mt-4 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
                     <Link
                       href={`/blog/${post.slug}`}
                       className="focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 dark:focus-visible:ring-neutral-100 dark:focus-visible:ring-offset-neutral-900"
@@ -111,7 +111,7 @@ export default async function BlogIndexPage() {
                   </div>
                   <Link
                     href={`/blog/${post.slug}`}
-                    className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-neutral-900 transition-colors hover:gap-3 dark:text-neutral-100"
+                    className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-neutral-900 dark:text-neutral-100"
                     aria-label={`${post.title}を読む`}
                   >
                     記事を読む
