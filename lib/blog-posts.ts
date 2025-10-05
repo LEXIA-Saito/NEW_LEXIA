@@ -1,148 +1,106 @@
-export type BlogPostSection = {
-  heading?: string
-  body?: string[]
-  list?: string[]
+import "server-only"
+
+import { cache } from "react"
+
+import { fallbackBlogPosts } from "./blog-posts-fallback"
+import type { BlogPost, BlogPostSection } from "./blog-posts.types"
+import { microcmsFetch, MicroCMSApiError, type MicroCMSListResponse } from "./microcms"
+
+const blogEndpoint = process.env.MICROCMS_BLOG_ENDPOINT || "blog"
+const isConfigured = Boolean(
+  process.env.MICROCMS_SERVICE_DOMAIN && process.env.MICROCMS_API_KEY,
+)
+
+type MicroCMSImageField = {
+  url: string
 }
 
-export type BlogPost = {
-  slug: string
+type MicroCMSBlogContent = {
+  id: string
+  slug?: string
   title: string
-  description: string
-  category: string
-  date: string
-  readingTime: string
-  heroImage?: string
-  sections: BlogPostSection[]
+  description?: string
+  category?: string
+  readingTime?: string
+  heroImage?: MicroCMSImageField | string
+  sections?: BlogPostSection[]
+  content?: string
+  contentHtml?: string
+  body?: string
+  publishedAt?: string
+  revisedAt?: string
+  createdAt?: string
+  updatedAt?: string
 }
 
-export const blogPosts: BlogPost[] = [
-  {
-    slug: "kickoff-lexia-blog",
-    title: "LEXIA BLOGスタート。地域密着で届けるWEB制作のリアル",
-    description:
-      "LEXIA BLOG開設の背景と発信していく内容について。碧南から届ける制作現場の知見と最新トレンドを紹介します。",
-    category: "お知らせ",
-    date: "2024-05-01",
-    readingTime: "5分",
-    sections: [
-      {
-        body: [
-          "LEXIA BLOGへようこそ。代表の齋藤です。碧南市を拠点に中小企業や個人事業主のみなさまと伴走してきたなかで、制作プロセスやマーケティングの考え方をもっと丁寧に伝える場が欲しいとずっと感じていました。",
-          "このブログでは、制作の裏側、ツールの活用法、地域ビジネスが成果を伸ばすためのポイントなど、実務で蓄積した知見を惜しみなく公開していきます。",
-        ],
-      },
-      {
-        heading: "これから発信していくテーマ",
-        list: [
-          "制作事例から学ぶ集客改善のヒント",
-          "低予算でも成果につなげるサイト改善のコツ",
-          "ローカルビジネスのための最新SEO・MEO情報",
-          "LEXIAの制作体制やツール選定の裏側",
-        ],
-        body: [
-          "単なる情報発信ではなく、読んでくださった方がすぐに実践できるような内容にこだわります。質問もお気軽にお寄せください。",
-        ],
-      },
-      {
-        heading: "地域に根ざした制作会社として",
-        body: [
-          "私たちは、一社一社の課題に合わせた柔軟な提案を大切にしています。ブログを通じてLEXIAのスタンスを知っていただき、気軽に相談してもらえる関係づくりを目指します。",
-          "次回以降の記事では、早速プロジェクトの進め方やリサーチ手法などを深掘りしていく予定です。ぜひ更新を楽しみにしていてください。",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "local-seo-checklist-2024",
-    title: "2024年版：ローカルSEOで押さえるべき7つのチェックポイント",
-    description:
-      "地域ビジネスがGoogleで選ばれるために、今すぐ取り組めるローカルSEOの実践チェックリストをまとめました。",
-    category: "マーケティング",
-    date: "2024-05-15",
-    readingTime: "7分",
-    sections: [
-      {
-        body: [
-          "検索結果の上位を狙うには、店舗情報を正確に整えることと、ユーザーの体験価値を高めることの両立が重要です。ここでは、碧南・西三河エリアのクライアント支援で成果が出た施策を中心に、すぐに活用できるチェックリストをご紹介します。",
-        ],
-      },
-      {
-        heading: "基本情報の整備",
-        list: [
-          "Googleビジネスプロフィールのオーナー確認と最新化",
-          "営業時間・電話番号・サービス内容の一貫性",
-          "主要カテゴリと補助カテゴリの最適化",
-        ],
-        body: [
-          "まずは正確な情報を届けることが信頼につながります。営業時間の変更などは、Googleだけでなく自社サイトやSNSも同時に更新することで評価が安定します。",
-        ],
-      },
-      {
-        heading: "評価と口コミの活用",
-        list: [
-          "来店後のフォローで口コミ投稿を依頼",
-          "返信テンプレートを用意し、即レスで対応",
-          "写真付きの口コミが増えるように事例を共有",
-        ],
-        body: [
-          "最新のアルゴリズムでは、星の数だけでなく返信率や返信スピードも評価対象です。クレーム対応はパブリックな改善アピールの場として活用しましょう。",
-        ],
-      },
-      {
-        heading: "コンテンツとリンクの強化",
-        list: [
-          "地域名＋サービス名のページを用意",
-          "イベントレポートなど独自性のある記事を作成",
-          "商工会議所など信頼性のあるサイトからリンクを獲得",
-        ],
-        body: [
-          "検索順位はコンテンツの独自性と信頼性で決まります。地域の声を盛り込んだ記事や導入事例は、来店前の不安解消にも効果的です。",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "website-renewal-checkflow",
-    title: "成果につながるホームページリニューアルの進め方",
-    description:
-      "リニューアルで失敗しないために、現状分析から公開後の改善までのフローをまとめました。",
-    category: "制作ノウハウ",
-    date: "2024-06-05",
-    readingTime: "8分",
-    sections: [
-      {
-        body: [
-          "ホームページのリニューアルは、新規集客だけでなく採用や業務効率化にも大きく影響します。LEXIAが実際に行っている進行フローを公開します。",
-        ],
-      },
-      {
-        heading: "1. 目的と指標を明確にする",
-        body: [
-          "最初に確認するのは、リニューアルで何を達成したいのかという点です。問い合わせ増、採用強化、EC売上改善など、目的によって必要な情報設計が変わります。KPIを数値で定義し、全員で共有しておきましょう。",
-        ],
-      },
-      {
-        heading: "2. コンテンツと導線の設計",
-        list: [
-          "現行サイトのアクセス解析から改善ポイントを抽出",
-          "ペルソナごとの閲覧シナリオを作成",
-          "スマホでの操作性を最優先にUIを調整",
-        ],
-        body: [
-          "特にBtoBサイトでは、意思決定者と現場担当者で求める情報が異なります。両者がスムーズに行動できる導線を用意することが成果への近道です。",
-        ],
-      },
-      {
-        heading: "3. 公開後の改善と運用",
-        body: [
-          "公開して終わりではなく、アクセスデータを確認しながら改善を続けることが重要です。解析ツールとヒートマップを活用し、問い合わせまでの流れを定期的に見直しましょう。",
-          "定期的な記事更新や事例追加もSEOと信頼性の両面で効果があります。LEXIA BLOGもその一環として運用していきます。",
-        ],
-      },
-    ],
-  },
-]
+function mapMicroCMSBlog(post: MicroCMSBlogContent): BlogPost {
+  const heroImage = typeof post.heroImage === "string" ? post.heroImage : post.heroImage?.url
+  const firstDate = post.publishedAt || post.revisedAt || post.updatedAt || post.createdAt
 
-export function getBlogPost(slug: string): BlogPost | undefined {
-  return blogPosts.find((post) => post.slug === slug)
+  return {
+    slug: post.slug || post.id,
+    title: post.title,
+    description: post.description || "",
+    category: post.category || "未分類",
+    date: firstDate || new Date().toISOString(),
+    readingTime: post.readingTime || "約5分",
+    heroImage,
+    sections: post.sections && post.sections.length > 0 ? post.sections : undefined,
+    contentHtml: post.contentHtml || post.content || post.body || undefined,
+  }
 }
+
+async function fetchMicroCMSBlogPosts(): Promise<BlogPost[]> {
+  if (!isConfigured) {
+    return fallbackBlogPosts
+  }
+
+  try {
+    const { contents } = await microcmsFetch<MicroCMSListResponse<MicroCMSBlogContent>>(blogEndpoint, {
+      orders: "-publishedAt",
+      limit: 100,
+    })
+
+    return contents.map(mapMicroCMSBlog)
+  } catch (error) {
+    console.error("[microcms] Failed to fetch blog posts", error)
+    return fallbackBlogPosts
+  }
+}
+
+async function fetchMicroCMSBlogPost(slug: string): Promise<BlogPost | undefined> {
+  if (!isConfigured) {
+    return fallbackBlogPosts.find((post) => post.slug === slug)
+  }
+
+  try {
+    const result = await microcmsFetch<MicroCMSBlogContent>(`${blogEndpoint}/${slug}`)
+    return mapMicroCMSBlog(result)
+  } catch (error) {
+    if (error instanceof MicroCMSApiError && error.status === 404) {
+      try {
+        const { contents } = await microcmsFetch<MicroCMSListResponse<MicroCMSBlogContent>>(blogEndpoint, {
+          filters: `slug[equals]${slug}`,
+          limit: 1,
+        })
+        const hit = contents[0]
+        if (hit) {
+          return mapMicroCMSBlog(hit)
+        }
+      } catch (nestedError) {
+        console.error(`[microcms] Failed to fetch blog post by slug filter (${slug})`, nestedError)
+      }
+    } else {
+      console.error(`[microcms] Failed to fetch blog post (${slug})`, error)
+    }
+
+    return fallbackBlogPosts.find((post) => post.slug === slug)
+  }
+}
+
+export const fetchBlogPosts = cache(fetchMicroCMSBlogPosts)
+
+export const fetchBlogPost = cache(fetchMicroCMSBlogPost)
+
+export { fallbackBlogPosts as blogPosts }
+export type { BlogPost, BlogPostSection }

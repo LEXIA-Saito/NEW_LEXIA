@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { SITE_URL } from '@/lib/config'
 import { projectsData } from '@/lib/projects-data'
-import { blogPosts } from '@/lib/blog-posts'
+import { fallbackBlogPosts } from '@/lib/blog-posts-fallback'
 
 const nameMap: Record<string, string> = {
   services: 'サービス',
@@ -25,23 +25,31 @@ const nameMap: Record<string, string> = {
   blog: 'LEXIA BLOG',
 }
 
-function segmentToLabel(seg: string): string {
+const fallbackBlogTitleMap = Object.fromEntries(
+  fallbackBlogPosts.map((post) => [post.slug, post.title] as const),
+)
+
+function segmentToLabel(seg: string, dynamicLabels?: Record<string, string>): string {
+  if (dynamicLabels?.[seg]) return dynamicLabels[seg]
   if (nameMap[seg]) return nameMap[seg]
   const project = projectsData.find((p) => p.slug === seg)
   if (project) return project.title
-  const blogPost = blogPosts.find((post) => post.slug === seg)
-  if (blogPost) return blogPost.title
+  if (fallbackBlogTitleMap[seg]) return fallbackBlogTitleMap[seg]
   return decodeURIComponent(seg)
 }
 
-export default function Breadcrumbs() {
+type BreadcrumbsProps = {
+  dynamicLabels?: Record<string, string>
+}
+
+export default function Breadcrumbs({ dynamicLabels }: BreadcrumbsProps = {}) {
   const pathname = usePathname()
   const segments = pathname.split('/').filter(Boolean)
   const crumbs = segments.map((seg, idx) => {
     const href = '/' + segments.slice(0, idx + 1).join('/')
     return {
       href,
-      label: segmentToLabel(seg),
+      label: segmentToLabel(seg, dynamicLabels),
     }
   })
   const jsonLd = {

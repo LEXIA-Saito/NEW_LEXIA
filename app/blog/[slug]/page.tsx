@@ -1,7 +1,7 @@
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
-import { blogPosts, getBlogPost } from "@/lib/blog-posts"
+import { fetchBlogPost, fetchBlogPosts } from "@/lib/blog-posts"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import { notFound } from "next/navigation"
@@ -14,12 +14,13 @@ interface BlogArticlePageProps {
   }
 }
 
-export function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }))
+export async function generateStaticParams() {
+  const posts = await fetchBlogPosts()
+  return posts.map((post) => ({ slug: post.slug }))
 }
 
-export function generateMetadata({ params }: BlogArticlePageProps): Metadata {
-  const post = getBlogPost(params.slug)
+export async function generateMetadata({ params }: BlogArticlePageProps): Promise<Metadata> {
+  const post = await fetchBlogPost(params.slug)
   if (!post) {
     return {
       title: "記事が見つかりません | LEXIA BLOG",
@@ -40,14 +41,25 @@ export function generateMetadata({ params }: BlogArticlePageProps): Metadata {
       type: "article",
       url: canonical,
       publishedTime: post.date,
+      images: post.heroImage
+        ? [
+            {
+              url: post.heroImage,
+              alt: post.title,
+            },
+          ]
+        : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: `${post.title} | LEXIA BLOG`,
       description: post.description,
+      images: post.heroImage ? [post.heroImage] : undefined,
     },
   }
 }
+
+export const revalidate = 60
 
 function formatJapaneseDate(date: string) {
   return new Date(date).toLocaleDateString("ja-JP", {
@@ -57,8 +69,8 @@ function formatJapaneseDate(date: string) {
   })
 }
 
-export default function BlogArticlePage({ params }: BlogArticlePageProps) {
-  const post = getBlogPost(params.slug)
+export default async function BlogArticlePage({ params }: BlogArticlePageProps) {
+  const post = await fetchBlogPost(params.slug)
 
   if (!post) {
     notFound()
@@ -79,6 +91,7 @@ export default function BlogArticlePage({ params }: BlogArticlePageProps) {
       name: "LEXIA",
     },
     url: `${SITE_URL.replace(/\/$/, "")}/blog/${post.slug}`,
+    image: post.heroImage,
   }
 
   return (
@@ -86,7 +99,7 @@ export default function BlogArticlePage({ params }: BlogArticlePageProps) {
       <Navigation />
       <main className="min-h-screen bg-white dark:bg-neutral-900">
         <div className="container mx-auto px-4 py-24 md:py-32 max-w-3xl">
-          <Breadcrumbs />
+          <Breadcrumbs dynamicLabels={{ [post.slug]: post.title }} />
           <article>
             <header className="mb-12">
               <span className="inline-flex items-center rounded-full bg-neutral-900 px-4 py-1 text-xs font-medium tracking-wide text-white dark:bg-neutral-100 dark:text-neutral-900">
@@ -105,7 +118,7 @@ export default function BlogArticlePage({ params }: BlogArticlePageProps) {
             </header>
 
             <div className="space-y-12 text-neutral-800 dark:text-neutral-200">
-              {post.sections.map((section, index) => (
+              {post.sections?.map((section, index) => (
                 <section key={section.heading ?? index}>
                   {section.heading ? (
                     <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
@@ -130,6 +143,12 @@ export default function BlogArticlePage({ params }: BlogArticlePageProps) {
                   </div>
                 </section>
               ))}
+
+              {post.contentHtml ? (
+                <section className="prose prose-neutral max-w-none dark:prose-invert">
+                  <div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+                </section>
+              ) : null}
             </div>
 
             <footer className="mt-16 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300">
