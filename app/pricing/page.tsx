@@ -6,27 +6,16 @@ import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import HomepageCalculator from "@/components/pricing/homepage-calculator"
-import GeneralPricingTable, {
-  PricingItem,
-} from "@/components/pricing/general-pricing-table"
-import EcCalculator from "@/components/pricing/ec-calculator"
-import SystemCalculator from "@/components/pricing/system-calculator"
-import DesignCalculator from "@/components/pricing/design-calculator"
+import ComingSoon from "@/components/pricing/coming-soon"
+// Temporarily disable other calculators in favor of ComingSoon placeholder
+// import EcCalculator from "@/components/pricing/ec-calculator"
+// import SystemCalculator from "@/components/pricing/system-calculator"
+// import DesignCalculator from "@/components/pricing/design-calculator"
 import PcClassPricingTable from "@/components/pricing/pc-class-pricing-table"
 import { SITE_URL } from "@/lib/config"
 
 export default function PricingPage() {
   const [tab, setTab] = useState("homepage")
-
-
-  const aiSupportItems: PricingItem[] = [
-    { name: "初期コンサルティング", cost: 100000 },
-    { name: "AIツール選定支援", cost: 50000 },
-    { name: "導入支援・設定", cost: 150000 },
-    { name: "社内トレーニング", cost: 50000 },
-    { name: "運用サポート・改善提案(月額)", cost: 50000 },
-    { name: "データ分析・レポーティング", cost: 100000 },
-  ]
 
   const offers = [
     { name: "ホームページ制作", price: "100000" },
@@ -75,22 +64,19 @@ export default function PricingPage() {
               <HomepageCalculator />
             </TabsContent>
             <TabsContent value="ec">
-              <EcCalculator />
+              <ComingSoon />
             </TabsContent>
             <TabsContent value="system">
-              <SystemCalculator />
+              <ComingSoon />
             </TabsContent>
             <TabsContent value="design">
-              <DesignCalculator />
+              <ComingSoon />
             </TabsContent>
             <TabsContent value="pc">
               <PcClassPricingTable />
             </TabsContent>
             <TabsContent value="ai">
-              <GeneralPricingTable
-                items={aiSupportItems}
-                note="※ 価格はすべて税込表示です。運用サポート・改善提案は月額費用です。"
-              />
+              <ComingSoon />
             </TabsContent>
           </Tabs>
           {/* Global CTA at bottom */}
