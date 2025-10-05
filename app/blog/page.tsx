@@ -1,7 +1,7 @@
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
-import { blogPosts } from "@/lib/blog-posts"
+import { fetchBlogPosts } from "@/lib/blog-posts"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import Link from "next/link"
@@ -29,6 +29,8 @@ export const metadata: Metadata = {
   },
 }
 
+export const revalidate = 60
+
 function formatJapaneseDate(date: string) {
   return new Date(date).toLocaleDateString("ja-JP", {
     year: "numeric",
@@ -37,8 +39,8 @@ function formatJapaneseDate(date: string) {
   })
 }
 
-export default function BlogIndexPage() {
-  const posts = [...blogPosts].sort(
+export default async function BlogIndexPage() {
+  const posts = (await fetchBlogPosts()).slice().sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   )
 
@@ -79,34 +81,45 @@ export default function BlogIndexPage() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-2">
-            {posts.map((post) => (
-              <article
-                key={post.slug}
-                className="group flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/80 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-neutral-900 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900/70 dark:hover:border-neutral-100"
-              >
-                <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
-                  <span>{post.category}</span>
-                  <span>{post.readingTime}</span>
-                </div>
-                <h2 className="mt-4 text-2xl font-semibold text-neutral-900 transition-colors group-hover:text-neutral-600 dark:text-neutral-100 dark:group-hover:text-neutral-300">
-                  <Link href={`/blog/${post.slug}`} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 dark:focus-visible:ring-neutral-100 dark:focus-visible:ring-offset-neutral-900">
-                    {post.title}
-                  </Link>
-                </h2>
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">{post.description}</p>
-                <div className="mt-6 text-sm text-neutral-500 dark:text-neutral-400">
-                  {formatJapaneseDate(post.date)} に公開
-                </div>
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-neutral-900 transition-colors hover:gap-3 dark:text-neutral-100"
-                  aria-label={`${post.title}を読む`}
+            {posts.length === 0 ? (
+              <p className="text-neutral-600 dark:text-neutral-300">
+                現在、公開中の記事はありません。更新をお待ちください。
+              </p>
+            ) : (
+              posts.map((post) => (
+                <article
+                  key={post.slug}
+                  className="group flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/80 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-neutral-900 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900/70 dark:hover:border-neutral-100"
                 >
-                  記事を読む
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </article>
-            ))}
+                  <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
+                    <span>{post.category}</span>
+                    <span>{post.readingTime}</span>
+                  </div>
+                  <h2 className="mt-4 text-2xl font-semibold text-neutral-900 transition-colors group-hover:text-neutral-600 dark:text-neutral-100 dark:group-hover:text-neutral-300">
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 dark:focus-visible:ring-neutral-100 dark:focus-visible:ring-offset-neutral-900"
+                    >
+                      {post.title}
+                    </Link>
+                  </h2>
+                  <p className="mt-4 flex-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
+                    {post.description}
+                  </p>
+                  <div className="mt-6 text-sm text-neutral-500 dark:text-neutral-400">
+                    {formatJapaneseDate(post.date)} に公開
+                  </div>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-neutral-900 transition-colors hover:gap-3 dark:text-neutral-100"
+                    aria-label={`${post.title}を読む`}
+                  >
+                    記事を読む
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </article>
+              ))
+            )}
           </div>
         </div>
       </main>

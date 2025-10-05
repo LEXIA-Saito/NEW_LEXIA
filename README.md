@@ -44,15 +44,18 @@ Next.js の `useSearchParams` フックを使用する際は、非同期処理�
 
 ## microCMS 設定
 
-ブログ記事は microCMS で管理します。以下の環境変数を `.env` に設定してください。
+ブログ記事は microCMS で管理します。以下の環境変数を `.env.local` などに設定してください。
 
-\`\`\`
-NEXT_PUBLIC_MICROCMS_DOMAIN=<サービスドメイン>
-LEXIA_MICROCMS_DOMAIN=<サービスドメイン>
+```
+MICROCMS_SERVICE_DOMAIN=<サービスドメイン>
 MICROCMS_API_KEY=<API キー>
-\`\`\`
+# 任意: ブログのエンドポイントを変更したい場合のみ
+MICROCMS_BLOG_ENDPOINT=blog
+```
 
-現在、実績データはすべてハードコーディングされており、microCMS は使用していません。
+- microCMS のコンテンツ ID をブログ記事のスラッグと同じにすると、ビルド時の静的生成がスムーズです。別フィールドにスラッグを保持する場合は `slug` というフィールド名で作成してください。
+- 記事本文は `sections`（繰り返しフィールド）または `content` / `contentHtml` / `body` といったリッチテキストで取得できます。`sections` を設定している場合は従来どおり見出しと本文・リストで段落を描画し、リッチテキストのみの場合は HTML をそのまま出力します。
+- 環境変数が未設定の場合は、開発中に既存のサンプル記事がフォールバックとして表示されます。
 
 ## Google Maps の埋め込み
 

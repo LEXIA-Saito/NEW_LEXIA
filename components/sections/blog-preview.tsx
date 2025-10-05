@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-import { blogPosts } from "@/lib/blog-posts"
+import { fetchBlogPosts } from "@/lib/blog-posts"
 
 function formatJapaneseDate(date: string) {
   return new Date(date).toLocaleDateString("ja-JP", {
@@ -10,10 +10,15 @@ function formatJapaneseDate(date: string) {
   })
 }
 
-export default function BlogPreview() {
-  const posts = [...blogPosts]
+export default async function BlogPreview() {
+  const posts = (await fetchBlogPosts())
+    .slice()
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3)
+
+  if (posts.length === 0) {
+    return null
+  }
 
   return (
     <section className="py-24 md:py-32 below-fold bg-white dark:bg-neutral-900" aria-labelledby="blog-preview-heading">
