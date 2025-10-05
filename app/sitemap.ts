@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
 import { projectsData } from "@/lib/projects-data"
+import { blogPosts } from "@/lib/blog-posts"
 import { SITE_URL } from "../lib/config"
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -18,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/team/riho-saito",
     "/team/assistant",
     "/contact",
+    "/blog",
   ].map((route) => ({
     url: `${SITE_URL}${route}`,
     lastModified: new Date(),
@@ -32,5 +34,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }))
-  return [...routes, ...projectRoutes]
+
+  const blogRoutes = blogPosts.map((post) => ({
+    url: `${SITE_URL}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }))
+
+  return [...routes, ...projectRoutes, ...blogRoutes]
 }

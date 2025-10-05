@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { SITE_URL } from '@/lib/config'
 import { projectsData } from '@/lib/projects-data'
+import { blogPosts } from '@/lib/blog-posts'
 
 const nameMap: Record<string, string> = {
   services: 'サービス',
@@ -21,12 +22,15 @@ const nameMap: Record<string, string> = {
   'masato-saito': '齋藤雅人',
   'riho-saito': '齋藤李保',
   assistant: 'アシスタント',
+  blog: 'LEXIA BLOG',
 }
 
 function segmentToLabel(seg: string): string {
   if (nameMap[seg]) return nameMap[seg]
   const project = projectsData.find((p) => p.slug === seg)
   if (project) return project.title
+  const blogPost = blogPosts.find((post) => post.slug === seg)
+  if (blogPost) return blogPost.title
   return decodeURIComponent(seg)
 }
 
