@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link"
 import Image from "next/image"
 import { MapPin, Tag } from "lucide-react"
@@ -9,33 +7,68 @@ import Footer from "@/components/footer"
 import { Chip } from "@/components/ui/chip"
 import { projectsData } from "@/lib/projects-data"
 import { ProjectSchema } from "@/components/schema/project-schema"
+import type { Metadata } from "next"
+import { SITE_URL } from "@/lib/config"
+import { notFound } from "next/navigation"
 
-export default function ProjectPage({ params }: { params: { slug: string } }) {
+interface ProjectPageProps {
+  params: {
+    slug: string
+  }
+}
+
+export async function generateStaticParams() {
+  return projectsData.map((project) => ({
+    slug: project.slug,
+  }))
+}
+
+export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const project = projectsData.find((p) => p.slug === params.slug)
 
   if (!project) {
-    return (
-      <>
-        <Navigation />
-        <main className="min-h-screen bg-white dark:bg-neutral-900">
-          <div className="container mx-auto px-4 py-24 md:py-32">
-            <div className="text-center">
-              <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-6">
-                Project Not Found
-              </h1>
-              <Breadcrumbs />
-              <p className="text-neutral-700 dark:text-neutral-300 mb-8">
-                The project you are looking for does not exist or has been moved.
-              </p>
-              <Link href="/projects" className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline">
-                Back to Projects
-              </Link>
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </>
-    )
+    return {
+      title: "プロジェクトが見つかりません | LEXIA",
+    }
+  }
+
+  const canonical = `${SITE_URL.replace(/\/$/, "")}/projects/${project.slug}`
+
+  return {
+    title: `${project.title} | 制作実績 | LEXIA`,
+    description: project.description,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title: `${project.title} | 制作実績 | LEXIA`,
+      description: project.description,
+      type: "article",
+      url: canonical,
+      images: project.image
+        ? [
+            {
+              url: project.image,
+              alt: project.title,
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} | 制作実績 | LEXIA`,
+      description: project.description,
+      images: project.image ? [project.image] : undefined,
+    },
+    keywords: project.tags.length > 0 ? project.tags : undefined,
+  }
+}
+
+export default function ProjectPage({ params }: ProjectPageProps) {
+  const project = projectsData.find((p) => p.slug === params.slug)
+
+  if (!project) {
+    notFound()
   }
 
   const relatedProjects = projectsData

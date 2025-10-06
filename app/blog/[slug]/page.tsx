@@ -224,7 +224,7 @@ var u=this||self;function v(a,b){a:{var c=["CLOSURE_FLAGS"];for(var d=u,e=0;e<c.
       <Script
         id={`blog-article-${post.slug}`}
         type="application/ld+json"
-        strategy="lazyOnload"
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
     </>

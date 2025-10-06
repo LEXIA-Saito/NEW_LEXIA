@@ -98,7 +98,7 @@ export default function Home() {
       <Script
         id="home-jsonld"
         type="application/ld+json"
-        strategy="lazyOnload"
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
     </main>

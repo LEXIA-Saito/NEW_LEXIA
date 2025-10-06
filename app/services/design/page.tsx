@@ -3,6 +3,7 @@ import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
 import type { Metadata } from "next"
 import Link from "next/link"
+import Script from "next/script"
 import { SITE_URL } from "@/lib/config"
 
 export const metadata: Metadata = {
@@ -136,9 +137,16 @@ export default function DesignServicePage() {
         </div>
       </main>
       <Footer />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
-      <script
+      <Script
+        id="service-design-jsonld"
         type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <Script
+        id="service-design-faq-jsonld"
+        type="application/ld+json"
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
     </>

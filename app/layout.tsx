@@ -118,7 +118,7 @@ export default function RootLayout({
         <Script
           id="website-jsonld"
           type="application/ld+json"
-          strategy="lazyOnload"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
@@ -136,7 +136,7 @@ export default function RootLayout({
         <Script
           id="organization-jsonld"
           type="application/ld+json"
-          strategy="lazyOnload"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <ThemeProvider defaultTheme="light" storageKey="lexia-theme">

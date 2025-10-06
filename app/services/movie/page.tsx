@@ -4,6 +4,7 @@ import Breadcrumbs from "@/components/breadcrumbs"
 import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
+import Script from "next/script"
 import { SITE_URL } from "@/lib/config"
 
 export const metadata: Metadata = {
@@ -264,9 +265,16 @@ export default function MovieServicePage() {
         </div>
       </main>
       <Footer />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
-      <script
+      <Script
+        id="service-movie-jsonld"
         type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <Script
+        id="service-movie-faq-jsonld"
+        type="application/ld+json"
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
     </>
