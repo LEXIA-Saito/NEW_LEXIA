@@ -172,7 +172,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
 
             <footer className="mt-16 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300">
               <p>
-                LEXIA BLOGでは、碧南市を中心に活動する制作会社LEXIAの視点で、WEB制作やマーケティングのヒントをお届けしています。お問い合わせやご相談はいつでも歓迎です。
+                LEXIA BLOGでは、愛知県碧南市を中心に活動する制作会社LEXIAの視点で、WEB制作やマーケティングのヒントをお届けしています。お問い合わせやご相談はいつでも歓迎です。
               </p>
               <p className="mt-4">
                 <Link

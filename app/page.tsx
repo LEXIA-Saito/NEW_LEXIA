@@ -17,23 +17,23 @@ export const dynamic = "force-static"
 export const revalidate = 3600 // Revalidate every hour
 
 export const metadata: Metadata = {
-  title: "碧南のホームページ制作・Web制作会社 | LEXIA",
+  title: "愛知県碧南市のホームページ制作・Web制作会社 | LEXIA",
   description:
-    "碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAにお任せください。",
+    "愛知県碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAにお任せください。",
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "碧南のホームページ制作・Web制作会社 | LEXIA",
+    title: "愛知県碧南市のホームページ制作・Web制作会社 | LEXIA",
     description:
-      "碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAにお任せください。",
+      "愛知県碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAにお任せください。",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "碧南のホームページ制作・Web制作会社 | LEXIA",
+    title: "愛知県碧南市のホームページ制作・Web制作会社 | LEXIA",
     description:
-      "碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAにお任せください。",
+      "愛知県碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAにお任せください。",
     images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
   },
 }
@@ -45,14 +45,14 @@ export default function Home() {
     name: "LEXIA",
     url: SITE_URL,
     logo: LOGO_URL,
-    description: "愛知県碧南市のWEB制作・システム開発。要件整理からUI実装、運用改善まで一貫対応。",
+  description: "愛知県碧南市のWEB制作・システム開発。要件整理からUI実装、運用改善まで一貫対応。",
     telephone: "090-1742-3456",
     email: "lexia0web@gmail.com",
     address: {
       "@type": "PostalAddress",
       addressCountry: "JP",
       addressRegion: "愛知県",
-      addressLocality: "碧南市",
+  addressLocality: "愛知県碧南市",
       streetAddress: "川端町1-45",
     },
     areaServed: ["Japan"],

@@ -5,23 +5,23 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 
 export const metadata: Metadata = {
-  title: "制作実績 | 碧南のWeb制作事例 - LEXIA",
+  title: "制作実績 | 愛知県碧南市のWeb制作事例 - LEXIA",
   description:
-    "碧南市や愛知県で手がけたホームページ制作・Webデザイン・ロゴ制作の事例をご紹介します。",
+    "愛知県碧南市や愛知県で手がけたホームページ制作・Webデザイン・ロゴ制作の事例をご紹介します。",
   alternates: {
     canonical: `${SITE_URL.replace(/\/$/, "")}/projects`,
   },
   openGraph: {
-    title: "制作実績 | 碧南のWeb制作事例 - LEXIA",
+    title: "制作実績 | 愛知県碧南市のWeb制作事例 - LEXIA",
     description:
-      "碧南市や愛知県で手がけたホームページ制作・Webデザイン・ロゴ制作の事例をご紹介します。",
+      "愛知県碧南市や愛知県で手がけたホームページ制作・Webデザイン・ロゴ制作の事例をご紹介します。",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "制作実績 | 碧南のWeb制作事例 - LEXIA",
+    title: "制作実績 | 愛知県碧南市のWeb制作事例 - LEXIA",
     description:
-      "碧南市や愛知県で手がけたホームページ制作・Webデザイン・ロゴ制作の事例をご紹介します。",
+      "愛知県碧南市や愛知県で手がけたホームページ制作・Webデザイン・ロゴ制作の事例をご紹介します。",
     images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
   },
 }

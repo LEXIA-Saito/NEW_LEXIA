@@ -3,8 +3,20 @@ import { projectsData } from "@/lib/projects-data"
 import { fetchBlogPosts } from "@/lib/blog-posts"
 import { SITE_URL } from "../lib/config"
 
+function safeDate(input?: string | Date | undefined): Date {
+  try {
+    if (!input) return new Date()
+    const d = new Date(input)
+    if (Number.isNaN(d.getTime())) return new Date()
+    return d
+  } catch {
+    return new Date()
+  }
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await fetchBlogPosts()
+  const base = SITE_URL.replace(/\/$/, "")
 
   const routes = [
     "",
@@ -22,22 +34,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/contact",
     "/blog",
   ].map((route) => ({
-    url: `${SITE_URL}${route}`,
+    url: `${base}${route}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: route === "" ? 1 : 0.8,
   }))
 
   const projectRoutes = projectsData.map((project) => ({
-    url: `${SITE_URL}/projects/${project.slug}`,
-    lastModified: new Date(parseInt(project.year, 10), 0),
+    url: `${base}/projects/${project.slug}`,
+    lastModified: safeDate(project.year ? `${project.year}-01-01` : undefined),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }))
 
   const blogRoutes = posts.map((post) => ({
-    url: `${SITE_URL}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
+    url: `${base}/blog/${post.slug}`,
+    lastModified: safeDate(post.date),
     changeFrequency: "weekly" as const,
     priority: 0.7,
   }))

@@ -30,7 +30,7 @@ export default async function BlogPreview() {
               制作の裏側と集客ノウハウを発信中
             </h2>
             <p className="mt-4 max-w-2xl text-neutral-600 dark:text-neutral-300">
-              碧南市を拠点とするLEXIAが、日々の制作で得た知見や地域ビジネス向けの最新トレンドをお届けします。まずは最新記事からチェックしてください。
+              愛知県碧南市を拠点とするLEXIAが、日々の制作で得た知見や地域ビジネス向けの最新トレンドをお届けします。まずは最新記事からチェックしてください。
             </p>
           </div>
           <div>

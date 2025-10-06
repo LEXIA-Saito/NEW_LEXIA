@@ -9,20 +9,20 @@ import Link from "next/link"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 export const metadata: Metadata = {
-  title: "Web制作サービス | 碧南のホームページ作成はLEXIA",
-  description: "コーポレートサイトやECサイトなど、Next.jsを活用したWeb制作を碧南で提供します。",
+  title: "Web制作サービス | 愛知県碧南市のホームページ作成はLEXIA",
+  description: "コーポレートサイトやECサイトなど、Next.jsを活用したWeb制作を愛知県碧南市で提供します。",
   alternates: {
     canonical: `${SITE_URL.replace(/\/$/, "")}/services/web`,
   },
   openGraph: {
-    title: "Web制作サービス | 碧南のホームページ作成はLEXIA",
-    description: "コーポレートサイトやECサイトなど、Next.jsを活用したWeb制作を碧南で提供します。",
+  title: "Web制作サービス | 愛知県碧南市のホームページ作成はLEXIA",
+  description: "コーポレートサイトやECサイトなど、Next.jsを活用したWeb制作を愛知県碧南市で提供します。",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Web制作サービス | 碧南のホームページ作成はLEXIA",
-    description: "コーポレートサイトやECサイトなど、Next.jsを活用したWeb制作を碧南で提供します。",
+  title: "Web制作サービス | 愛知県碧南市のホームページ作成はLEXIA",
+  description: "コーポレートサイトやECサイトなど、Next.jsを活用したWeb制作を愛知県碧南市で提供します。",
     images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
   },
 }

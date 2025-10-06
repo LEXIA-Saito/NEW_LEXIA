@@ -20,7 +20,7 @@ const organizationJsonLd = {
     "@type": "PostalAddress",
     addressCountry: "JP",
     addressRegion: "愛知県",
-    addressLocality: "碧南市",
+    addressLocality: "愛知県碧南市",
     streetAddress: "川端町1-45",
   },
   contactPoint: [
@@ -42,12 +42,12 @@ const notoSansJP = Noto_Sans_JP({
 })
 
 const siteDescription =
-  "愛知県碧南市のホームページ制作・WEB制作ならLEXIA｜システム開発・AI活用・デザインまで一貫対応。制作実績多数、無料相談実施中。最新技術×地元視点で成果にコミット。中部・全国対応可"
+  "愛知県碧南市のホームページ制作・WEB制作ならLEXIA｜システム開発・AI活用・デザインまで一貫対応。制作実績多数、無料相談実施中。最新技術×地元視点で成果にコミット。愛知県碧南市"
 
 export const metadata: Metadata = {
   title: "LEXIA | 価値を伝わるカタチに",
   description:
-    "愛知県碧南市のホームページ制作・WEB制作ならLEXIA｜システム開発・AI活用・デザインまで一貫対応。制作実績多数、無料相談実施中。最新技術×地元視点で成果にコミット。中部・全国対応可",
+    "愛知県碧南市のホームページ制作・WEB制作ならLEXIA｜システム開発・AI活用・デザインまで一貫対応。制作実績多数、無料相談実施中。最新技術×地元視点で成果にコミット。愛知県碧南市",
   metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: SITE_URL,
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "LEXIA | 価値を伝わるカタチに",
     description:
-      "愛知県碧南市のホームページ制作・WEB制作ならLEXIA｜システム開発・AI活用・デザインまで一貫対応。制作実績多数、無料相談実施中。最新技術×地元視点で成果にコミット。中部・全国対応可",
+      "愛知県碧南市のホームページ制作・WEB制作ならLEXIA｜システム開発・AI活用・デザインまで一貫対応。制作実績多数、無料相談実施中。最新技術×地元視点で成果にコミット。愛知県碧南市",
     url: SITE_URL,
     siteName: "LEXIA",
     images: [

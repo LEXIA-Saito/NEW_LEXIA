@@ -6,23 +6,23 @@ import Link from "next/link"
 import { SITE_URL } from "@/lib/config"
 
 export const metadata: Metadata = {
-  title: "システム開発サービス | 碧南のWebアプリ開発はLEXIA",
+  title: "システム開発サービス | 愛知県碧南市のWebアプリ開発はLEXIA",
   description:
-    "碧南での予約・顧客管理などのWebシステム開発やDX支援を提供します。",
+    "愛知県碧南市での予約・顧客管理などのWebシステム開発やDX支援を提供します。",
   alternates: {
     canonical: `${SITE_URL.replace(/\/$/, "")}/services/system`,
   },
   openGraph: {
-    title: "システム開発サービス | 碧南のWebアプリ開発はLEXIA",
+    title: "システム開発サービス | 愛知県碧南市のWebアプリ開発はLEXIA",
     description:
-      "碧南での予約・顧客管理などのWebシステム開発やDX支援を提供します。",
+      "愛知県碧南市での予約・顧客管理などのWebシステム開発やDX支援を提供します。",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "システム開発サービス | 碧南のWebアプリ開発はLEXIA",
+    title: "システム開発サービス | 愛知県碧南市のWebアプリ開発はLEXIA",
     description:
-      "碧南での予約・顧客管理などのWebシステム開発やDX支援を提供します。",
+      "愛知県碧南市での予約・顧客管理などのWebシステム開発やDX支援を提供します。",
     images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
   },
 }

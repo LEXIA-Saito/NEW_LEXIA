@@ -135,7 +135,7 @@ export default function CompanyClient() {
       "@type": "PostalAddress",
       addressCountry: "JP",
       addressRegion: "愛知県",
-      addressLocality: "碧南市",
+      addressLocality: "愛知県碧南市",
       streetAddress: "川端町1-45",
     },
     areaServed: ["Japan"],

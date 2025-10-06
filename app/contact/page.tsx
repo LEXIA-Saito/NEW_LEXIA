@@ -9,21 +9,21 @@ import { SITE_URL } from "@/lib/config"
 export const metadata: Metadata = {
   title: "お問い合わせ | Web制作の無料見積もり・相談はLEXIA",
   description:
-    "ホームページ制作のご相談や無料見積もりは碧南のWEB制作会社LEXIAまで。",
+    "ホームページ制作のご相談や無料見積もりは愛知県碧南市のWEB制作会社LEXIAまで。",
   alternates: {
     canonical: `${SITE_URL.replace(/\/$/, "")}/contact`,
   },
   openGraph: {
     title: "お問い合わせ | Web制作の無料見積もり・相談はLEXIA",
     description:
-      "ホームページ制作のご相談や無料見積もりは碧南のWEB制作会社LEXIAまで。",
+      "ホームページ制作のご相談や無料見積もりは愛知県碧南市のWEB制作会社LEXIAまで。",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "お問い合わせ | Web制作の無料見積もり・相談はLEXIA",
     description:
-      "ホームページ制作のご相談や無料見積もりは碧南のWEB制作会社LEXIAまで。",
+      "ホームページ制作のご相談や無料見積もりは愛知県碧南市のWEB制作会社LEXIAまで。",
     images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
   },
 }

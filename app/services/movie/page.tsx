@@ -7,14 +7,14 @@ import Image from "next/image"
 import { SITE_URL } from "@/lib/config"
 
 export const metadata: Metadata = {
-  title: "動画制作サービス | 碧南の動画制作はLEXIA",
+  title: "動画制作サービス | 愛知県碧南市の動画制作はLEXIA",
   description:
     "企画から撮影・編集までワンストップで対応します。",
   alternates: {
     canonical: `${SITE_URL.replace(/\/$/, "")}/services/movie`,
   },
   openGraph: {
-    title: "動画制作サービス | 碧南の動画制作はLEXIA",
+  title: "動画制作サービス | 愛知県碧南市の動画制作はLEXIA",
     description:
       "企画から撮影・編集までワンストップで対応します。",
     type: "website",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "動画制作サービス | 碧南の動画制作はLEXIA",
+  title: "動画制作サービス | 愛知県碧南市の動画制作はLEXIA",
     description:
       "企画から撮影・編集までワンストップで対応します。",
     images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
