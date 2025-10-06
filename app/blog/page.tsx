@@ -136,7 +136,7 @@ export default async function BlogIndexPage(props: PageProps) {
                   ) : null}
                   <div className="absolute inset-0 bg-gradient-to-br from-neutral-950/80 via-neutral-950/70 to-neutral-900/50" aria-hidden />
                   <div className="relative grid gap-10 px-10 py-14 md:px-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-                    <div className="space-y-6">
+                      <div className="space-y-6">
                       <span className="inline-flex items-center rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-neutral-200">
                         最新記事
                       </span>
@@ -147,9 +147,13 @@ export default async function BlogIndexPage(props: PageProps) {
                         <LinkifyText text={latestPost.description} />
                       </p>
                       <div className="flex flex-wrap items-center gap-3 text-sm text-neutral-300/90">
-                        <span className="inline-flex items-center rounded-full border border-white/20 px-3 py-1">
+                        <Link
+                          href={`/blog?genre=${latestPost.genre}#genre-filter`}
+                          className="inline-flex items-center rounded-full border border-white/20 px-3 py-1 hover:bg-white/10"
+                          aria-label={`${getBlogGenreLabel(latestPost.genre)} の記事一覧`}
+                        >
                           {getBlogGenreLabel(latestPost.genre)}
-                        </span>
+                        </Link>
                         <span>{latestPost.readingTime}</span>
                         <span>{formatJapaneseDate(latestPost.date)} 公開</span>
                       </div>
@@ -218,9 +222,13 @@ export default async function BlogIndexPage(props: PageProps) {
                       >
                         <div>
                           <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
-                            <span className="inline-flex items-center gap-1">
+                            <Link
+                              href={`/blog?genre=${post.genre}#genre-filter`}
+                              className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 hover:underline"
+                              aria-label={`${getBlogGenreLabel(post.genre)} の記事一覧`}
+                            >
                               {getBlogGenreLabel(post.genre)}
-                            </span>
+                            </Link>
                             <span>{post.readingTime}</span>
                           </div>
                           <h3 className="mt-4 text-xl font-semibold text-neutral-900 dark:text-neutral-100">

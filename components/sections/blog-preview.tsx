@@ -50,7 +50,13 @@ export default async function BlogPreview() {
               className="group relative flex h-full flex-col rounded-2xl border border-neutral-200 bg-white/70 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-neutral-900 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900/70 dark:hover:border-neutral-100"
             >
               <div className="text-xs font-medium text-neutral-500 dark:text-neutral-400">
-                {getBlogGenreLabel(post.genre)}
+                <Link
+                  href={`/blog?genre=${post.genre}#genre-filter`}
+                  aria-label={`${getBlogGenreLabel(post.genre)} の記事一覧`}
+                  className="hover:underline"
+                >
+                  {getBlogGenreLabel(post.genre)}
+                </Link>
               </div>
               <h3 className="mt-3 text-xl font-semibold text-neutral-900 transition-colors group-hover:text-neutral-600 dark:text-neutral-100 dark:group-hover:text-neutral-300">
                 <Link href={`/blog/${post.slug}`} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 dark:focus-visible:ring-neutral-100 dark:focus-visible:ring-offset-neutral-900">
