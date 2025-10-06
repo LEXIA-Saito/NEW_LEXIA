@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-import { fetchBlogPosts } from "@/lib/blog-posts"
+import { fetchBlogPosts, getBlogGenreLabel } from "@/lib/blog-posts"
 
 function formatJapaneseDate(date: string) {
   return new Date(date).toLocaleDateString("ja-JP", {
@@ -49,13 +49,27 @@ export default async function BlogPreview() {
               key={post.slug}
               className="group relative flex h-full flex-col rounded-2xl border border-neutral-200 bg-white/70 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-neutral-900 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900/70 dark:hover:border-neutral-100"
             >
-              <div className="text-xs font-medium text-neutral-500 dark:text-neutral-400">{post.category}</div>
+              <div className="text-xs font-medium text-neutral-500 dark:text-neutral-400">
+                {getBlogGenreLabel(post.genre)}
+              </div>
               <h3 className="mt-3 text-xl font-semibold text-neutral-900 transition-colors group-hover:text-neutral-600 dark:text-neutral-100 dark:group-hover:text-neutral-300">
                 <Link href={`/blog/${post.slug}`} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 dark:focus-visible:ring-neutral-100 dark:focus-visible:ring-offset-neutral-900">
                   {post.title}
                 </Link>
               </h3>
               <p className="mt-3 flex-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">{post.description}</p>
+              {post.tags.length > 0 ? (
+                <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center rounded-full border border-neutral-200 px-2.5 py-1 dark:border-neutral-700"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
               <div className="mt-6 flex items-center justify-between text-sm text-neutral-500 dark:text-neutral-400">
                 <span>{formatJapaneseDate(post.date)}</span>
                 <span>{post.readingTime}</span>

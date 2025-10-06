@@ -4,11 +4,14 @@ export type BlogPostSection = {
   list?: string[]
 }
 
+export type BlogGenre = "tech" | "ideas"
+
 export type BlogPost = {
   slug: string
   title: string
   description: string
-  category: string
+  genre: BlogGenre
+  tags: string[]
   date: string
   readingTime: string
   heroImage?: string

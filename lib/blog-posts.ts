@@ -3,13 +3,69 @@ import "server-only"
 import { cache } from "react"
 
 import { fallbackBlogPosts } from "./blog-posts-fallback"
-import type { BlogPost, BlogPostSection } from "./blog-posts.types"
+import type { BlogPost, BlogPostSection, BlogGenre } from "./blog-posts.types"
 import { microcmsFetch, MicroCMSApiError, type MicroCMSListResponse } from "./microcms"
 
 const blogEndpoint = process.env.MICROCMS_BLOG_ENDPOINT || "blog"
 const isConfigured = Boolean(
   process.env.MICROCMS_SERVICE_DOMAIN && process.env.MICROCMS_API_KEY,
 )
+
+const GENRE_METADATA: Record<BlogGenre, { label: string; description: string }> = {
+  tech: {
+    label: "技術（Tech）",
+    description: "制作現場で活用している技術やツールの知見をまとめています。",
+  },
+  ideas: {
+    label: "アイデア（Ideas）",
+    description: "戦略や思考法、取り組みの背景などを深掘りするコラムです。",
+  },
+}
+
+const BLOG_GENRE_LIST = (Object.keys(GENRE_METADATA) as BlogGenre[]).map((id) => ({
+  id,
+  ...GENRE_METADATA[id],
+}))
+
+function normalizeGenre(value?: string | null): BlogGenre {
+  if (!value) {
+    return "ideas"
+  }
+
+  const normalized = value.trim().toLowerCase()
+
+  if (normalized.includes("tech") || normalized.includes("技術")) {
+    return "tech"
+  }
+
+  return "ideas"
+}
+
+type MicroCMSTagField = string | { name?: string | null }
+
+function extractTagName(tag: MicroCMSTagField): string | undefined {
+  if (typeof tag === "string") {
+    return tag.trim()
+  }
+
+  if (typeof tag === "object" && tag?.name) {
+    return tag.name.trim()
+  }
+
+  return undefined
+}
+
+function normalizeTags(tags?: MicroCMSTagField[] | null): string[] {
+  if (!tags || !Array.isArray(tags)) {
+    return []
+  }
+
+  const normalized = tags
+    .map(extractTagName)
+    .filter((tag): tag is string => Boolean(tag && tag.length > 0))
+
+  return Array.from(new Set(normalized)).slice(0, 3)
+}
 
 type MicroCMSImageField = {
   url: string
@@ -21,6 +77,8 @@ type MicroCMSBlogContent = {
   title: string
   description?: string
   category?: string
+  genre?: string
+  tags?: MicroCMSTagField[]
   readingTime?: string
   heroImage?: MicroCMSImageField | string
   sections?: BlogPostSection[]
@@ -36,12 +94,15 @@ type MicroCMSBlogContent = {
 function mapMicroCMSBlog(post: MicroCMSBlogContent): BlogPost {
   const heroImage = typeof post.heroImage === "string" ? post.heroImage : post.heroImage?.url
   const firstDate = post.publishedAt || post.revisedAt || post.updatedAt || post.createdAt
+  const genre = normalizeGenre(post.genre || post.category)
+  const tags = normalizeTags(post.tags)
 
   return {
     slug: post.slug || post.id,
     title: post.title,
     description: post.description || "",
-    category: post.category || "未分類",
+    genre,
+    tags,
     date: firstDate || new Date().toISOString(),
     readingTime: post.readingTime || "約5分",
     heroImage,
@@ -103,4 +164,14 @@ export const fetchBlogPosts = cache(fetchMicroCMSBlogPosts)
 export const fetchBlogPost = cache(fetchMicroCMSBlogPost)
 
 export { fallbackBlogPosts as blogPosts }
-export type { BlogPost, BlogPostSection }
+export const BLOG_GENRES = BLOG_GENRE_LIST
+
+export function getBlogGenreLabel(genre: BlogGenre): string {
+  return GENRE_METADATA[genre].label
+}
+
+export function getBlogGenreDescription(genre: BlogGenre): string {
+  return GENRE_METADATA[genre].description
+}
+
+export type { BlogPost, BlogPostSection, BlogGenre }
