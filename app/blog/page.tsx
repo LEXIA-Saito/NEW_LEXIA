@@ -1,25 +1,26 @@
-import Navigation from "@/components/navigation"
-import Footer from "@/components/footer"
-import Breadcrumbs from "@/components/breadcrumbs"
+import NavigationLite from "@/components/navigation-lite"
+import FooterLite from "@/components/footer-lite"
+import BreadcrumbsLite from "@/components/breadcrumbs-lite"
 import { fetchBlogPosts } from "@/lib/blog-posts"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import Link from "next/link"
-import Script from "next/script"
+
+const siteBase = SITE_URL.replace(/\/$/, "")
 
 export const metadata: Metadata = {
   title: "LEXIA BLOG | 碧南のWEB制作・マーケティング情報",
   description:
     "LEXIAが提供するWEB制作・マーケティング・ローカルSEOの知見をお届けします。碧南市から発信する実践的なノウハウと事例を紹介。",
   alternates: {
-    canonical: `${SITE_URL.replace(/\/$/, "")}/blog`,
+    canonical: `${siteBase}/blog`,
   },
   openGraph: {
     title: "LEXIA BLOG | 碧南のWEB制作・マーケティング情報",
     description:
       "LEXIAが提供するWEB制作・マーケティング・ローカルSEOの知見をお届けします。碧南市から発信する実践的なノウハウと事例を紹介。",
     type: "website",
-    url: `${SITE_URL.replace(/\/$/, "")}/blog`,
+    url: `${siteBase}/blog`,
   },
   twitter: {
     card: "summary_large_image",
@@ -50,7 +51,7 @@ export default async function BlogIndexPage() {
     name: "LEXIA BLOG",
     description:
       "WEB制作会社LEXIAが、制作の裏側やローカルビジネス支援のノウハウを発信する公式ブログ。",
-    url: `${SITE_URL.replace(/\/$/, "")}/blog`,
+    url: `${siteBase}/blog`,
     blogPost: posts.map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
@@ -60,16 +61,21 @@ export default async function BlogIndexPage() {
         "@type": "Person",
         name: "齋藤雅人",
       },
-      url: `${SITE_URL.replace(/\/$/, "")}/blog/${post.slug}`,
+      url: `${siteBase}/blog/${post.slug}`,
     })),
   }
 
+  const breadcrumbs = [
+    { href: "/", label: "ホーム" },
+    { href: "/blog", label: "LEXIA BLOG" },
+  ] as const
+
   return (
     <>
-      <Navigation />
+      <NavigationLite />
       <main className="min-h-screen bg-white dark:bg-neutral-900">
         <div className="container mx-auto px-4 py-24 md:py-32 max-w-6xl">
-          <Breadcrumbs />
+          <BreadcrumbsLite trail={breadcrumbs} />
           <div className="mb-12 max-w-3xl">
             <span className="text-sm uppercase tracking-[0.3em] text-neutral-400">LEXIA BLOG</span>
             <h1 className="mt-3 text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100">
@@ -123,11 +129,10 @@ export default async function BlogIndexPage() {
           </div>
         </div>
       </main>
-      <Footer />
-      <Script
+      <FooterLite />
+      <script
         id="blog-jsonld"
         type="application/ld+json"
-        strategy="lazyOnload"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
     </>
