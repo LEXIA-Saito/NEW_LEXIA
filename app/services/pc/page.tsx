@@ -4,6 +4,7 @@ import Breadcrumbs from "@/components/breadcrumbs"
 import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
+import Script from "next/script"
 import { SITE_URL } from "@/lib/config"
 import { Monitor, Smartphone, Camera, Mail, FileText, ShoppingCart, Globe, MousePointerClick } from "lucide-react"
 
@@ -183,9 +184,16 @@ export default function PcServicePage() {
         </div>
       </main>
       <Footer />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
-      <script
+      <Script
+        id="service-pc-jsonld"
         type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <Script
+        id="service-pc-faq-jsonld"
+        type="application/ld+json"
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
     </>
