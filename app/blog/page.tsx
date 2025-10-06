@@ -18,14 +18,14 @@ const siteBase = SITE_URL.replace(/\/$/, "")
 export const metadata: Metadata = {
   title: "LEXIA BLOG | 愛知県碧南市のWEB制作・マーケティング情報",
   description:
-    "LEXIAが提供するWEB制作・マーケティング・ローカルSEOの知見をお届けします。愛知県碧南市から発信する実践的なノウハウと事例を紹介。",
+    "WEB制作事業LEXIAがWEB制作技術やITの最新トレンドを発信します。",
   alternates: {
     canonical: `${siteBase}/blog`,
   },
   openGraph: {
     title: "LEXIA BLOG | 愛知県碧南市のWEB制作・マーケティング情報",
     description:
-      "LEXIAが提供するWEB制作・マーケティング・ローカルSEOの知見をお届けします。愛知県碧南市から発信する実践的なノウハウと事例を紹介。",
+      "WEB制作事業LEXIAがWEB制作技術やITの最新トレンドを発信します。",
     type: "website",
     url: `${siteBase}/blog`,
   },
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "LEXIA BLOG | 愛知県碧南市のWEB制作・マーケティング情報",
     description:
-      "LEXIAが提供するWEB制作・マーケティング・ローカルSEOの知見をお届けします。愛知県碧南市から発信する実践的なノウハウと事例を紹介。",
+      "WEB制作事業LEXIAがWEB制作技術やITの最新トレンドを発信します。",
   },
 }
 
@@ -70,7 +70,7 @@ export default async function BlogIndexPage() {
     "@type": "Blog",
     name: "LEXIA BLOG",
     description:
-      "WEB制作会社LEXIAが、制作の裏側やローカルビジネス支援のノウハウを発信する公式ブログ。",
+      "WEB制作事業LEXIAがWEB制作技術やITの最新トレンドを発信します。",
     url: `${siteBase}/blog`,
     blogPost: posts.map((post) => ({
       "@type": "BlogPosting",
@@ -102,7 +102,7 @@ export default async function BlogIndexPage() {
               制作とマーケティングの“今”がわかるメインメディア
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">
-              愛知県碧南市を拠点とするWEB制作会社LEXIAが、最新のプロジェクトから得た学びや、地域ビジネスの集客に役立つヒントを発信します。最新記事のダイジェストとカテゴリー別のおすすめ記事から、知りたい情報をすぐにチェックできます。
+          WEB制作事業LEXIAがWEB制作技術やITの最新トレンドを発信します。
             </p>
           </div>
 
