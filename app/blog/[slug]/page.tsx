@@ -125,13 +125,14 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               </div>
               {post.tags.length > 0 ? (
                 <div className="mt-4 flex flex-wrap gap-2 text-xs font-medium text-neutral-500 dark:text-neutral-400">
-                  {post.tags.map((tag) => (
-                    <span
+                  {post.tags.slice(0, 3).map((tag) => (
+                    <Link
                       key={tag}
-                      className="inline-flex items-center rounded-full border border-neutral-300 px-3 py-1 dark:border-neutral-600"
+                      href={`/blog/tags/${encodeURIComponent(tag)}`}
+                      className="inline-flex items-center rounded-full border border-neutral-300 px-3 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:border-neutral-600"
                     >
                       #{tag}
-                    </span>
+                    </Link>
                   ))}
                 </div>
               ) : null}
