@@ -4,6 +4,7 @@ import BreadcrumbsLite from "@/components/breadcrumbs-lite"
 import { fetchBlogPosts, getBlogGenreLabel } from "@/lib/blog-posts"
 import type { Metadata } from "next"
 import Link from "next/link"
+import LinkifyText from "@/components/LinkifyText"
 
 export const revalidate = 60
 
@@ -111,7 +112,7 @@ export default async function TagIndexPage({ params }: Params) {
                       </Link>
                     </h3>
                     <p className="mt-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
-                      {post.description}
+                      <LinkifyText text={post.description} />
                     </p>
                     {post.tags.length > 0 ? (
                       <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
@@ -148,4 +149,3 @@ export default async function TagIndexPage({ params }: Params) {
     </>
   )
 }
-

@@ -11,6 +11,7 @@ import { SITE_URL } from "@/lib/config"
 import { notFound } from "next/navigation"
 import Script from "next/script"
 import Link from "next/link"
+import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
 
 interface BlogArticlePageProps {
@@ -154,7 +155,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 <section key={section.heading ?? index}>
                   {section.heading ? (
                     <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
-                      {section.heading}
+                      <LinkifyText text={section.heading} />
                     </h2>
                   ) : null}
                   {section.image ? (
@@ -171,14 +172,14 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                   <div className="mt-4 space-y-4">
                     {section.body?.map((paragraph, i) => (
                       <p key={i} className="leading-relaxed">
-                        {paragraph}
+                        <LinkifyText text={paragraph} />
                       </p>
                     ))}
                     {section.list ? (
                       <ul className="list-disc space-y-2 pl-6">
                         {section.list.map((item, i) => (
                           <li key={i} className="leading-relaxed">
-                            {item}
+                            <LinkifyText text={item} />
                           </li>
                         ))}
                       </ul>
