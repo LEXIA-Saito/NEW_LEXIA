@@ -1,6 +1,7 @@
 export type BlogPostSection = {
   heading?: string
   body?: string[]
+  image?: string
   list?: string[]
 }
 

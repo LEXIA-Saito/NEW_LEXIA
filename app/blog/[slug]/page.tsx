@@ -11,6 +11,7 @@ import { SITE_URL } from "@/lib/config"
 import { notFound } from "next/navigation"
 import Script from "next/script"
 import Link from "next/link"
+import Image from "next/image"
 
 interface BlogArticlePageProps {
   params: {
@@ -134,6 +135,17 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                   ))}
                 </div>
               ) : null}
+              {post.heroImage ? (
+                <div className="mt-8">
+                  <Image
+                    src={post.heroImage}
+                    alt={post.title}
+                    width={1200}
+                    height={675}
+                    className="w-full rounded-xl object-cover"
+                  />
+                </div>
+              ) : null}
             </header>
 
             <div className="space-y-12 text-neutral-800 dark:text-neutral-200">
@@ -143,6 +155,17 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                     <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
                       {section.heading}
                     </h2>
+                  ) : null}
+                  {section.image ? (
+                    <div className="mt-4">
+                      <Image
+                        src={section.image}
+                        alt={section.heading ?? `${post.title} image ${index + 1}`}
+                        width={1200}
+                        height={700}
+                        className="w-full rounded-lg object-cover"
+                      />
+                    </div>
                   ) : null}
                   <div className="mt-4 space-y-4">
                     {section.body?.map((paragraph, i) => (
