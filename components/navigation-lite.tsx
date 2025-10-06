@@ -19,8 +19,8 @@ const navLinks = [
 
 export default function NavigationLite() {
   return (
-    <header className="border-b border-neutral-200 bg-white/95 backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-950/95">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4">
+    <header className="border-b border-neutral-200 bg-white/95 backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-950/95 relative z-50">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4 relative">
         <Link href="/" className="flex items-center gap-3" aria-label="LEXIA">
           <Image
             src={LOGO_URL || "/placeholder.svg"}
@@ -73,11 +73,14 @@ export default function NavigationLite() {
           >
             無料相談
           </Link>
+          {/* Mobile menu: dropdown overlays below header instead of expanding header */}
           <details className="w-full md:hidden">
             <summary className="cursor-pointer rounded-full border border-neutral-300 px-4 py-2 text-sm font-semibold text-neutral-900 dark:border-neutral-700 dark:text-neutral-100">
               メニュー
             </summary>
-            <div className="mt-3 flex flex-col gap-2 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
+            {/* Dropdown panel positioned below header */}
+            <div className="absolute left-0 right-0 top-full z-40 mx-auto max-w-6xl px-4">
+              <div className="mt-2 flex flex-col gap-2 rounded-2xl border border-neutral-200 bg-white p-4 shadow-lg ring-1 ring-black/5 dark:border-neutral-800 dark:bg-neutral-900">
               {navLinks.map((item) => (
                 <Link
                   key={item.href}
@@ -93,6 +96,7 @@ export default function NavigationLite() {
               >
                 無料相談
               </Link>
+              </div>
             </div>
           </details>
         </div>

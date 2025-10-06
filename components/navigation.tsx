@@ -170,22 +170,19 @@ export default function Navigation() {
 
   return (
     <>
-      <div
-        className="fixed top-0 left-0 right-0 z-50"
+      <motion.header
+        ref={headerRef}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? "bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm py-3"
+            : "bg-transparent py-5"
+        }`}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         onMouseEnter={() => setMegaMenuOpen(true)}
         onMouseLeave={() => setMegaMenuOpen(false)}
       >
-        <motion.header
-          ref={headerRef}
-          className={`transition-all duration-300 ${
-            isScrolled
-              ? "bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm py-3"
-              : "bg-transparent py-5"
-          }`}
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
           <div className="container mx-auto px-4 flex justify-between items-center">
             <Link href="/" className="flex items-center" aria-label="LEXIA">
               <motion.div
@@ -365,11 +362,13 @@ export default function Navigation() {
         <AnimatePresence>
           {megaMenuOpen && (
             <motion.div
-              className="hidden md:block bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm"
+              className="fixed top-[var(--header-height)] left-0 right-0 z-40 hidden md:block bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
+              onMouseEnter={() => setMegaMenuOpen(true)}
+              onMouseLeave={() => setMegaMenuOpen(false)}
             >
               <div className="container mx-auto px-4 py-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8">
                 {navItems.map((item) => (
@@ -400,7 +399,6 @@ export default function Navigation() {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
 
       <AnimatePresence>
         {mobileMenuOpen && (

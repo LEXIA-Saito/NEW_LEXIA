@@ -13,6 +13,7 @@ import { SITE_URL } from "@/lib/config"
 import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
+import GenreFilterList from "@/components/blog/GenreFilterList"
 
 const siteBase = SITE_URL.replace(/\/$/, "")
 
@@ -52,7 +53,13 @@ function createGenreAnchor(genre: BlogGenre) {
   return `genre-${genre}`
 }
 
-export default async function BlogIndexPage() {
+type PageProps = {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function BlogIndexPage(props: PageProps) {
+  const sp = (await props.searchParams) || {}
+  const initialGenre = (typeof sp.genre === "string" ? sp.genre : undefined) as BlogGenre | undefined
   const posts = (await fetchBlogPosts()).slice().sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   )
@@ -184,8 +191,8 @@ export default async function BlogIndexPage() {
                 </section>
               )}
 
-              {latestList.length > 0 && (
-                <section className="mt-20">
+          {latestList.length > 0 && (
+            <section className="mt-20">
                   <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                     <div>
                       <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
@@ -255,8 +262,15 @@ export default async function BlogIndexPage() {
                       </article>
                     ))}
                   </div>
-                </section>
-              )}
+            </section>
+          )}
+
+          {/* Category filter list: Tech / Ideas */}
+          <GenreFilterList
+            posts={posts}
+            genres={BLOG_GENRES.map((g) => ({ id: g.id, label: g.label }))}
+            initialGenre={initialGenre}
+          />
 
               <section id="genres" className="mt-24">
                 <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
