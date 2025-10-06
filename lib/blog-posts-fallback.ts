@@ -44,7 +44,7 @@ export const fallbackBlogPosts: BlogPost[] = [
     description:
       "コードとデザインの境界を溶かす次世代ビジュアルエディタ「Onlook」の特徴、アーキテクチャ、利点と課題をLEXIA視点で解説します。",
     genre: "tech",
-    tags: ["Onlook", "React", "Tailwind", "デザインツール", "AI"],
+    tags: ["Onlook", "React", "Tailwind"],
     date: "2025-10-06",
     readingTime: "8分",
     heroImage:

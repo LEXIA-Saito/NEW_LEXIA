@@ -147,13 +147,14 @@ export default async function BlogIndexPage() {
                       </div>
                       {latestPost.tags.length > 0 ? (
                         <div className="mt-3 flex flex-wrap gap-2 text-xs font-medium text-neutral-200/90">
-                          {latestPost.tags.map((tag) => (
-                            <span
+                          {latestPost.tags.slice(0, 3).map((tag) => (
+                            <Link
                               key={tag}
-                              className="inline-flex items-center rounded-full border border-white/30 px-3 py-1"
+                              href={`/blog/tags/${encodeURIComponent(tag)}`}
+                              className="inline-flex items-center rounded-full border border-white/30 px-3 py-1 hover:bg-white/10"
                             >
                               #{tag}
-                            </span>
+                            </Link>
                           ))}
                         </div>
                       ) : null}
@@ -227,13 +228,14 @@ export default async function BlogIndexPage() {
                           </p>
                           {post.tags.length > 0 ? (
                             <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
-                              {post.tags.map((tag) => (
-                                <span
+                              {post.tags.slice(0, 3).map((tag) => (
+                                <Link
                                   key={tag}
-                                  className="inline-flex items-center rounded-full border border-neutral-200 px-2.5 py-1 dark:border-neutral-700"
+                                  href={`/blog/tags/${encodeURIComponent(tag)}`}
+                                  className="inline-flex items-center rounded-full border border-neutral-200 px-2.5 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:border-neutral-700"
                                 >
                                   #{tag}
-                                </span>
+                                </Link>
                               ))}
                             </div>
                           ) : null}
@@ -321,13 +323,14 @@ export default async function BlogIndexPage() {
                           </p>
                           {post.tags.length > 0 ? (
                             <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
-                              {post.tags.map((tag) => (
-                                <span
+                              {post.tags.slice(0, 3).map((tag) => (
+                                <Link
                                   key={tag}
-                                  className="inline-flex items-center rounded-full border border-neutral-200 px-2.5 py-1 dark:border-neutral-700"
+                                  href={`/blog/tags/${encodeURIComponent(tag)}`}
+                                  className="inline-flex items-center rounded-full border border-neutral-200 px-2.5 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:border-neutral-700"
                                 >
                                   #{tag}
-                                </span>
+                                </Link>
                               ))}
                             </div>
                           ) : null}
