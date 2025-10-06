@@ -17,23 +17,23 @@ export const dynamic = "force-static"
 export const revalidate = 3600 // Revalidate every hour
 
 export const metadata: Metadata = {
-  title: "愛知県碧南市のホームページ制作・Web制作会社 | LEXIA",
+  title: "愛知県碧南市のホームページ制作・WEB制作事業 | LEXIA",
   description:
-    "愛知県碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAにお任せください。",
+    "愛知県碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAのWEB制作事業にお任せください。",
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "愛知県碧南市のホームページ制作・Web制作会社 | LEXIA",
+  title: "愛知県碧南市のホームページ制作・WEB制作事業 | LEXIA",
     description:
-      "愛知県碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAにお任せください。",
+      "愛知県碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAのWEB制作事業にお任せください。",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "愛知県碧南市のホームページ制作・Web制作会社 | LEXIA",
+  title: "愛知県碧南市のホームページ制作・WEB制作事業 | LEXIA",
     description:
-      "愛知県碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAにお任せください。",
+      "愛知県碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAのWEB制作事業にお任せください。",
     images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
   },
 }

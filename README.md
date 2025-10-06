@@ -1,6 +1,6 @@
 # LEXIA Web Design
 
-愛知県碧南市のWEB制作会社「LEXIA」のリポジトリです。v0.dev で構築したチャット UI と Vercel のデプロイが同期されています。
+愛知県碧南市のWEB制作事業「LEXIA」のリポジトリです。v0.dev で構築したチャット UI と Vercel のデプロイが同期されています。
 
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/lexia-projects/lexia-web)
 [![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/9UrVLVai4dj)
