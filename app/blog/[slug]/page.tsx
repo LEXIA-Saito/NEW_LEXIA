@@ -1,7 +1,11 @@
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
-import { fetchBlogPost, fetchBlogPosts } from "@/lib/blog-posts"
+import {
+  fetchBlogPost,
+  fetchBlogPosts,
+  getBlogGenreLabel,
+} from "@/lib/blog-posts"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import { notFound } from "next/navigation"
@@ -56,6 +60,7 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
       description: post.description,
       images: post.heroImage ? [post.heroImage] : undefined,
     },
+    keywords: post.tags.length > 0 ? post.tags : undefined,
   }
 }
 
@@ -82,6 +87,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     headline: post.title,
     description: post.description,
     datePublished: post.date,
+    articleSection: getBlogGenreLabel(post.genre),
     author: {
       "@type": "Person",
       name: "齋藤雅人",
@@ -92,6 +98,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     },
     url: `${SITE_URL.replace(/\/$/, "")}/blog/${post.slug}`,
     image: post.heroImage,
+    keywords: post.tags.length > 0 ? post.tags.join(", ") : undefined,
   }
 
   return (
@@ -103,7 +110,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
           <article>
             <header className="mb-12">
               <span className="inline-flex items-center rounded-full bg-neutral-900 px-4 py-1 text-xs font-medium tracking-wide text-white dark:bg-neutral-100 dark:text-neutral-900">
-                {post.category}
+                {getBlogGenreLabel(post.genre)}
               </span>
               <h1 className="mt-6 text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100">
                 {post.title}
@@ -115,6 +122,18 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 <span aria-hidden="true">•</span>
                 <span>執筆：齋藤雅人</span>
               </div>
+              {post.tags.length > 0 ? (
+                <div className="mt-4 flex flex-wrap gap-2 text-xs font-medium text-neutral-500 dark:text-neutral-400">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center rounded-full border border-neutral-300 px-3 py-1 dark:border-neutral-600"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
             </header>
 
             <div className="space-y-12 text-neutral-800 dark:text-neutral-200">

@@ -1,7 +1,13 @@
 import NavigationLite from "@/components/navigation-lite"
 import FooterLite from "@/components/footer-lite"
 import BreadcrumbsLite from "@/components/breadcrumbs-lite"
-import { fetchBlogPosts } from "@/lib/blog-posts"
+import {
+  BLOG_GENRES,
+  fetchBlogPosts,
+  getBlogGenreDescription,
+  getBlogGenreLabel,
+} from "@/lib/blog-posts"
+import type { BlogGenre } from "@/lib/blog-posts"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import Link from "next/link"
@@ -41,11 +47,8 @@ function formatJapaneseDate(date: string) {
   })
 }
 
-function createCategoryId(category: string) {
-  return `category-${category
-    .toLowerCase()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w\-ぁ-んァ-ヶー一-龠]/g, "") || "uncategorized"}`
+function createGenreAnchor(genre: BlogGenre) {
+  return `genre-${genre}`
 }
 
 export default async function BlogIndexPage() {
@@ -57,19 +60,10 @@ export default async function BlogIndexPage() {
   const remainingPosts = posts.slice(1)
   const latestList = remainingPosts.slice(0, 4)
 
-  const categoryMap = new Map<string, typeof posts>()
-
-  posts.forEach((post) => {
-    const category = post.category || "未分類"
-    if (!categoryMap.has(category)) {
-      categoryMap.set(category, [])
-    }
-    categoryMap.get(category)?.push(post)
-  })
-
-  const categoryEntries = Array.from(categoryMap.entries()).sort((a, b) =>
-    a[0].localeCompare(b[0], "ja"),
-  )
+  const postsByGenre = BLOG_GENRES.map((genre) => ({
+    ...genre,
+    posts: posts.filter((post) => post.genre === genre.id),
+  })).filter((group) => group.posts.length > 0)
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -144,13 +138,25 @@ export default async function BlogIndexPage() {
                       <p className="text-base md:text-lg text-neutral-200/90">
                         {latestPost.description}
                       </p>
-                      <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-300/90">
+                      <div className="flex flex-wrap items-center gap-3 text-sm text-neutral-300/90">
                         <span className="inline-flex items-center rounded-full border border-white/20 px-3 py-1">
-                          {latestPost.category}
+                          {getBlogGenreLabel(latestPost.genre)}
                         </span>
                         <span>{latestPost.readingTime}</span>
                         <span>{formatJapaneseDate(latestPost.date)} 公開</span>
                       </div>
+                      {latestPost.tags.length > 0 ? (
+                        <div className="mt-3 flex flex-wrap gap-2 text-xs font-medium text-neutral-200/90">
+                          {latestPost.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="inline-flex items-center rounded-full border border-white/30 px-3 py-1"
+                            >
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
+                      ) : null}
                       <Link
                         href={`/blog/${latestPost.slug}`}
                         className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
@@ -188,10 +194,10 @@ export default async function BlogIndexPage() {
                       </p>
                     </div>
                     <Link
-                      href="#categories"
+                      href="#genres"
                       className="inline-flex items-center gap-2 text-sm font-medium text-neutral-900 underline-offset-4 hover:underline dark:text-neutral-100"
                     >
-                      カテゴリー一覧を見る
+                      ジャンル一覧を見る
                       <span aria-hidden>→</span>
                     </Link>
                   </div>
@@ -203,7 +209,9 @@ export default async function BlogIndexPage() {
                       >
                         <div>
                           <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
-                            <span>{post.category}</span>
+                            <span className="inline-flex items-center gap-1">
+                              {getBlogGenreLabel(post.genre)}
+                            </span>
                             <span>{post.readingTime}</span>
                           </div>
                           <h3 className="mt-4 text-xl font-semibold text-neutral-900 dark:text-neutral-100">
@@ -217,6 +225,18 @@ export default async function BlogIndexPage() {
                           <p className="mt-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
                             {post.description}
                           </p>
+                          {post.tags.length > 0 ? (
+                            <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
+                              {post.tags.map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="inline-flex items-center rounded-full border border-neutral-200 px-2.5 py-1 dark:border-neutral-700"
+                                >
+                                  #{tag}
+                                </span>
+                              ))}
+                            </div>
+                          ) : null}
                         </div>
                         <div className="mt-6 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
                           <span>{formatJapaneseDate(post.date)}</span>
@@ -235,51 +255,51 @@ export default async function BlogIndexPage() {
                 </section>
               )}
 
-              <section id="categories" className="mt-24">
+              <section id="genres" className="mt-24">
                 <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                   <div>
                     <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
-                      カテゴリーから探す
+                      ジャンルで探す
                     </h2>
                     <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
                       テーマ別に記事をピックアップ。必要な知識を体系的にキャッチアップできます。
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {categoryEntries.map(([category]) => (
+                    {postsByGenre.map(({ id, label }) => (
                       <Link
-                        key={category}
-                        href={`#${createCategoryId(category)}`}
+                        key={id}
+                        href={`#${createGenreAnchor(id)}`}
                         className="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-4 py-2 text-xs font-medium tracking-wide text-neutral-700 transition hover:border-neutral-500 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-200 dark:hover:border-neutral-500 dark:hover:text-neutral-50"
                       >
-                        #{category}
+                        #{label}
                       </Link>
                     ))}
                   </div>
                 </div>
 
-                {categoryEntries.map(([category, categoryPosts]) => (
+                {postsByGenre.map(({ id, label, posts: genrePosts }) => (
                   <section
-                    key={category}
-                    id={createCategoryId(category)}
+                    key={id}
+                    id={createGenreAnchor(id)}
                     className="mt-16 scroll-mt-24"
-                    aria-labelledby={`${createCategoryId(category)}-label`}
+                    aria-labelledby={`${createGenreAnchor(id)}-label`}
                   >
                     <div className="flex items-center justify-between gap-4">
                       <div>
                         <h3
-                          id={`${createCategoryId(category)}-label`}
+                          id={`${createGenreAnchor(id)}-label`}
                           className="text-xl font-semibold text-neutral-900 dark:text-neutral-100"
                         >
-                          {category}
+                          {label}
                         </h3>
                         <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-                          {category}に関する最新の実践ノウハウと解説をまとめました。
+                          {getBlogGenreDescription(id)}
                         </p>
                       </div>
                     </div>
                     <div className="mt-6 grid gap-6 md:grid-cols-2">
-                      {categoryPosts.slice(0, 4).map((post) => (
+                      {genrePosts.slice(0, 4).map((post) => (
                         <article
                           key={post.slug}
                           className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
@@ -299,6 +319,18 @@ export default async function BlogIndexPage() {
                           <p className="mt-3 flex-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
                             {post.description}
                           </p>
+                          {post.tags.length > 0 ? (
+                            <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
+                              {post.tags.map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="inline-flex items-center rounded-full border border-neutral-200 px-2.5 py-1 dark:border-neutral-700"
+                                >
+                                  #{tag}
+                                </span>
+                              ))}
+                            </div>
+                          ) : null}
                           <Link
                             href={`/blog/${post.slug}`}
                             className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-neutral-900 dark:text-neutral-100"
