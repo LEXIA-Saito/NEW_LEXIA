@@ -11,6 +11,7 @@ import type { BlogGenre } from "@/lib/blog-posts"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import Link from "next/link"
+import LinkifyOnlook from "@/components/LinkifyOnlook"
 import Image from "next/image"
 
 const siteBase = SITE_URL.replace(/\/$/, "")
@@ -136,7 +137,7 @@ export default async function BlogIndexPage() {
                         {latestPost.title}
                       </h2>
                       <p className="text-base md:text-lg text-neutral-200/90">
-                        {latestPost.description}
+                        <LinkifyOnlook text={latestPost.description} />
                       </p>
                       <div className="flex flex-wrap items-center gap-3 text-sm text-neutral-300/90">
                         <span className="inline-flex items-center rounded-full border border-white/20 px-3 py-1">
@@ -224,7 +225,7 @@ export default async function BlogIndexPage() {
                             </Link>
                           </h3>
                           <p className="mt-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
-                            {post.description}
+                            <LinkifyOnlook text={post.description} />
                           </p>
                           {post.tags.length > 0 ? (
                             <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
@@ -319,7 +320,7 @@ export default async function BlogIndexPage() {
                             </Link>
                           </h4>
                           <p className="mt-3 flex-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
-                            {post.description}
+                            <LinkifyOnlook text={post.description} />
                           </p>
                           {post.tags.length > 0 ? (
                             <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
