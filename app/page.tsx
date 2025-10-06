@@ -8,6 +8,7 @@ import Hero from "@/components/sections/hero"
 import PricingCTA from "@/components/sections/pricing-cta"
 import ServicesCTA from "@/components/sections/services-cta"
 import Features from "@/components/Features"
+import BlogPreview from "@/components/sections/blog-preview"
 import type { Metadata } from "next"
 import Script from "next/script"
 import { SITE_URL, LOGO_URL } from "@/lib/config"
@@ -87,6 +88,8 @@ export default function Home() {
       <section id="team" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
         <Team />
       </section>
+
+      <BlogPreview />
 
       <section id="contact" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
         <Contact />

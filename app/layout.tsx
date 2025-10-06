@@ -109,6 +109,13 @@ export default function RootLayout({
       </head>
       <body className={`${notoSansJP.className} antialiased`}>
         <Script
+          id="google-adsense"
+          strategy="afterInteractive"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8789901212664644"
+          crossOrigin="anonymous"
+        />
+        <Script
           id="website-jsonld"
           type="application/ld+json"
           strategy="lazyOnload"

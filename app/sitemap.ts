@@ -1,9 +1,11 @@
 import type { MetadataRoute } from "next"
 import { projectsData } from "@/lib/projects-data"
+import { fetchBlogPosts } from "@/lib/blog-posts"
 import { SITE_URL } from "../lib/config"
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  // Main pages
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await fetchBlogPosts()
+
   const routes = [
     "",
     "/projects",
@@ -18,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/team/riho-saito",
     "/team/assistant",
     "/contact",
+    "/blog",
   ].map((route) => ({
     url: `${SITE_URL}${route}`,
     lastModified: new Date(),
@@ -25,12 +28,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === "" ? 1 : 0.8,
   }))
 
-  // Project pages
   const projectRoutes = projectsData.map((project) => ({
     url: `${SITE_URL}/projects/${project.slug}`,
     lastModified: new Date(parseInt(project.year, 10), 0),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }))
-  return [...routes, ...projectRoutes]
+
+  const blogRoutes = posts.map((post) => ({
+    url: `${SITE_URL}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }))
+
+  return [...routes, ...projectRoutes, ...blogRoutes]
 }

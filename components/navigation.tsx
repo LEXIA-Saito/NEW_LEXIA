@@ -45,6 +45,7 @@ export const navItems = [
     subItems: [{ name: "料金シミュレーション", href: "/pricing" }],
   },
   { name: "制作実績", href: "/projects", subItems: [] },
+  { name: "LEXIA BLOG", href: "/blog", subItems: [] },
   {
     name: "チーム",
     href: "/team",
