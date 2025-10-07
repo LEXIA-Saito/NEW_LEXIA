@@ -201,13 +201,7 @@ export default async function BlogIndexPage(props: PageProps) {
                         最新記事からダイジェストでチェック。気になるテーマから読み進めましょう。
                       </p>
                     </div>
-                    <Link
-                      href="#genres"
-                      className="inline-flex items-center gap-2 text-sm font-medium text-neutral-900 underline-offset-4 hover:underline dark:text-neutral-100"
-                    >
-                      ジャンル一覧を見る
-                      <span aria-hidden>→</span>
-                    </Link>
+                    {/* ジャンル一覧を見る リンクは削除 */}
                   </div>
                   <div className="mt-8 grid gap-8 md:grid-cols-2">
                     {latestList.map((post) => (
