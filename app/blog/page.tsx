@@ -55,6 +55,10 @@ function createGenreAnchor(genre: BlogGenre) {
   return `genre-${genre}`
 }
 
+function createTagAnchor(tag: string) {
+  return `tag-${tag.toLowerCase().replace(/[^a-z0-9一-龯ぁ-んァ-ヶー\s]/gi, "").replace(/\s+/g, "-")}`
+}
+
 type PageProps = {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }
@@ -70,10 +74,11 @@ export default async function BlogIndexPage(props: PageProps) {
   const remainingPosts = posts.slice(1)
   const latestList = remainingPosts.slice(0, 4)
 
-  const postsByGenre = BLOG_GENRES.map((genre) => ({
-    ...genre,
-    posts: posts.filter((post) => post.genre === genre.id),
-  })).filter((group) => group.posts.length > 0)
+  const allTags = Array.from(new Set(posts.flatMap((p) => p.tags))).sort((a, b) => a.localeCompare(b, "ja"))
+  const postsByTag = allTags.map((tag) => ({
+    tag,
+    posts: posts.filter((post) => post.tags.includes(tag)),
+  }))
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -285,51 +290,46 @@ export default async function BlogIndexPage(props: PageProps) {
             initialGenre={initialGenre}
           />
 
-              <section id="genres" className="mt-24">
+              <section id="tags" className="mt-24">
                 <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                   <div>
-                    <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
-                      ジャンルで探す
-                    </h2>
+                    <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">タグで探す</h2>
                     <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      テーマ別に記事をピックアップ。必要な知識を体系的にキャッチアップできます。
+                      気になるテーマのタグから関連する記事をチェック。
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {postsByGenre.map(({ id, label }) => (
+                    {allTags.map((tag) => (
                       <Link
-                        key={id}
-                        href={`#${createGenreAnchor(id)}`}
+                        key={tag}
+                        href={`#${createTagAnchor(tag)}`}
                         className="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-4 py-2 text-xs font-medium tracking-wide text-neutral-700 transition hover:border-neutral-500 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-200 dark:hover:border-neutral-500 dark:hover:text-neutral-50"
                       >
-                        #{label}
+                        #{tag}
                       </Link>
                     ))}
                   </div>
                 </div>
 
-                {postsByGenre.map(({ id, label, posts: genrePosts }) => (
+                {postsByTag.map(({ tag, posts: tagPosts }) => (
                   <section
-                    key={id}
-                    id={createGenreAnchor(id)}
+                    key={tag}
+                    id={createTagAnchor(tag)}
                     className="mt-16 scroll-mt-24"
-                    aria-labelledby={`${createGenreAnchor(id)}-label`}
+                    aria-labelledby={`${createTagAnchor(tag)}-label`}
                   >
                     <div className="flex items-center justify-between gap-4">
                       <div>
                         <h3
-                          id={`${createGenreAnchor(id)}-label`}
+                          id={`${createTagAnchor(tag)}-label`}
                           className="text-xl font-semibold text-neutral-900 dark:text-neutral-100"
                         >
-                          {label}
+                          #{tag}
                         </h3>
-                        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-                          {getBlogGenreDescription(id)}
-                        </p>
                       </div>
                     </div>
                     <div className="mt-6 grid gap-6 md:grid-cols-2">
-                      {genrePosts.slice(0, 4).map((post) => (
+                      {tagPosts.slice(0, 4).map((post) => (
                         <article
                           key={post.slug}
                           className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-0 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
