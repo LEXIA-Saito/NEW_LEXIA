@@ -291,24 +291,16 @@ export default async function BlogIndexPage(props: PageProps) {
           />
 
               <section id="tags" className="mt-24">
-                <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                  <div>
-                    <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">タグで探す</h2>
-                    <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      気になるテーマのタグから関連する記事をチェック。
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {allTags.map((tag) => (
-                      <Link
-                        key={tag}
-                        href={`#${createTagAnchor(tag)}`}
-                        className="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-4 py-2 text-xs font-medium tracking-wide text-neutral-700 transition hover:border-neutral-500 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-200 dark:hover:border-neutral-500 dark:hover:text-neutral-50"
-                      >
-                        #{tag}
-                      </Link>
-                    ))}
-                  </div>
+                <div className="flex flex-wrap gap-2">
+                  {allTags.map((tag) => (
+                    <Link
+                      key={tag}
+                      href={`#${createTagAnchor(tag)}`}
+                      className="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-4 py-2 text-xs font-medium tracking-wide text-neutral-700 transition hover:border-neutral-500 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-200 dark:hover:border-neutral-500 dark:hover:text-neutral-50"
+                    >
+                      #{tag}
+                    </Link>
+                  ))}
                 </div>
 
                 {postsByTag.map(({ tag, posts: tagPosts }) => (
