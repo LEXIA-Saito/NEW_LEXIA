@@ -108,7 +108,7 @@ export default async function BlogIndexPage(props: PageProps) {
           <BreadcrumbsLite trail={breadcrumbs} />
           <div className="mb-12 max-w-4xl">
             <span className="text-sm uppercase tracking-[0.3em] text-neutral-400">LEXIA BLOG</span>
-            <h1 className="mt-3 text-3xl md:text-5xl font-light text-neutral-900 dark:text-neutral-100">LEXIA BLOG</h1>
+            <h1 className="mt-3 text-3xl md:text-5xl font-light text-neutral-900 dark:text-neutral-100">WEB制作 × AI 最前線 — 未来を創るトレンド発信ブログ</h1>
             <p className="mt-5 text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">
               WEB制作事業LEXIAがWEB制作技術やITの最新トレンドを発信します。
             </p>
