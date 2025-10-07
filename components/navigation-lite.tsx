@@ -24,8 +24,8 @@ export default function NavigationLite() {
   const pathname = usePathname()
   const blogNavLinks = [
     { href: "/blog", label: "記事一覧" },
-    { href: "/blog?genre=tech#genre-filter", label: "技術（Tech）" },
-    { href: "/blog?genre=ideas#genre-filter", label: "アイデア（Ideas）" },
+    { href: "/blog/genres/tech", label: "技術（Tech）" },
+    { href: "/blog/genres/ideas", label: "アイデア（Ideas）" },
   ] as const
 
   const navLinks = pathname?.startsWith("/blog") ? blogNavLinks : defaultNavLinks

@@ -63,8 +63,8 @@ export default function Navigation() {
   const pathname = usePathname()
   const blogNavItems = [
     { name: "記事一覧", href: "/blog", subItems: [] },
-    { name: "技術（Tech）", href: "/blog?genre=tech#genre-filter", subItems: [] },
-    { name: "アイデア（Ideas）", href: "/blog?genre=ideas#genre-filter", subItems: [] },
+    { name: "技術（Tech）", href: "/blog/genres/tech", subItems: [] },
+    { name: "アイデア（Ideas）", href: "/blog/genres/ideas", subItems: [] },
   ] as const
 
   const displayItems = pathname?.startsWith("/blog") ? blogNavItems : navItems
