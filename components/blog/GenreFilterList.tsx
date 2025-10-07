@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
+
+const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 import type { BlogPost, BlogGenre } from "@/lib/blog-posts"
 import { getBlogGenreLabel } from "@/lib/blog-posts"
 
@@ -77,17 +79,15 @@ export default function GenreFilterList({ posts, genres, initialGenre = "all" }:
             <h3 className="mt-3 text-xl font-semibold text-neutral-900 dark:text-neutral-100">
               <Link href={`/blog/${post.slug}`}>{post.title}</Link>
             </h3>
-            {post.heroImage ? (
-              <div className="relative mt-3 h-44 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
-                <Image
-                  src={post.heroImage}
-                  alt={post.title}
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 1024px) 40vw, 100vw"
-                />
-              </div>
-            ) : null}
+            <div className="relative mt-3 h-44 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+              <Image
+                src={post.heroImage || PLACEHOLDER_IMG}
+                alt={post.title}
+                fill
+                className="object-cover"
+                sizes="(min-width: 1024px) 40vw, 100vw"
+              />
+            </div>
             <p className="mt-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">{post.description}</p>
             <div className="mt-4 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
               <span>{new Date(post.date).toLocaleDateString("ja-JP", { year: "numeric", month: "long", day: "numeric" })}</span>

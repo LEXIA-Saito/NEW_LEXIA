@@ -15,6 +15,8 @@ import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
 import GenreFilterList from "@/components/blog/GenreFilterList"
 
+const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
+
 const siteBase = SITE_URL.replace(/\/$/, "")
 
 export const metadata: Metadata = {
@@ -105,13 +107,23 @@ export default async function BlogIndexPage(props: PageProps) {
         <div className="container mx-auto px-4 py-24 md:py-32 max-w-6xl">
           <BreadcrumbsLite trail={breadcrumbs} />
           <div className="mb-12 max-w-4xl">
-            <span className="text-sm uppercase tracking-[0.3em] text-neutral-400">LEXIA BLOG</span>
-            <h1 className="mt-3 text-3xl md:text-5xl font-light text-neutral-900 dark:text-neutral-100">
-              制作とマーケティングの“今”がわかるメインメディア
+            <h1 className="text-3xl md:text-5xl font-light text-neutral-900 dark:text-neutral-100">
+              記事一覧
             </h1>
-            <p className="mt-5 text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">
-          WEB制作事業LEXIAがWEB制作技術やITの最新トレンドを発信します。
-            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Link
+                href={`/blog?genre=tech#genre-filter`}
+                className="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-4 py-2 text-xs font-medium tracking-wide text-neutral-700 transition hover:border-neutral-500 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-200 dark:hover:border-neutral-500 dark:hover:text-neutral-50"
+              >
+                技術（Tech）
+              </Link>
+              <Link
+                href={`/blog?genre=ideas#genre-filter`}
+                className="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-4 py-2 text-xs font-medium tracking-wide text-neutral-700 transition hover:border-neutral-500 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-200 dark:hover:border-neutral-500 dark:hover:text-neutral-50"
+              >
+                アイデア（Ideas）
+              </Link>
+            </div>
           </div>
 
           {posts.length === 0 ? (
@@ -124,16 +136,14 @@ export default async function BlogIndexPage(props: PageProps) {
             <>
               {latestPost && (
                 <section className="relative overflow-hidden rounded-[2.5rem] border border-neutral-200 bg-neutral-950 text-neutral-50 shadow-2xl dark:border-neutral-800">
-                  {latestPost.heroImage ? (
-                    <Image
-                      src={latestPost.heroImage}
-                      alt={latestPost.title}
-                      fill
-                      priority
-                      className="absolute inset-0 h-full w-full object-cover opacity-60"
-                      sizes="(min-width: 1024px) 60vw, 100vw"
-                    />
-                  ) : null}
+                  <Image
+                    src={latestPost.heroImage || PLACEHOLDER_IMG}
+                    alt={latestPost.title}
+                    fill
+                    priority
+                    className="absolute inset-0 h-full w-full object-cover opacity-60"
+                    sizes="(min-width: 1024px) 60vw, 100vw"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-br from-neutral-950/80 via-neutral-950/70 to-neutral-900/50" aria-hidden />
                   <div className="relative grid gap-10 px-10 py-14 md:px-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
                       <div className="space-y-6">
@@ -179,18 +189,16 @@ export default async function BlogIndexPage(props: PageProps) {
                         <span aria-hidden>→</span>
                       </Link>
                     </div>
-                    {latestPost.heroImage ? (
-                      <div className="relative hidden h-full min-h-[320px] overflow-hidden rounded-[2rem] border border-white/20 bg-neutral-900/40 shadow-xl lg:block">
-                        <Image
-                          src={latestPost.heroImage}
-                          alt={latestPost.title}
-                          fill
-                          className="h-full w-full object-cover"
-                          sizes="(min-width: 1280px) 40vw, 50vw"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/70 via-neutral-900/30 to-transparent" aria-hidden />
-                      </div>
-                    ) : null}
+                    <div className="relative hidden h-full min-h-[320px] overflow-hidden rounded-[2rem] border border-white/20 bg-neutral-900/40 shadow-xl lg:block">
+                      <Image
+                        src={latestPost.heroImage || PLACEHOLDER_IMG}
+                        alt={latestPost.title}
+                        fill
+                        className="h-full w-full object-cover"
+                        sizes="(min-width: 1280px) 40vw, 50vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/70 via-neutral-900/30 to-transparent" aria-hidden />
+                    </div>
                   </div>
                 </section>
               )}
@@ -218,9 +226,18 @@ export default async function BlogIndexPage(props: PageProps) {
                     {latestList.map((post) => (
                       <article
                         key={post.slug}
-                        className="flex h-full flex-col justify-between rounded-3xl border border-neutral-200 bg-white/90 p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900/70"
+                        className="flex h-full flex-col justify-between rounded-3xl border border-neutral-200 bg-white/90 p-0 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900/70"
                       >
-                        <div>
+                        <div className="relative h-48 w-full overflow-hidden rounded-t-3xl border-b border-neutral-200 dark:border-neutral-800">
+                          <Image
+                            src={post.heroImage || PLACEHOLDER_IMG}
+                            alt={post.title}
+                            fill
+                            className="object-cover"
+                            sizes="(min-width: 768px) 50vw, 100vw"
+                          />
+                        </div>
+                        <div className="p-8">
                           <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
                             <Link
                               href={`/blog?genre=${post.genre}#genre-filter`}
@@ -256,7 +273,7 @@ export default async function BlogIndexPage(props: PageProps) {
                             </div>
                           ) : null}
                         </div>
-                        <div className="mt-6 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
+                        <div className="px-8 pb-8 pt-2 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
                           <span>{formatJapaneseDate(post.date)}</span>
                           <Link
                             href={`/blog/${post.slug}`}
@@ -327,44 +344,55 @@ export default async function BlogIndexPage(props: PageProps) {
                       {genrePosts.slice(0, 4).map((post) => (
                         <article
                           key={post.slug}
-                          className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
+                          className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-0 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
                         >
-                          <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
-                            <span>{post.readingTime}</span>
-                            <span>{formatJapaneseDate(post.date)}</span>
+                          <div className="relative h-44 w-full overflow-hidden rounded-t-3xl border-b border-neutral-200 dark:border-neutral-800">
+                            <Image
+                              src={post.heroImage || PLACEHOLDER_IMG}
+                              alt={post.title}
+                              fill
+                              className="object-cover"
+                              sizes="(min-width: 768px) 50vw, 100vw"
+                            />
                           </div>
-                          <h4 className="mt-4 text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                          <div className="p-6">
+                            <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
+                              <span>{post.readingTime}</span>
+                              <span>{formatJapaneseDate(post.date)}</span>
+                            </div>
+                            <h4 className="mt-4 text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                              <Link
+                                href={`/blog/${post.slug}`}
+                                className="focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 dark:focus-visible:ring-neutral-100 dark:focus-visible:ring-offset-neutral-900"
+                              >
+                                {post.title}
+                              </Link>
+                            </h4>
+                            <p className="mt-3 flex-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
+                              <LinkifyText text={post.description} />
+                            </p>
+                            {post.tags.length > 0 ? (
+                              <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
+                                {post.tags.slice(0, 3).map((tag) => (
+                                  <Link
+                                    key={tag}
+                                    href={`/blog/tags/${encodeURIComponent(tag)}`}
+                                    className="inline-flex items-center rounded-full border border-neutral-200 px-2.5 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:border-neutral-700"
+                                  >
+                                    #{tag}
+                                  </Link>
+                                ))}
+                              </div>
+                            ) : null}
                             <Link
                               href={`/blog/${post.slug}`}
-                              className="focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 dark:focus-visible:ring-neutral-100 dark:focus-visible:ring-offset-neutral-900"
+                              className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-neutral-900 dark:text-neutral-100"
+                              aria-label={`${post.title}を読む`}
                             >
-                              {post.title}
+                              記事を読む
+                              <span aria-hidden>→</span>
                             </Link>
-                          </h4>
-                          <p className="mt-3 flex-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
-                            <LinkifyText text={post.description} />
-                          </p>
-                          {post.tags.length > 0 ? (
-                            <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
-                              {post.tags.slice(0, 3).map((tag) => (
-                                <Link
-                                  key={tag}
-                                  href={`/blog/tags/${encodeURIComponent(tag)}`}
-                                  className="inline-flex items-center rounded-full border border-neutral-200 px-2.5 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:border-neutral-700"
-                                >
-                                  #{tag}
-                                </Link>
-                              ))}
-                            </div>
-                          ) : null}
-                          <Link
-                            href={`/blog/${post.slug}`}
-                            className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-neutral-900 dark:text-neutral-100"
-                            aria-label={`${post.title}を読む`}
-                          >
-                            記事を読む
-                            <span aria-hidden>→</span>
-                          </Link>
+                          </div>
                         </article>
                       ))}
                     </div>

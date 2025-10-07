@@ -14,6 +14,8 @@ import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
 
+const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
+
 interface BlogArticlePageProps {
   params: {
     slug: string
@@ -232,11 +234,9 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                           key={p.slug}
                           className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
                         >
-                          {p.heroImage ? (
-                            <div className="relative h-40 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
-                              <Image src={p.heroImage} alt={p.title} fill className="object-cover" sizes="(min-width: 768px) 30vw, 100vw" />
-                            </div>
-                          ) : null}
+                          <div className="relative h-40 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+                            <Image src={p.heroImage || PLACEHOLDER_IMG} alt={p.title} fill className="object-cover" sizes="(min-width: 768px) 30vw, 100vw" />
+                          </div>
                           <h4 className="mt-3 text-base font-semibold text-neutral-900 dark:text-neutral-100">
                             <Link href={`/blog/${p.slug}`}>{p.title}</Link>
                           </h4>
@@ -264,11 +264,9 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                           key={p.slug}
                           className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
                         >
-                          {p.heroImage ? (
-                            <div className="relative h-40 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
-                              <Image src={p.heroImage} alt={p.title} fill className="object-cover" sizes="(min-width: 768px) 30vw, 100vw" />
-                            </div>
-                          ) : null}
+                          <div className="relative h-40 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+                            <Image src={p.heroImage || PLACEHOLDER_IMG} alt={p.title} fill className="object-cover" sizes="(min-width: 768px) 30vw, 100vw" />
+                          </div>
                           <h4 className="mt-3 text-base font-semibold text-neutral-900 dark:text-neutral-100">
                             <Link href={`/blog/${p.slug}`}>{p.title}</Link>
                           </h4>
