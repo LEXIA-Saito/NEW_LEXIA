@@ -47,6 +47,8 @@ export const fallbackBlogPosts: BlogPost[] = [
     tags: ["Studio", "ノーコード", "AI"],
     date: "2025-10-08",
     readingTime: "6分",
+    heroImage:
+      "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/studio-ai-status-2025/STUDIO%20AI%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E7%94%BB%E5%83%8F.webp",
     sections: [
       {
         body: [
@@ -65,6 +67,8 @@ export const fallbackBlogPosts: BlogPost[] = [
           "CMSリストのAND条件フィルタなど継続的な改善",
           "ブランド名・料金・ビジュアルIDのリニューアル（2024年10月）",
         ],
+        image:
+          "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/studio-ai-status-2025/Editor%205.0%20Beta%20Web%E3%82%A8%E3%83%86%E3%82%99%E3%82%A3%E3%82%BF%E3%83%BC%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9.webp",
       },
       {
         heading: "“STUDIO AI”の足跡",
@@ -77,6 +81,8 @@ export const fallbackBlogPosts: BlogPost[] = [
           "2025年9月：Editor 5.0 Beta記事で将来的な連携を言及",
           "一般提供の正式リリース告知は未確認",
         ],
+        image:
+          "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/studio-ai-status-2025/STUDIO%20AI%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E7%94%BB%E5%83%8F.webp",
       },
       {
         heading: "現在使えるAI機能：SEO Writing Assist",
@@ -84,6 +90,8 @@ export const fallbackBlogPosts: BlogPost[] = [
           "現時点で誰でも利用できるAI機能として、テキストコンテンツを解析しmetaタイトルとディスクリプションを提案・生成する「SEO Writing Assist」が正式に案内されています。",
           "デザイン自動生成ではなくSEO支援に特化したツールで、ヘルプセンターでは手順や活用方法が詳細に解説されています。",
         ],
+        image:
+          "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/studio-ai-status-2025/SEO%20Writing%20Assist%20%E3%81%AE%E8%A8%AD%E5%AE%9A%E7%94%BB%E9%9D%A2.webp",
       },
       {
         heading: "タイムライン早見表",
