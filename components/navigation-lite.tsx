@@ -30,7 +30,7 @@ export default function NavigationLite() {
 
   const navLinks = pathname?.startsWith("/blog") ? blogNavLinks : defaultNavLinks
   return (
-    <header className="border-b border-neutral-200 bg-white/95 backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-950/95 relative z-50">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-950/95">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4 relative">
         <Link href="/" className="flex items-center gap-3" aria-label="LEXIA">
           <Image
