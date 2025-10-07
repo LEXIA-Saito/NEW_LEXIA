@@ -7,6 +7,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Instagram, Linkedin, Share2, Phone, Mail } from "lucide-react"
+import { usePathname } from "next/navigation"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LOGO_URL, LOGO_WHITE_URL, LOGO_TEXT_URL, LOGO_TEXT_WHITE_URL } from "@/lib/config"
 import { trackEvent } from "@/lib/analytics"
@@ -59,6 +60,14 @@ export const navItems = [
 ]
 
 export default function Navigation() {
+  const pathname = usePathname()
+  const blogNavItems = [
+    { name: "記事一覧", href: "/blog", subItems: [] },
+    { name: "技術（Tech）", href: "/blog/genres/tech", subItems: [] },
+    { name: "アイデア（Ideas）", href: "/blog/genres/ideas", subItems: [] },
+  ] as const
+
+  const displayItems = pathname?.startsWith("/blog") ? blogNavItems : navItems
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("hero")
@@ -168,6 +177,8 @@ export default function Navigation() {
 
   
 
+  const isBlog = pathname?.startsWith("/blog")
+
   return (
     <>
       <motion.header
@@ -180,8 +191,8 @@ export default function Navigation() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        onMouseEnter={() => setMegaMenuOpen(true)}
-        onMouseLeave={() => setMegaMenuOpen(false)}
+        onMouseEnter={() => { if (!isBlog) setMegaMenuOpen(true) }}
+        onMouseLeave={() => { if (!isBlog) setMegaMenuOpen(false) }}
       >
           <div className="container mx-auto px-4 flex justify-between items-center">
             <Link href="/" className="flex items-center" aria-label="LEXIA">
@@ -234,7 +245,7 @@ export default function Navigation() {
             <div className="hidden md:flex items-center space-x-8">
               <nav>
                 <ul className="flex space-x-8">
-                  {navItems.map((item, index) => (
+                  {displayItems.map((item, index) => (
                     <motion.li
                       key={item.name}
                       initial={{ opacity: 0, y: -20 }}
@@ -360,7 +371,7 @@ export default function Navigation() {
         </motion.header>
 
         <AnimatePresence>
-          {megaMenuOpen && (
+          {!isBlog && megaMenuOpen && (
             <motion.div
               className="fixed top-[var(--header-height)] left-0 right-0 z-40 hidden md:block bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm"
               initial={{ opacity: 0, y: -10 }}
@@ -462,7 +473,7 @@ export default function Navigation() {
 
               {/* Navigation */}
               <ul className="space-y-8 text-center mt-8">
-                {navItems.map((item, index) => (
+                {displayItems.map((item, index) => (
                   <motion.li
                     key={item.name}
                     initial={{ opacity: 0, x: 20 }}

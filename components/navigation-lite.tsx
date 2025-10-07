@@ -1,5 +1,8 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 
 import {
   LOGO_TEXT_URL,
@@ -8,7 +11,7 @@ import {
   LOGO_WHITE_URL,
 } from "@/lib/config"
 
-const navLinks = [
+const defaultNavLinks = [
   { href: "/company", label: "事業概要" },
   { href: "/services", label: "サービス一覧" },
   { href: "/projects", label: "制作実績" },
@@ -18,8 +21,16 @@ const navLinks = [
 ]
 
 export default function NavigationLite() {
+  const pathname = usePathname()
+  const blogNavLinks = [
+    { href: "/blog", label: "記事一覧" },
+    { href: "/blog/genres/tech", label: "技術（Tech）" },
+    { href: "/blog/genres/ideas", label: "アイデア（Ideas）" },
+  ] as const
+
+  const navLinks = pathname?.startsWith("/blog") ? blogNavLinks : defaultNavLinks
   return (
-    <header className="border-b border-neutral-200 bg-white/95 backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-950/95 relative z-50">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-950/95">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4 relative">
         <Link href="/" className="flex items-center gap-3" aria-label="LEXIA">
           <Image

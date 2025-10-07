@@ -14,6 +14,8 @@ import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
 
+const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
+
 interface BlogArticlePageProps {
   params: {
     slug: string
@@ -82,6 +84,17 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
   if (!post) {
     notFound()
   }
+
+  // Collect posts to build CTAs (same genre / latest)
+  const allPosts = await fetchBlogPosts()
+  const sameGenrePosts = allPosts
+    .filter((p) => p.slug !== post.slug && p.genre === post.genre)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3)
+  const latestPosts = allPosts
+    .filter((p) => p.slug !== post.slug && !sameGenrePosts.find((s) => s.slug === p.slug))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3)
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -198,6 +211,81 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 </section>
               ) : null}
             </div>
+
+            {/* Related posts CTA */}
+            {(sameGenrePosts.length > 0 || latestPosts.length > 0) && (
+              <section className="mt-16">
+                <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">他の記事も見る</h2>
+                {sameGenrePosts.length > 0 && (
+                  <div className="mt-6">
+                    <div className="flex items-end justify-between">
+                      <h3 className="text-lg font-medium text-neutral-800 dark:text-neutral-200">同じジャンルのおすすめ</h3>
+                      <Link
+                        href={`/blog?genre=${post.genre}#genre-filter`}
+                        className="text-sm text-neutral-700 underline-offset-4 hover:underline dark:text-neutral-300"
+                        aria-label={`${getBlogGenreLabel(post.genre)} の記事一覧へ`}
+                      >
+                        もっと見る →
+                      </Link>
+                    </div>
+                    <div className="mt-4 grid gap-6 md:grid-cols-3">
+                      {sameGenrePosts.map((p) => (
+                        <article
+                          key={p.slug}
+                          className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
+                        >
+                          <div className="relative h-40 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+                            <Image src={p.heroImage || PLACEHOLDER_IMG} alt={p.title} fill className="object-cover" sizes="(min-width: 768px) 30vw, 100vw" />
+                          </div>
+                          <h4 className="mt-3 text-base font-semibold text-neutral-900 dark:text-neutral-100">
+                            <Link href={`/blog/${p.slug}`}>{p.title}</Link>
+                          </h4>
+                          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
+                            <LinkifyText text={p.description} />
+                          </p>
+                          <div className="mt-3 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
+                            <span>{formatJapaneseDate(p.date)}</span>
+                            <Link href={`/blog/${p.slug}`} className="inline-flex items-center gap-1 font-medium text-neutral-900 dark:text-neutral-100" aria-label={`${p.title}を読む`}>
+                              続きを読む <span aria-hidden>→</span>
+                            </Link>
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {latestPosts.length > 0 && (
+                  <div className="mt-12">
+                    <h3 className="text-lg font-medium text-neutral-800 dark:text-neutral-200">新着記事</h3>
+                    <div className="mt-4 grid gap-6 md:grid-cols-3">
+                      {latestPosts.map((p) => (
+                        <article
+                          key={p.slug}
+                          className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
+                        >
+                          <div className="relative h-40 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+                            <Image src={p.heroImage || PLACEHOLDER_IMG} alt={p.title} fill className="object-cover" sizes="(min-width: 768px) 30vw, 100vw" />
+                          </div>
+                          <h4 className="mt-3 text-base font-semibold text-neutral-900 dark:text-neutral-100">
+                            <Link href={`/blog/${p.slug}`}>{p.title}</Link>
+                          </h4>
+                          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
+                            <LinkifyText text={p.description} />
+                          </p>
+                          <div className="mt-3 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
+                            <span>{formatJapaneseDate(p.date)}</span>
+                            <Link href={`/blog/${p.slug}`} className="inline-flex items-center gap-1 font-medium text-neutral-900 dark:text-neutral-100" aria-label={`${p.title}を読む`}>
+                              続きを読む <span aria-hidden>→</span>
+                            </Link>
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </section>
+            )}
 
             <footer className="mt-16 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300">
               <p>
