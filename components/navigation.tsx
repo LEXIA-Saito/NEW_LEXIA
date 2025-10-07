@@ -177,6 +177,8 @@ export default function Navigation() {
 
   
 
+  const isBlog = pathname?.startsWith("/blog")
+
   return (
     <>
       <motion.header
@@ -189,8 +191,8 @@ export default function Navigation() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        onMouseEnter={() => setMegaMenuOpen(true)}
-        onMouseLeave={() => setMegaMenuOpen(false)}
+        onMouseEnter={() => { if (!isBlog) setMegaMenuOpen(true) }}
+        onMouseLeave={() => { if (!isBlog) setMegaMenuOpen(false) }}
       >
           <div className="container mx-auto px-4 flex justify-between items-center">
             <Link href="/" className="flex items-center" aria-label="LEXIA">
@@ -369,7 +371,7 @@ export default function Navigation() {
         </motion.header>
 
         <AnimatePresence>
-          {megaMenuOpen && (
+          {!isBlog && megaMenuOpen && (
             <motion.div
               className="fixed top-[var(--header-height)] left-0 right-0 z-40 hidden md:block bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm"
               initial={{ opacity: 0, y: -10 }}
