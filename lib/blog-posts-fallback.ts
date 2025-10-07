@@ -47,6 +47,8 @@ export const fallbackBlogPosts: BlogPost[] = [
     tags: ["Studio", "ノーコード", "AI"],
     date: "2025-10-08",
     readingTime: "6分",
+    heroImage:
+      "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/studio-ai-status-2025/STUDIO%20AI%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E7%94%BB%E5%83%8F.webp",
     sections: [
       {
         body: [
