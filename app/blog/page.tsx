@@ -107,23 +107,11 @@ export default async function BlogIndexPage(props: PageProps) {
         <div className="container mx-auto px-4 py-24 md:py-32 max-w-6xl">
           <BreadcrumbsLite trail={breadcrumbs} />
           <div className="mb-12 max-w-4xl">
-            <h1 className="text-3xl md:text-5xl font-light text-neutral-900 dark:text-neutral-100">
-              記事一覧
-            </h1>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Link
-                href={`/blog?genre=tech#genre-filter`}
-                className="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-4 py-2 text-xs font-medium tracking-wide text-neutral-700 transition hover:border-neutral-500 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-200 dark:hover:border-neutral-500 dark:hover:text-neutral-50"
-              >
-                技術（Tech）
-              </Link>
-              <Link
-                href={`/blog?genre=ideas#genre-filter`}
-                className="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-4 py-2 text-xs font-medium tracking-wide text-neutral-700 transition hover:border-neutral-500 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-200 dark:hover:border-neutral-500 dark:hover:text-neutral-50"
-              >
-                アイデア（Ideas）
-              </Link>
-            </div>
+            <span className="text-sm uppercase tracking-[0.3em] text-neutral-400">LEXIA BLOG</span>
+            <h1 className="mt-3 text-3xl md:text-5xl font-light text-neutral-900 dark:text-neutral-100">LEXIA BLOG</h1>
+            <p className="mt-5 text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">
+              WEB制作事業LEXIAがWEB制作技術やITの最新トレンドを発信します。
+            </p>
           </div>
 
           {posts.length === 0 ? (

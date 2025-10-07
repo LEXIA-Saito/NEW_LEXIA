@@ -7,6 +7,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Instagram, Linkedin, Share2, Phone, Mail } from "lucide-react"
+import { usePathname } from "next/navigation"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LOGO_URL, LOGO_WHITE_URL, LOGO_TEXT_URL, LOGO_TEXT_WHITE_URL } from "@/lib/config"
 import { trackEvent } from "@/lib/analytics"
@@ -59,6 +60,14 @@ export const navItems = [
 ]
 
 export default function Navigation() {
+  const pathname = usePathname()
+  const blogNavItems = [
+    { name: "記事一覧", href: "/blog", subItems: [] },
+    { name: "技術（Tech）", href: "/blog?genre=tech#genre-filter", subItems: [] },
+    { name: "アイデア（Ideas）", href: "/blog?genre=ideas#genre-filter", subItems: [] },
+  ] as const
+
+  const displayItems = pathname?.startsWith("/blog") ? blogNavItems : navItems
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("hero")
@@ -234,7 +243,7 @@ export default function Navigation() {
             <div className="hidden md:flex items-center space-x-8">
               <nav>
                 <ul className="flex space-x-8">
-                  {navItems.map((item, index) => (
+                  {displayItems.map((item, index) => (
                     <motion.li
                       key={item.name}
                       initial={{ opacity: 0, y: -20 }}
@@ -462,7 +471,7 @@ export default function Navigation() {
 
               {/* Navigation */}
               <ul className="space-y-8 text-center mt-8">
-                {navItems.map((item, index) => (
+                {displayItems.map((item, index) => (
                   <motion.li
                     key={item.name}
                     initial={{ opacity: 0, x: 20 }}
