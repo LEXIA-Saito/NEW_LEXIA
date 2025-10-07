@@ -55,9 +55,7 @@ function createGenreAnchor(genre: BlogGenre) {
   return `genre-${genre}`
 }
 
-function createTagAnchor(tag: string) {
-  return `tag-${tag.toLowerCase().replace(/[^a-z0-9一-龯ぁ-んァ-ヶー\s]/gi, "").replace(/\s+/g, "-")}`
-}
+// tag anchor helper removed (no tag list on index)
 
 type PageProps = {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
@@ -74,11 +72,7 @@ export default async function BlogIndexPage(props: PageProps) {
   const remainingPosts = posts.slice(1)
   const latestList = remainingPosts.slice(0, 4)
 
-  const allTags = Array.from(new Set(posts.flatMap((p) => p.tags))).sort((a, b) => a.localeCompare(b, "ja"))
-  const postsByTag = allTags.map((tag) => ({
-    tag,
-    posts: posts.filter((post) => post.tags.includes(tag)),
-  }))
+  // removed tag aggregation for index
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -290,95 +284,7 @@ export default async function BlogIndexPage(props: PageProps) {
             initialGenre={initialGenre}
           />
 
-              <section id="tags" className="mt-24">
-                <div className="flex flex-wrap gap-2">
-                  {allTags.map((tag) => (
-                    <Link
-                      key={tag}
-                      href={`#${createTagAnchor(tag)}`}
-                      className="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-4 py-2 text-xs font-medium tracking-wide text-neutral-700 transition hover:border-neutral-500 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-200 dark:hover:border-neutral-500 dark:hover:text-neutral-50"
-                    >
-                      #{tag}
-                    </Link>
-                  ))}
-                </div>
-
-                {postsByTag.map(({ tag, posts: tagPosts }) => (
-                  <section
-                    key={tag}
-                    id={createTagAnchor(tag)}
-                    className="mt-16 scroll-mt-24"
-                    aria-labelledby={`${createTagAnchor(tag)}-label`}
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <div>
-                        <h3
-                          id={`${createTagAnchor(tag)}-label`}
-                          className="text-xl font-semibold text-neutral-900 dark:text-neutral-100"
-                        >
-                          #{tag}
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="mt-6 grid gap-6 md:grid-cols-2">
-                      {tagPosts.slice(0, 4).map((post) => (
-                        <article
-                          key={post.slug}
-                          className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-0 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
-                        >
-                          <div className="relative h-44 w-full overflow-hidden rounded-t-3xl border-b border-neutral-200 dark:border-neutral-800">
-                            <Image
-                              src={post.heroImage || PLACEHOLDER_IMG}
-                              alt={post.title}
-                              fill
-                              className="object-cover"
-                              sizes="(min-width: 768px) 50vw, 100vw"
-                            />
-                          </div>
-                          <div className="p-6">
-                            <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
-                              <span>{post.readingTime}</span>
-                              <span>{formatJapaneseDate(post.date)}</span>
-                            </div>
-                            <h4 className="mt-4 text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-                              <Link
-                                href={`/blog/${post.slug}`}
-                                className="focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 dark:focus-visible:ring-neutral-100 dark:focus-visible:ring-offset-neutral-900"
-                              >
-                                {post.title}
-                              </Link>
-                            </h4>
-                            <p className="mt-3 flex-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
-                              <LinkifyText text={post.description} />
-                            </p>
-                            {post.tags.length > 0 ? (
-                              <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
-                                {post.tags.slice(0, 3).map((tag) => (
-                                  <Link
-                                    key={tag}
-                                    href={`/blog/tags/${encodeURIComponent(tag)}`}
-                                    className="inline-flex items-center rounded-full border border-neutral-200 px-2.5 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:border-neutral-700"
-                                  >
-                                    #{tag}
-                                  </Link>
-                                ))}
-                              </div>
-                            ) : null}
-                            <Link
-                              href={`/blog/${post.slug}`}
-                              className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-neutral-900 dark:text-neutral-100"
-                              aria-label={`${post.title}を読む`}
-                            >
-                              記事を読む
-                              <span aria-hidden>→</span>
-                            </Link>
-                          </div>
-                        </article>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </section>
+              {/* tags section removed as requested */}
             </>
           )}
         </div>
