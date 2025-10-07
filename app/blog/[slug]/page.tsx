@@ -111,9 +111,13 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
           <Breadcrumbs dynamicLabels={{ [post.slug]: post.title }} />
           <article>
             <header className="mb-12">
-              <span className="inline-flex items-center rounded-full bg-neutral-900 px-4 py-1 text-xs font-medium tracking-wide text-white dark:bg-neutral-100 dark:text-neutral-900">
+              <Link
+                href={`/blog?genre=${post.genre}#genre-filter`}
+                className="inline-flex items-center rounded-full bg-neutral-900 px-4 py-1 text-xs font-medium tracking-wide text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200"
+                aria-label={`${getBlogGenreLabel(post.genre)} の記事一覧`}
+              >
                 {getBlogGenreLabel(post.genre)}
-              </span>
+              </Link>
               <h1 className="mt-6 text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100">
                 {post.title}
               </h1>

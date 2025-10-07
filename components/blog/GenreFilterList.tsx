@@ -28,7 +28,7 @@ export default function GenreFilterList({ posts, genres, initialGenre = "all" }:
   }, [posts, active])
 
   return (
-    <section className="mt-20">
+    <section id="genre-filter" className="mt-20">
       <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
           <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">カテゴリで絞り込み</h2>
@@ -101,4 +101,3 @@ export default function GenreFilterList({ posts, genres, initialGenre = "all" }:
     </section>
   )
 }
-
