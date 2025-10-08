@@ -26,20 +26,20 @@ export type SanityBlogSection = {
 
 export type SanityBlogPost = {
   _id: string
-  slug: { current: string }
+  slug: string
   title: string
   description: string
   genre: 'tech' | 'ideas'
   tags: string[]
   date: string
-  heroImage?: any
+  heroImage?: string
   sections?: SanityBlogSection[]
   contentHtml?: string
 }
 
 export const blogPostProjection = `{
   _id,
-  'slug': slug,
+  'slug': slug.current,
   title,
   description,
   genre,
