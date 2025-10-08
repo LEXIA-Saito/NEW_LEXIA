@@ -233,13 +233,19 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                       </div>
                     ) : null}
                     {section.list ? (
-                      <ul className="list-disc space-y-2 pl-6">
-                        {section.list.map((item, i) => (
-                          <li key={i} className="leading-relaxed">
-                            <LinkifyText text={item} />
-                          </li>
-                        ))}
-                      </ul>
+                      (() => {
+                        const visibleItems = section.list.filter((li) => li && li.trim().length > 0)
+                        if (visibleItems.length === 0) return null
+                        return (
+                          <ul className="list-disc space-y-2 pl-6">
+                            {visibleItems.map((item, i) => (
+                              <li key={i} className="leading-relaxed">
+                                <LinkifyText text={item} />
+                              </li>
+                            ))}
+                          </ul>
+                        )
+                      })()
                     ) : null}
                   </div>
                 </section>

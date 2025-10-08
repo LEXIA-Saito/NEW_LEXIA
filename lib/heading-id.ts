@@ -3,9 +3,10 @@
 // Heading text -> stable fragment id generator.
 export function generateHeadingId(heading: string): string {
   return heading
+    .trim()
     .toLowerCase()
     .replace(/[^\w\u00C0-\u024f\s-]/g, "") // allow unicode letters, remove symbols
     .replace(/\s+/g, "-")
     .replace(/--+/g, "-")
-    .trim()
+    .replace(/^-+|-+$/g, "") // strip leading/trailing hyphens
 }

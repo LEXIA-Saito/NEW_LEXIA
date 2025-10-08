@@ -12,7 +12,8 @@ type TableOfContentsProps = {
 
 
 export default function TableOfContents({ sections }: TableOfContentsProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  // デフォルト展開へ仕様変更
+  const [isOpen, setIsOpen] = useState(true)
   const [activeId, setActiveId] = useState<string>("")
 
   // 見出しがあるセクションのみ抽出
