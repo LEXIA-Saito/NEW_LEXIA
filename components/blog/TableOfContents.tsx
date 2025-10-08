@@ -7,7 +7,7 @@ import type { BlogPostSection } from "@/lib/blog-posts.types"
 import { generateHeadingId } from "@/lib/heading-id"
 
 type TableOfContentsProps = {
-  sections: BlogPostSection[]
+  sections: Array<BlogPostSection & { headingId?: string }>
 }
 
 
@@ -21,7 +21,7 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
     .filter((section) => section.heading)
     .map((section) => ({
       heading: section.heading!,
-      id: generateHeadingId(section.heading!),
+      id: section.headingId ?? generateHeadingId(section.heading!),
     }))
 
   // 仕様変更: 見出し数に関わらず表示（空の場合はメッセージ表示）。
