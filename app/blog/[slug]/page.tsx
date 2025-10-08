@@ -192,6 +192,38 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                         <LinkifyText text={paragraph} />
                       </p>
                     ))}
+                    {section.table ? (
+                      <div className="overflow-x-auto mt-4">
+                        <table className="min-w-full border-collapse border border-neutral-300 dark:border-neutral-700">
+                          <thead className="bg-neutral-100 dark:bg-neutral-800">
+                            <tr>
+                              {section.table.headers.map((header, i) => (
+                                <th
+                                  key={i}
+                                  className="border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-left font-semibold text-neutral-900 dark:text-neutral-100"
+                                >
+                                  {header}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {section.table.rows.map((row, i) => (
+                              <tr key={i} className="hover:bg-neutral-50 dark:hover:bg-neutral-800/50">
+                                {row.map((cell, j) => (
+                                  <td
+                                    key={j}
+                                    className="border border-neutral-300 dark:border-neutral-700 px-4 py-2"
+                                  >
+                                    <LinkifyText text={cell} />
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    ) : null}
                     {section.list ? (
                       <ul className="list-disc space-y-2 pl-6">
                         {section.list.map((item, i) => (

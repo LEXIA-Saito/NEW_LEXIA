@@ -3,6 +3,10 @@ export type BlogPostSection = {
   body?: string[]
   image?: string
   list?: string[]
+  table?: {
+    headers: string[]
+    rows: string[][]
+  }
 }
 
 export type BlogGenre = "tech" | "ideas"
