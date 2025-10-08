@@ -13,6 +13,7 @@ import Script from "next/script"
 import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
+import TableOfContents, { generateId } from "@/components/blog/TableOfContents"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
@@ -167,11 +168,19 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               ) : null}
             </header>
 
+            {/* 目次 */}
+            {post.sections && post.sections.length > 0 && (
+              <TableOfContents sections={post.sections} />
+            )}
+
             <div className="space-y-12 text-neutral-800 dark:text-neutral-200">
               {post.sections?.map((section, index) => (
-                <section key={section.heading ?? index}>
+                <section
+                  key={section.heading ?? index}
+                  id={section.heading ? generateId(section.heading) : undefined}
+                >
                   {section.heading ? (
-                    <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+                    <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 scroll-mt-24">
                       <LinkifyText text={section.heading} />
                     </h2>
                   ) : null}
