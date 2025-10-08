@@ -47,7 +47,7 @@ The app reads from `fallbackBlogPosts` only (microCMS integration is removed). S
 - `date`: `YYYY-MM-DD`。一覧の並び順に影響します。
 - `genre`: 既存の `"tech" | "ideas"` のいずれか。
   - 新ジャンルを追加する場合は `lib/blog-posts.types.ts` と `lib/blog-posts.ts` の `GENRE_METADATA` を更新し、UI影響範囲を確認してください。
-- `readingTime`: 表示用の短い文字列（例: `"6分"`）。
+- `readingTime`: 2025-10 以降は手動入力を無視し、自動計算（総語数 / 400wpm 切り上げ、最低1分）で表示されます。データファイルに書いてあっても上書きされるため、気にしなくてOKです。
 - `tags`: 3つ程度までが無難（UIでトリミングされます）。
 
 ### 実装・確認フロー
@@ -71,6 +71,12 @@ The app reads from `fallbackBlogPosts` only (microCMS integration is removed). S
 - ジャンル別カード（フィルター）: `components/blog/GenreFilterList.tsx`
 - 記事本文のセクション描画＆OG/Twitter: `app/blog/[slug]/page.tsx`
 - データ取得（ローカルのみ）: `lib/blog-posts.ts`
+
+### 2025-10 運用ルール追加
+- 目次（TOC）は見出し数に関わらず常時表示します（見出しが無い場合は案内文）。
+- 読了時間は `lib/blog-posts.ts` 内で自動算出し、`fallbackBlogPosts` 内の `readingTime` 値は無視されます。
+- 語数カウントは英数字の連続文字列 + CJK 単一文字を1語として抽出する簡易ヒューリスティックです。
+- 変更時はヒューリスティックを壊さないように注意し、必要ならテスト導入を検討してください。
 
 ---
 このドキュメントは、ブログ記事追加・更新の一連作業を迷いなく行うための運用指針です。更新が必要になった場合は、この `AGENTS.md` を修正してください。

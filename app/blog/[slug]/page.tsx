@@ -169,10 +169,8 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               ) : null}
             </header>
 
-            {/* 目次 */}
-            {post.sections && post.sections.length > 0 && (
-              <TableOfContents sections={post.sections} />
-            )}
+            {/* 目次: 要件変更により常時表示（セクション配列が存在すれば表示）。 */}
+            {post.sections && <TableOfContents sections={post.sections} />}
 
             <div className="space-y-12 text-neutral-800 dark:text-neutral-200">
               {post.sections?.map((section, index) => (

@@ -23,8 +23,7 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
       id: generateHeadingId(section.heading!),
     }))
 
-  // 目次がない場合（見出しが2つ未満）は何も表示しない
-  if (tocItems.length < 2) return null
+  // 仕様変更: 見出し数に関わらず表示（空の場合はメッセージ表示）。
 
   // スクロール位置に応じてアクティブセクションをハイライト
   useEffect(() => {
@@ -70,34 +69,37 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
       </button>
 
       {isOpen && (
-        <ol className="mt-4 space-y-2 text-sm">
-          {tocItems.map((item, index) => (
-            <li key={item.id}>
-              <Link
-                href={`#${item.id}`}
-                className={`block py-1 transition-colors duration-200 hover:text-neutral-900 dark:hover:text-neutral-100 ${
-                  activeId === item.id
-                    ? "font-semibold text-neutral-900 dark:text-neutral-100"
-                    : "text-neutral-600 dark:text-neutral-400"
-                }`}
-                onClick={(e) => {
-                  e.preventDefault()
-                  const element = document.getElementById(item.id)
-                  if (element) {
-                    element.scrollIntoView({
-                      behavior: "smooth",
-                      block: "start",
-                    })
-                    // URLを更新（履歴には残さない）
-                    window.history.replaceState(null, "", `#${item.id}`)
-                  }
-                }}
-              >
-                {index + 1}. {item.heading}
-              </Link>
-            </li>
-          ))}
-        </ol>
+        tocItems.length > 0 ? (
+          <ol className="mt-4 space-y-2 text-sm">
+            {tocItems.map((item, index) => (
+              <li key={item.id}>
+                <Link
+                  href={`#${item.id}`}
+                  className={`block py-1 transition-colors duration-200 hover:text-neutral-900 dark:hover:text-neutral-100 ${
+                    activeId === item.id
+                      ? "font-semibold text-neutral-900 dark:text-neutral-100"
+                      : "text-neutral-600 dark:text-neutral-400"
+                  }`}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    const element = document.getElementById(item.id)
+                    if (element) {
+                      element.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      })
+                      window.history.replaceState(null, "", `#${item.id}`)
+                    }
+                  }}
+                >
+                  {index + 1}. {item.heading}
+                </Link>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">この投稿には見出しがありません。</p>
+        )
       )}
     </nav>
   )
