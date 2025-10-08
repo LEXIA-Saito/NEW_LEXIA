@@ -13,7 +13,8 @@ import Script from "next/script"
 import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
-import TableOfContents, { generateId } from "@/components/blog/TableOfContents"
+import TableOfContents from "@/components/blog/TableOfContents"
+import { generateHeadingId } from "@/lib/heading-id"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
@@ -177,7 +178,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               {post.sections?.map((section, index) => (
                 <section
                   key={section.heading ?? index}
-                  id={section.heading ? generateId(section.heading) : undefined}
+                  id={section.heading ? generateHeadingId(section.heading) : undefined}
                 >
                   {section.heading ? (
                     <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 scroll-mt-24">

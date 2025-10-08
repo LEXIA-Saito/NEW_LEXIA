@@ -4,22 +4,12 @@ import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { ChevronDown, ChevronUp } from "lucide-react"
 import type { BlogPostSection } from "@/lib/blog-posts.types"
+import { generateHeadingId } from "@/lib/heading-id"
 
 type TableOfContentsProps = {
   sections: BlogPostSection[]
 }
 
-/**
- * セクション見出しをURLフラグメント（アンカーID）に変換
- */
-function generateId(heading: string): string {
-  return heading
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "") // 特殊文字を削除
-    .replace(/\s+/g, "-") // スペースをハイフンに
-    .replace(/--+/g, "-") // 連続ハイフンを1つに
-    .trim()
-}
 
 export default function TableOfContents({ sections }: TableOfContentsProps) {
   const [isOpen, setIsOpen] = useState(false)
@@ -30,7 +20,7 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
     .filter((section) => section.heading)
     .map((section) => ({
       heading: section.heading!,
-      id: generateId(section.heading!),
+      id: generateHeadingId(section.heading!),
     }))
 
   // 目次がない場合（見出しが2つ未満）は何も表示しない
@@ -117,4 +107,5 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
  * セクション見出しにIDを付与するためのヘルパー関数
  * この関数はpage.tsxで使用します
  */
-export { generateId }
+// generateId was moved to a server-safe util (lib/heading-id.ts)
+// and is now imported where needed.
