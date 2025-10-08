@@ -7,7 +7,10 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "test": "node ./tests/i18n.test.js && node ./tests/dev-pricing.test.js && node ./tests/design-pricing.test.js && node ./tests/web-pricing.test.js"
+    "test": "node ./tests/i18n.test.js && node ./tests/dev-pricing.test.js && node ./tests/design-pricing.test.js && node ./tests/web-pricing.test.js",
+    "sanity-dev": "sanity dev --host 0.0.0.0 --port 3333 --studio-dir sanity",
+    "sanity-build": "sanity build --studio-dir sanity",
+    "sanity-deploy": "sanity deploy --studio-dir sanity"
   },
   "browserslist": {
     "production": [
