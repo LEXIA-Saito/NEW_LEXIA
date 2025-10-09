@@ -1,4 +1,3 @@
-import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
 import {
@@ -88,7 +87,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     notFound()
   }
 
-  // Collect posts to build CTAs (same genre / latest)
   const allPosts = await fetchBlogPosts()
   const sameGenrePosts = allPosts
     .filter((p) => p.slug !== post.slug && p.genre === post.genre)
@@ -139,7 +137,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
 
   return (
     <>
-      <Navigation />
       <main className="min-h-screen bg-white dark:bg-neutral-900">
         <div className="container mx-auto px-4 py-24 md:py-32 max-w-3xl">
           <Breadcrumbs dynamicLabels={{ [post.slug]: post.title }} />
@@ -188,7 +185,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               ) : null}
             </header>
 
-            {/* 目次: 要件変更により常時表示（セクション配列が存在すれば表示）。 */}
             <TableOfContents sections={sectionsWithHeadingIds} />
 
             <div className="space-y-12 text-neutral-800 dark:text-neutral-200">
@@ -277,7 +273,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               ) : null}
             </div>
 
-            {/* Related posts CTA */}
             {(sameGenrePosts.length > 0 || latestPosts.length > 0) && (
               <section className="mt-16">
                 <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">他の記事も見る</h2>
@@ -367,6 +362,17 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               </p>
             </footer>
           </article>
+
+          <div className="mt-16 text-center">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700"
+            >
+              <span>←</span>
+              <span>記事一覧に戻る</span>
+            </Link>
+          </div>
+
         </div>
       </main>
       <Footer />
