@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { SITE_URL } from '@/lib/config'
 import { projectsData } from '@/lib/projects-data'
-import { fallbackBlogPosts } from '@/lib/blog-posts-fallback'
 
 const nameMap: Record<string, string> = {
   services: 'サービス',
@@ -25,16 +24,11 @@ const nameMap: Record<string, string> = {
   blog: 'LEXIA BLOG',
 }
 
-const fallbackBlogTitleMap = Object.fromEntries(
-  fallbackBlogPosts.map((post) => [post.slug, post.title] as const),
-)
-
 function segmentToLabel(seg: string, dynamicLabels?: Record<string, string>): string {
   if (dynamicLabels?.[seg]) return dynamicLabels[seg]
   if (nameMap[seg]) return nameMap[seg]
   const project = projectsData.find((p) => p.slug === seg)
   if (project) return project.title
-  if (fallbackBlogTitleMap[seg]) return fallbackBlogTitleMap[seg]
   return decodeURIComponent(seg)
 }
 
