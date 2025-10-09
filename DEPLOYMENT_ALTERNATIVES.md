@@ -17,7 +17,7 @@
 2. **GitHubリポジトリ接続**
 3. **環境変数設定**:
    ```
-   RESEND_API_KEY = re_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ
+   RESEND_API_KEY = re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
    NODE_ENV = production
    ```
 4. **自動デプロイ開始**
@@ -44,7 +44,7 @@
    ```
 5. **Environment variables**:
    ```
-   RESEND_API_KEY = re_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ
+   RESEND_API_KEY = re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
    ```
 
 ---
@@ -69,7 +69,7 @@
    ```
 4. **Environment variables**:
    ```
-   RESEND_API_KEY = re_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ
+   RESEND_API_KEY = re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
    NODE_VERSION = 18
    ```
 
@@ -100,7 +100,7 @@
 ### 手順2: 環境変数設定
 Railway Dashboard で:
 ```
-RESEND_API_KEY = re_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ
+RESEND_API_KEY = re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NODE_ENV = production
 PORT = 3000
 ```
@@ -134,7 +134,7 @@ PORT = 3000
 3. "New Project" → "Deploy from GitHub repo" 
 4. "LEXIA-Saito/NEW_LEXIA" を選択
 5. Environment Variables 追加:
-   - RESEND_API_KEY: re_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ
+   - RESEND_API_KEY: re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 6. Deploy 完了を待つ（約3-5分）
 
 完了！ https://your-app.up.railway.app でアクセス可能

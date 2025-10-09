@@ -8,7 +8,7 @@ export interface ExternalConfig {
 
 export async function getExternalConfig(): Promise<ExternalConfig> {
   return {
-    resendApiKey: process.env.RESEND_API_KEY || 're_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ',
+    resendApiKey: process.env.RESEND_API_KEY ?? '',
     emailSettings: {
       from: 'LEXIA <noreply@lexia-hp.com>',
       to: 'lexia0web@gmail.com'

@@ -30,14 +30,18 @@
 
 ## 🎯 Deployment Configuration
 
-- **No Vercel environment variables required**
-- **RESEND_API_KEY encrypted in code**
+- **RESEND_API_KEY はVercel環境変数で管理**
 - **Enterprise-grade security (A+ rating)**
 - **OWASP Top 10 compliant**
 
+### 🔐 Immediate Action Required
+- Resendダッシュボードで旧APIキーを無効化し、新しいキーを発行
+- `vercel env add RESEND_API_KEY` で Production / Preview / Development の全環境に再設定
+- 暗号化設定を利用している場合は `initializeSecureConfig` を最新キーで再実行
+
 ## 📧 Email Configuration
 
-- **API Key**: `re_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ` (encrypted)
+- **API Key**: `re_` で始まるResend APIキー（環境変数で設定）
 - **From**: LEXIA <noreply@lexia-hp.com>
 - **To**: lexia0web@gmail.com
 - **Domain**: lexia-hp.com (verified)

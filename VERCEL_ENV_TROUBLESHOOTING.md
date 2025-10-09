@@ -4,6 +4,8 @@
 - **ローカル環境**: ✅ RESEND_API_KEY 正常動作
 - **Vercel本番環境**: ❌ 環境変数が認識されない
 
+> ⚠️ GitGuardian により旧Resend APIキーの露出が検知されています。必ずダッシュボードでキーを再発行し、以下の手順で新しい値を登録してください。
+
 ## 📋 Vercel環境変数の確認手順
 
 ### 1. Vercelダッシュボードでの設定確認
@@ -22,7 +24,7 @@ npx vercel env pull .env.vercel.local
 2. 以下の設定を確認：
    ```
    Name: RESEND_API_KEY
-   Value: re_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ
+   Value: <YOUR_RESEND_API_KEY>
    Environment: Production, Preview, Development (全て選択)
    ```
 
@@ -79,7 +81,7 @@ npx vercel --prod --force
 2. 既存の RESEND_API_KEY を削除
 3. 新しく追加：
    - Name: `RESEND_API_KEY`
-   - Value: `re_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ`
+   - Value: `re_` で始まる最新のResend APIキー（例: `re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`）
    - Environment: ✅ Production ✅ Preview ✅ Development
 
 ### ステップ2: 再デプロイ
@@ -117,7 +119,10 @@ curl -X POST https://your-domain.vercel.app/api/debug-env
 1. **ハードコーディング（テスト用のみ）**:
    ```typescript
    // app/api/contact/route.ts (本番環境でのみ一時的に)
-   const apiKey = process.env.RESEND_API_KEY || 're_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ'
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY is not configured')
+  }
    ```
 
 2. **Vercel Functions の環境変数ログ**:

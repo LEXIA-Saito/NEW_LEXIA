@@ -71,7 +71,7 @@ Permissions-Policy: 不要な機能を無効化
 ```typescript
 {
   resend: {
-    apiKey: "re_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ",
+    apiKey: "<YOUR_RESEND_API_KEY>",
     from: "LEXIA <noreply@lexia-hp.com>",
     to: "lexia0web@gmail.com"
   },
@@ -92,17 +92,23 @@ Permissions-Policy: 不要な機能を無効化
 ## 🚀 本番環境対応
 
 ### デプロイ準備完了
-- ✅ **APIキー暗号化済み**
-- ✅ **平文APIキー完全削除**
+- ✅ **APIキーは環境変数で管理**
+- ✅ **平文APIキーはリポジトリに含まれない設計**
 - ✅ **セキュリティヘッダー設定**
 - ✅ **レート制限実装**
 - ✅ **入力検証強化**
 
+### Resend APIキーのローテーション手順
+1. Resendダッシュボードで既存キーを失効させ、新しいキーを発行する
+2. `vercel env add RESEND_API_KEY` で全ての環境に新しいキーを登録する
+3. （任意）`initializeSecureConfig` を実行して暗号化済み設定を再生成し、`ENCRYPTED_SECURE_CONFIG` と `ENCRYPTED_SECURE_CONFIG_IV` を更新する
+4. `git push` または `vercel --prod --force` で再デプロイし、`/api/debug-env` で反映を確認する
+
 ### 運用上の利点
 
-1. **Vercel環境変数不要**
-   - 設定ミスリスクゼロ
-   - 即座にデプロイ可能
+1. **Vercel環境変数での集中管理**
+   - ローテーションを迅速化
+   - 各環境で一貫した設定が可能
 
 2. **高度なセキュリティ**
    - エンタープライズレベルの保護
