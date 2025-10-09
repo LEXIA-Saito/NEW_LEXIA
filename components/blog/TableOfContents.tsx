@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import { ChevronDown, ChevronUp } from "lucide-react"
 import type { BlogPostSection } from "@/lib/blog-posts.types"
@@ -12,8 +12,6 @@ type TableOfContentsProps = {
 
 export default function TableOfContents({ sections }: TableOfContentsProps) {
   const [isOpen, setIsOpen] = useState(true)
-  const [activeId, setActiveId] = useState<string>("")
-  const visibleHeadings = useRef(new Set<string>())
 
   const tocItems = sections
     .filter((section) => section.heading)
@@ -21,39 +19,6 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
       heading: section.heading!,
       id: section.headingId ?? generateHeadingId(section.heading!),
     }))
-
-  useEffect(() => {
-    const callback = (entries: IntersectionObserverEntry[]) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          visibleHeadings.current.add(entry.target.id)
-        } else {
-          visibleHeadings.current.delete(entry.target.id)
-        }
-      }
-
-      let newActiveId = ""
-      // Find the first visible heading from the top of the viewport
-      for (const item of tocItems) {
-        if (visibleHeadings.current.has(item.id)) {
-          newActiveId = item.id
-          break
-        }
-      }
-      setActiveId(newActiveId)
-    }
-
-    const observer = new IntersectionObserver(callback, {
-      // -120px top margin to account for sticky header
-      // -60% bottom margin to focus on the top part of the screen
-      rootMargin: "-120px 0px -60% 0px",
-    })
-
-    const elements = tocItems.map(item => document.getElementById(item.id)).filter(el => el)
-    elements.forEach(el => observer.observe(el))
-
-    return () => elements.forEach(el => observer.unobserve(el))
-  }, [tocItems])
 
   return (
     <nav
@@ -82,11 +47,7 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
               <li key={item.id}>
                 <Link
                   href={`#${item.id}`}
-                  className={`block py-1 transition-colors duration-200 hover:text-neutral-900 dark:hover:text-neutral-100 ${
-                    activeId === item.id
-                      ? "font-semibold text-neutral-900 dark:text-neutral-100"
-                      : "text-neutral-600 dark:text-neutral-400"
-                  }`}
+                  className="block py-1 text-neutral-600 transition-colors duration-200 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
                 >
                   {index + 1}. {item.heading}
                 </Link>
