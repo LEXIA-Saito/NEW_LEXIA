@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { ChevronDown, ChevronUp } from "lucide-react"
 import type { BlogPostSection } from "@/lib/blog-posts.types"
@@ -10,13 +10,11 @@ type TableOfContentsProps = {
   sections: Array<BlogPostSection & { headingId?: string }>
 }
 
-
 export default function TableOfContents({ sections }: TableOfContentsProps) {
-  // デフォルト展開へ仕様変更
   const [isOpen, setIsOpen] = useState(true)
   const [activeId, setActiveId] = useState<string>("")
+  const visibleHeadings = useRef(new Set<string>())
 
-  // 見出しがあるセクションのみ抽出
   const tocItems = sections
     .filter((section) => section.heading)
     .map((section) => ({
@@ -24,29 +22,37 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
       id: section.headingId ?? generateHeadingId(section.heading!),
     }))
 
-  // 仕様変更: 見出し数に関わらず表示（空の場合はメッセージ表示）。
-
-  // スクロール位置に応じてアクティブセクションをハイライト
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id)
-          }
-        })
-      },
-      {
-        rootMargin: "-20% 0px -80% 0px",
+    const callback = (entries: IntersectionObserverEntry[]) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          visibleHeadings.current.add(entry.target.id)
+        } else {
+          visibleHeadings.current.delete(entry.target.id)
+        }
       }
-    )
 
-    tocItems.forEach((item) => {
-      const element = document.getElementById(item.id)
-      if (element) observer.observe(element)
+      let newActiveId = ""
+      // Find the first visible heading from the top of the viewport
+      for (const item of tocItems) {
+        if (visibleHeadings.current.has(item.id)) {
+          newActiveId = item.id
+          break
+        }
+      }
+      setActiveId(newActiveId)
+    }
+
+    const observer = new IntersectionObserver(callback, {
+      // -120px top margin to account for sticky header
+      // -60% bottom margin to focus on the top part of the screen
+      rootMargin: "-120px 0px -60% 0px",
     })
 
-    return () => observer.disconnect()
+    const elements = tocItems.map(item => document.getElementById(item.id)).filter(el => el)
+    elements.forEach(el => observer.observe(el))
+
+    return () => elements.forEach(el => observer.unobserve(el))
   }, [tocItems])
 
   return (
@@ -81,17 +87,6 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
                       ? "font-semibold text-neutral-900 dark:text-neutral-100"
                       : "text-neutral-600 dark:text-neutral-400"
                   }`}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    const element = document.getElementById(item.id)
-                    if (element) {
-                      element.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                      })
-                      window.history.replaceState(null, "", `#${item.id}`)
-                    }
-                  }}
                 >
                   {index + 1}. {item.heading}
                 </Link>
@@ -105,10 +100,3 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
     </nav>
   )
 }
-
-/**
- * セクション見出しにIDを付与するためのヘルパー関数
- * この関数はpage.tsxで使用します
- */
-// generateId was moved to a server-safe util (lib/heading-id.ts)
-// and is now imported where needed.
