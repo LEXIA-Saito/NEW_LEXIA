@@ -1,7 +1,7 @@
 import { cache } from "react"
-
-import { fallbackBlogPosts } from "./blog-posts-fallback"
-import type { BlogPost, BlogPostSection, BlogGenre } from "./blog-posts.types"
+import type { BlogPost, BlogGenre } from "./blog-posts.types"
+import fs from 'fs/promises';
+import path from 'path';
 
 // Static genre metadata kept for compatibility with UI components
 const GENRE_METADATA: Record<BlogGenre, { label: string; description: string }> = {
@@ -20,14 +20,6 @@ const BLOG_GENRE_LIST = (Object.keys(GENRE_METADATA) as BlogGenre[]).map((id) =>
   ...GENRE_METADATA[id],
 }))
 
-// IMPORTANT: Blog microCMS integration removed.
-// The blog now uses the local `fallbackBlogPosts` data only.
-
-// --- Reading Time Calculation ------------------------------------------------
-// NOTE: We auto-calculate reading time instead of using the static field in data.
-// Heuristic: Count "words" where a word is either an alphanumeric sequence or a single CJK character.
-// Then: minutes = ceil(words / 400). Minimum 1 minute.
-// This keeps implementation simple and deterministic server-side.
 const WORDS_PER_MINUTE = 400
 
 function countWordsFromText(text: string): number {
@@ -51,7 +43,6 @@ function computeReadingTime(post: BlogPost): string {
       }
     }
   }
-  // Fallback: if no sections, optionally inspect contentHtml (plain strip tags) but we skip for now.
   const minutes = Math.max(1, Math.ceil(totalWords / WORDS_PER_MINUTE))
   return `${minutes}分`
 }
@@ -60,20 +51,43 @@ function withComputedReadingTime(post: BlogPost): BlogPost {
   return { ...post, readingTime: computeReadingTime(post) }
 }
 
+const blogDataDir = path.join(process.cwd(), 'data', 'blog');
+
 async function fetchLocalBlogPosts(): Promise<BlogPost[]> {
-  return fallbackBlogPosts.map(withComputedReadingTime)
+  try {
+    const filenames = await fs.readdir(blogDataDir);
+    const posts = await Promise.all(
+      filenames
+        .filter(filename => filename.endsWith('.ts'))
+        .map(async filename => {
+          const { post } = await import(`@/data/blog/${filename.replace(/\.ts$/, '')}`);
+          return post;
+        })
+    );
+    return posts.map(withComputedReadingTime);
+  } catch (error) {
+    console.error("Failed to fetch blog posts:", error);
+    return [];
+  }
 }
 
 async function fetchLocalBlogPost(slug: string): Promise<BlogPost | undefined> {
-  const found = fallbackBlogPosts.find((post) => post.slug === slug)
-  return found ? withComputedReadingTime(found) : undefined
+  try {
+    const { post } = await import(`@/data/blog/${slug}`);
+    return post ? withComputedReadingTime(post) : undefined;
+  } catch (error) {
+    // It's okay if a post is not found, so just log other errors.
+    if (error.code !== 'MODULE_NOT_FOUND') {
+      console.error(`Failed to fetch blog post with slug "${slug}":`, error);
+    }
+    return undefined;
+  }
 }
 
 export const fetchBlogPosts = cache(fetchLocalBlogPosts)
 
 export const fetchBlogPost = cache(fetchLocalBlogPost)
 
-export { fallbackBlogPosts as blogPosts }
 export const BLOG_GENRES = BLOG_GENRE_LIST
 
 export function getBlogGenreLabel(genre: BlogGenre): string {
