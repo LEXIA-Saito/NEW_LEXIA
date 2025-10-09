@@ -2,10 +2,9 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
 import {
-  fetchBlogPost,
-  fetchBlogPosts,
   getBlogGenreLabel,
 } from "@/lib/blog-posts"
+import { fetchBlogPost, fetchBlogPosts } from "@/lib/blog-posts-server"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import { notFound } from "next/navigation"

@@ -3,10 +3,10 @@ import FooterLite from "@/components/footer-lite"
 import BreadcrumbsLite from "@/components/breadcrumbs-lite"
 import {
   BLOG_GENRES,
-  fetchBlogPosts,
   getBlogGenreDescription,
   getBlogGenreLabel,
 } from "@/lib/blog-posts"
+import { fetchBlogPosts } from "@/lib/blog-posts-server"
 import type { BlogGenre } from "@/lib/blog-posts"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
