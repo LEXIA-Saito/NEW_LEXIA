@@ -15,6 +15,7 @@ import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
 import TableOfContents from "@/components/blog/TableOfContents"
 import { generateHeadingId } from "@/lib/heading-id"
+import type { BlogPostSection } from "@/lib/blog-posts.types"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
@@ -118,6 +119,24 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     keywords: post.tags.length > 0 ? post.tags.join(", ") : undefined,
   }
 
+  const sectionsWithHeadingIds = (() => {
+    const headingCounts = new Map<string, number>()
+
+    return (post.sections ?? []).map((section) => {
+      if (!section.heading) {
+        return { ...section, headingId: undefined }
+      }
+
+      const baseId = generateHeadingId(section.heading)
+      const count = headingCounts.get(baseId) ?? 0
+      const uniqueId = count === 0 ? baseId : `${baseId}-${count + 1}`
+
+      headingCounts.set(baseId, count + 1)
+
+      return { ...section, headingId: uniqueId }
+    })
+  })() satisfies Array<BlogPostSection & { headingId?: string }>
+
   return (
     <>
       <Navigation />
@@ -170,13 +189,13 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
             </header>
 
             {/* 目次: 要件変更により常時表示（セクション配列が存在すれば表示）。 */}
-            <TableOfContents sections={post.sections ?? []} />
+            <TableOfContents sections={sectionsWithHeadingIds} />
 
             <div className="space-y-12 text-neutral-800 dark:text-neutral-200">
-              {post.sections?.map((section, index) => (
+              {sectionsWithHeadingIds.map((section, index) => (
                 <section
                   key={section.heading ?? index}
-                  id={section.heading ? generateHeadingId(section.heading) : undefined}
+                  id={section.headingId}
                 >
                   {section.heading ? (
                     <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 scroll-mt-24">
