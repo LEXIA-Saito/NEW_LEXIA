@@ -81,17 +81,6 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
                       ? "font-semibold text-neutral-900 dark:text-neutral-100"
                       : "text-neutral-600 dark:text-neutral-400"
                   }`}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    const element = document.getElementById(item.id)
-                    if (element) {
-                      element.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                      })
-                      window.history.replaceState(null, "", `#${item.id}`)
-                    }
-                  }}
                 >
                   {index + 1}. {item.heading}
                 </Link>
