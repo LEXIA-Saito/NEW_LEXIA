@@ -8,7 +8,7 @@ export const LOGO_TEXT_WHITE_URL = process.env.NEXT_PUBLIC_LOGO_TEXT_WHITE_URL |
 
 export const config = {
   resend: {
-    apiKey: process.env.RESEND_API_KEY || 're_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ',
+    apiKey: process.env.RESEND_API_KEY ?? '',
     from: 'LEXIA <noreply@lexia-hp.com>',
     to: 'lexia0web@gmail.com'
   }

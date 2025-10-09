@@ -20,12 +20,16 @@ interface SecureConfig {
 
 // Encrypted configuration data
 const ENCRYPTED_CONFIG = {
-  // Encrypted production configuration
-  data: '17980bcf764588770c5744143a032617764c5a71d9b8c27af90ac4884f6a3393dbb872a36e48e6556ffe6d06430793da6f53b0a2f04a8014ea1f167548d40321dc79524d10c4c4fe8768d6e689d6aba4d2e51d8879200fc1ec73fb2f09de09c35136a525652ddb0a908d3a9e4a1c847e52ae3b26f9ead9a8bd022746a76c1648a35aed39e0210c1fec08d2ac5fad23b0138d6ec92bc593c70bcd405f3a6683a819064d4d95d9ae07c261eabe5dc347d4ef7d8b2542abf948064c192cbc4871b1b279c8fd8adc38bbb3bbf5f6c33454fb',
-  iv: '3c81e08e132398754be2c1680b271f4a',
-  // Backup method: environment-based key derivation
+  // Allow operators to provide encrypted configuration via environment variables
+  data: process.env.ENCRYPTED_SECURE_CONFIG ?? '',
+  iv: process.env.ENCRYPTED_SECURE_CONFIG_IV ?? '',
   keyDerivation: true
 }
+
+const DEFAULT_EMAIL_SETTINGS = {
+  from: "LEXIA <noreply@lexia-hp.com>",
+  to: "lexia0web@gmail.com"
+} as const
 
 /**
  * Decrypt configuration data
@@ -62,18 +66,10 @@ export function encryptConfig(data: string): { encrypted: string; iv: string } {
  * Fallback configuration method
  */
 function getFallbackConfig(): string {
-  // Use environment-based key derivation as fallback
-  const seed = process.env.VERCEL_URL || process.env.NODE_ENV || 'development'
-  const hash = crypto.createHash('sha256').update(seed + ENCRYPTION_KEY).digest('hex')
-  
-  // Derive API key from hash (this is a fallback method)
-  const apiKey = 're_' + hash.substring(0, 33)
-  
   return JSON.stringify({
     resend: {
-      apiKey: process.env.RESEND_API_KEY || apiKey,
-      from: "LEXIA <noreply@lexia-hp.com>",
-      to: "lexia0web@gmail.com"
+      apiKey: process.env.RESEND_API_KEY ?? '',
+      ...DEFAULT_EMAIL_SETTINGS
     },
     security: {
       rateLimiting: true,
@@ -87,32 +83,22 @@ function getFallbackConfig(): string {
  * Get secure configuration
  */
 export function getSecureConfig(): SecureConfig {
-  let configData: string
-  
-  // Try to decrypt stored config
+  let configData: string | undefined
+
+  // Try to decrypt stored config when provided
   if (ENCRYPTED_CONFIG.data && ENCRYPTED_CONFIG.iv) {
     configData = decryptConfig(ENCRYPTED_CONFIG.data, ENCRYPTED_CONFIG.iv)
-  } else {
-    // Use fallback method
+  }
+
+  if (!configData) {
     configData = getFallbackConfig()
   }
-  
+
   try {
     return JSON.parse(configData)
   } catch (error) {
-    console.error('Failed to parse config, using emergency fallback')
-    return {
-      resend: {
-        apiKey: 're_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ',
-        from: "LEXIA <noreply@lexia-hp.com>",
-        to: "lexia0web@gmail.com"
-      },
-      security: {
-        rateLimiting: true,
-        ipWhitelist: [],
-        maxAttachmentSize: 5 * 1024 * 1024
-      }
-    }
+    console.error('Failed to parse config, using fallback from environment', error)
+    return JSON.parse(getFallbackConfig())
   }
 }
 
@@ -155,12 +141,15 @@ export function validateSecureConfig(config: SecureConfig): { isValid: boolean; 
 /**
  * Initialize encrypted configuration (run once during setup)
  */
-export function initializeSecureConfig() {
+export function initializeSecureConfig(apiKey: string) {
+  if (!apiKey || !apiKey.startsWith('re_')) {
+    throw new Error('A valid Resend API key (starting with "re_") is required')
+  }
+
   const configData = JSON.stringify({
     resend: {
-      apiKey: 're_CWisMuJA_Ee48mxgpkt55Tqx9SnxLjLpZ',
-      from: "LEXIA <noreply@lexia-hp.com>",
-      to: "lexia0web@gmail.com"
+      apiKey,
+      ...DEFAULT_EMAIL_SETTINGS
     },
     security: {
       rateLimiting: true,
@@ -168,12 +157,12 @@ export function initializeSecureConfig() {
       maxAttachmentSize: 5 * 1024 * 1024
     }
   })
-  
+
   const { encrypted, iv } = encryptConfig(configData)
-  
+
   console.log('Encrypted config data:')
   console.log('data:', encrypted)
   console.log('iv:', iv)
-  
+
   return { encrypted, iv }
 }

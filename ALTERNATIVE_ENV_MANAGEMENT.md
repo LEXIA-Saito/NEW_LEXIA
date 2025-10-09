@@ -12,8 +12,7 @@ Vercelの環境変数管理を使わずに、APIキーを安全に管理する�
 **使用API**: `/api/contact` (メインのContact API)
 
 **特徴**:
-- ✅ Vercel環境変数設定不要
-- ✅ 即座にデプロイ可能  
+- ✅ Vercel環境変数から安全に読み込み
 - ✅ 設定の検証機能付き
 - ✅ 開発・本番環境対応
 
@@ -22,7 +21,7 @@ Vercelの環境変数管理を使わずに、APIキーを安全に管理する�
 // lib/config.ts
 export const config = {
   resend: {
-    apiKey: getResendApiKey(), // 複数の方法でAPIキーを取得
+    apiKey: process.env.RESEND_API_KEY ?? '',
     from: "LEXIA <noreply@lexia-hp.com>",
     to: "lexia0web@gmail.com"
   }
@@ -58,10 +57,8 @@ export const config = {
 import { config, validateConfig } from "@/lib/config"
 
 // APIキーは以下の優先順位で取得：
-// 1. process.env.RESEND_API_KEY (Vercel環境変数)
-// 2. Base64エンコードされたキー
-// 3. 直接埋め込まれたキー (本番環境)
-// 4. 外部サービスからの取得
+// 1. ENCRYPTED_SECURE_CONFIG / ENCRYPTED_SECURE_CONFIG_IV (提供されている場合)
+// 2. process.env.RESEND_API_KEY (Vercel環境変数)
 ```
 
 ## 🧪 テスト結果
@@ -75,44 +72,47 @@ import { config, validateConfig } from "@/lib/config"
 
 ## 📋 デプロイ手順
 
-### 即座にデプロイ可能 (環境変数設定不要)
+### 本番公開前に必ず実施
 
 ```bash
-# 1. コードをプッシュ
+# 1. ResendダッシュボードでAPIキーを発行
+# 2. Vercel CLIで環境変数を登録
+npx vercel env add RESEND_API_KEY
+
+# 3. （任意）暗号化ストアを利用する場合
+# ENCRYPTED_SECURE_CONFIG と ENCRYPTED_SECURE_CONFIG_IV を登録
+
+# 4. コードをプッシュしてデプロイ
 git push origin main
 
-# 2. Vercelが自動デプロイ
-# ✅ 環境変数設定は不要
-# ✅ APIキーはコードに埋め込み済み
-
-# 3. デプロイ後の確認
+# 5. 動作確認
 curl https://your-domain.vercel.app/api/debug-env
 curl -X POST https://your-domain.vercel.app/api/contact
 ```
 
 ## 🔒 セキュリティ考慮
 
-### APIキーの保護方法
+### APIキーの保護方法（現行）
 
-1. **Base64エンコーディング** (軽度の難読化)
-2. **関数内埋め込み** (ソースコード内でのキー分散)
-3. **環境別分岐** (開発・本番での異なる取得方法)
-4. **外部サービス連携** (より高度なセキュリティ)
+1. **Vercel環境変数** で集中管理
+2. **暗号化済み設定（任意）**: `initializeSecureConfig('re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')` で生成し、環境変数に保存
+3. **権限管理**: Resend ダッシュボードで不要なキーは即時削除
+4. **監査ログ**: GitGuardian 等のツールで漏洩検知
 
 ### リスク評価
 
-- **低リスク**: APIキーがソースコードに含まれるが、プライベートリポジトリ
-- **軽減策**: キーのローテーション、アクセス制限、監査ログ
-- **代替案**: より高度なセキュリティが必要な場合の外部設定サービス
+- **主要リスク**: 環境変数の誤設定または漏洩
+- **軽減策**: 定期ローテーション、アクセス権限の最小化、監査ログの確認
+- **代替案**: AWS Secrets Manager / HashiCorp Vault などの専用シークレットストア
 
 ## 📊 方法別比較
 
 | 方法 | セットアップ | セキュリティ | 保守性 | 推奨度 |
 |------|-------------|-------------|--------|--------|
-| Runtime Config | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ | **✅ 推奨** |
-| External Config | ⭐ | ⭐⭐⭐ | ⭐⭐ | 高度用途向け |
-| Next.js Runtime | ⭐⭐ | ⭐⭐ | ⭐⭐ | 代替案 |
-| Vercel Env Vars | ⭐ | ⭐⭐⭐ | ⭐ | 問題有り |
+| Vercel Env Vars | ⭐ | ⭐⭐⭐ | ⭐⭐ | **✅ 推奨** |
+| Encrypted Secure Config | ⭐⭐ | ⭐⭐⭐ | ⭐⭐ | 本番向け拡張 |
+| External Config Service | ⭐⭐ | ⭐⭐⭐ | ⭐ | 大規模用途 |
+| Next.js Runtime Config | ⭐⭐ | ⭐⭐ | ⭐⭐ | 代替案 |
 
 ## 🔄 将来のアップグレード
 
@@ -138,10 +138,10 @@ async function fetchFromSecureVault() {
 ## ✅ 現在のステータス
 
 - **✅ Runtime Configuration** 実装完了・テスト済み
-- **✅ メインContact API** 更新完了  
+- **✅ メインContact API** 更新完了
 - **✅ 複数の代替方法** 利用可能
-- **✅ 即座にデプロイ可能** 環境変数設定不要
-- **✅ Vercel Dashboard設定** 不要
+- **✅ Vercel Dashboard での環境変数管理に統一**
+- **✅ GitGuardian による漏洩監視を継続**
 
 ## 📞 メール送信確認
 
