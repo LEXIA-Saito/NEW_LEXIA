@@ -531,10 +531,10 @@ fallbackBlogPosts.push({
     {
       heading: "参考リンク",
       list: [
-        "Stagehand 公式サイト",
-        "Stagehand GitHub リポジトリ",
-        "Stagehand 公式ドキュメント",
-        "Browserbase 公式サイト",
+        "Stagehand 公式サイト — https://stagehand.dev/",
+        "Stagehand GitHub リポジトリ — https://github.com/browserbase/stagehand",
+        "Stagehand 公式ドキュメント — https://docs.stagehand.dev/",
+        "Browserbase 公式サイト — https://www.browserbase.com/",
       ],
     },
   ],
