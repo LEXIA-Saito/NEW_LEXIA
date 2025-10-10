@@ -2,6 +2,7 @@ export type BlogPostSection = {
   heading?: string
   body?: string[]
   image?: string
+  imageAlt?: string
   list?: string[]
   table?: {
     headers: string[]
@@ -20,6 +21,7 @@ export type BlogPost = {
   date: string
   readingTime: string
   heroImage?: string
+  heroImageAlt?: string
   sections?: BlogPostSection[]
   contentHtml?: string
 }

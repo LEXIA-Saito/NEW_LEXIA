@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
         ? [
             {
               url: post.heroImage,
-              alt: post.title,
+              alt: (post as any).heroImageAlt ?? post.title,
             },
           ]
         : undefined,
@@ -176,7 +176,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 <div className="mt-8">
                   <Image
                     src={post.heroImage}
-                    alt={post.title}
+                    alt={(post as any).heroImageAlt ?? post.title}
                     width={1200}
                     height={675}
                     className="w-full rounded-xl object-cover"
@@ -202,7 +202,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                     <div className="mt-4">
                       <Image
                         src={section.image}
-                        alt={section.heading ?? `${post.title} image ${index + 1}`}
+                        alt={section.imageAlt ?? section.heading ?? `${post.title} image ${index + 1}`}
                         width={1200}
                         height={700}
                         className="w-full rounded-lg object-cover"

@@ -12,6 +12,7 @@ export const fallbackBlogPosts: BlogPost[] = [
     date: "2025-10-09",
     readingTime: "5分", // Placeholder, will be recalculated
     heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/cover.webp",
+    heroImageAlt: "Infisical のロゴとダッシュボードイメージ",
     sections: [
       {
         heading: "はじめに",
@@ -20,6 +21,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           "Infisicalは、GitHubのトレンドリポジトリにも登場するほど人気があり、開発者体験全体を再設計することで、セキュリティツールを誰もが利用しやすいものにすることを目指しています。"
         ],
         image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/Infisical-logo.webp",
+        imageAlt: "Infisical のロゴ",
       },
       {
         heading: "Infisicalの主な機能",
@@ -34,6 +36,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           "シークレットのスキャンと漏洩防止: Gitリポジトリへのシークレットのコミットを防ぎます。"
         ],
         image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/best-secret-management-tools.webp",
+        imageAlt: "シークレット管理ツール比較のイメージ",
       },
       {
         heading: "始め方",
@@ -46,6 +49,7 @@ export const fallbackBlogPosts: BlogPost[] = [
         ]
         ,
         image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/infisical-1500-color.webp",
+        imageAlt: "Infisical のセットアップ画面イメージ",
       },
       {
         heading: "まとめ",
@@ -53,6 +57,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           "Infisicalは、開発者にとって非常に強力なシークレット管理プラットフォームです。オープンソースであるため、誰でも利用でき、コミュニティによる活発な開発も行われています。シークレット管理に課題を感じている方は、ぜひ一度試してみてはいかがでしょうか。"
         ],
         image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/secrets-management-cicd.webp",
+        imageAlt: "シークレット管理とCI/CD連携のイメージ",
       }
     ]
   },
@@ -67,6 +72,7 @@ export const fallbackBlogPosts: BlogPost[] = [
     readingTime: "6分",
     heroImage:
       "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/studio-ai-status-2025/STUDIO%20AI%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E7%94%BB%E5%83%8F.webp",
+    heroImageAlt: "Studio / STUDIO AI に関する公式ビジュアル",
     sections: [
       {
         body: [
@@ -87,6 +93,7 @@ export const fallbackBlogPosts: BlogPost[] = [
         ],
         image:
           "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/studio-ai-status-2025/Editor%205.0%20Beta%20Web%E3%82%A8%E3%83%86%E3%82%99%E3%82%A3%E3%82%BF%E3%83%BC%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9.webp",
+        imageAlt: "Editor 5.0 Beta のスクリーンショット",
       },
       {
         heading: "“STUDIO AI”の足跡",
@@ -110,6 +117,7 @@ export const fallbackBlogPosts: BlogPost[] = [
         ],
         image:
           "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/studio-ai-status-2025/SEO%20Writing%20Assist%20%E3%81%AE%E8%A8%AD%E5%AE%9A%E7%94%BB%E9%9D%A2.webp",
+        imageAlt: "SEO Writing Assist の設定画面イメージ",
       },
       {
         heading: "タイムライン早見表",
@@ -155,6 +163,7 @@ export const fallbackBlogPosts: BlogPost[] = [
     readingTime: "8分",
     heroImage:
       "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-hero-cursor-for-designers.avif",
+    heroImageAlt: "Onlook のメインビジュアル（デザイン編集 UI）",
     sections: [
       {
         body: [
@@ -163,6 +172,7 @@ export const fallbackBlogPosts: BlogPost[] = [
         ],
         image:
           "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-desktop-app-main-interface.webp",
+        imageAlt: "Onlook デスクトップアプリのメインインターフェース",
       },
       {
         heading: "Onlookの基本コンセプト",
@@ -172,6 +182,7 @@ export const fallbackBlogPosts: BlogPost[] = [
         ],
         image:
           "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-figma-like-visual-editor.avif",
+        imageAlt: "Figma ライクなビジュアルエディタのスクリーンショット",
       },
       {
         heading: "主要機能①：Figmaライクなビジュアルエディタ",
@@ -180,7 +191,8 @@ export const fallbackBlogPosts: BlogPost[] = [
           "また既存のNext.js + Tailwindプロジェクトを読み込んで、その上で編集できるため、デザインから実装への移行コストが小さく済みます。",
         ],
         image:
-          "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-realtime-editing-demo.gif",
+          "https://2iuxfx58zw36rxwq.public.blob.vercel.storage.com/onlook-article-images/onlook-realtime-editing-demo.gif",
+        imageAlt: "Onlook のリアルタイム編集デモ GIF",
       },
       {
         heading: "主要機能②：AIによる自然言語デザイン",
@@ -190,6 +202,7 @@ export const fallbackBlogPosts: BlogPost[] = [
         ],
         image:
           "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-what-can-you-do-prompt.png",
+        imageAlt: "Onlook の自然言語デザイン機能の例（プロンプトと結果）",
       },
       {
         heading: "主要機能③：Figmaインポートとデザインシステム管理",
@@ -199,6 +212,7 @@ export const fallbackBlogPosts: BlogPost[] = [
         ],
         image:
           "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-project-creation-workflow.webp",
+        imageAlt: "Onlook のプロジェクト作成ワークフロー図",
       },
       {
         heading: "アーキテクチャと技術構成",
@@ -215,6 +229,7 @@ export const fallbackBlogPosts: BlogPost[] = [
         ],
         image:
           "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-pricing-plans.jpg",
+        imageAlt: "Onlook の料金プラン表イメージ",
       },
       {
         heading: "実際の使い心地と課題",
@@ -276,8 +291,9 @@ export const fallbackBlogPosts: BlogPost[] = [
     genre: "tech",
     tags: ["Stremio", "stremio-web", "ストリーミング", "オープンソース", "セキュリティ"],
     date: "2025-10-08",
-    readingTime: "約10分",
-    heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/article-super.webp",
+  readingTime: "約10分",
+  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/article-super.webp",
+  heroImageAlt: "Stremio に関する記事のメインビジュアル",
     sections: [
       {
         heading: "はじめに：動画体験の分散を統合したいニーズ",
@@ -286,6 +302,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           "そんな中、複数サービスをひとつにまとめて視聴できたらという発想から生まれたのが Stremio（ストレミオ） です。特にそのWeb版インターフェースを担う stremio-web は、動画視聴体験を統合する次世代のUIとして注目を集めています。",
         ],
         image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/Screenshot-2023-08-16-at-18.08.46-1024x595.webp",
+        imageAlt: "Stremio のスクリーンショット（UIの一部）",
       },
       {
         heading: "Stremio / stremio-web の基本構造と役割",
@@ -296,6 +313,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           "Stremio自体は動画データをホストせず、あくまで「情報をまとめる・ストリーム元へ橋渡しする」仕組みを提供しています。この中立的な設計が、合法的な利用を可能にしています。",
         ],
         image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/Stremio-logo-dark-background-1024x570.webp",
+        imageAlt: "Stremio のロゴ（ダーク背景）",
       },
       {
         heading: "できること・実際の機能",
@@ -335,6 +353,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           ],
         },
         image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/Endavo-BlogGraphic-230901-StreamingPlatformsCompleteGuide-1200x628-V1-1024x536.jpg",
+        imageAlt: "複数のストリーミングプラットフォームを比較したグラフィック",
       },
       {
         heading: "技術的価値と恩恵：開発者・社会にとっての可能性",
@@ -387,6 +406,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           "研究元： https://arxiv.org/abs/2408.00502 (arXiv.org \"Hacked in Translation\")",
         ],
         image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/1_xWN8xkAxo1qnQt9BoKaOdQ.jpg",
+        imageAlt: "字幕脆弱性に関する参考図",
       },
       {
         heading: "将来性・展望：Stremioが描く次のフェーズ",
@@ -452,6 +472,7 @@ fallbackBlogPosts.push({
   date: "2025-10-10",
   readingTime: "5分",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stagehand/browserbase-stagehand-illustration.webp",
+  heroImageAlt: "Stagehand（ブラウザ自動化とAIの統合）を表す概念図",
   sections: [
     {
       heading: "はじめに：ブラウザ自動化の新たな可能性",
@@ -460,6 +481,7 @@ fallbackBlogPosts.push({
         "コードと自然言語のハイブリッドな指示を両立させることで、保守性と柔軟性を両立した自動化体験を提供します。",
       ],
       image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stagehand/f46ea1b8-f011-4c66-a65c-8c2ff411ef17_1200x630.png",
+      imageAlt: "Stagehand のイントロダクションイメージ（概念図）",
     },
     {
       heading: "従来の課題を解決するハイブリッドアプローチ",
@@ -484,6 +506,7 @@ fallbackBlogPosts.push({
         "UI が多少変わっても壊れにくい点が特徴です。",
       ],
       image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stagehand/stagehand.jpg",
+      imageAlt: "Stagehand の act 機能の操作イメージ",
     },
     {
       heading: "observe とキャッシュ：安定性の強化",
@@ -509,6 +532,7 @@ fallbackBlogPosts.push({
         "主要技術：TypeScript, Playwright, React, Next.js, Tailwind CSS, Bun, Drizzle, Zod。",
       ],
       image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stagehand/gradii-1920x1080--4-.webp",
+      imageAlt: "Stagehand のアーキテクチャ図",
     },
     {
       heading: "他ツールとの比較",
@@ -538,6 +562,7 @@ fallbackBlogPosts.push({
         "自然言語での操作、構造化抽出、キャッシュ機構により実運用に耐える安定性と柔軟性を備えています。",
       ],
       image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stagehand/stagehand2.jpg",
+      imageAlt: "Stagehand の利用イメージ（まとめ）",
     },
     {
       heading: "参考リンク",
