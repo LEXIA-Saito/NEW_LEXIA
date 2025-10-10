@@ -11,13 +11,15 @@ export const fallbackBlogPosts: BlogPost[] = [
     tags: ["Infisical", "セキュリティ", "オープンソース"],
     date: "2025-10-09",
     readingTime: "5分", // Placeholder, will be recalculated
+    heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/cover.webp",
     sections: [
       {
         heading: "はじめに",
         body: [
           "開発プロセスにおいて、APIキーやデータベースの認証情報などの「シークレット」の管理は、セキュリティを確保する上で非常に重要です。これらの情報を安全に、かつ効率的にチームやインフラ間で共有するためのツールとして、オープンソースのシークレット管理プラットフォーム「Infisical」が注目を集めています。",
           "Infisicalは、GitHubのトレンドリポジトリにも登場するほど人気があり、開発者体験全体を再設計することで、セキュリティツールを誰もが利用しやすいものにすることを目指しています。"
-        ]
+        ],
+        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/Infisical-logo.webp",
       },
       {
         heading: "Infisicalの主な機能",
@@ -30,7 +32,8 @@ export const fallbackBlogPosts: BlogPost[] = [
           "バージョン管理とポイントインタイムリカバリ: シークレットの変更履歴を記録し、必要に応じて復元できます。",
           "シークレットローテーションと動的シークレット: 定期的なローテーションや一時的なシークレットの生成が可能です。",
           "シークレットのスキャンと漏洩防止: Gitリポジトリへのシークレットのコミットを防ぎます。"
-        ]
+        ],
+        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/best-secret-management-tools.webp",
       },
       {
         heading: "始め方",
@@ -41,12 +44,15 @@ export const fallbackBlogPosts: BlogPost[] = [
           "Infisical Cloud: 最も手軽な方法で、無料で利用を開始できます。",
           "セルフホスティング: 自身のインフラで運用することも可能です。Dockerを使って簡単にセットアップできます。"
         ]
+        ,
+        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/infisical-1500-color.webp",
       },
       {
         heading: "まとめ",
         body: [
           "Infisicalは、開発者にとって非常に強力なシークレット管理プラットフォームです。オープンソースであるため、誰でも利用でき、コミュニティによる活発な開発も行われています。シークレット管理に課題を感じている方は、ぜひ一度試してみてはいかがでしょうか。"
-        ]
+        ],
+        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/secrets-management-cicd.webp",
       }
     ]
   },
