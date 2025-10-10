@@ -245,7 +245,7 @@ export default function CompanyClient() {
                   そこに更なる価値を創造すること。<br />
                   それこそが、私たちLEXIAの使命です。
                 </p>
-                <p>私たちは、5つの指針を胸に日々の仕事に向き合っています。</p>
+                <p>私たちは、5つの指針を胸に日々の活動に向き合っています。</p>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>
                     <p className="font-medium">L：Lead with Value（価値で導く）</p>
