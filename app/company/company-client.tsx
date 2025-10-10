@@ -253,19 +253,19 @@ export default function CompanyClient() {
                   </li>
                   <li>
                     <p className="font-medium">E：Evolve Constantly（常に進化する）</p>
-                    <p>技術・思考を磨き続け、変化を恐れず挑戦を重ねる。</p>
+                    <p>技術や思考を磨き続け、変化を恐れず挑戦を重ねる。</p>
                   </li>
                   <li>
                     <p className="font-medium">X：Xperience by Design（体験をデザインする）</p>
-                    <p>見る・触れる・使う、その瞬間の感動をデザインに宿す。</p>
+                    <p>見る・触れる・使う、その瞬間の体験をデザインに宿す。</p>
                   </li>
                   <li>
                     <p className="font-medium">I：Inspire Connection（つながりを生む）</p>
-                    <p>人と人、企業と顧客を結ぶ架け橋として、信頼と共感を形にする。</p>
+                    <p>人と人、企業と顧客を結ぶ架け橋となる。</p>
                   </li>
                   <li>
                     <p className="font-medium">A：Achieve Together（共に成し遂げる）</p>
-                    <p>クライアントと共創し、地域に語り継がれる成果を残す。</p>
+                    <p>クライアントと共に語り継がれる成果を構築する。</p>
                   </li>
                 </ul>
                 <p>
