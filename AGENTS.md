@@ -15,7 +15,7 @@
   slug: "example-slug",
   title: "記事タイトル",
   description: "一覧・OGに使われる短い要約",
-  genre: "tech" | "ideas",
+  genre: "tech" | "trends" | "ideas",
   tags: ["Tag1", "Tag2"],
   date: "YYYY-MM-DD",
   readingTime: "6分",
@@ -46,8 +46,9 @@
 ## Field Notes
 - `slug`: 一意、半角英数とハイフン（URLになるため慎重に）
 - `date`: `YYYY-MM-DD`（一覧の並び順に影響）
-- `genre`: 既存は `"tech"` または `"ideas"`
+- `genre`: 既存は `"tech"` / `"trends"` / `"ideas"`
   - 新ジャンル追加時は `lib/blog-posts.types.ts` と `lib/blog-posts.ts` の `GENRE_METADATA` を更新
+  - 記事生成時は、実際の内容（コード中心か／動向紹介か／戦略・思想か）を把握した上で最も適切なカテゴリを決定すること
 - `readingTime`: 2025-10以降は自動計算（語数 ÷ 400wpm を切り上げ、最低1分）。データファイル値は無視されます
 - `tags`: UIの都合上3つ程度が無難（トリミングされる可能性あり）
 

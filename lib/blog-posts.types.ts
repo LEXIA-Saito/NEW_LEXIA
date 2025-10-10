@@ -10,7 +10,7 @@ export type BlogPostSection = {
   }
 }
 
-export type BlogGenre = "tech" | "ideas"
+export type BlogGenre = "tech" | "trends" | "ideas"
 
 export type BlogPost = {
   slug: string

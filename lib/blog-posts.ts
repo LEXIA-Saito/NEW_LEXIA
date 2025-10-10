@@ -6,12 +6,16 @@ import type { BlogPost, BlogPostSection, BlogGenre } from "./blog-posts.types"
 // Static genre metadata kept for compatibility with UI components
 const GENRE_METADATA: Record<BlogGenre, { label: string; description: string }> = {
   tech: {
-    label: "技術（Tech）",
-    description: "制作現場で活用している技術やツールの知見をまとめています。",
+    label: "技術・実装（Tech / Implementation）",
+    description: "コード解説、ライブラリ紹介、API使い方、フレームワーク分析など。開発者・技術担当者向け。",
+  },
+  trends: {
+    label: "トレンド・先端（Trends / Innovation）",
+    description: "新技術動向、AI／Web界隈の最新潮流、業界の変化予測。今何が来ているかを素早く把握。",
   },
   ideas: {
-    label: "アイデア（Ideas）",
-    description: "戦略や思考法、取り組みの背景などを深掘りするコラムです。",
+    label: "戦略・構想（Strategy / Ideas）",
+    description: "Web制作戦略、コンセプト設計、UX思想、プロセス論など。技術以外の視点で深掘り。",
   },
 }
 

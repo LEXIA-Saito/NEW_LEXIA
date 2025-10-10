@@ -1,7 +1,5 @@
 import { BlogPost } from "./blog-posts.types"
 
-import { BlogPost } from "./blog-posts.types"
-
 export const fallbackBlogPosts: BlogPost[] = [
   {
     slug: "infisical-introduction",
@@ -66,7 +64,7 @@ export const fallbackBlogPosts: BlogPost[] = [
     title: "STUDIOアップデート総点検：あの「STUDIO AI」は今どこに？",
     description:
       "Studio（旧STUDIO）のプロダクト刷新とAI機能の現在地を一次情報から整理します。",
-    genre: "tech",
+  genre: "trends",
     tags: ["Studio", "ノーコード", "AI"],
     date: "2025-10-08",
     readingTime: "6分",
@@ -191,7 +189,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           "また既存のNext.js + Tailwindプロジェクトを読み込んで、その上で編集できるため、デザインから実装への移行コストが小さく済みます。",
         ],
         image:
-          "https://2iuxfx58zw36rxwq.public.blob.vercel.storage.com/onlook-article-images/onlook-realtime-editing-demo.gif",
+          "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-realtime-editing-demo.gif",
         imageAlt: "Onlook のリアルタイム編集デモ GIF",
       },
       {
