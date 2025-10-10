@@ -230,10 +230,9 @@ export default function CompanyClient() {
 
         {/* Representative & Team */}
         <section className="container mx-auto px-4 py-24 space-y-8" data-testid="team" id="team">
-          <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">代表＆チーム</h2>
+          <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">代表メッセージ</h2>
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">代表メッセージ</h3>
               <div className="text-neutral-700 dark:text-neutral-300 text-sm space-y-3">
                 <p>
                   LEXIAという名前は、
@@ -271,7 +270,7 @@ export default function CompanyClient() {
                 </ul>
                 <p>
                   LEXIAは事業活動を通じて、
-                  お客様の“価値”を技術で向上させて、“伝説”を共に創る存在であり続けます。
+                  お客様の“価値”を技術で向上し、“伝説”を共に創る存在であり続けます。
                 </p>
                 <p className="mt-4">LEXIA代表　齋藤 雅人</p>
               </div>
