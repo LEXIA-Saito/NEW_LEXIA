@@ -277,6 +277,7 @@ export const fallbackBlogPosts: BlogPost[] = [
     tags: ["Stremio", "stremio-web", "ストリーミング", "オープンソース", "セキュリティ"],
     date: "2025-10-08",
     readingTime: "約10分",
+    heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/article-super.webp",
     sections: [
       {
         heading: "はじめに：動画体験の分散を統合したいニーズ",
@@ -284,6 +285,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           "YouTube、Netflix、Amazon Prime、Disney+…現代では動画配信サービスが乱立し、「どこで観られるのか」を探すだけでも一苦労です。",
           "そんな中、複数サービスをひとつにまとめて視聴できたらという発想から生まれたのが Stremio（ストレミオ） です。特にそのWeb版インターフェースを担う stremio-web は、動画視聴体験を統合する次世代のUIとして注目を集めています。",
         ],
+        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/Screenshot-2023-08-16-at-18.08.46-1024x595.webp",
       },
       {
         heading: "Stremio / stremio-web の基本構造と役割",
@@ -293,6 +295,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           "一方で、stremio-web はStremioのフロントエンド（Web UI）を構成するリポジトリです。作品リスト表示、検索、詳細画面、アドオンとの通信など、ユーザーが実際に操作する部分を担当しています。",
           "Stremio自体は動画データをホストせず、あくまで「情報をまとめる・ストリーム元へ橋渡しする」仕組みを提供しています。この中立的な設計が、合法的な利用を可能にしています。",
         ],
+        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/Stremio-logo-dark-background-1024x570.webp",
       },
       {
         heading: "できること・実際の機能",
@@ -331,6 +334,7 @@ export const fallbackBlogPosts: BlogPost[] = [
             ],
           ],
         },
+        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/Endavo-BlogGraphic-230901-StreamingPlatformsCompleteGuide-1200x628-V1-1024x536.jpg",
       },
       {
         heading: "技術的価値と恩恵：開発者・社会にとっての可能性",
@@ -382,6 +386,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           "定期的なソフトウェアアップデートを行う",
           "研究元： https://arxiv.org/abs/2408.00502 (arXiv.org \"Hacked in Translation\")",
         ],
+        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/1_xWN8xkAxo1qnQt9BoKaOdQ.jpg",
       },
       {
         heading: "将来性・展望：Stremioが描く次のフェーズ",
