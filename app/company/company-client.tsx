@@ -234,9 +234,47 @@ export default function CompanyClient() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">代表メッセージ</h3>
-              <p className="text-neutral-700 dark:text-neutral-300 text-sm">
-                齋藤雅人は愛知県碧南市出身のエンジニアです。地域の中小企業がデジタルで成果を出せるよう、伝わる設計と実装にこだわっています。
-              </p>
+              <div className="text-neutral-700 dark:text-neutral-300 text-sm space-y-3">
+                <p>
+                  LEXIAという名前は、
+                  “LEGEND（伝説）”と“AXIA（価値）”を掛け合わせた造語です。<br />
+                  「価値あるものを共に創り、伝説として残す」──その想いが、私たちの原点です。
+                </p>
+                <p>
+                  WEBという形のない媒体に、
+                  お客様の軌跡や想い、情報を正確に刻み、
+                  そこに新たな価値を創造すること。<br />
+                  それこそが、私たちLEXIAの使命です。
+                </p>
+                <p>私たちは、5つの指針を胸に日々の仕事に向き合っています。</p>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li>
+                    <p className="font-medium">L：Lead with Value（価値で導く）</p>
+                    <p>価値あるデジタル資産を創出し、クライアントや社会の未来を切り拓く。</p>
+                  </li>
+                  <li>
+                    <p className="font-medium">E：Evolve Constantly（常に進化する）</p>
+                    <p>技術・思考を磨き続け、変化を恐れず挑戦を重ねる。</p>
+                  </li>
+                  <li>
+                    <p className="font-medium">X：Xperience by Design（体験をデザインする）</p>
+                    <p>見る・触れる・使う、その瞬間の感動をデザインに宿す。</p>
+                  </li>
+                  <li>
+                    <p className="font-medium">I：Inspire Connection（つながりを生む）</p>
+                    <p>人と人、企業と顧客を結ぶ架け橋として、信頼と共感を形にする。</p>
+                  </li>
+                  <li>
+                    <p className="font-medium">A：Achieve Together（共に成し遂げる）</p>
+                    <p>クライアントと共創し、地域に語り継がれる成果を残す。</p>
+                  </li>
+                </ul>
+                <p>
+                  LEXIAはデザインを通じて、
+                  “価値”を形にし、“伝説”を共に創る存在であり続けます。
+                </p>
+                <p className="mt-4">LEXIA代表　齋藤 雅人</p>
+              </div>
             </div>
             <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden">
               <Image src="/placeholder.svg" alt="代表 齋藤雅人" fill className="object-cover" />
