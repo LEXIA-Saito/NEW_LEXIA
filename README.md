@@ -47,6 +47,16 @@ Next.js の `useSearchParams` フックを使用する際は、非同期処理�
 ブログ記事は microCMS で管理します。以下の環境変数を `.env.local` などに設定してください。
 
 ```
+
+## 2025-10-10 画像 alt と型の改善
+
+このリポジトリのブログ機能について、アクセシビリティとSEO向上のために以下の変更を行いました：
+
+- ブログ記事データ型に `heroImageAlt` と `sections[].imageAlt` を追加しました（`lib/blog-posts.types.ts`）。
+- 既存のフォールバック記事（`lib/blog-posts-fallback.ts`）に対して、すべての hero / section 画像に対して明示的な alt テキストを埋め込みました。
+- 記事ページのレンダラー（`app/blog/[slug]/page.tsx`）を更新し、alt が明示されていればそれを優先して使用するようになりました。
+
+確認方法：ローカルで `pnpm dev` を起動し、記事ページを開いて画像要素の `alt` 属性が適切にセットされていることを確認してください。
 MICROCMS_SERVICE_DOMAIN=<サービスドメイン>
 MICROCMS_API_KEY=<API キー>
 # 任意: ブログのエンドポイントを変更したい場合のみ
