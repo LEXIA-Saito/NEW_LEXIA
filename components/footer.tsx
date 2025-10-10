@@ -21,6 +21,7 @@ export default function Footer() {
     { name: "チーム", href: "/team" },
     { name: "理念", href: "/company#principles" },
     { name: "お問い合わせ", href: "/contact" },
+    { name: "プライバシーポリシー", href: "/privacy" },
   ]
 
   const connectItems = [

@@ -28,6 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/services/pc",
     "/services/design",
     "/pricing",
+    "/privacy",
     "/team/masato-saito",
     "/team/riho-saito",
     "/team/assistant",
