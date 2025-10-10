@@ -238,7 +238,7 @@ export default function CompanyClient() {
                 <p>
                   LEXIAという名前は、
                   “LEGEND（伝説）”と“AXIA（価値）”を掛け合わせた造語です。<br />
-                  「価値あるものを共に創り、伝説として残す」──その想いが、私たちの原点です。
+                  「価値を技術で深化させ、語り継がれる成果を構築する」──その想いが、私たちの原点です。
                 </p>
                 <p>
                   WEBという形のない媒体に、
@@ -270,8 +270,8 @@ export default function CompanyClient() {
                   </li>
                 </ul>
                 <p>
-                  LEXIAはデザインを通じて、
-                  “価値”を形にし、“伝説”を共に創る存在であり続けます。
+                  LEXIAは事業活動を通じて、
+                  お客様の“価値”を技術で向上させて、“伝説”を共に創る存在であり続けます。
                 </p>
                 <p className="mt-4">LEXIA代表　齋藤 雅人</p>
               </div>
