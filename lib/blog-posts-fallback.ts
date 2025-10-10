@@ -429,3 +429,113 @@ export const fallbackBlogPosts: BlogPost[] = [
   },
   
 ]
+
+// Append Stagehand post to the fallback posts array
+fallbackBlogPosts.push({
+  slug: "stagehand-explained",
+  title: "Stagehand：PlaywrightとAIが融合した次世代ブラウザ自動化フレームワークの全貌",
+  description:
+    "Playwright と AI を組み合わせたハイブリッド自動化フレームワーク Stagehand の特徴、アーキテクチャ、活用シーンを整理します。",
+  genre: "tech",
+  tags: ["Stagehand", "Playwright", "自動化", "AI"],
+  date: "2025-10-10",
+  readingTime: "5分",
+  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stagehand/browserbase-stagehand-illustration.webp",
+  sections: [
+    {
+      heading: "はじめに：ブラウザ自動化の新たな可能性",
+      body: [
+        "Stagehand は Playwright を置き換えるのではなく、その上に AI を使った抽象化レイヤーを重ねる拡張フレームワークです。",
+        "コードと自然言語のハイブリッドな指示を両立させることで、保守性と柔軟性を両立した自動化体験を提供します。",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stagehand/f46ea1b8-f011-4c66-a65c-8c2ff411ef17_1200x630.png",
+    },
+    {
+      heading: "従来の課題を解決するハイブリッドアプローチ",
+      body: [
+        "従来の E2E テストやスクレイピングはセレクタや DOM 変化に弱く、AI は柔軟だが安定性に課題がありました。",
+        "Stagehand は「精密なコードの再現性」と「自然言語 AI の柔軟性」を統合することで、両者の長所を活かします。",
+      ],
+    },
+    {
+      heading: "Stagehand の核となる4つの機能",
+      list: [
+        "act：自然言語によるアクション実行 — 英語での指示をブラウザ操作に変換",
+        "observe：アクションのプレビューとキャッシュ化 — 実行前の確認と再利用で安定性を確保",
+        "extract：構造化データの抽出 — 自然言語と Zod スキーマを組み合わせた型安全な抽出",
+        "agent：多段階の自律タスク実行 — 複雑な目標を段階的に実行（v2 での追加機能）",
+      ],
+    },
+    {
+      heading: "act：自然言語でのブラウザ操作",
+      body: [
+        "act() は Stagehand の中心的メソッドで、\"Click the login button\" のような自然言語を解析して最適な DOM 操作を実行します。",
+        "UI が多少変わっても壊れにくい点が特徴です。",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stagehand/stagehand.jpg",
+    },
+    {
+      heading: "observe とキャッシュ：安定性の強化",
+      body: [
+        "observe() によるアクションの事前プレビューと、それを保存して再利用するキャッシュ設計により、AI の予測不確実性を低減し、再現性を高めます。",
+      ],
+    },
+    {
+      heading: "extract：Zod スキーマと自然言語による抽出",
+      body: [
+        "Zod のスキーマを使い、自然言語ベースの指示と組み合わせて構造化データを取り出せます。",
+        "例：",
+      ],
+      list: [
+        "const schema = z.object({ title: z.string(), price: z.number() })",
+        "const data = await stagehand.extract({ schema, prompt: \"Extract all product titles and prices from the page\" })",
+      ],
+    },
+    {
+      heading: "技術アーキテクチャと構成",
+      body: [
+        "Stagehand は MIT ライセンスのオープンソースで、モノレポ構成で管理されます。",
+        "主要技術：TypeScript, Playwright, React, Next.js, Tailwind CSS, Bun, Drizzle, Zod。",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stagehand/gradii-1920x1080--4-.webp",
+    },
+    {
+      heading: "他ツールとの比較",
+      table: {
+        headers: ["比較項目", "Playwright/Selenium", "純 AI エージェント", "Stagehand"],
+        rows: [
+          ["操作精度", "高い", "中程度", "高い"],
+          ["柔軟性", "低い", "高い", "高い"],
+          ["UI 変更への耐性", "弱い", "中程度", "強化済み"],
+          ["再現性", "安定", "不安定", "安定（キャッシュ機構）"],
+        ],
+      },
+    },
+    {
+      heading: "活用シーンと将来性",
+      list: [
+        "E2E テスト自動化",
+        "Web スクレイピング",
+        "業務・データ収集の自動化",
+        "QA／RPA シナリオの効率化",
+      ],
+    },
+    {
+      heading: "まとめ：AI 時代のブラウザ自動化がここから始まる",
+      body: [
+        "Stagehand はコードベース制御と AI の自律的判断を組み合わせた次世代フレームワークです。",
+        "自然言語での操作、構造化抽出、キャッシュ機構により実運用に耐える安定性と柔軟性を備えています。",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stagehand/stagehand2.jpg",
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "Stagehand 公式サイト",
+        "Stagehand GitHub リポジトリ",
+        "Stagehand 公式ドキュメント",
+        "Browserbase 公式サイト",
+      ],
+    },
+  ],
+})
