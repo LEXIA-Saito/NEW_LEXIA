@@ -573,7 +573,7 @@ fallbackBlogPosts.push({
     },
   ],
 })
-<<<<<<< HEAD
+
 
 // Append XYFlow post to the fallback posts array
 fallbackBlogPosts.push({
