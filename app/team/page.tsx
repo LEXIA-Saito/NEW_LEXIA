@@ -6,6 +6,7 @@ import { SITE_URL } from "@/lib/config"
 import Image from "next/image"
 import Link from "next/link"
 import Script from "next/script"
+import { allTeamMembers } from "@/lib/team-members"
 
 export const metadata: Metadata = {
   title: "チーム | LEXIA",
@@ -26,27 +27,7 @@ export const metadata: Metadata = {
   },
 }
 
-const members = [
-  {
-    name: "齋藤雅人",
-    role: "代表・WEBディレクター",
-    href: "/team/masato-saito",
-    img: "/images/saito_profile.webp",
-  },
-  {
-    name: "齋藤李保",
-    role: "デザイナー",
-    href: "/team/riho-saito",
-    img: "/images/riho-saito-profile.webp",
-  },
-  {
-    name: "アシスタント",
-    role: "アシスタント",
-    href: "/team/assistant",
-    bio: "Lexiaのアシスタント。チームの作業を支援し、効率的なワークフローを提供します。",
-    img: "/placeholder-user.svg",
-  },
-]
+const members = allTeamMembers
 
 export default function TeamIndexPage() {
   return (
@@ -64,30 +45,52 @@ export default function TeamIndexPage() {
 
           <section>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {members.map((m) => (
-                <Link
-                  href={m.href}
-                  key={m.href}
-                  className="group rounded-lg border border-neutral-200 dark:border-neutral-800 p-6 hover:shadow-md transition-shadow bg-white/60 dark:bg-neutral-900/60"
-                >
-                  <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4">
-                    <Image
-                      src={m.img}
-                      alt={`${m.name}のプロフィール写真`}
-                      fill
-                      className="object-cover"
-                      sizes="96px"
-                    />
+              {members.map((m, idx) => {
+                const img = m.image || "/placeholder-user.svg"
+                const href = m.slug ? `/team/${m.slug}` : undefined
+                const CardInner = (
+                  <>
+                    <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4">
+                      <Image
+                        src={img}
+                        alt={`${m.name}のプロフィール写真`}
+                        fill
+                        className="object-cover"
+                        sizes="96px"
+                      />
+                    </div>
+                    <h2 className="text-xl font-light text-neutral-900 dark:text-neutral-100">{m.name}</h2>
+                    {m.role ? (
+                      <p className="text-sm text-neutral-600 dark:text-neutral-400">{m.role}</p>
+                    ) : null}
+                    {m.experienceYearsText ? (
+                      <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">経験: {m.experienceYearsText}</p>
+                    ) : null}
+                    {m.message ? (
+                      <p className="text-sm text-neutral-700 dark:text-neutral-300 mt-2 line-clamp-2">{m.message}</p>
+                    ) : null}
+                  </>
+                )
+                return href ? (
+                  <Link
+                    href={href}
+                    key={`${m.name}-${idx}`}
+                    className="group rounded-lg border border-neutral-200 dark:border-neutral-800 p-6 hover:shadow-md transition-shadow bg-white/60 dark:bg-neutral-900/60"
+                  >
+                    {CardInner}
+                    <span className="mt-4 inline-block text-sm text-neutral-900 dark:text-neutral-100 group-hover:underline">
+                      プロフィールを見る →
+                    </span>
+                  </Link>
+                ) : (
+                  <div
+                    key={`${m.name}-${idx}`}
+                    className="rounded-lg border border-neutral-200 dark:border-neutral-800 p-6 bg-white/60 dark:bg-neutral-900/60"
+                  >
+                    {CardInner}
                   </div>
-                  <h2 className="text-xl font-light text-neutral-900 dark:text-neutral-100">
-                    {m.name}
-                  </h2>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">{m.role}</p>
-                  <span className="mt-4 inline-block text-sm text-neutral-900 dark:text-neutral-100 group-hover:underline">
-                    プロフィールを見る →
-                  </span>
-                </Link>
-              ))}
+                )
+              })}
             </div>
           </section>
         </div>
@@ -107,8 +110,10 @@ export default function TeamIndexPage() {
               "@type": "Person",
               name: m.name,
               jobTitle: m.role,
-              url: `${SITE_URL.replace(/\/$/, "")}${m.href}`,
-              image: `${SITE_URL.replace(/\/$/, "")}${m.img}`,
+              url: m.slug
+                ? `${SITE_URL.replace(/\/$/, "")}/team/${m.slug}`
+                : `${SITE_URL.replace(/\/$/, "")}/team`,
+              image: `${SITE_URL.replace(/\/$/, "")}${m.image || "/placeholder-user.svg"}`,
             })),
           }),
         }}

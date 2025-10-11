@@ -7,40 +7,7 @@ import SectionIcon from "@/components/section-icon"
 import { Linkedin, Mail, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import { t } from "@/lib/i18n"
-
-// Team member data
-const teamMembers = [
-  {
-    id: 1,
-    name: "齋藤雅人",
-    role: "代表・WEBディレクター",
-    bio: "最新の制作技術を駆使してクライアントの期待を超え、WEB上に価値を見出す制作を実現します。",
-    image: "/images/saito_profile.webp",
-    linkedin: "https://www.linkedin.com/in/lexia-saito/",
-    email: "msms12120614@gmail.com",
-    slug: "masato-saito",
-  },
-  {
-    id: 2,
-    name: "齋藤李保",
-    role: "経理",
-    bio: "会社の資金管理や請求業務を担い、LEXIAの安定運営を支える縁の下の力持ちです。",
-    image: "/images/riho-saito-profile.webp",
-    linkedin: "",
-    email: "",
-    slug: "riho-saito",
-  },
-  {
-    id: 3,
-    name: "アシスタント",
-    role: "アシスタント",
-    bio: "日々の業務をサポートし、チームが円滑に動くよう支援しています。",
-    image: "/placeholder-user.svg",
-    linkedin: "",
-    email: "",
-    slug: "assistant",
-  },
-]
+import { allTeamMembers } from "@/lib/team-members"
 
 export default function Team() {
   const fadeIn = {
@@ -69,10 +36,50 @@ export default function Team() {
         </motion.div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {teamMembers.map((member, index) => (
+      {/* 主要メンバー（横スクロール） */}
+      <div className="overflow-x-auto pb-2 -mx-4 px-4">
+        <div className="flex gap-6 snap-x snap-mandatory">
+          {allTeamMembers
+            .filter((m) => m.isPrimary)
+            .map((member, index) => (
+              <motion.div
+                key={`${member.name}-${index}`}
+                className="bg-white dark:bg-neutral-800 rounded-lg overflow-hidden shadow-sm group min-w-[260px] snap-start"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                variants={fadeIn}
+                whileHover={{ y: -10 }}
+              >
+                <div className="aspect-[3/4] relative overflow-hidden">
+                  <Image
+                    src={member.image || "/placeholder-user.svg"}
+                    alt={member.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-medium text-neutral-900 dark:text-neutral-100 mb-1">{member.name}</h3>
+                  <p className="text-neutral-500 dark:text-neutral-400 mb-3">{member.role}</p>
+                  {member.message ? (
+                    <p className="text-neutral-700 dark:text-neutral-300 text-sm mb-3">{member.message}</p>
+                  ) : null}
+                </div>
+              </motion.div>
+            ))}
+        </div>
+      </div>
+
+      {/* 既存カードグリッド（必要なら継続）: 主要外は省略か、少数表示に */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
+        {allTeamMembers
+          .filter((m) => !m.isPrimary)
+          .slice(0, 4)
+          .map((member, index) => (
           <motion.div
-            key={member.id}
+            key={`${member.name}-${index}`}
             className="bg-white dark:bg-neutral-800 rounded-lg overflow-hidden shadow-sm group"
             initial="hidden"
             whileInView="visible"
@@ -83,47 +90,18 @@ export default function Team() {
           >
             <div className="aspect-[3/4] relative overflow-hidden">
               <Image
-                src={member.image || "/placeholder.svg"}
+                src={member.image || "/placeholder-user.svg"}
                 alt={member.name}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                <div className="p-6 w-full">
-                  <div className="flex justify-center space-x-3">
-                    <Link
-                      href={`mailto:${member.email}`}
-                      className="bg-white/90 dark:bg-neutral-900/90 p-2 rounded-full text-neutral-900 dark:text-neutral-100 hover:scale-110 transition-transform duration-300"
-                      aria-label={`Email ${member.name}`}
-                    >
-                      <Mail className="h-5 w-5" />
-                    </Link>
-                    <Link
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-white/90 dark:bg-neutral-900/90 p-2 rounded-full text-neutral-900 dark:text-neutral-100 hover:scale-110 transition-transform duration-300"
-                      aria-label={`${member.name}'s LinkedIn profile`}
-                    >
-                      <Linkedin className="h-5 w-5" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
             </div>
             <div className="p-6">
               <h3 className="text-xl font-medium text-neutral-900 dark:text-neutral-100 mb-1">{member.name}</h3>
               <p className="text-neutral-500 dark:text-neutral-400 mb-3">{member.role}</p>
-              <p className="text-neutral-700 dark:text-neutral-300 text-sm mb-3">{member.bio}</p>
-              {member.slug && (
-                <Link
-                  href={`/team/${member.slug}`}
-                  className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline group text-sm"
-                >
-                  プロフィールを見る
-                  <ArrowUpRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </Link>
-              )}
+              {member.message ? (
+                <p className="text-neutral-700 dark:text-neutral-300 text-sm mb-3">{member.message}</p>
+              ) : null}
             </div>
           </motion.div>
         ))}
