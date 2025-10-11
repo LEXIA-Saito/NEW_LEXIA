@@ -584,8 +584,6 @@ fallbackBlogPosts.push({
   tags: ["XYFlow", "React Flow", "グラフ", "ノードエディタ"],
   date: "2025-10-11",
   readingTime: "6分",
-  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/xyflow/xyflow-playground-screenshot.webp",
-  heroImageAlt: "XYFlow Playground のスクリーンショット",
   sections: [
     {
       heading: "はじめに：なぜいま XYFlow が注目？",
@@ -606,8 +604,6 @@ fallbackBlogPosts.push({
         "カスタムノード/エッジの拡張 API と豊富なイベント",
         "レイアウト、マルチビュー、ミニマップなどの UX 補助",
       ],
-      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/xyflow/react-flow-animated-example.gif",
-      imageAlt: "XYFlow/React Flow 系のアニメーション動作例",
     },
     {
       heading: "主なユースケース",
@@ -667,16 +663,6 @@ fallbackBlogPosts.push({
         "XYFlow は“つくりやすさ”と“拡張性”を両立したグラフ/ノードエディタ基盤です。PoC からプロダクションまでスムーズに繋げやすく、開発速度と UI 品質を両立できます。",
         "業務フローやデータフローの可視化が求められるプロジェクトで、まず検討すべき選択肢の一つと言えるでしょう。",
       ],
-    },
-    {
-      heading: "ブランドロゴ（ダーク）",
-      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/xyflow/xyflow-logo-dark.svg",
-      imageAlt: "XYFlow ロゴ（ダークバージョン）",
-    },
-    {
-      heading: "ブランドロゴ（ライト）",
-      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/xyflow/xyflow-logo-light.svg",
-      imageAlt: "XYFlow ロゴ（ライトバージョン）",
     },
     {
       heading: "参考リンク",
