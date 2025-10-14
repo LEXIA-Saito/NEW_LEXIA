@@ -635,8 +635,8 @@ fallbackBlogPosts.push({
         "AIが生成したコード・文章・画像をArtifactsとして保存・一覧化し、チャット中に作成した成果物を右サイドで管理できます。",
         "コードや文書を再利用しやすいUIで、作業履歴を『生成物』として資産化できます。",
         "詳細： https://lobehub.com/docs/usage/features/artifacts",
-        "出典（画像）：LobeHub Changelog - Major Update: LobeChat Enters the Era of Artifacts ／ 公式サイト https://lobehub.com/",
-        "著作権：LobeHub 公式提供画像",
+        "出典（画像）：LobeHub Changelog - Artifacts Update",
+        "ライセンス：LobeHub 公式提供画像",
       ],
       image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lobe-chat/lobe-chat-artifacts-feature.webp",
       imageAlt: "Lobe Chat の Artifacts 機能イメージ（公式提供）",
@@ -644,8 +644,8 @@ fallbackBlogPosts.push({
     {
       heading: "4. ナレッジベースとRAG対応",
       body: [
-        "出典（図解）：Qdrant - What is RAG in AI: Understanding Retrieval-Augmented Generation",
-        "ライセンス：教育目的での引用（要出典明記） — https://qdrant.tech/articles_data/what-is-rag-in-ai/how-rag-works.jpg",
+        "出典（図解）：Qdrant - What is RAG in AI",
+        "ライセンス：教育目的での利用可（要出典明記） — https://qdrant.tech/articles_data/what-is-rag-in-ai/how-rag-works.jpg",
       ],
       list: [
         "PDF／Markdown／TXTなどのドキュメントをアップロードしてRAGで参照",
@@ -719,7 +719,8 @@ fallbackBlogPosts.push({
       heading: "関連動画（YouTube）",
       body: [
         "LobeChat: Free Open Source LLM Platform — https://www.youtube.com/watch?v=2bjkx3QFOQo",
-        "出典：YouTube（標準ライセンス）／ チャンネル：LobeChat公式またはコミュニティ",
+        "出典：YouTube - LobeChat: Free Open Source LLM Platform",
+        "ライセンス：YouTube標準ライセンス（埋め込み・引用可）",
       ],
       image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lobe-chat/lobe-chat-youtube-thumbnail.webp",
       imageAlt: "YouTube サムネイル：LobeChat: Free Open Source LLM Platform",
