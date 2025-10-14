@@ -39,13 +39,63 @@ function linkifyOnlook(text: string, linkClassName?: string): React.ReactNode[] 
 export default function LinkifyText({ text, linkClassName }: Props) {
   // 関連記事プレースホルダーをチェック
   const relatedArticleRegex = /\{\{RELATED_ARTICLE:([^}]+)\}\}/g
-  const relatedArticleMatch = text.match(relatedArticleRegex)
+  const relatedArticleMatches = Array.from(text.matchAll(relatedArticleRegex))
   
-  if (relatedArticleMatch) {
-    const slug = relatedArticleMatch[0].replace(/\{\{RELATED_ARTICLE:([^}]+)\}\}/, '$1')
-    return <RelatedArticleSection targetSlug={slug} />
+  // 関連記事プレースホルダーがある場合の処理
+  if (relatedArticleMatches.length > 0) {
+    const nodes: React.ReactNode[] = []
+    let lastIndex = 0
+    let componentIndex = 0
+    
+    for (const match of relatedArticleMatches) {
+      const start = match.index ?? 0
+      const slug = match[1]
+      
+      // プレースホルダーの前のテキストを処理
+      if (start > lastIndex) {
+        const beforeText = text.slice(lastIndex, start)
+        if (beforeText.trim()) {
+          nodes.push(
+            <div key={`text-${componentIndex}`} className="mb-4">
+              {processTextWithLinks(beforeText, linkClassName)}
+            </div>
+          )
+        }
+      }
+      
+      // 関連記事コンポーネントを追加
+      nodes.push(
+        <RelatedArticleSection 
+          key={`related-${componentIndex}`} 
+          targetSlug={slug} 
+          className="my-6"
+        />
+      )
+      
+      lastIndex = start + match[0].length
+      componentIndex++
+    }
+    
+    // 最後のプレースホルダー以降のテキストを処理
+    if (lastIndex < text.length) {
+      const afterText = text.slice(lastIndex)
+      if (afterText.trim()) {
+        nodes.push(
+          <div key={`text-${componentIndex}`} className="mt-4">
+            {processTextWithLinks(afterText, linkClassName)}
+          </div>
+        )
+      }
+    }
+    
+    return <>{nodes}</>
   }
 
+  // 関連記事プレースホルダーがない場合は通常の処理
+  return <>{processTextWithLinks(text, linkClassName)}</>
+}
+
+function processTextWithLinks(text: string, linkClassName?: string): React.ReactNode[] {
   const urlRegex = /https?:\/\/[^\s)]+/g
   const nodes: React.ReactNode[] = []
   let lastIndex = 0
@@ -77,7 +127,7 @@ export default function LinkifyText({ text, linkClassName }: Props) {
     nodes.push(...linkifyOnlook(tail, linkClassName))
   }
 
-  if (nodes.length === 0) return <>{text}</>
-  return <>{nodes}</>
+  if (nodes.length === 0) return [text]
+  return nodes
 }
 

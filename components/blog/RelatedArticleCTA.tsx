@@ -27,7 +27,7 @@ export default function RelatedArticleCTA({
     className = "",
 }: RelatedArticleCTAProps) {
     return (
-        <div className={`group relative overflow-hidden rounded-xl bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800 border border-neutral-200 dark:border-neutral-700 shadow-lg hover:shadow-xl transition-all duration-300 ${className}`}>
+        <div className={`group relative overflow-hidden rounded-xl bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800 border border-neutral-200 dark:border-neutral-700 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ${className}`}>
             <Link
                 href={`/blog/${slug}`}
                 onClick={() => trackEvent("related_article_click", { slug, title })}
@@ -42,7 +42,14 @@ export default function RelatedArticleCTA({
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                    
+                    {/* 関連記事バッジ */}
+                    <div className="absolute top-3 left-3">
+                        <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-white/90 text-neutral-800 rounded-full backdrop-blur-sm">
+                            関連記事
+                        </span>
+                    </div>
                 </div>
 
                 {/* Content */}
@@ -77,11 +84,14 @@ export default function RelatedArticleCTA({
                     </p>
 
                     {/* CTA Button */}
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between pt-2 border-t border-neutral-200 dark:border-neutral-700">
                         <span className="text-blue-600 dark:text-blue-400 font-medium text-sm group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors duration-300">
                             記事を読む
                         </span>
-                        <ArrowRight className="w-5 h-5 text-blue-600 dark:text-blue-400 transition-all duration-300 group-hover:translate-x-1 group-hover:text-blue-700 dark:group-hover:text-blue-300" />
+                        <div className="flex items-center gap-1 text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors duration-300">
+                            <span className="text-xs font-medium">続きを読む</span>
+                            <ArrowRight className="w-4 h-4 transition-all duration-300 group-hover:translate-x-1" />
+                        </div>
                     </div>
                 </div>
             </Link>

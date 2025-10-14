@@ -755,8 +755,9 @@ fallbackBlogPosts.push({
       heading: "0. まずは全体像（前編：概要編）",
       body: [
         "Firebase Studioの背景や特徴、Project IDXからの進化については前回の記事で解説しています。",
-        "→ Firebase Studioとは？AI時代の新しい開発環境を徹底解説",
-        "https://lexia-hp.com/blog/what-is-firebase-studio-overview",
+        "",
+        "{{RELATED_ARTICLE:what-is-firebase-studio-overview}}",
+        "",
         "本記事では、その続編として「実際の操作方法（始め方）」に焦点を当てます。",
       ],
     },
@@ -900,9 +901,10 @@ fallbackBlogPosts.push({
     },
     {
       heading: "関連記事",
+      body: [
+        "{{RELATED_ARTICLE:what-is-firebase-studio-overview}}",
+      ],
       list: [
-        "Firebase Studioとは？AI時代の新しい開発環境を徹底解説",
-        "https://lexia-hp.com/blog/what-is-firebase-studio-overview",
         "公式ドキュメント：Get started with Firebase Studio",
         "https://firebase.google.com/docs/studio/get-started",
       ],
