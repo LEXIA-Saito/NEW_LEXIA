@@ -4,7 +4,13 @@
 
 ## 初期セットアップ
 
-### 1. 環境変数の設定
+### 1. 必要なパッケージのインストール
+
+```bash
+npm install @sanity/vision
+```
+
+### 2. 環境変数の設定
 
 `.env.local`ファイルを作成し、以下の環境変数を設定してください：
 
@@ -14,7 +20,13 @@ SANITY_DATASET=production
 SANITY_API_VERSION=2025-10-01
 ```
 
-### 2. Sanity Studioの起動
+### 3. Sanity Studioのビルド
+
+```bash
+npm run sanity-build
+```
+
+### 4. Sanity Studioの起動
 
 ```bash
 npm run sanity-dev
@@ -22,7 +34,7 @@ npm run sanity-dev
 
 Sanity Studioが `http://localhost:3333` で起動します。
 
-### 3. 初回ログイン
+### 5. 初回ログイン
 
 1. ブラウザで `http://localhost:3333` にアクセス
 2. Sanityアカウントでログイン
@@ -101,6 +113,26 @@ npm run sanity-deploy
 
 ## トラブルシューティング
 
+### Sanity Studioが起動しない場合
+
+1. **設定ファイルエラー**
+   ```bash
+   # sanity.config.tsがプロジェクトルートにあることを確認
+   ls sanity.config.ts
+   ```
+
+2. **依存関係エラー**
+   ```bash
+   npm install @sanity/vision
+   npm run sanity-build
+   ```
+
+3. **ポート競合**
+   ```bash
+   # 別のポートで起動
+   sanity dev --port 3334
+   ```
+
 ### Sanityに接続できない場合
 
 - 環境変数が正しく設定されているか確認
@@ -118,3 +150,38 @@ npm run sanity-deploy
 - プレースホルダーの構文が正しいか確認
 - 参照している記事のスラッグが存在するか確認
 - 記事がSanityまたはfallbackに存在するか確認
+### 
+記事が表示されない場合
+
+- Sanityで記事が公開されているか確認
+- スラッグが正しく設定されているか確認
+- ブラウザのコンソールでエラーを確認
+
+### 関連記事CTAが表示されない場合
+
+- プレースホルダーの構文が正しいか確認
+- 参照している記事のスラッグが存在するか確認
+- 記事がSanityまたはfallbackに存在するか確認
+
+### ビルドエラーが発生する場合
+
+```bash
+# 依存関係を再インストール
+npm install
+npm run sanity-build
+npm run build
+```
+
+## よくある質問
+
+### Q: Sanityを使わずにfallbackファイルだけで運用できますか？
+
+A: はい、可能です。Sanityが利用できない場合、自動的にfallbackファイルのみを使用します。
+
+### Q: Sanityとfallbackで同じスラッグの記事がある場合はどうなりますか？
+
+A: Sanityの記事が優先されます。重複を避けるため、Sanityにある記事はfallbackから除外されます。
+
+### Q: 読了時間は手動で設定できますか？
+
+A: いいえ、読了時間は常に自動計算されます。これにより一貫性が保たれます。
