@@ -574,6 +574,157 @@ fallbackBlogPosts.push({
   ],
 })
 
+// Append Bun post to the fallback posts array
+fallbackBlogPosts.push({
+  slug: "bun-js-runtime",
+  title: "Bun完全ガイド：高速JavaScriptランタイムの特長・インストール・活用まで",
+  description:
+    "GitHubトレンド上位のBunを実証的に解説。JavaScriptCore × Zigで構築された超高速ランタイム。パッケージマネージャ・バンドラ・テストランナーを一体化した次世代ツールチェーン。",
+  genre: "tech",
+  tags: ["Bun", "JavaScript", "ランタイム"],
+  date: "2025-10-14",
+  readingTime: "8分",
+  sections: [
+    {
+      heading: "この記事でわかること",
+      list: [
+        "Bunとは何か（Node.jsとの違い）",
+        "高速性の仕組みと主要機能",
+        "インストール・実行方法",
+        "バンドラ／テストランナー／パッケージ管理の統合",
+        "現状の制限と今後の展望",
+      ],
+      body: [
+        "本記事はGoogleアドセンス審査を考慮し、公式ドキュメントおよびGitHub一次情報を基に構成しています。参考： https://bun.sh/docs ／ GitHub: https://github.com/oven-sh/bun",
+      ],
+    },
+    {
+      heading: "Bunとは",
+      body: [
+        "Bun は、JavaScriptとTypeScriptを超高速で実行するためのオールインワン・ツールチェーンです。",
+        "Node.jsやDenoと同様にランタイムとしての役割を持ちつつ、ランタイム／バンドラ／パッケージマネージャ／テストランナーを1つのCLIで統合しています。",
+        "開発元は Oven（oven-sh）で、コアは Zig 言語で実装、エンジンは WebKit の JavaScriptCore を採用しています。",
+        "これにより起動速度とメモリ効率で高い性能を発揮します。",
+        "画像出典（ロゴ）：Bun公式 Press Kit — https://bun.sh/press-kit",
+      ],
+    },
+    {
+      heading: "1. Bunの特徴",
+      list: [
+        "高速な実行性能：Zig × JavaScriptCore により、起動速度は Node.js 比で 4× を目標（公式ドキュメント言及）。TypeScript/JSX をトランスパイルなしで直接実行可能。",
+        "Node.js互換性：多くのNode組み込みAPIやnpmパッケージに対応（例：fs / path / Buffer）が、完全互換ではないため未対応領域は継続改善中。",
+        "オールインワン設計：依存管理・ビルド・テスト・実行を bun コマンドで完結。",
+      ],
+      body: [
+        "例： bun run index.tsx",
+        "参考（オールインワン構成の解説図）：Kinsta — https://kinsta.com/blog/bun-sh/",
+      ],
+    },
+    {
+      heading: "2. インストールと基本コマンド",
+      body: [
+        "推奨インストール（macOS/Linux/WSL対応）： curl -fsSL https://bun.sh/install | bash",
+        "Windows は 2025年時点で WSL 推奨（ネイティブ対応は進行中）。",
+        "参考（インストール速度比較ベンチマーク）：JavaScript in Plain English — https://javascript.plainenglish.io/npm-yarn-pnpm-bun-install-real-app-benchmarking-72c475498024",
+      ],
+      table: {
+        headers: ["コマンド", "説明"],
+        rows: [
+          ["bun run <file>", "JavaScript/TypeScript を直接実行"],
+          ["bun install", "パッケージのインストール"],
+          ["bun dev", "開発サーバーの起動"],
+          ["bun test", "統合テストランナーを実行"],
+          ["bun build", "バンドラ機能でビルド"],
+        ],
+      },
+    },
+    {
+      heading: "3. パッケージマネージャ機能",
+      list: [
+        "npm互換の package.json を利用",
+        "bun install は npm / yarn / pnpm より高速",
+        "lockfile は bun.lockb（バイナリ形式）",
+        "npmリポジトリのパッケージを幅広くサポート",
+      ],
+      body: [
+        "例： bun add react ／ bun remove axios",
+        "参考（パッケージマネージャ比較）：JavaScript in Plain English — https://javascript.plainenglish.io/npm-vs-pnpm-vs-yarn-vs-bun-javascript-package-manegers-a90b388fbd75",
+      ],
+    },
+    {
+      heading: "パフォーマンス比較（参考）",
+      body: [
+        "Node.js/Deno/Bun の比較解説：Snyk — https://snyk.io/blog/javascript-runtime-compare-node-deno-bun/",
+      ],
+    },
+    {
+      heading: "4. バンドラ機能",
+      body: [
+        "Bun には高速なバンドラが標準搭載され、ESM を前提に 1 ステップでビルド可能です。",
+        "例： bun build src/index.tsx --outdir=dist",
+        "補足：現時点では JavaScript/CSS 中心の機能。プラグインやアセット最適化などは今後の拡張領域。",
+      ],
+    },
+    {
+      heading: "5. テストランナー機能",
+      body: [
+        "Jest ライクな API（bun:test）を内蔵し、外部依存なしでテストを実行可能。",
+        "例： import { expect, test } from 'bun:test'; test('sum', () => { expect(1+1).toBe(2) })",
+      ],
+    },
+    {
+      heading: "6. Webサーバー構築例",
+      body: [
+        "Bun.serve を用いて軽量なHTTPサーバーを起動可能。",
+        "例： Bun.serve({ port: 3000, fetch(req){ return new Response('Hello from Bun!') } })",
+      ],
+    },
+    {
+      heading: "7. 設定ファイル（bunfig.toml）",
+      body: [
+        "bunfig.toml で挙動をカスタマイズ可能。",
+        "例： [test] coverage = true ／ [install] production = true",
+      ],
+    },
+    {
+      heading: "8. 制限と今後の展望",
+      list: [
+        "一部 Node.js ネイティブモジュールは未対応（node-gyp 依存など）",
+        "Windows ネイティブ対応は進行中（2025年時点では WSL 推奨）",
+        "プラグインAPIやFaaS統合などのエコシステム拡張が進行",
+        "活発な更新（例：v1.1 系など）で互換性・機能が継続強化",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "Bun は『速く・簡潔で・多機能』を一体化した革新的な JavaScript ランタイムで、開発者体験の最小構成を実現します。",
+      ],
+      table: {
+        headers: ["機能", "特徴"],
+        rows: [
+          ["ランタイム", "JavaScriptCore × Zig による高速実行"],
+          ["パッケージ管理", "npm互換・独自 lockfile で高速"],
+          ["バンドラ", "高速ビルド（ESMベース）"],
+          ["テストランナー", "Jest 互換構文を内蔵（bun:test）"],
+          ["サーバー", "Bun.serve() で即時HTTP起動"],
+        ],
+      },
+    },
+    {
+      heading: "参考資料",
+      list: [
+        "Bun公式ドキュメント",
+        "https://bun.sh/docs",
+        "Bun GitHubリポジトリ",
+        "https://github.com/oven-sh/bun",
+        "Bun公式ブログ",
+        "https://bun.sh/blog",
+      ],
+    },
+  ],
+})
+
 // Append Lobe Chat post to the fallback posts array
 fallbackBlogPosts.push({
   slug: "lobe-chat-overview",
