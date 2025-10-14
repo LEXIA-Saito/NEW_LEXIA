@@ -638,9 +638,6 @@ fallbackBlogPosts.push({
     },
     {
       heading: "Firebase Studioの使い方【始め方からデプロイまで】",
-      body: [
-        "画像提供: Google Firebase Studio ／ 引用元: https://cloud.google.com/blog/products/application-development/firebase-studio-lets-you-build-full-stack-ai-apps-with-gemini",
-      ],
       list: [
         "1) Googleアカウントでサインイン",
         "2) 新規プロジェクト作成またはGitHubインポート",
@@ -649,8 +646,6 @@ fallbackBlogPosts.push({
         "5) Webプレビュー/エミュレータで動作確認",
         "6) Firebase Hostingへデプロイ",
       ],
-      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-ai-prototyping-interface.webp",
-      imageAlt: "Firebase Studioの自然言語によるアプリ構築画面",
     },
     {
       heading: "Firebase Studioのメリット【AIがもたらす新しい開発体験】",
@@ -669,9 +664,6 @@ fallbackBlogPosts.push({
     },
     {
       heading: "Firebase Studioの注意点・制限事項【知っておきたいリスク】",
-      body: [
-        "画像提供: Google Firebase Studio ／ 引用元: https://firebase.google.com/docs/studio",
-      ],
       list: [
         "プレビュー版ゆえの不安定さと仕様変更リスク（SLAなし）",
         "無料ワークスペース上限（3つまで：プレビュー時点）",
@@ -679,8 +671,6 @@ fallbackBlogPosts.push({
         "Firebase依存による移行難易度（ロックイン可能性）",
         "大規模/複雑構成での実績・性能が未成熟",
       ],
-      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-firestore-rules-preview.webp",
-      imageAlt: "Firebase Studio開発環境のワークスペース管理",
     },
     {
       heading: "今後のアップデートと展望【Gemini時代の開発環境へ】",
