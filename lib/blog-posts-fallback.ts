@@ -721,6 +721,194 @@ fallbackBlogPosts.push({
   ],
 })
 
+// Append Firebase Studio Getting Started Guide (detailed tutorial)
+fallbackBlogPosts.push({
+  slug: "firebase-studio-getting-started-lexia",
+  title: "Firebase Studioの始め方｜登録からAIプロトタイプ作成・デプロイまで完全ガイド",
+  description:
+    "Firebase StudioはGoogleが提供するAI統合クラウド開発環境。ブラウザだけでアプリ開発・プレビュー・デプロイまで完結します。本記事では、ワークスペース作成、Geminiの活用、Firebase連携、Hostingへの公開手順、注意点までを公式情報に基づいて解説。",
+  genre: "tech",
+  tags: ["Firebase", "AI", "開発環境", "チュートリアル"],
+  date: "2025-10-14",
+  readingTime: "10分",
+  sections: [
+    {
+      body: [
+        "本記事は一次情報（Firebase公式ドキュメント、Google Developers Blog、Firebase Blog）に基づき構成しています。Firebase Studioは現在プレビュー段階のため、機能や仕様は今後変更される可能性があります。",
+      ],
+    },
+    {
+      heading: "この記事でわかること",
+      list: [
+        "Firebase Studioの準備とアクセス方法",
+        "ワークスペース作成・既存リポジトリのインポート",
+        "Gemini（AIエージェント）の活用ポイント",
+        "Firebaseサービス（Auth／Firestore など）の統合",
+        "プレビューとログ確認方法",
+        "Firebase Hostingへのデプロイ手順",
+        "制限事項・注意点",
+        "概要編との連動（全体像の理解）",
+      ],
+    },
+    {
+      heading: "0. まずは全体像（前編：概要編）",
+      body: [
+        "Firebase Studioの背景や特徴、Project IDXからの進化については前回の記事で解説しています。",
+        "→ Firebase Studioとは？AI時代の新しい開発環境を徹底解説",
+        "https://lexia-hp.com/blog/what-is-firebase-studio-overview",
+        "本記事では、その続編として「実際の操作方法（始め方）」に焦点を当てます。",
+      ],
+    },
+    {
+      heading: "1. 前提と準備",
+      body: [
+        "✅ 動作環境",
+        "対応ブラウザ：Google Chrome（推奨）／Edge／Safari（最新版）",
+        "Googleアカウント必須",
+        "Firebaseプロジェクトを利用する場合は、Firebase Console権限も必要",
+        "",
+        "Firebase StudioはブラウザベースのIDEであり、ローカル環境構築は不要です。",
+      ],
+    },
+    {
+      heading: "2. Firebase Studioにアクセスしてワークスペースを作成",
+      list: [
+        "1. https://firebase.google.com/studio にアクセス",
+        "2. 「Sign in with Google」でログイン",
+        "3. 左上の Create a new workspace をクリック",
+        "4. 任意のプロジェクト名を入力（例：my-first-firebase-app）",
+        "5. テンプレートを選択（例：Next.js、React、Vue、Angular、Flutter、Go、Python）",
+        "6. 「Create workspace」を押すと、数十秒でブラウザIDEが起動",
+      ],
+      body: [
+        "作成されたワークスペースはGoogleアカウントに紐づき、他の端末からもアクセス可能。Firebase Studioでは、最大3つまで無料ワークスペースを保持できます。",
+        "参考: Firebase Studio Pricing — https://firebase.google.com/docs/studio/pricing",
+      ],
+    },
+    {
+      heading: "3. 既存リポジトリをインポートする（任意）",
+      body: [
+        "GitHub／GitLab／Bitbucketから既存プロジェクトを取り込むことも可能です。",
+        "",
+        "手順:",
+      ],
+      list: [
+        "1. メニューから Import from GitHub を選択",
+        "2. リポジトリを選択 → Import",
+        "3. Studioが自動的に package.json や依存関係を解析し、環境を構築",
+      ],
+      body: [
+        "特殊なネイティブ依存やビルド設定がある場合、dev.nix を編集して環境をカスタマイズ可能です。",
+        "参考: Import existing project — https://firebase.google.com/docs/studio/get-started-import",
+      ],
+    },
+    {
+      heading: "4. テンプレートと初期構成を確認",
+      body: [
+        "テンプレートによってはすでにプレビュー設定（.idx/dev.nix）が組み込まれていますが、含まれていない場合は手動で有効化する必要があります。",
+        "",
+        "テンプレート構成：Next.js／React／Vue／Flutterなど",
+        "一部テンプレートでは、プレビュー機能が事前設定されていない場合あり",
+        "参考: Preview your app — https://firebase.google.com/docs/studio/preview-apps",
+      ],
+    },
+    {
+      heading: "5. Gemini（AIエージェント）を使う",
+      body: [
+        "Firebase Studio右上の「Gemini」アイコン、または下部のチャットバーから起動します。AIモデルには Gemini Pro が使用され、コード補完・提案・解説が可能です。",
+      ],
+      table: {
+        headers: ["用途", "指示例（英語推奨）"],
+        rows: [
+          ["コード生成", "Create a login page using Firebase Auth"],
+          ["エラーハンドリング改善", "Improve error handling in this function"],
+          ["テスト作成", "Write a unit test for this component"],
+          ["コード解説", "Explain what this function does"],
+        ],
+      },
+      body: [
+        "AIはプロジェクト内の文脈を参照し、コードを提案します。ただし、生成内容は常に検証が必要です。",
+        "参考: Gemini safety notice — https://firebase.google.com/docs/studio/ai-assistance",
+      ],
+    },
+    {
+      heading: "6. Firebaseサービスの統合（Auth／Firestoreなど）",
+      body: [
+        "Geminiに「Add Firebase Authentication」などと指示すると、関連する設定ファイル（firebase.json など）、必要な依存パッケージの追加、雛形コードの生成を試みます。",
+        "",
+        "ただし、すべてのケースで完全自動化されるわけではありません。Firebaseプロジェクトの紐付け、環境変数設定、セキュリティルールなどは手動確認が推奨されます。",
+      ],
+    },
+    {
+      heading: "7. プレビューとログ確認",
+      body: [
+        "上部の Preview ボタンで動作を確認できます。",
+        "",
+        "Webアプリ → ブラウザ内プレビュー（Live reload対応）",
+        "Flutter（Android） → Androidプレビュー利用可能（β機能）",
+        "",
+        "ログ／ターミナルタブで、ビルド／エラー／出力結果をリアルタイムに確認可能。",
+        "参考: Preview your app – Firebase Docs — https://firebase.google.com/docs/studio/preview-apps",
+      ],
+    },
+    {
+      heading: "8. Firebase Hostingへのデプロイ",
+      list: [
+        "1. 右上の Deploy をクリック",
+        "2. Firebaseプロジェクトを選択（初回のみ紐付け）",
+        "3. firebase.json が生成・更新され、デプロイ実行",
+        "4. 完了後、公開URL（例：https://your-app.web.app/）が表示",
+      ],
+      body: [
+        "StudioからHostingに直接デプロイ可能ですが、高度な設定（CI/CD・複数環境管理）はFirebase CLI併用が推奨されます。",
+      ],
+    },
+    {
+      heading: "9. トラブルシュート（よくある事例）",
+      table: {
+        headers: ["症状", "主な原因", "対処"],
+        rows: [
+          ["ワークスペースが開かない", "ブラウザ拡張・キャッシュ", "シークレットモードで再試行"],
+          ["Geminiが応答しない", "一時的なサーバー制限", "モード切替または時間をおいて再試行"],
+          ["FirestoreやAuthが反映されない", "設定未紐付け／ルールエラー", "Firebase Consoleで設定確認"],
+          ["Hostingデプロイ失敗", "権限不足／プロジェクトID相違", "プロジェクト選択とロール確認"],
+          ["プレビューが動かない", "dev.nix設定未適用", "設定ファイルの有効化またはテンプレート再作成"],
+        ],
+      },
+    },
+    {
+      heading: "10. 制限と注意点（Preview版）",
+      table: {
+        headers: ["項目", "内容"],
+        rows: [
+          ["無料ワークスペース数", "最大3つまで"],
+          ["Geminiリクエスト制限", "過負荷時に制限が発生する場合あり"],
+          ["互換性", "Preview版のため後方互換性非保証"],
+          ["費用", "Studio自体は無料。Firebaseサービス使用量に応じて課金発生あり"],
+          ["商用利用", "Preview段階では慎重な運用推奨"],
+        ],
+      },
+    },
+    {
+      heading: "11. まとめと次のステップ",
+      body: [
+        "Firebase Studioは、環境構築不要 × AI統合 × Firebase連携を実現した次世代IDEです。ブラウザだけで設計 → 実装 → プレビュー → デプロイを完結でき、特に個人開発・プロトタイピングに最適です。",
+        "",
+        "ただし、AI生成コードはレビュー必須、プレビュー版特有の不安定さにも注意が必要。今後は正式リリースに向け、Gemini連携やCLI統合の拡充が進む見込みです。",
+      ],
+    },
+    {
+      heading: "関連記事",
+      list: [
+        "Firebase Studioとは？AI時代の新しい開発環境を徹底解説",
+        "https://lexia-hp.com/blog/what-is-firebase-studio-overview",
+        "公式ドキュメント：Get started with Firebase Studio",
+        "https://firebase.google.com/docs/studio/get-started",
+      ],
+    },
+  ],
+})
+
 // Append Bun post to the fallback posts array
 fallbackBlogPosts.push({
   slug: "bun-js-runtime",
