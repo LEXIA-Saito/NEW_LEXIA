@@ -585,7 +585,7 @@ fallbackBlogPosts.push({
   date: "2025-10-14",
   readingTime: "7分",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-logo-hero-banner.webp",
-  heroImageAlt: "Firebase Studio ロゴのヒーローバナー",
+  heroImageAlt: "Firebase Studioロゴとブランディング",
   sections: [
     {
       // 導入（冒頭パート）
@@ -593,7 +593,7 @@ fallbackBlogPosts.push({
         "AIがコードを書く時代、Googleの答えは『Firebase Studio』だった。",
         "2025年、Googleは『Project IDX』を進化させた新たな開発環境 Firebase Studio を発表しました。クラウド上でアプリを構築し、AIがリアルタイムでサポートする——まさに次世代の開発体験です。",
         "この記事では、Firebase Studioの概要から特徴、使い方、注意点、そして今後の展望までを、一次情報（公式ドキュメント・Google開発者ブログ）に基づいて詳しく解説します。これからFirebase Studioを試したい開発者や、AI時代の新しいIDEを探している方に最適な内容です。",
-        "画像提供（ヘッダー）: Google Firebase Studio ／ 引用元: https://firebase.studio/",
+        "画像提供: Google Firebase Studio ／ 引用元: https://firebase.studio/",
       ],
     },
     {
@@ -605,7 +605,7 @@ fallbackBlogPosts.push({
         "画像提供: Google Firebase Studio ／ 引用元: https://firebase.studio/",
       ],
       image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/google-firebase-studio-website-1024x572.webp",
-      imageAlt: "Firebase Studio 公式サイトのスクリーンショット",
+      imageAlt: "Firebase Studio開発環境の全体像",
     },
     {
       heading: "Project IDXからFirebase Studioへ【進化の背景】",
@@ -613,7 +613,10 @@ fallbackBlogPosts.push({
         "Firebase Studioは、かつてのProject IDXを統合・進化させたプロジェクトです。",
         "IDXが目指した“AI支援のクラウドIDE”に、Firebaseのバックエンド機能（Auth/Firestore/Hosting等）が有機的に結び付けられ、AIエージェントを核とする開発体験へと深化しました。",
         "これにより、プロトタイピングと運用基盤の距離が縮まり、設計→実装→デプロイの一連の体験がシームレスになっています。",
+        "画像提供: Google Firebase Studio ／ 引用元: https://firebase.google.com/docs/studio",
       ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-coding-interface-gemini-ai.webp",
+      imageAlt: "Firebase StudioのTypeScriptコーディング画面とGemini AI連携",
     },
     {
       heading: "Firebase Studioの主な機能とできること【AI×クラウド開発】",
@@ -631,12 +634,12 @@ fallbackBlogPosts.push({
         "Firebase Hostingへのワンクリックデプロイ：Auth/Firestoreなどと深く統合",
       ],
       image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-ai-prototyping-interface.webp",
-      imageAlt: "Firebase Studio の AI プロトタイピング UI",
+      imageAlt: "Firebase StudioのAIプロトタイピング機能とGemini統合",
     },
     {
       heading: "Firebase Studioの使い方【始め方からデプロイまで】",
       body: [
-        "画像提供: Google Firebase Studio ／ 引用元: https://firebase.google.com/docs/studio",
+        "画像提供: Google Firebase Studio ／ 引用元: https://cloud.google.com/blog/products/application-development/firebase-studio-lets-you-build-full-stack-ai-apps-with-gemini",
       ],
       list: [
         "1) Googleアカウントでサインイン",
@@ -646,11 +649,14 @@ fallbackBlogPosts.push({
         "5) Webプレビュー/エミュレータで動作確認",
         "6) Firebase Hostingへデプロイ",
       ],
-      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-coding-interface-gemini-ai.webp",
-      imageAlt: "Firebase Studio の Gemini 連携によるコーディング支援画面",
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-ai-prototyping-interface.webp",
+      imageAlt: "Firebase Studioの自然言語によるアプリ構築画面",
     },
     {
       heading: "Firebase Studioのメリット【AIがもたらす新しい開発体験】",
+      body: [
+        "画像提供: Google Firebase Studio ／ 引用元: https://firebase.google.com/docs/studio",
+      ],
       list: [
         "ローカル環境構築が不要：ブラウザですぐ開始",
         "Geminiによる自然言語操作：設計/コード修正/テストを言語化",
@@ -658,6 +664,8 @@ fallbackBlogPosts.push({
         "Nixで高い環境再現性：VMベースの宣言的環境管理",
         "AIモード切替の柔軟性：会話型/部分実行/自律実行を使い分け",
       ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-firestore-rules-preview.webp",
+      imageAlt: "Firebase StudioのFirestoreルール設定とプレビュー画面",
     },
     {
       heading: "Firebase Studioの注意点・制限事項【知っておきたいリスク】",
@@ -672,7 +680,7 @@ fallbackBlogPosts.push({
         "大規模/複雑構成での実績・性能が未成熟",
       ],
       image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-firestore-rules-preview.webp",
-      imageAlt: "Firebase Studio の Firestore セキュリティルール プレビュー",
+      imageAlt: "Firebase Studio開発環境のワークスペース管理",
     },
     {
       heading: "今後のアップデートと展望【Gemini時代の開発環境へ】",
@@ -702,6 +710,10 @@ fallbackBlogPosts.push({
         "https://cloud.google.com/blog/products/application-development/firebase-studio-lets-you-build-full-stack-ai-apps-with-gemini",
         "Firebase Blog – Introducing Firebase Studio (2025年4月発表)",
         "https://firebase.blog/posts/2025/04/introducing-firebase-studio/",
+        "Licensed software in Firebase Studio",
+        "https://firebase.google.com/docs/studio/oss",
+        "Firebase Studio Workspaces - Getting Started",
+        "https://firebase.google.com/docs/studio/get-started-workspace",
       ],
     },
   ],
