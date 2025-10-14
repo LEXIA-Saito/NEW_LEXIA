@@ -2,6 +2,8 @@ import { cache } from "react"
 
 import { fallbackBlogPosts } from "./blog-posts-fallback"
 import { withComputedReadingTime } from "./reading-time"
+import { fetchSanityBlogPosts, fetchSanityBlogPost } from "./sanity"
+import { convertSanityBlogPosts, convertSanityBlogPostSingle } from "./sanity-blog-adapter"
 import type { BlogPost, BlogPostSection, BlogGenre } from "./blog-posts.types"
 
 // Static genre metadata kept for compatibility with UI components
@@ -32,18 +34,52 @@ const BLOG_GENRE_LIST = (Object.keys(GENRE_METADATA) as BlogGenre[]).map((id) =>
 // NOTE: Reading time calculation logic has been moved to lib/reading-time.ts
 // for better reusability across the application.
 
-async function fetchLocalBlogPosts(): Promise<BlogPost[]> {
-  return fallbackBlogPosts.map(withComputedReadingTime)
+async function fetchAllBlogPosts(): Promise<(BlogPost & { readingTime: string })[]> {
+  try {
+    // Sanityから記事を取得
+    const sanityPosts = await fetchSanityBlogPosts()
+    const convertedSanityPosts = convertSanityBlogPosts(sanityPosts)
+    
+    // fallbackBlogPostsも含める
+    const fallbackPostsWithReadingTime = fallbackBlogPosts.map(withComputedReadingTime)
+    
+    // 重複を避けるため、Sanityにあるスラッグはfallbackから除外
+    const sanityPostSlugs = new Set(convertedSanityPosts.map(post => post.slug))
+    const uniqueFallbackPosts = fallbackPostsWithReadingTime.filter(
+      post => !sanityPostSlugs.has(post.slug)
+    )
+    
+    // Sanity記事とfallback記事を結合
+    const allPosts = [...convertedSanityPosts, ...uniqueFallbackPosts]
+    
+    // 日付順でソート
+    return allPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  } catch (error) {
+    console.warn('Sanity fetch failed, using fallback posts only:', error)
+    // Sanityが利用できない場合はfallbackBlogPostsのみを使用
+    return fallbackBlogPosts.map(withComputedReadingTime)
+  }
 }
 
-async function fetchLocalBlogPost(slug: string): Promise<BlogPost | undefined> {
-  const found = fallbackBlogPosts.find((post) => post.slug === slug)
-  return found ? withComputedReadingTime(found) : undefined
+async function fetchSingleBlogPost(slug: string): Promise<(BlogPost & { readingTime: string }) | undefined> {
+  try {
+    // まずSanityから取得を試行
+    const sanityPost = await fetchSanityBlogPost(slug)
+    if (sanityPost) {
+      return convertSanityBlogPostSingle(sanityPost)
+    }
+  } catch (error) {
+    console.warn(`Sanity fetch failed for slug ${slug}, trying fallback:`, error)
+  }
+  
+  // Sanityにない場合はfallbackBlogPostsから取得
+  const fallbackPost = fallbackBlogPosts.find((post) => post.slug === slug)
+  return fallbackPost ? withComputedReadingTime(fallbackPost) : undefined
 }
 
-export const fetchBlogPosts = cache(fetchLocalBlogPosts)
+export const fetchBlogPosts = cache(fetchAllBlogPosts)
 
-export const fetchBlogPost = cache(fetchLocalBlogPost)
+export const fetchBlogPost = cache(fetchSingleBlogPost)
 
 export { fallbackBlogPosts as blogPosts }
 export const BLOG_GENRES = BLOG_GENRE_LIST

@@ -8,13 +8,13 @@ interface RelatedArticleSectionProps {
   className?: string
 }
 
-export default function RelatedArticleSection({
+export default async function RelatedArticleSection({
   targetSlug,
   title = "関連記事",
   description,
   className = "",
 }: RelatedArticleSectionProps) {
-  const article = getSpecificArticle(targetSlug)
+  const article = await getSpecificArticle(targetSlug)
 
   if (!article) {
     return null

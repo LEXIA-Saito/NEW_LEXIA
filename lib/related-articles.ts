@@ -52,12 +52,9 @@ export async function getRelatedArticles(
  * @param slug 取得したい記事のスラッグ
  * @returns 記事データまたはnull
  */
-export function getSpecificArticle(slug: string): (BlogPost & { readingTime: string }) | null {
-  const { fallbackBlogPosts } = require("./blog-posts-fallback")
-  const post = fallbackBlogPosts.find((post: BlogPost) => post.slug === slug)
-  
-  if (!post) return null
-  
-  // 読了時間を計算して返す
-  return withComputedReadingTime(post)
+export async function getSpecificArticle(slug: string): Promise<(BlogPost & { readingTime: string }) | null> {
+  // fetchBlogPostを使用してSanityとfallbackの両方をサポート
+  const { fetchBlogPost } = await import("./blog-posts")
+  const post = await fetchBlogPost(slug)
+  return post || null
 }

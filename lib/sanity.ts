@@ -16,7 +16,8 @@ export type SanityBlogSection = {
   _type: 'section'
   heading?: string
   body?: string[]
-  image?: SanityImage | null
+  image?: string
+  imageAlt?: string
   list?: string[]
   table?: {
     headers: string[]
@@ -29,10 +30,11 @@ export type SanityBlogPost = {
   slug: string
   title: string
   description: string
-  genre: 'tech' | 'ideas'
+  genre: 'tech' | 'trends' | 'ideas'
   tags: string[]
   date: string
   heroImage?: string
+  heroImageAlt?: string
   sections?: SanityBlogSection[]
   contentHtml?: string
 }
@@ -46,6 +48,7 @@ export const blogPostProjection = `{
   tags,
   date,
   heroImage,
+  heroImageAlt,
   sections,
   contentHtml,
 }`

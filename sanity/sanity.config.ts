@@ -19,12 +19,14 @@ export default defineConfig({
           { name: 'slug', type: 'slug', title: 'Slug', options: { source: 'title', maxLength: 96 } },
           { name: 'description', type: 'text', title: 'Description' },
           { name: 'genre', type: 'string', title: 'Genre', options: { list: [
-            { title: 'Tech', value: 'tech' },
-            { title: 'Ideas', value: 'ideas' },
+            { title: 'Tech / Implementation', value: 'tech' },
+            { title: 'Trends / Innovation', value: 'trends' },
+            { title: 'Strategy / Ideas', value: 'ideas' },
           ]}},
           { name: 'tags', type: 'array', title: 'Tags', of: [{ type: 'string' }] },
           { name: 'date', type: 'date', title: 'Publish Date' },
           { name: 'heroImage', type: 'url', title: 'Hero Image URL' },
+          { name: 'heroImageAlt', type: 'string', title: 'Hero Image Alt Text' },
           {
             name: 'sections',
             title: 'Sections',
@@ -37,6 +39,7 @@ export default defineConfig({
                 { name: 'heading', type: 'string', title: 'Heading' },
                 { name: 'body', type: 'array', title: 'Body Paragraphs', of: [{ type: 'text' }] },
                 { name: 'image', type: 'url', title: 'Inline Image URL' },
+                { name: 'imageAlt', type: 'string', title: 'Image Alt Text' },
                 { name: 'list', type: 'array', title: 'List Items', of: [{ type: 'string' }] },
                 { name: 'table', type: 'object', title: 'Table', fields: [
                   { name: 'headers', type: 'array', of: [{ type: 'string' }] },
