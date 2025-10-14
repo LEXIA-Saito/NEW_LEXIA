@@ -179,6 +179,9 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                     alt={(post as any).heroImageAlt ?? post.title}
                     width={1200}
                     height={675}
+                    priority
+                    fetchPriority="high"
+                    sizes="(min-width: 1024px) 70vw, 100vw"
                     className="w-full rounded-xl object-cover"
                   />
                 </div>

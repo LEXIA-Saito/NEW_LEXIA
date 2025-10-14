@@ -128,6 +128,7 @@ export default async function BlogIndexPage(props: PageProps) {
                     alt={latestPost.title}
                     fill
                     priority
+                    fetchPriority="high"
                     className="absolute inset-0 h-full w-full object-cover opacity-60"
                     sizes="(min-width: 1024px) 60vw, 100vw"
                   />

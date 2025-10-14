@@ -584,6 +584,8 @@ fallbackBlogPosts.push({
   tags: ["Bun", "JavaScript", "ランタイム"],
   date: "2025-10-14",
   readingTime: "8分",
+  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Bun/bun-1-0-official-announcement.webp",
+  heroImageAlt: "Bun 1.0 公式アナウンスのビジュアル",
   sections: [
     {
       heading: "この記事でわかること",
@@ -595,7 +597,7 @@ fallbackBlogPosts.push({
         "現状の制限と今後の展望",
       ],
       body: [
-        "本記事はGoogleアドセンス審査を考慮し、公式ドキュメントおよびGitHub一次情報を基に構成しています。参考： https://bun.sh/docs ／ GitHub: https://github.com/oven-sh/bun",
+        "本記事は、公式ドキュメントおよびGitHub一次情報を基に構成しています。参考： https://bun.sh/docs ／ GitHub: https://github.com/oven-sh/bun",
       ],
     },
     {
@@ -607,6 +609,8 @@ fallbackBlogPosts.push({
         "これにより起動速度とメモリ効率で高い性能を発揮します。",
         "画像出典（ロゴ）：Bun公式 Press Kit — https://bun.sh/press-kit",
       ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Bun/bun-javascript-runtime-hero.svg",
+      imageAlt: "Bun JavaScript ランタイム（公式ロゴ/ビジュアル）",
     },
     {
       heading: "1. Bunの特徴",
@@ -619,6 +623,8 @@ fallbackBlogPosts.push({
         "例： bun run index.tsx",
         "参考（オールインワン構成の解説図）：Kinsta — https://kinsta.com/blog/bun-sh/",
       ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Bun/bun-all-in-one-toolkit.webp",
+      imageAlt: "Bun のオールインワン機能概念図",
     },
     {
       heading: "2. インストールと基本コマンド",
@@ -627,6 +633,8 @@ fallbackBlogPosts.push({
         "Windows は 2025年時点で WSL 推奨（ネイティブ対応は進行中）。",
         "参考（インストール速度比較ベンチマーク）：JavaScript in Plain English — https://javascript.plainenglish.io/npm-yarn-pnpm-bun-install-real-app-benchmarking-72c475498024",
       ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Bun/bun-install-speed-benchmark.webp",
+      imageAlt: "インストール速度ベンチマーク（比較図）",
       table: {
         headers: ["コマンド", "説明"],
         rows: [
@@ -650,12 +658,32 @@ fallbackBlogPosts.push({
         "例： bun add react ／ bun remove axios",
         "参考（パッケージマネージャ比較）：JavaScript in Plain English — https://javascript.plainenglish.io/npm-vs-pnpm-vs-yarn-vs-bun-javascript-package-manegers-a90b388fbd75",
       ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Bun/bun-package-manager-speed-comparison.webp",
+      imageAlt: "パッケージマネージャの速度比較（npm / yarn / pnpm / bun）",
     },
     {
       heading: "パフォーマンス比較（参考）",
       body: [
         "Node.js/Deno/Bun の比較解説：Snyk — https://snyk.io/blog/javascript-runtime-compare-node-deno-bun/",
       ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Bun/bun-vs-nodejs-performance-benchmark.webp",
+      imageAlt: "Bun vs Node.js パフォーマンス比較図",
+    },
+    {
+      heading: "ランタイム比較（Node.js / Deno / Bun）",
+      body: [
+        "各ランタイムの特徴とユースケース比較（参考リンクは上記Snyk記事を参照）。",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Bun/bun-nodejs-deno-comparison.webp",
+      imageAlt: "Node.js / Deno / Bun の比較図",
+    },
+    {
+      heading: "JavaScriptCore エンジン構成（参考）",
+      body: [
+        "Bun が採用する JavaScriptCore のアーキテクチャ概念図（参考）。",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Bun/javascriptcore-engine-architecture.svg",
+      imageAlt: "JavaScriptCore エンジンのアーキテクチャ図",
     },
     {
       heading: "4. バンドラ機能",

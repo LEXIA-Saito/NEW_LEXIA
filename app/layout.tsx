@@ -96,6 +96,8 @@ export default function RootLayout({
   return (
     <html lang="ja" className="scroll-smooth">
       <head>
+        <link rel="preconnect" href="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preload" as="style" href="/deferred.css" />
         <link
           rel="stylesheet"
