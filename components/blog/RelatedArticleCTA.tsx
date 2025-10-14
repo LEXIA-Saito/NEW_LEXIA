@@ -43,7 +43,7 @@ export default function RelatedArticleCTA({
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                    
+
                     {/* 関連記事バッジ */}
                     <div className="absolute top-3 left-3">
                         <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-white/90 text-neutral-800 rounded-full backdrop-blur-sm">
