@@ -1,4 +1,5 @@
 import { fetchBlogPosts } from "./blog-posts"
+import { withComputedReadingTime } from "./reading-time"
 import type { BlogPost } from "./blog-posts.types"
 
 /**
@@ -51,8 +52,12 @@ export async function getRelatedArticles(
  * @param slug 取得したい記事のスラッグ
  * @returns 記事データまたはnull
  */
-export function getSpecificArticle(slug: string): BlogPost | null {
-  // fallbackBlogPostsから直接取得（同期処理）
+export function getSpecificArticle(slug: string): (BlogPost & { readingTime: string }) | null {
   const { fallbackBlogPosts } = require("./blog-posts-fallback")
-  return fallbackBlogPosts.find((post: BlogPost) => post.slug === slug) || null
+  const post = fallbackBlogPosts.find((post: BlogPost) => post.slug === slug)
+  
+  if (!post) return null
+  
+  // 読了時間を計算して返す
+  return withComputedReadingTime(post)
 }

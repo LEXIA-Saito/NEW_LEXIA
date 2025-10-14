@@ -32,7 +32,7 @@ export default function RelatedArticleSection({
           </p>
         )}
       </div>
-      
+
       <RelatedArticleCTA
         slug={article.slug}
         title={article.title}

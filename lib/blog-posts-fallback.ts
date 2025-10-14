@@ -8,7 +8,6 @@ export const fallbackBlogPosts: BlogPost[] = [
     genre: "tech",
     tags: ["Infisical", "セキュリティ", "オープンソース"],
     date: "2025-10-09",
-    readingTime: "5分", // Placeholder, will be recalculated
     heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/cover.webp",
     heroImageAlt: "Infisical のロゴとダッシュボードイメージ",
     sections: [
@@ -67,7 +66,6 @@ export const fallbackBlogPosts: BlogPost[] = [
   genre: "trends",
     tags: ["Studio", "ノーコード", "AI"],
     date: "2025-10-08",
-    readingTime: "6分",
     heroImage:
       "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/studio-ai-status-2025/STUDIO%20AI%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E7%94%BB%E5%83%8F.webp",
     heroImageAlt: "Studio / STUDIO AI に関する公式ビジュアル",
@@ -158,7 +156,6 @@ export const fallbackBlogPosts: BlogPost[] = [
     genre: "tech",
     tags: ["Onlook", "React", "Tailwind"],
     date: "2025-10-06",
-    readingTime: "8分",
     heroImage:
       "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-hero-cursor-for-designers.avif",
     heroImageAlt: "Onlook のメインビジュアル（デザイン編集 UI）",
@@ -289,7 +286,6 @@ export const fallbackBlogPosts: BlogPost[] = [
     genre: "tech",
     tags: ["Stremio", "stremio-web", "ストリーミング", "オープンソース", "セキュリティ"],
     date: "2025-10-08",
-  readingTime: "約10分",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/article-super.webp",
   heroImageAlt: "Stremio に関する記事のメインビジュアル",
     sections: [
@@ -468,7 +464,6 @@ fallbackBlogPosts.push({
   genre: "tech",
   tags: ["Stagehand", "Playwright", "自動化", "AI"],
   date: "2025-10-10",
-  readingTime: "5分",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stagehand/browserbase-stagehand-illustration.webp",
   heroImageAlt: "Stagehand（ブラウザ自動化とAIの統合）を表す概念図",
   sections: [
@@ -583,7 +578,6 @@ fallbackBlogPosts.push({
   genre: "tech",
   tags: ["Firebase", "AI", "開発環境"],
   date: "2025-10-14",
-  readingTime: "7分",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-logo-hero-banner.webp",
   heroImageAlt: "Firebase Studioロゴとブランディング",
   sections: [
@@ -729,7 +723,6 @@ fallbackBlogPosts.push({
   genre: "tech",
   tags: ["Firebase", "AI", "開発環境", "チュートリアル"],
   date: "2025-10-14",
-  readingTime: "10分",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-getting-started-tutorial-hero.webp",
   heroImageAlt: "Firebase Studio始め方チュートリアル - ワークスペース作成からデプロイまでの完全ガイド",
   sections: [
@@ -921,7 +914,6 @@ fallbackBlogPosts.push({
   genre: "tech",
   tags: ["Bun", "JavaScript", "ランタイム"],
   date: "2025-10-14",
-  readingTime: "8分",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Bun/bun-1-0-official-announcement.webp",
   heroImageAlt: "Bun 1.0 公式アナウンスのビジュアル",
   sections: [
@@ -1100,7 +1092,6 @@ fallbackBlogPosts.push({
   genre: "tech",
   tags: ["AI", "MCP", "RAG"],
   date: "2025-10-14",
-  readingTime: "8分",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lobe-chat/lobe-chat-overview-hero.webp",
   heroImageAlt: "Lobe Chat のメインビジュアル（公式提供画像）",
   sections: [
@@ -1280,7 +1271,6 @@ fallbackBlogPosts.push({
   genre: "tech",
   tags: ["XYFlow", "React Flow", "グラフ", "ノードエディタ"],
   date: "2025-10-11",
-  readingTime: "6分",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/xyflow/xyflow-playground-screenshot.webp",
   heroImageAlt: "XYFlow Playground のスクリーンショット",
   sections: [
@@ -1396,7 +1386,6 @@ fallbackBlogPosts.push({
   genre: "tech",
   tags: ["AI", "VectorDB", "Rust", "Python", "Database"],
   date: "2025-10-14",
-  readingTime: "7分",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/LanceDB/vector-db-architecture.webp",
   heroImageAlt: "ベクトルデータベースのアーキテクチャ概念図",
   sections: [

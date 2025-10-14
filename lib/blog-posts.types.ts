@@ -19,7 +19,7 @@ export type BlogPost = {
   genre: BlogGenre
   tags: string[]
   date: string
-  readingTime: string
+  readingTime?: string // オプショナルに変更（計算時に自動設定）
   heroImage?: string
   heroImageAlt?: string
   sections?: BlogPostSection[]
