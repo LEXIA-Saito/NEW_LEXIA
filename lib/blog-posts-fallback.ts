@@ -574,6 +574,184 @@ fallbackBlogPosts.push({
   ],
 })
 
+// Append Lobe Chat post to the fallback posts array
+fallbackBlogPosts.push({
+  slug: "lobe-chat-overview",
+  title: "Lobe Chat完全ガイド：複数AI・ナレッジベース・MCPで“自社エージェント”を構築する方法",
+  description:
+    "GitHubトレンド上位のLobe Chatを検証。OpenAI / Claude / Gemini / DeepSeek / Ollama対応、ナレッジベース・Artifacts・MCPプラグイン・セルフホスト手順を公式情報をもとに整理。",
+  genre: "tech",
+  tags: ["AI", "MCP", "RAG"],
+  date: "2025-10-14",
+  readingTime: "8分",
+  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lobe-chat/lobe-chat-overview-hero.webp",
+  heroImageAlt: "Lobe Chat のメインビジュアル（公式提供画像）",
+  sections: [
+    {
+      heading: "この記事でわかること",
+      list: [
+        "Lobe Chatとは何か",
+        "主な特徴・機能・技術構成",
+        "MCPプラグイン・Artifacts・ナレッジベースの実装概要",
+        "セルフホスト（Vercel／Docker）構成の基本",
+        "今後の開発動向とビジネス活用の方向性",
+      ],
+      body: [
+        "本記事はGoogleアドセンス審査を考慮し、一次情報（公式GitHubリポジトリ・公式ドキュメント）をもとに構成しています。",
+        "出典： https://github.com/lobehub/lobe-chat",
+      ],
+    },
+    {
+      heading: "Lobe Chatとは",
+      body: [
+        "Lobe Chat は、複数のAIモデルを切り替えて利用できるオープンソースのチャットアプリケーションフレームワークです。開発は LobeHub チームによって行われており、Next.js と TypeScript で構築されています。",
+        "公式READMEの説明： An open-source, extensible AI chat framework supporting OpenAI, Claude, Gemini, DeepSeek, Ollama, and more.",
+        "複数プロバイダ対応・セルフホスト可能・拡張性重視が大きな特徴で、UIはチャット形式で直感的に操作できます。",
+      ],
+    },
+    {
+      heading: "1. 複数AIプロバイダに対応（マルチLLM）",
+      body: [
+        "2025年10月時点の標準サポート例：OpenAI（GPT-4/4o）、Claude 4、Gemini、DeepSeek、Ollama（ローカルLLM）、Qwen など。",
+        "環境変数として各APIキーを設定するだけで利用可能（例）：",
+        "OPENAI_API_KEY=sk-xxxx",
+        "ANTHROPIC_API_KEY=sk-xxxx",
+        "GEMINI_API_KEY=sk-xxxx",
+        "用途別に複数モデルの比較検証や切り替えが容易です。",
+      ],
+    },
+    {
+      heading: "2. MCP（Model Context Protocol）による拡張性",
+      body: [
+        "MCPはAIモデルが外部リソースへ安全にアクセスするための拡張プロトコルで、Lobe Chatはこれに対応しています。",
+        "MCPマーケットプレイスからのワンクリック導入に関する記載が公式READMEにあります。",
+        "プラグインにより機能拡張（自作含む）が可能で、データベース／外部API連携などの拡張余地があります。",
+        "注：現時点で特定SaaS（例：Google Drive／Notion）との公式統合が標準提供と断定できる明記はなく、MCPにより拡張可能な設計として理解するのが正確です。",
+      ],
+    },
+    {
+      heading: "3. Artifacts（生成成果物）の保存と再利用",
+      body: [
+        "AIが生成したコード・文章・画像をArtifactsとして保存・一覧化し、チャット中に作成した成果物を右サイドで管理できます。",
+        "コードや文書を再利用しやすいUIで、作業履歴を『生成物』として資産化できます。",
+        "詳細： https://lobehub.com/docs/usage/features/artifacts",
+        "出典（画像）：LobeHub Changelog - Major Update: LobeChat Enters the Era of Artifacts ／ 公式サイト https://lobehub.com/",
+        "著作権：LobeHub 公式提供画像",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lobe-chat/lobe-chat-artifacts-feature.webp",
+      imageAlt: "Lobe Chat の Artifacts 機能イメージ（公式提供）",
+    },
+    {
+      heading: "4. ナレッジベースとRAG対応",
+      body: [
+        "出典（図解）：Qdrant - What is RAG in AI: Understanding Retrieval-Augmented Generation",
+        "ライセンス：教育目的での引用（要出典明記） — https://qdrant.tech/articles_data/what-is-rag-in-ai/how-rag-works.jpg",
+      ],
+      list: [
+        "PDF／Markdown／TXTなどのドキュメントをアップロードしてRAGで参照",
+        "アップロードした独自データに基づくQA",
+        "ベクトル検索で文脈把握し、自社マニュアルやFAQに強いエージェントを構築",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lobe-chat/lobe-chat-rag-knowledge-base.webp",
+      imageAlt: "RAG（Retrieval-Augmented Generation）の仕組み概念図（Qdrant 提供）",
+    },
+    {
+      heading: "5. セルフホスト構成（Docker／Vercel対応）",
+      body: [
+        "Lobe Chatはセルフホストでも稼働します。公式READMEではVercelとDockerの両対応が記載されています。",
+        "Vercelでのデプロイ例（概念）：",
+        "git clone https://github.com/lobehub/lobe-chat",
+        "cd lobe-chat",
+        "vercel deploy",
+        "Dockerでの実行例（概念）：",
+        "docker pull lobehub/lobe-chat:latest",
+        "docker run -d -p 3000:3000 -e OPENAI_API_KEY=sk-xxxx lobehub/lobe-chat:latest",
+        "起動後は http://localhost:3000 にアクセス。Next.js製のUIが表示されます。",
+        "※環境変数仕様はリリースによって変わる可能性があります。最新のSelf-Hostingガイド： https://lobehub.com/docs/deployment/self-hosting",
+      ],
+    },
+    {
+      heading: "技術構成",
+      table: {
+        headers: ["カテゴリ", "使用技術"],
+        rows: [
+          ["フロントエンド", "Next.js / React / Tailwind CSS"],
+          ["バックエンド", "Node.js / TypeScript"],
+          ["認証", "OAuth2 / APIキー"],
+          ["データベース", "Supabase（β版サポート）"],
+          ["デプロイ", "Vercel / Docker"],
+          ["AIモデル連携", "OpenAI / Claude / Gemini / DeepSeek / Ollama / Qwen"],
+          ["拡張", "MCPプラグイン / RAG検索 / Artifacts保存"],
+        ],
+      },
+    },
+    {
+      heading: "今後の開発動向（2025年10月時点）",
+      body: [
+        "公式のReleasesによると、v1.135.2（2025年10月6日リリース）が最新です。",
+      ],
+      list: [
+        "MCP Marketplaceの拡張",
+        "Realtime APIによる音声入力・ストリーミング応答",
+        "チーム共有／マルチユーザー対応",
+        "ナレッジベースUIの改良",
+      ],
+    },
+    {
+      heading: "Lobe Chatのビジネス活用：ユースケース",
+      list: [
+        "社内ドキュメント検索AI",
+        "顧客サポート用チャットボット",
+        "AIライティング補助・レビュー",
+        "コードレビュー支援",
+        "RAG × プロジェクトナレッジ活用",
+      ],
+    },
+    {
+      heading: "LEXIA的観点からの応用",
+      list: [
+        "Supabase連携で『プロジェクト情報 × 会話UI』",
+        "MCPで社内DBや外部APIに安全アクセス（自作プラグイン）",
+        "Artifactsで制作物を再利用・検証可能に",
+      ],
+    },
+    {
+      heading: "関連動画（YouTube）",
+      body: [
+        "LobeChat: Free Open Source LLM Platform — https://www.youtube.com/watch?v=2bjkx3QFOQo",
+        "出典：YouTube（標準ライセンス）／ チャンネル：LobeChat公式またはコミュニティ",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lobe-chat/lobe-chat-youtube-thumbnail.webp",
+      imageAlt: "YouTube サムネイル：LobeChat: Free Open Source LLM Platform",
+    },
+    {
+      heading: "まとめ",
+      list: [
+        "複数AIモデル統合（OpenAI／Claude／Gemini等）",
+        "MCPによるプラグイン拡張性",
+        "ナレッジベース × RAG対応",
+        "セルフホスト・プライベート運用対応",
+      ],
+      body: [
+        "オープンソースの自由度と実運用性を両立しており、“自社AIエージェント構築基盤”として検討する価値があります。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "公式サイト",
+        "https://lobehub.com/",
+        "公式リポジトリ",
+        "https://github.com/lobehub/lobe-chat",
+        "公式ドキュメント",
+        "https://lobehub.com/docs",
+        "最新リリース",
+        "https://github.com/lobehub/lobe-chat/releases",
+      ],
+    },
+  ],
+})
+
 
 // Append XYFlow post to the fallback posts array
 fallbackBlogPosts.push({
