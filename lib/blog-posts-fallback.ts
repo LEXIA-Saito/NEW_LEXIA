@@ -593,6 +593,7 @@ fallbackBlogPosts.push({
         "AIがコードを書く時代、Googleの答えは『Firebase Studio』だった。",
         "2025年、Googleは『Project IDX』を進化させた新たな開発環境 Firebase Studio を発表しました。クラウド上でアプリを構築し、AIがリアルタイムでサポートする——まさに次世代の開発体験です。",
         "この記事では、Firebase Studioの概要から特徴、使い方、注意点、そして今後の展望までを、一次情報（公式ドキュメント・Google開発者ブログ）に基づいて詳しく解説します。これからFirebase Studioを試したい開発者や、AI時代の新しいIDEを探している方に最適な内容です。",
+        "画像提供（ヘッダー）: Google Firebase Studio ／ 引用元: https://firebase.studio/",
       ],
     },
     {
@@ -601,7 +602,7 @@ fallbackBlogPosts.push({
         "Firebase StudioはGoogleが開発したクラウドベースのAI対応開発環境です。ブラウザ上でアプリを構築・テスト・デプロイでき、FirebaseサービスやGemini AIとシームレスに連携します。",
         "公式には“agentic cloud-based development environment”として紹介され、フロントエンド/バックエンド/モバイルを横断する開発を1つのワークスペースで完結できるよう設計されています。",
         "なお現時点ではPreview（プレビュー）提供で、SLA保証はなく、将来的に後方互換性を壊す変更の可能性が明記されています。",
-        "画像提供: Google Firebase Studio ／ 引用元: Firebase Studio 公式サイト",
+        "画像提供: Google Firebase Studio ／ 引用元: https://firebase.studio/",
       ],
       image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/google-firebase-studio-website-1024x572.webp",
       imageAlt: "Firebase Studio 公式サイトのスクリーンショット",
@@ -617,7 +618,7 @@ fallbackBlogPosts.push({
     {
       heading: "Firebase Studioの主な機能とできること【AI×クラウド開発】",
       body: [
-        "画像提供: Google Firebase Studio ／ 引用元: Google Cloud Blog（詳細URLは本文末の参考を参照）",
+        "画像提供: Google Firebase Studio ／ 引用元: https://cloud.google.com/blog/products/application-development/firebase-studio-lets-you-build-full-stack-ai-apps-with-gemini",
       ],
       list: [
         "AIプロトタイピング（Gemini連携）：自然言語/画像からUI・API・データ構成を生成・修正",
@@ -635,7 +636,7 @@ fallbackBlogPosts.push({
     {
       heading: "Firebase Studioの使い方【始め方からデプロイまで】",
       body: [
-        "画像提供: Google Firebase Studio ／ 引用元: Firebase Studio 公式ドキュメント（詳細URLは本文末の参考を参照）",
+        "画像提供: Google Firebase Studio ／ 引用元: https://firebase.google.com/docs/studio",
       ],
       list: [
         "1) Googleアカウントでサインイン",
@@ -661,7 +662,7 @@ fallbackBlogPosts.push({
     {
       heading: "Firebase Studioの注意点・制限事項【知っておきたいリスク】",
       body: [
-        "画像提供: Google Firebase Studio ／ 引用元: Firebase Studio 公式ドキュメント（詳細URLは本文末の参考を参照）",
+        "画像提供: Google Firebase Studio ／ 引用元: https://firebase.google.com/docs/studio",
       ],
       list: [
         "プレビュー版ゆえの不安定さと仕様変更リスク（SLAなし）",
@@ -693,8 +694,12 @@ fallbackBlogPosts.push({
     {
       heading: "参考",
       list: [
-        "Firebase Studio公式サイト",
-        "Google Developers Blog – Advancing agentic AI development with Firebase Studio",
+        "Firebase Studio 公式サイト",
+        "https://firebase.studio/",
+        "Firebase Studio 公式ドキュメント",
+        "https://firebase.google.com/docs/studio",
+        "Google Cloud Blog – Firebase Studio lets you build full-stack AI apps with Gemini",
+        "https://cloud.google.com/blog/products/application-development/firebase-studio-lets-you-build-full-stack-ai-apps-with-gemini",
         "Firebase Blog – Introducing Firebase Studio (2025年4月発表)",
       ],
     },
