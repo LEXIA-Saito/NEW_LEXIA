@@ -574,6 +574,135 @@ fallbackBlogPosts.push({
   ],
 })
 
+// Append Firebase Studio post to the fallback posts array
+fallbackBlogPosts.push({
+  slug: "firebase-studio-overview",
+  title: "Firebase Studio とは？Google が描く \"AI ネイティブ開発環境\" 解説",
+  description:
+    "Project IDX の進化系として登場した Firebase Studio の概要、主な機能、利点と制約、今後の展望を一次情報ベースで整理します。",
+  genre: "trends",
+  tags: ["Firebase Studio", "Firebase", "AI"],
+  date: "2025-10-14",
+  readingTime: "7分",
+  sections: [
+    {
+      heading: "はじめに",
+      body: [
+        "アプリ開発の世界は、AI の進化とともに急速に変わりつつあります。Google はその変化を見据え、\"Firebase Studio（ファイアベース スタジオ）\" という新しい開発環境を発表しています。",
+        "このサービスは、AI 支援を核としつつ、従来の Firebase 機能と統合したクラウド IDE を目指しています。本記事ではその全体像と実用面のポイントを解説します。",
+      ],
+    },
+    {
+      heading: "1. 概要：Firebase Studio とは何か",
+      body: [
+        "Firebase Studio は、Google が提供するクラウドベースの AI 搭載開発環境（IDE）です。ブラウザからアクセスでき、AI を活用した支援を受けながら、アプリの設計・コーディング・テスト・デプロイを行える統合ワークスペースを提供します。",
+        "公式には \"agentic cloud-based development environment\" として紹介され、バックエンド・フロントエンド・モバイル機能をひとつの環境で扱えるよう設計されています。",
+        "なお、現時点では Preview（プレビュー）版として提供され、SLA 保証はなく将来的に後方互換性を壊す変更が行われる可能性が明記されています。",
+      ],
+    },
+    {
+      heading: "2. 背景と変遷：Project IDX から Firebase Studio へ",
+      body: [
+        "Firebase Studio は、新規のサービスというよりは、既存プロジェクトである Project IDX を Firebase ブランドへ統合・進化させたものと位置づけられます。",
+        "Project IDX はブラウザ上で動く VS Code 系列のクラウド IDE を目指し、AI 支援や複数言語対応を打ち出していました。Firebase Studio では、これを Firebase のバックエンドサービスとの統合性を強め、AI エージェント機能を核とした開発体験へと昇華させています。",
+        "この統合により、Firebase の認証（Auth）・データベース（Firestore など）・ホスティング（Hosting）などと AI を介したプロトタイピング・支援が密に結びつく設計になっています。",
+      ],
+    },
+    {
+      heading: "3. 主な機能・特徴",
+      table: {
+        headers: ["機能", "内容", "補足"],
+        rows: [
+          [
+            "プロジェクトの取り込み / 作成",
+            "既存プロジェクトを GitHub/GitLab/Bitbucket 等からインポート、またはアーカイブからアップロード",
+            "プロトタイプ〜実運用まで柔軟に取り込める",
+          ],
+          [
+            "テンプレート／サンプル",
+            "Next.js, React, Angular, Vue, Go, Python Flask, Flutter など多数",
+            "\"ここから始める\" の選択肢が豊富",
+          ],
+          [
+            "AI プロトタイピング（Gemini）",
+            "自然言語や画像からアプリ構成・UI・API 設計を生成／修正するエージェント",
+            "Auth や DB 構成の初期セットアップ支援も対象",
+          ],
+          [
+            "AI コーディング支援",
+            "コード補完、バグ修正、テスト補助、依存管理などを Gemini で支援",
+            "常時アシスタントとして利用可能",
+          ],
+          [
+            "プレビュー / エミュレータ",
+            "Web 即時プレビュー、Flutter では Android エミュレータもブラウザ内で",
+            "ローカル不要の動作確認",
+          ],
+          [
+            "環境カスタマイズ（Nix）",
+            "Nix ベースで VM 環境を構築。システムパッケージや言語ツール、IDE 設定を宣言的に管理",
+            "再現性・移植性の高い開発環境",
+          ],
+          [
+            "Agent モード / Gemini CLI",
+            "Ask／Agent／Autonomous Agent のモード切替、Gemini CLI と統合",
+            "会話→部分実行→自律実行まで段階的に対応",
+          ],
+          [
+            "MCP（Model Context Protocol）",
+            "ワークスペースに MCP サーバーを追加し文脈理解を拡張",
+            "デバッグやデータ操作を自然言語で",
+          ],
+          [
+            "Firebase 連携・デプロイ",
+            "Firebase Hosting へデプロイ。Auth/Firestore などと深く統合",
+            "\"Firebase ならでは\" の親和性",
+          ],
+        ],
+      },
+    },
+    {
+      heading: "4. 利点・魅力",
+      list: [
+        "環境構築の負荷が小さく、ブラウザですぐ開始",
+        "自然言語での操作・設計により初期試作が速い",
+        "豊富なテンプレートでスピード起動",
+        "Nix による高度な環境再現性・移植性",
+        "Ask/Agent/自律モードの柔軟な AI 利用",
+        "Firebase サービス（Auth/Firestore/Hosting 等）との緊密な統合",
+      ],
+    },
+    {
+      heading: "5. 制約・注意すべき点",
+      list: [
+        "プレビュー版ゆえに仕様変更・後方互換性リスクがある",
+        "AI 生成コードはレビュー/テスト前提での活用が必要",
+        "無料枠は 3 ワークスペースまで（プレビュー時点の制限）",
+        "統合する Firebase 各サービスの従量課金・クォータ超過には注意",
+        "クラウド依存・ロックインの可能性を理解して設計する",
+        "大規模・複雑構成での安定性/性能の実績は発展途上",
+      ],
+    },
+    {
+      heading: "6. 今後の動向・注目ポイント",
+      list: [
+        "Gemini 2.5 / Gemma など最新モデル対応の加速",
+        "App Prototyping agent の画像生成・UI 強化（Unsplash 連携等）",
+        "モバイルでのプロトタイピング強化（UI 最適化）",
+        "自律エージェント強化と MCP 連携拡張で文脈理解を向上",
+        "ワークスペース拡張や商用プランの多様化",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "Firebase Studio は、Firebase のサービスと Gemini を一体化し、クラウド IDE 型でアプリ開発を支援する新しい環境です。既存の Project IDX を進化させつつ、AI を中心に据えた開発体験を目指しています。",
+        "プレビュー段階の特性（仕様変更・制限）を理解したうえで、試作・学習・新規プロジェクトの検証環境として活用する価値があります。",
+      ],
+    },
+  ],
+})
+
 // Append Bun post to the fallback posts array
 fallbackBlogPosts.push({
   slug: "bun-js-runtime",
