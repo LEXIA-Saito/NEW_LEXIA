@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import RelatedArticleSection from "./blog/RelatedArticleSection"
 
 type Props = {
   text: string
@@ -36,6 +37,15 @@ function linkifyOnlook(text: string, linkClassName?: string): React.ReactNode[] 
 }
 
 export default function LinkifyText({ text, linkClassName }: Props) {
+  // 関連記事プレースホルダーをチェック
+  const relatedArticleRegex = /\{\{RELATED_ARTICLE:([^}]+)\}\}/g
+  const relatedArticleMatch = text.match(relatedArticleRegex)
+  
+  if (relatedArticleMatch) {
+    const slug = relatedArticleMatch[0].replace(/\{\{RELATED_ARTICLE:([^}]+)\}\}/, '$1')
+    return <RelatedArticleSection targetSlug={slug} />
+  }
+
   const urlRegex = /https?:\/\/[^\s)]+/g
   const nodes: React.ReactNode[] = []
   let lastIndex = 0

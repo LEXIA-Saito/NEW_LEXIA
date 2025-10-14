@@ -651,8 +651,7 @@ fallbackBlogPosts.push({
         "",
         "これらの手順を実際に体験してみたい方は、以下の記事で詳しく解説しています👇",
         "",
-        "➡️ Firebase Studioの始め方｜登録からAIプロトタイプ作成・デプロイまで完全ガイド",
-        "https://lexia-hp.com/blog/firebase-studio-getting-started-lexia",
+        "{{RELATED_ARTICLE:firebase-studio-getting-started-lexia}}",
         "",
         "この記事では、Googleアカウントでのアクセス手順、ワークスペース作成とテンプレート設定、Geminiによる自動コード生成と補助操作、Firebaseサービス連携・デプロイの実例をステップごとにわかりやすくまとめています。",
         "",
@@ -731,6 +730,8 @@ fallbackBlogPosts.push({
   tags: ["Firebase", "AI", "開発環境", "チュートリアル"],
   date: "2025-10-14",
   readingTime: "10分",
+  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-getting-started-tutorial-hero.webp",
+  heroImageAlt: "Firebase Studio始め方チュートリアル - ワークスペース作成からデプロイまでの完全ガイド",
   sections: [
     {
       body: [
