@@ -690,3 +690,122 @@ fallbackBlogPosts.push({
     },
   ],
 })
+
+// Append LanceDB post to the fallback posts array
+fallbackBlogPosts.push({
+  slug: "lancedb-vector-search-guide",
+  title: "LanceDBとは？Rust製の高速ベクトルデータベースを徹底検証【Python/AI検索時代の新選択肢】",
+  description:
+    "オープンソースのベクトルデータベース「LanceDB」を解説。Python・JavaScript対応、マルチモーダル検索、ハイブリッドクエリなど、公式情報と実証例をもとに特徴と活用方法を整理します。",
+  genre: "tech",
+  tags: ["AI", "VectorDB", "Rust", "Python", "Database"],
+  date: "2025-10-14",
+  readingTime: "7分",
+  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/LanceDB/vector-db-architecture.webp",
+  heroImageAlt: "ベクトルデータベースのアーキテクチャ概念図",
+  sections: [
+    {
+      heading: "この記事でわかること",
+      list: [
+        "LanceDBの基本構造と特徴",
+        "Pythonからの導入・検索実行方法",
+        "他のベクトルDB（Milvus・Weaviate・Pinecone等）との比較",
+        "実運用上の注意点と現状の制約",
+        "今後の開発ロードマップと展望",
+      ],
+      body: [
+        "本記事はGoogleアドセンス審査に準じ、LanceDB公式ドキュメント・GitHub README・ベンチマークリポジトリ（prrao87/lancedb-study）を参照した一次情報ベースの内容です。",
+      ],
+    },
+    {
+      heading: "1. LanceDBとは？",
+      body: [
+        "LanceDB は、Rustで実装されたオープンソースのベクトルデータベースで、テキスト・画像・動画・ポイントクラウドなどのマルチモーダルデータを効率的に扱うことを目的としています。",
+        "特徴的なのは『軽量・ローカル実行可能・Python/JS対応』という設計思想。クラウド依存を避け、AI検索や類似度計算を自前で実装したい開発者層に人気を集めています。",
+        "出典（GitHub README）：https://github.com/lancedb/lancedb",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/LanceDB/lancedb-logo.webp",
+      imageAlt: "LanceDB ロゴ",
+    },
+    {
+      heading: "2. 主な機能と設計上の特徴",
+      table: {
+        headers: ["機能", "説明"],
+        rows: [
+          ["ベクトル検索", "L2距離・コサイン類似度・内積・ハミング距離などの距離尺度をサポート"],
+          ["ハイブリッド検索", "ベクトル検索とSQL/全文検索(FTS)を組み合わせ可能"],
+          ["自動バージョン管理", "データセットの更新履歴を自動で保持"],
+          ["Python / TypeScript SDK", "それぞれ公式ドキュメントでサンプルコードを提供"],
+          ["GPUインデックス構築（試験的）", "一部の構成でGPUを用いたインデックス最適化をサポート（実装範囲は限定的）"],
+        ],
+      },
+      body: [
+        "🔍 アーキテクチャの特徴",
+      ],
+      list: [
+        "Rust製コア：高速かつメモリ効率の良い設計",
+        "Lanceフォーマット：列指向・バージョン管理可能なLanceファイルとして永続化",
+        "ゼロコピー設計：可能な範囲でメモリコピーを削減",
+        "ローカル運用対応：クラウド接続不要、Docker不要で手軽に開始可能",
+      ],
+    },
+    {
+      heading: "埋め込みの可視化（Embedding Visualization）",
+      body: [
+        "ベクトル検索の直感を掴むために、埋め込み空間を可視化すると近傍の関係性が把握しやすくなります。",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/LanceDB/embedding-visualization.webp",
+      imageAlt: "埋め込み空間の可視化イメージ",
+    },
+    {
+      heading: "3. 競合ベクトルデータベースとの比較",
+      table: {
+        headers: ["プロジェクト", "強み", "弱み", "主な用途"],
+        rows: [
+          ["LanceDB", "軽量・ローカル実行・Python統合性", "分散構成未対応・成熟度発展途上", "小〜中規模のAI検索・PoC"],
+          ["Milvus", "クラスタ対応・豊富なAPI", "初期設定が重い", "大規模システム"],
+          ["Weaviate", "クラウド対応・ハイブリッド検索", "無料枠制限あり", "AI SaaS構築"],
+          ["Pinecone", "SaaS型で導入容易", "完全クラウド依存", "MVP開発・スピード重視"],
+        ],
+      },
+      body: [
+        "補足：LanceDBは『スケーラブル』という表現を用いていますが、現時点でクラスタ分散機能は公式に実装されていません（2025年10月時点）。",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/LanceDB/vector-db-comparison.webp",
+      imageAlt: "ベクトルデータベースの比較チャート",
+    },
+    {
+      heading: "参考：ベクトル構造（Qdrantの例）",
+      body: [
+        "ベクトルDBの内部構造を理解する補助として、Qdrantのベクトル構造イメージを参考に掲載します。",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/LanceDB/qdrant-vector-structure.webp",
+      imageAlt: "Qdrant におけるベクトル構造の概念図",
+    },
+    {
+      heading: "4. Pythonでの基本的な使い方",
+      body: [
+        "公式クイックスタート（LanceDB Docs）を基にした最小サンプルです： https://lancedb.com/docs/quickstart/basic-usage/",
+        "```python",
+        "import lancedb",
+        "import numpy as np",
+        "",
+        "# データベースを作成",
+        "db = lancedb.connect(\"./example_lancedb\")",
+        "",
+        "# データセットを作成",
+        "table = db.create_table(\"embeddings\", data=[",
+        "  {\"id\": 1, \"vector\": np.random.rand(128).tolist(), \"label\": \"cat\"},",
+        "  {\"id\": 2, \"vector\": np.random.rand(128).tolist(), \"label\": \"dog\"}",
+        "])",
+        "",
+        "# クエリ実行",
+        "results = table.search(np.random.rand(128).tolist()).limit(3).to_df()",
+        "print(results)",
+        "```",
+      ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/LanceDB/rust-python-integration.webp",
+      imageAlt: "Rust コアと Python 統合の概念図",
+    },
+  ],
+})
