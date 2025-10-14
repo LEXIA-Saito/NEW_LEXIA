@@ -597,7 +597,7 @@ fallbackBlogPosts.push({
         "今後の開発動向とビジネス活用の方向性",
       ],
       body: [
-        "本記事はGoogleアドセンス審査を考慮し、一次情報（公式GitHubリポジトリ・公式ドキュメント）をもとに構成しています。",
+        "本記事は一次情報（公式GitHubリポジトリ・公式ドキュメント）をもとに構成しています。",
         "出典： https://github.com/lobehub/lobe-chat",
       ],
     },
