@@ -66,7 +66,7 @@ Sanity Studioが `http://localhost:3333` で起動します。
 - **Inline Image URL**: セクション内の画像URL
 - **Image Alt Text**: 画像の代替テキスト
 - **List Items**: リスト項目（配列）
-- **Table**: テーブルデータ（ヘッダーと行の配列）
+- **Table**: テーブルデータ（ヘッダーと行のオブジェクト配列）
 
 ## データの統合
 
