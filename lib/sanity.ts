@@ -21,7 +21,7 @@ export type SanityBlogSection = {
   list?: string[]
   table?: {
     headers: string[]
-    rows: string[][]
+    rows: Array<{ cells: string[] }>
   }
 }
 

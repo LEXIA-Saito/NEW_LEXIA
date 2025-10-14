@@ -124,8 +124,28 @@ export default defineConfig({
                       type: 'array', 
                       title: 'Table Rows',
                       of: [{ 
-                        type: 'array', 
-                        of: [{ type: 'string' }] 
+                        type: 'object',
+                        name: 'tableRow',
+                        title: 'Table Row',
+                        fields: [
+                          {
+                            name: 'cells',
+                            type: 'array',
+                            title: 'Row Cells',
+                            of: [{ type: 'string' }]
+                          }
+                        ],
+                        preview: {
+                          select: {
+                            cells: 'cells'
+                          },
+                          prepare(selection) {
+                            const { cells } = selection
+                            return {
+                              title: cells ? cells.join(' | ') : 'Empty row'
+                            }
+                          }
+                        }
                       }] 
                     }
                   ] 

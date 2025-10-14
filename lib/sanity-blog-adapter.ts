@@ -6,13 +6,22 @@ import { withComputedReadingTime } from "./reading-time"
  * SanityBlogSectionをBlogPostSectionに変換
  */
 function convertSanitySection(sanitySection: SanityBlogSection): BlogPostSection {
+  // テーブルデータの変換
+  let convertedTable = undefined
+  if (sanitySection.table) {
+    convertedTable = {
+      headers: sanitySection.table.headers,
+      rows: sanitySection.table.rows.map(row => row.cells)
+    }
+  }
+
   return {
     heading: sanitySection.heading,
     body: sanitySection.body,
     image: sanitySection.image,
     imageAlt: sanitySection.imageAlt,
     list: sanitySection.list,
-    table: sanitySection.table,
+    table: convertedTable,
   }
 }
 
