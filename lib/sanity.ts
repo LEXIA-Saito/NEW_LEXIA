@@ -19,10 +19,7 @@ export type SanityBlogSection = {
   image?: string
   imageAlt?: string
   list?: string[]
-  table?: {
-    headers: string[]
-    rows: Array<{ cells: string[] }>
-  }
+  tableData?: string // JSON string containing table data
 }
 
 export type SanityBlogPost = {

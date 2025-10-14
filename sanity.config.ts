@@ -109,46 +109,10 @@ export default defineConfig({
                   of: [{ type: 'string' }] 
                 },
                 { 
-                  name: 'table', 
-                  type: 'object', 
-                  title: 'Table', 
-                  fields: [
-                    { 
-                      name: 'headers', 
-                      type: 'array', 
-                      title: 'Table Headers',
-                      of: [{ type: 'string' }] 
-                    },
-                    { 
-                      name: 'rows', 
-                      type: 'array', 
-                      title: 'Table Rows',
-                      of: [{ 
-                        type: 'object',
-                        name: 'tableRow',
-                        title: 'Table Row',
-                        fields: [
-                          {
-                            name: 'cells',
-                            type: 'array',
-                            title: 'Row Cells',
-                            of: [{ type: 'string' }]
-                          }
-                        ],
-                        preview: {
-                          select: {
-                            cells: 'cells'
-                          },
-                          prepare(selection) {
-                            const { cells } = selection
-                            return {
-                              title: cells ? cells.join(' | ') : 'Empty row'
-                            }
-                          }
-                        }
-                      }] 
-                    }
-                  ] 
+                  name: 'tableData', 
+                  type: 'text', 
+                  title: 'Table Data (JSON format)',
+                  description: 'Enter table data as JSON: {"headers": ["Col1", "Col2"], "rows": [["Row1Col1", "Row1Col2"], ["Row2Col1", "Row2Col2"]]}'
                 }
               ],
               preview: {

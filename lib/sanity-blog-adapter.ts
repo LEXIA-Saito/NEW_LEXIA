@@ -6,12 +6,19 @@ import { withComputedReadingTime } from "./reading-time"
  * SanityBlogSectionをBlogPostSectionに変換
  */
 function convertSanitySection(sanitySection: SanityBlogSection): BlogPostSection {
-  // テーブルデータの変換
+  // テーブルデータの変換（JSON文字列から解析）
   let convertedTable = undefined
-  if (sanitySection.table) {
-    convertedTable = {
-      headers: sanitySection.table.headers,
-      rows: sanitySection.table.rows.map(row => row.cells)
+  if (sanitySection.tableData) {
+    try {
+      const parsedTable = JSON.parse(sanitySection.tableData)
+      if (parsedTable.headers && parsedTable.rows) {
+        convertedTable = {
+          headers: parsedTable.headers,
+          rows: parsedTable.rows
+        }
+      }
+    } catch (error) {
+      console.warn('Failed to parse table data:', error)
     }
   }
 
