@@ -988,3 +988,85 @@ fallbackBlogPosts.push({
     },
   ],
 })
+
+fallbackBlogPosts.push({
+  slug: "bun-js-runtime",
+  title: "Bun高速ランタイム完全ガイド：高速JSランタイム・バンドラ・テストランナー・パッケージマネージャの特徴と使い方",
+  description: "GitHubトレンド上位のBunは、Zigで書かれた高速なJavaScriptランタイムであり、バンドラやテストランナー、パッケージマネージャを統合したオールインワンツールです。本記事ではBunの特徴、実装手順、Node.jsとの違い、実際の從用例を整理します。",
+  genre: "tech",
+  tags: ["Bun", "JavaScript", "ランタイム"],
+  date: "2025-10-14",
+  readingTime: "約8分",
+  heroImage: "https://raw.githubusercontent.com/oven-sh/bun/main/assets/logo.png",
+  heroImageAlt: "Bunのロゴ",
+  sections: [
+    {
+      heading: "この記事でわかること",
+      list: [
+        "Bunとは何か",
+        "主な特徴・機能",
+        "インストール方法と基本的な使い方",
+        "Node.jsやDenoとの違いとメリット",
+        "実際の開発從用例"
+      ],
+    },
+    {
+      heading: "Bunとは",
+      body: [
+        "BunはZig言語で実装された高速なJavaScript/TypeScriptランタイムであり、エンドツーエンドの開発体験を提供するためにバンドラ・テストランナー・パッケージマネージャを統合したオールインワンツールです。",
+        "公式READMEでは「all-in-one JavaScript runtime & toolkit」をうたい、Node.jsやDenoの代換として注目を集めています。"
+      ],
+    },
+    {
+      heading: "主な特徴",
+      list: [
+        "高速なJavaScriptランタイム：Zig製のJSエンジンにより、Node.jsより高速な起動と実行性能を実現【247894408310675†L457-L459】。",
+        "esbuild互換のバンドラ：TypeScript、TSX、JSX、CSSなどを索快くバンドル可能【247894408310675†L452-L456】。",
+        "Jest互換のテストランナー：`bun test`で単体テストが実行でき、Jestのインターフェースを部分的にサポート【247894408310675†L463-L466】。",
+        "npm互換のパッケージマネージャ：`bun install`で依存解決を高速に行い、pnpmやnpmとの互換性も高い【247894408310675†L463-L466】。"
+      ],
+    },
+    {
+      heading: "インストールと使い方",
+      body: [
+        "MacやLinuxでは公式インストーラを用いてインストールします。"
+      ],
+      list: [
+        "`curl https://bun.sh/install | bash`",
+        "Homebrewの場合: `brew install oven-sh/bun/bun`",
+        "bunスクリプト実行: `bun run app.ts`",
+        "bunパッケージ管理: `bun install`"
+      ],
+    },
+    {
+      heading: "Node.jsやDenoとの違い・実入メリット",
+      body: [
+        "Bunはランタイムだけでなく、バンドラ・テストランナー・パッケージマネージャを内藏したオールイン環境であり、当体のNode.js環境で必要だった複数ツールの実装を省けます。",
+        "Zigベースのエンジンによる高速起動と低メモリ消費はサーバーレス環境で特に有利です。",
+        "Denoと比較すると、Node.js互換性が高く、既存の npm ライブラリ資産がそのまま利用できる点がメリットです。"
+      ],
+    },
+    {
+      heading: "開発從用例",
+      list: [
+        "Bun + React: `bun create react` でBunを使ったReactアプリの隨微形生成。",
+        "Bun + Next.js: Next.jsアプリのランタイムとしてBunを使用し高速化。",
+        "CLIツール作成：高速起動を活かしたコマンドラインツールの開発。"
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "公式サイト: https://bun.sh/",
+        "GitHubリポジトリ: https://github.com/oven-sh/bun",
+        "GitHubトレンド: https://github.com/trending"
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "Bunは高速なJS/TSランタイムと統合ツールチェーンにより、開発体験を大幅に向上させます。特にサーバーレスやフルスタック開発においてコスト削減と生産性向上を期待できます。"
+      ],
+    },
+  ],
+});
