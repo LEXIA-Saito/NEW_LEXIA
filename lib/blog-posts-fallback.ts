@@ -701,6 +701,7 @@ fallbackBlogPosts.push({
         "Google Cloud Blog – Firebase Studio lets you build full-stack AI apps with Gemini",
         "https://cloud.google.com/blog/products/application-development/firebase-studio-lets-you-build-full-stack-ai-apps-with-gemini",
         "Firebase Blog – Introducing Firebase Studio (2025年4月発表)",
+        "https://firebase.blog/posts/2025/04/introducing-firebase-studio/",
       ],
     },
   ],
