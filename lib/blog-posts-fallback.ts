@@ -584,6 +584,8 @@ fallbackBlogPosts.push({
   tags: ["Firebase", "AI", "開発環境"],
   date: "2025-10-14",
   readingTime: "7分",
+  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-logo-hero-banner.webp",
+  heroImageAlt: "Firebase Studio ロゴのヒーローバナー",
   sections: [
     {
       // 導入（冒頭パート）
@@ -600,6 +602,8 @@ fallbackBlogPosts.push({
         "公式には“agentic cloud-based development environment”として紹介され、フロントエンド/バックエンド/モバイルを横断する開発を1つのワークスペースで完結できるよう設計されています。",
         "なお現時点ではPreview（プレビュー）提供で、SLA保証はなく、将来的に後方互換性を壊す変更の可能性が明記されています。",
       ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/google-firebase-studio-website-1024x572.webp",
+      imageAlt: "Firebase Studio 公式サイトのスクリーンショット",
     },
     {
       heading: "Project IDXからFirebase Studioへ【進化の背景】",
@@ -621,6 +625,8 @@ fallbackBlogPosts.push({
         "Gemini CLI / Agentモード：Ask→Agent→Autonomousのモード切替、ターミナル統合",
         "Firebase Hostingへのワンクリックデプロイ：Auth/Firestoreなどと深く統合",
       ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-ai-prototyping-interface.webp",
+      imageAlt: "Firebase Studio の AI プロトタイピング UI",
     },
     {
       heading: "Firebase Studioの使い方【始め方からデプロイまで】",
@@ -632,6 +638,8 @@ fallbackBlogPosts.push({
         "5) Webプレビュー/エミュレータで動作確認",
         "6) Firebase Hostingへデプロイ",
       ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-coding-interface-gemini-ai.webp",
+      imageAlt: "Firebase Studio の Gemini 連携によるコーディング支援画面",
     },
     {
       heading: "Firebase Studioのメリット【AIがもたらす新しい開発体験】",
@@ -652,6 +660,8 @@ fallbackBlogPosts.push({
         "Firebase依存による移行難易度（ロックイン可能性）",
         "大規模/複雑構成での実績・性能が未成熟",
       ],
+      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-firestore-rules-preview.webp",
+      imageAlt: "Firebase Studio の Firestore セキュリティルール プレビュー",
     },
     {
       heading: "今後のアップデートと展望【Gemini時代の開発環境へ】",
