@@ -1,8 +1,8 @@
 {
   "apiFields": [
     {
-      "fieldId": "headingsText",
-      "name": "目次の見出し（オプショナル）",
+      "fieldId": "headings",
+      "name": "目次（オプショナル）",
       "kind": "textArea",
       "required": false,
       "description": "目次をカスタマイズしたい場合のみ使用。改行区切りで見出しを入力。空の場合はcontentHtmlから自動抽出されます。"
@@ -54,10 +54,10 @@
       "height": 675
     },
     "contentHtml": "<h2>はじめに</h2><p>本文...</p><h2>詳細</h2><h3>実装例</h3><p>...</p>",
-    "headingsText": "はじめに\n詳細\n### 実装例"
+    "headings": "はじめに\n詳細\n### 実装例"
   },
   "notes": [
-    "headingsTextが空の場合、contentHtmlから全ての見出し（h2-h6）が自動抽出されます",
+    "headingsが空の場合、contentHtmlから全ての見出し（h2-h6）が自動抽出されます",
     "見出しテキストはcontentHtml内のテキストと完全一致する必要があります",
     "## から ##### までの5段階（h2-h6）をサポート",
     "h1は記事タイトル専用のため使用不可"

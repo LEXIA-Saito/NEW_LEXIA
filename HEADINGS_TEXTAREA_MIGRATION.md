@@ -95,50 +95,47 @@ headings: post.contentHtml
 
 ## 📝 microCMSスキーマ設定
 
-### 新しいフィールド設定
+### 現在のフィールド設定（確認済み）
 
 ```json
 {
-  "fieldId": "headingsText",
-  "name": "目次の見出し（オプショナル）",
+  "fieldId": "headings",
+  "name": "目次",
   "kind": "textArea",
-  "required": false,
-  "description": "目次をカスタマイズしたい場合のみ使用。改行区切りで見出しを入力。空の場合はcontentHtmlから自動抽出されます。"
+  "required": false
 }
 ```
 
-### 古いフィールドの削除（オプション）
+✅ **既に正しく設定されています！**
 
-既存の `headings` 繰り返しフィールドは削除可能です:
+### 推奨: 説明文を追加
 
-1. microCMS管理画面 → APIスキーマ
-2. `headings` フィールドを削除
-3. 新しい `headingsText` テキストエリアを追加
+microCMS管理画面で `headings` フィールドの説明を以下に更新することを推奨します:
+
+```
+目次をカスタマイズしたい場合のみ使用。改行区切りで見出しを入力。空の場合はcontentHtmlから自動抽出されます。
+```
 
 ## 🚀 移行手順
 
-### 既存記事の移行
+### ✅ 既に完了しています！
 
-既存記事で `headings` フィールドを使用している場合:
+microCMSのAPIスキーマを確認したところ、`headings` フィールドは既に **textArea** として設定されています。
 
-**Option 1: 自動抽出に切り替え**（推奨）
-- `headings` フィールドの内容を削除
-- 何もしない → 自動抽出が動作
+追加作業は不要ですが、以下を推奨します:
 
-**Option 2: textAreaに移行**
-- `headings` の内容を以下の形式でコピー:
-  ```
-  ## 見出し1
-  ### 見出し2
-  ## 見出し3
-  ```
-- `headingsText` フィールドに貼り付け
+1. **フィールド説明を更新**（オプション）
+   - microCMS管理画面 → APIスキーマ → `headings` フィールド
+   - 説明文: 「目次をカスタマイズしたい場合のみ使用。改行区切りで見出しを入力。空の場合はcontentHtmlから自動抽出されます。」
 
-### スキーマ変更
+2. **cheerioパッケージをインストール**
+   ```bash
+   pnpm install
+   ```
 
-1. microCMSで `headingsText` テキストエリアを追加
-2. 既存記事を移行
-3. 動作確認後、古い `headings` フィールドを削除
+3. **動作確認**
+   - 既存記事: `headings` フィールドが空 → 自動抽出が動作
+   - 新規記事: `headings` に改行区切りで入力 → カスタマイズ表示
 
 ## ✅ メリット
 
