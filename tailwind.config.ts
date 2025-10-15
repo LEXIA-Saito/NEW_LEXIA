@@ -79,11 +79,11 @@ const config = {
             maxWidth: 'none',
             color: 'inherit',
             a: {
-              color: '#0ea5e9',
+              color: '#196081ff',
               textDecoration: 'underline',
               fontWeight: '500',
               '&:hover': {
-                color: '#0284c7',
+                color: '#67b1d6ff',
               },
             },
             'h1, h2, h3, h4, h5, h6': {
