@@ -57,6 +57,11 @@ const nextConfig = {
         hostname: '**.public.blob.vercel-storage.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.microcms-assets.io',
+        pathname: '/**',
+      },
     ],
   },
   
