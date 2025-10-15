@@ -47,8 +47,8 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: 
   
   // genreが配列の場合は最初の要素を取得（microCMSのセレクトフィールドが配列を返す場合がある）
   const genre: BlogGenre = Array.isArray(post.genre) 
-    ? (post.genre[0] as BlogGenre) || "tech"
-    : (post.genre as BlogGenre) || "tech"
+    ? (post.genre[0] as BlogGenre) || "AI"
+    : (post.genre as BlogGenre) || "AI"
   
   // heroImageがオブジェクトの場合はURLを抽出
   const heroImage = post.heroImage 

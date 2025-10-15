@@ -7,17 +7,33 @@ import type { BlogPost, BlogPostSection, BlogGenre } from "./blog-posts.types"
 
 // Static genre metadata kept for compatibility with UI components
 const GENRE_METADATA: Record<BlogGenre, { label: string; description: string }> = {
-  tech: {
-    label: "技術・実装（Tech / Implementation）",
-    description: "コード解説、ライブラリ紹介、API使い方、フレームワーク分析など。開発者・技術担当者向け。",
+  AI: {
+    label: "AI",
+    description: "AI、機械学習、LLM、ChatGPT、Copilotなど最新AI技術の活用事例や実装ガイド。",
   },
-  trends: {
-    label: "トレンド・先端（Trends / Innovation）",
-    description: "新技術動向、AI／Web界隈の最新潮流、業界の変化予測。今何が来ているかを素早く把握。",
+  Frontend: {
+    label: "フロントエンド",
+    description: "React、Next.js、Vue.js、TypeScriptなどフロントエンド技術の解説とベストプラクティス。",
   },
-  ideas: {
-    label: "戦略・構想（Strategy / Ideas）",
-    description: "Web制作戦略、コンセプト設計、UX思想、プロセス論など。技術以外の視点で深掘り。",
+  Backend: {
+    label: "バックエンド",
+    description: "サーバーサイド開発、API設計、データベース、インフラ構築など。",
+  },
+  Update: {
+    label: "アップデート",
+    description: "技術トレンド、新機能リリース、フレームワークアップデート情報。",
+  },
+  "Full-stack": {
+    label: "フルスタック",
+    description: "フロントエンドからバックエンドまで、フルスタック開発の総合的な解説。",
+  },
+  Security: {
+    label: "セキュリティ",
+    description: "Webセキュリティ、脆弱性対策、認証・認可、HTTPS、CSPなど。",
+  },
+  Api: {
+    label: "API",
+    description: "REST API、GraphQL、API設計、マイクロサービス、API統合など。",
   },
 }
 

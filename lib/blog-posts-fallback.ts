@@ -5,7 +5,7 @@ export const fallbackBlogPosts: BlogPost[] = [
     slug: "infisical-introduction",
     title: "Infisical: オープンソースのシークレット管理プラットフォーム",
     description: "GitHubでトレンドになっているInfisicalは、開発チームとインフラストラクチャ全体でシークレットを同期し、シークレットの漏洩を防ぐためのオープンソースプラットフォームです。この記事では、Infisicalの主な機能と始め方について解説します。",
-    genre: "tech",
+    genre: "Security",
     tags: ["Infisical", "セキュリティ", "オープンソース"],
     date: "2025-10-09",
     heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/cover.webp",

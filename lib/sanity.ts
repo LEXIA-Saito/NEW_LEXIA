@@ -27,7 +27,7 @@ export type SanityBlogPost = {
   slug: string
   title: string
   description: string
-  genre: 'tech' | 'trends' | 'ideas'
+  genre: 'AI' | 'Frontend' | 'Backend' | 'Update' | 'Full-stack' | 'Security' | 'Api'
   tags: string[]
   date: string
   heroImage?: string

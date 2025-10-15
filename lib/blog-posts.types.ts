@@ -11,7 +11,7 @@ export type BlogPostSection = {
   }
 }
 
-export type BlogGenre = "tech" | "trends" | "ideas"
+export type BlogGenre = "AI" | "Frontend" | "Backend" | "Update" | "Full-stack" | "Security" | "Api"
 
 export type BlogPost = {
   slug: string

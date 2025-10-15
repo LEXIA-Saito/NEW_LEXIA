@@ -12,7 +12,7 @@ const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 type Params = { genre: BlogGenre }
 
 export async function generateStaticParams() {
-  const genres: BlogGenre[] = ["tech", "ideas"]
+  const genres: BlogGenre[] = ["AI", "Frontend", "Backend", "Update", "Full-stack", "Security", "Api"]
   return genres.map((g) => ({ genre: g }))
 }
 
