@@ -17,11 +17,17 @@ export type MicroCMSBlogPost = {
   tags: string[]
   date: string
   heroImage?: string
+  heroImageAlt?: string
   sections: {
     heading?: string
     body?: string[]
     list?: string[]
     image?: string
+    imageAlt?: string
+    table?: {
+      headers: string[]
+      rows: string[][]
+    }
   }[]
   publishedAt?: string
   updatedAt?: string
@@ -39,6 +45,7 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: 
     tags: post.tags,
     date: post.date,
     heroImage: post.heroImage,
+    heroImageAlt: post.heroImageAlt,
     sections: post.sections,
     // readingTimeはフォールバックとして設定（後で自動計算される）
     readingTime: "5分",
