@@ -182,9 +182,16 @@ export async function fetchMicroCMSBlogPost(
       return null
     }
 
-    return convertMicroCMSPost(response.contents[0])
+    // 変換時のエラーをキャッチ
+    try {
+      return convertMicroCMSPost(response.contents[0])
+    } catch (conversionError) {
+      console.error(`Failed to convert microCMS post "${slug}":`, conversionError)
+      return null
+    }
   } catch (error) {
     console.error(`Failed to fetch blog post "${slug}" from microCMS:`, error)
-    throw error
+    // エラーをスローせずnullを返す（フォールバックに任せる）
+    return null
   }
 }

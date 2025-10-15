@@ -30,6 +30,9 @@ const BLOG_GENRE_LIST = (Object.keys(GENRE_METADATA) as BlogGenre[]).map((id) =>
 // Blog posts are fetched from microCMS.
 // If microCMS is unavailable, fallback to local data in blog-posts-fallback.ts
 
+// Temporary: Exclude problematic slugs from microCMS
+const EXCLUDED_SLUGS = ['bolt-new-ai-code-generator']
+
 // --- Reading Time Calculation ------------------------------------------------
 // NOTE: Reading time calculation logic has been moved to lib/reading-time.ts
 // for better reusability across the application.
@@ -43,18 +46,26 @@ async function fetchAllBlogPosts(): Promise<(BlogPost & { readingTime: string })
       console.log(`[fetchAllBlogPosts] microCMS slugs:`, microCMSPosts.map(p => p.slug))
     }
     
+    // 除外対象のスラッグをフィルタリング
+    const filteredMicroCMSPosts = microCMSPosts.filter(
+      post => !EXCLUDED_SLUGS.includes(post.slug)
+    )
+    if (filteredMicroCMSPosts.length !== microCMSPosts.length) {
+      console.warn(`[fetchAllBlogPosts] Excluded ${microCMSPosts.length - filteredMicroCMSPosts.length} problematic posts`)
+    }
+    
     // fallbackBlogPostsも含める
     const fallbackPostsWithReadingTime = fallbackBlogPosts.map(withComputedReadingTime)
     
     // 重複を避けるため、microCMSにあるスラッグはfallbackから除外
-    const microCMSPostSlugs = new Set(microCMSPosts.map(post => post.slug))
+    const microCMSPostSlugs = new Set(filteredMicroCMSPosts.map(post => post.slug))
     const uniqueFallbackPosts = fallbackPostsWithReadingTime.filter(
       post => !microCMSPostSlugs.has(post.slug)
     )
     
     // microCMS記事とfallback記事を結合
-    const allPosts = [...microCMSPosts, ...uniqueFallbackPosts]
-    console.log(`[fetchAllBlogPosts] Total posts: ${allPosts.length} (microCMS: ${microCMSPosts.length}, fallback: ${uniqueFallbackPosts.length})`)
+    const allPosts = [...filteredMicroCMSPosts, ...uniqueFallbackPosts]
+    console.log(`[fetchAllBlogPosts] Total posts: ${allPosts.length} (microCMS: ${filteredMicroCMSPosts.length}, fallback: ${uniqueFallbackPosts.length})`)
     
     // 日付順でソート
     return allPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -67,6 +78,13 @@ async function fetchAllBlogPosts(): Promise<(BlogPost & { readingTime: string })
 
 async function fetchSingleBlogPost(slug: string): Promise<(BlogPost & { readingTime: string }) | undefined> {
   console.log(`[fetchSingleBlogPost] Fetching post with slug: ${slug}`)
+  
+  // 除外対象のスラッグは即座にundefinedを返す
+  if (EXCLUDED_SLUGS.includes(slug)) {
+    console.warn(`[fetchSingleBlogPost] Slug is in exclusion list: ${slug}`)
+    return undefined
+  }
+  
   try {
     // まずmicroCMSから取得を試行
     const microCMSPost = await fetchMicroCMSBlogPost(slug)
