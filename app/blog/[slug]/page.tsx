@@ -12,8 +12,6 @@ import Script from "next/script"
 import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
-import { generateHeadingId } from "@/lib/heading-id"
-import { addIdsToHeadings } from "@/lib/extract-headings"
 import type { BlogPostSection } from "@/lib/blog-posts.types"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
@@ -144,34 +142,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     keywords: post.tags.length > 0 ? post.tags.join(", ") : undefined,
   }
 
-  // contentHtmlがある場合はheadingsから目次を生成、sectionsがある場合はそれを使用
-  const sectionsWithHeadingIds = (() => {
-    const headingCounts = new Map<string, number>()
-
-    // contentHtmlを使用している場合はheadingsから目次を生成（IDは既に含まれている）
-    if (post.contentHtml && post.headings && Array.isArray(post.headings) && post.headings.length > 0) {
-      return post.headings.map((heading) => ({
-        heading: heading.text,
-        headingId: heading.id, // parseHeadingsText()で既に生成済み
-      }))
-    }
-
-    // sectionsを使用している場合は従来通り
-    return (post.sections ?? []).map((section) => {
-      if (!section.heading) {
-        return { ...section, headingId: undefined }
-      }
-
-      const baseId = generateHeadingId(section.heading)
-      const count = headingCounts.get(baseId) ?? 0
-      const uniqueId = count === 0 ? baseId : `${baseId}-${count + 1}`
-
-      headingCounts.set(baseId, count + 1)
-
-      return { ...section, headingId: uniqueId }
-    })
-  })()
-
   return (
     <>
       <main className="min-h-screen bg-white dark:bg-neutral-900">
@@ -229,22 +199,15 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
             {post.contentHtml ? (
               <div 
                 className="prose prose-lg prose-neutral max-w-none dark:prose-invert mt-12"
-                dangerouslySetInnerHTML={{ 
-                  __html: post.headings && Array.isArray(post.headings) && post.headings.length > 0
-                    ? addIdsToHeadings(post.contentHtml, post.headings)
-                    : post.contentHtml
-                }}
+                dangerouslySetInnerHTML={{ __html: post.contentHtml }}
               />
             ) : (
               /* sectionsがある場合は従来の構造化表示 */
               <div className="space-y-12 text-neutral-800 dark:text-neutral-200">
-                {sectionsWithHeadingIds.map((section, index) => (
-                  <section
-                    key={section.heading ?? index}
-                    id={section.headingId}
-                  >
+                {(post.sections ?? []).map((section, index) => (
+                  <section key={section.heading ?? index}>
                     {section.heading ? (
-                      <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 scroll-mt-24">
+                      <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
                         <LinkifyText text={section.heading} />
                       </h2>
                     ) : null}

@@ -13,11 +13,6 @@ export type BlogPostSection = {
 
 export type BlogGenre = "tech" | "trends" | "ideas"
 
-export type BlogHeading = {
-  text: string
-  level: 2 | 3 | 4 | 5 | 6 // h1 is reserved for title
-}
-
 export type BlogPost = {
   slug: string
   title: string
@@ -30,5 +25,4 @@ export type BlogPost = {
   heroImageAlt?: string
   sections?: BlogPostSection[]
   contentHtml?: string
-  headings?: BlogHeading[] // contentHtml使用時の目次用
 }
