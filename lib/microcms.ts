@@ -21,12 +21,12 @@ type FetchOptions = RequestInit & {
   }
 }
 
-const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN
+const serviceDomain = process.env.LEXIA_MICROCMS_DOMAIN || process.env.NEXT_PUBLIC_MICROCMS_DOMAIN
 const apiKey = process.env.MICROCMS_API_KEY
 
 function ensureConfigured() {
   if (!serviceDomain) {
-    throw new Error("MICROCMS_SERVICE_DOMAIN is not configured")
+    throw new Error("LEXIA_MICROCMS_DOMAIN or NEXT_PUBLIC_MICROCMS_DOMAIN is not configured")
   }
   if (!apiKey) {
     throw new Error("MICROCMS_API_KEY is not configured")

@@ -19,7 +19,7 @@ LEXIAブログはmicroCMSで管理されています。このガイドでは、m
 
 ```bash
 # microCMS設定
-MICROCMS_SERVICE_DOMAIN=your-service-name
+LEXIA_MICROCMS_DOMAIN=your-service-name
 MICROCMS_API_KEY=your-api-key
 ```
 
@@ -27,7 +27,7 @@ MICROCMS_API_KEY=your-api-key
 
 1. **microCMSダッシュボード**にログイン
 2. **サービス設定** → **APIキー**から確認
-   - `MICROCMS_SERVICE_DOMAIN`: サービス名（例: `lexia-blog`）
+   - `LEXIA_MICROCMS_DOMAIN`: サービス名（例: `lexia`）
    - `MICROCMS_API_KEY`: APIキー（読み取り専用推奨）
 
 ### Vercel用設定
@@ -36,7 +36,7 @@ Vercelダッシュボードで環境変数を設定:
 
 1. プロジェクト → **Settings** → **Environment Variables**
 2. 以下の変数を追加:
-   - `MICROCMS_SERVICE_DOMAIN`
+   - `LEXIA_MICROCMS_DOMAIN`
    - `MICROCMS_API_KEY`
 3. 環境: **Production**, **Preview**, **Development** すべてにチェック
 
