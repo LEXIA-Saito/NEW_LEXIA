@@ -130,12 +130,32 @@ export const fetchBlogPost = cache(fetchSingleBlogPost)
 export { fallbackBlogPosts as blogPosts }
 export const BLOG_GENRES = BLOG_GENRE_LIST
 
-export function getBlogGenreLabel(genre: BlogGenre): string {
-  return GENRE_METADATA[genre].label
+export function getBlogGenreLabel(genre: BlogGenre | string): string {
+  // 旧カテゴリから新カテゴリへのマッピング（後方互換性のため）
+  const legacyMapping: Record<string, BlogGenre> = {
+    "tech": "AI",
+    "trends": "Update",
+    "ideas": "Full-stack"
+  }
+  
+  // 旧カテゴリの場合は新カテゴリに変換
+  const mappedGenre = (legacyMapping[genre] || genre) as BlogGenre
+  
+  return GENRE_METADATA[mappedGenre]?.label || "その他"
 }
 
-export function getBlogGenreDescription(genre: BlogGenre): string {
-  return GENRE_METADATA[genre].description
+export function getBlogGenreDescription(genre: BlogGenre | string): string {
+  // 旧カテゴリから新カテゴリへのマッピング（後方互換性のため）
+  const legacyMapping: Record<string, BlogGenre> = {
+    "tech": "AI",
+    "trends": "Update",
+    "ideas": "Full-stack"
+  }
+  
+  // 旧カテゴリの場合は新カテゴリに変換
+  const mappedGenre = (legacyMapping[genre] || genre) as BlogGenre
+  
+  return GENRE_METADATA[mappedGenre]?.description || ""
 }
 
 export type { BlogPost, BlogPostSection, BlogGenre }

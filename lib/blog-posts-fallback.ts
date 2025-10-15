@@ -63,7 +63,7 @@ export const fallbackBlogPosts: BlogPost[] = [
     title: "STUDIOアップデート総点検：あの「STUDIO AI」は今どこに？",
     description:
       "Studio（旧STUDIO）のプロダクト刷新とAI機能の現在地を一次情報から整理します。",
-  genre: "trends",
+  genre: "Update",
     tags: ["Studio", "ノーコード", "AI"],
     date: "2025-10-08",
     heroImage:
@@ -283,7 +283,7 @@ export const fallbackBlogPosts: BlogPost[] = [
     title: "Stremio / stremio-web とは？技術的価値と合法性・リスクを徹底解説 — 将来性も含めて",
     description:
       "動画体験の統合を実現するStremioとstremio-webの技術的構造、合法性、安全対策、そして将来性を包括的に解説します。",
-    genre: "tech",
+    genre: "Full-stack",
     tags: ["Stremio", "stremio-web", "ストリーミング", "オープンソース", "セキュリティ"],
     date: "2025-10-08",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stremio/article-super.webp",
@@ -461,7 +461,7 @@ fallbackBlogPosts.push({
   title: "Stagehand：PlaywrightとAIが融合した次世代ブラウザ自動化フレームワークの全貌",
   description:
     "Playwright と AI を組み合わせたハイブリッド自動化フレームワーク Stagehand の特徴、アーキテクチャ、活用シーンを整理します。",
-  genre: "tech",
+  genre: "AI",
   tags: ["Stagehand", "Playwright", "自動化", "AI"],
   date: "2025-10-10",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Stagehand/browserbase-stagehand-illustration.webp",
@@ -575,7 +575,7 @@ fallbackBlogPosts.push({
   title: "Firebase Studioとは？Googleが描くAI時代の新しい開発環境を徹底解説",
   description:
     "Firebase StudioはGoogleが提供するAI統合型クラウド開発環境（IDE）。Project IDXを継承し、Geminiによるコード生成やFirebaseとの連携を実現。この記事では、Firebase Studioの仕組み・特徴・使い方・注意点までをわかりやすく紹介します。",
-  genre: "tech",
+  genre: "AI",
   tags: ["Firebase", "AI", "開発環境"],
   date: "2025-10-14",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-logo-hero-banner.webp",
@@ -720,7 +720,7 @@ fallbackBlogPosts.push({
   title: "Firebase Studioの始め方｜登録からAIプロトタイプ作成・デプロイまで完全ガイド",
   description:
     "Firebase StudioはGoogleが提供するAI統合クラウド開発環境。ブラウザだけでアプリ開発・プレビュー・デプロイまで完結します。本記事では、ワークスペース作成、Geminiの活用、Firebase連携、Hostingへの公開手順、注意点までを公式情報に基づいて解説。",
-  genre: "tech",
+  genre: "AI",
   tags: ["Firebase", "AI", "開発環境", "チュートリアル"],
   date: "2025-10-14",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-getting-started-tutorial-hero.webp",
@@ -910,7 +910,7 @@ fallbackBlogPosts.push({
   title: "Bun完全ガイド：高速JavaScriptランタイムの特長・インストール・活用まで",
   description:
     "GitHubトレンド上位のBunを実証的に解説。JavaScriptCore × Zigで構築された超高速ランタイム。パッケージマネージャ・バンドラ・テストランナーを一体化した次世代ツールチェーン。",
-  genre: "tech",
+  genre: "Backend",
   tags: ["Bun", "JavaScript", "ランタイム"],
   date: "2025-10-14",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Bun/bun-1-0-official-announcement.webp",
@@ -1088,7 +1088,7 @@ fallbackBlogPosts.push({
   title: "Lobe Chat完全ガイド：複数AI・ナレッジベース・MCPで“自社エージェント”を構築する方法",
   description:
     "GitHubトレンド上位のLobe Chatを検証。OpenAI / Claude / Gemini / DeepSeek / Ollama対応、ナレッジベース・Artifacts・MCPプラグイン・セルフホスト手順を公式情報をもとに整理。",
-  genre: "tech",
+  genre: "AI",
   tags: ["AI", "MCP", "RAG"],
   date: "2025-10-14",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lobe-chat/lobe-chat-overview-hero.webp",
@@ -1267,7 +1267,7 @@ fallbackBlogPosts.push({
   title: "XYFlow（React Flow 後継）入門：モダンなノード・グラフエディタをプロダクションへ",
   description:
     "GitHub トレンド入りの XYFlow を一次情報ベースで整理。主要機能、活用シーン、導入手順、運用のコツをまとめました。",
-  genre: "tech",
+  genre: "Frontend",
   tags: ["XYFlow", "React Flow", "グラフ", "ノードエディタ"],
   date: "2025-10-11",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/xyflow/xyflow-playground-screenshot.webp",
@@ -1382,7 +1382,7 @@ fallbackBlogPosts.push({
   title: "LanceDBとは？Rust製の高速ベクトルデータベースを徹底検証【Python/AI検索時代の新選択肢】",
   description:
     "オープンソースのベクトルデータベース「LanceDB」を解説。Python・JavaScript対応、マルチモーダル検索、ハイブリッドクエリなど、公式情報と実証例をもとに特徴と活用方法を整理します。",
-  genre: "tech",
+  genre: "AI",
   tags: ["AI", "VectorDB", "Rust", "Python", "Database"],
   date: "2025-10-14",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/LanceDB/vector-db-architecture.webp",
