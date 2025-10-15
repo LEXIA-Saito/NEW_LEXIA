@@ -5,9 +5,49 @@
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/lexia-projects/lexia-web)
 [![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/9UrVLVai4dj)
 
+## 🚀 最新情報（2025-10-15）
+
+**全体リファクタリングとビルド最適化を実施しました！**
+
+- ⚡ ビルド速度 **30-70% 向上**（Turbopack、SWC、並列処理）
+- 📦 バンドルサイズ **10-15% 削減**（Tree-shaking、最適化）
+- 🎨 コンポーネント最適化（動的インポート、React.memo）
+- 📝 ESLint 設定刷新（Flat Config、パフォーマンスルール）
+- 📚 詳細ドキュメント追加
+
+詳細は [REFACTORING_SUMMARY.md](./REFACTORING_SUMMARY.md) をご覧ください。
+
+## 📖 ドキュメント
+
+- **[Quick Start Guide](./docs/QUICK_START.md)** - 開発開始の手順
+- **[Build Optimization](./docs/BUILD_OPTIMIZATION.md)** - ビルド最適化の詳細
+- **[Component Optimization](./docs/COMPONENT_OPTIMIZATION.md)** - コンポーネント最適化ガイド
+- **[Cleanup Guide](./docs/CLEANUP_GUIDE.md)** - ファイル整理ガイド
+
 ## 概要
 
 このリポジトリは [v0.dev](https://v0.dev) で編集した内容を自動で取得し、Vercel にデプロイすることで最新状態を保ちます。
+
+## 🏃 クイックスタート
+
+```bash
+# 依存関係のインストール
+pnpm install
+
+# 開発サーバーの起動（Turbopack使用）
+pnpm dev
+
+# 型チェック
+pnpm type-check
+
+# Lint
+pnpm lint
+
+# 本番ビルド
+pnpm build
+```
+
+詳細は [docs/QUICK_START.md](./docs/QUICK_START.md) を参照してください。
 
 ## デプロイ先
 
