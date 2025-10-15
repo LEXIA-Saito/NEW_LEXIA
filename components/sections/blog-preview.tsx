@@ -64,7 +64,7 @@ export default async function BlogPreview() {
                 </Link>
               </h3>
               <p className="mt-3 flex-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">{post.description}</p>
-              {post.tags.length > 0 ? (
+              {post.tags && post.tags.length > 0 ? (
                 <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
                   {post.tags.map((tag) => (
                     <span

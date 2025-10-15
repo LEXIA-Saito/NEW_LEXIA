@@ -12,7 +12,7 @@ interface RelatedArticleCTAProps {
     heroImage: string
     heroImageAlt: string
     readingTime: string
-    tags: string[]
+    tags?: string[]
     className?: string
 }
 
@@ -60,17 +60,19 @@ export default function RelatedArticleCTA({
                             <Clock className="w-4 h-4" />
                             <span>{readingTime}</span>
                         </div>
-                        <div className="flex items-center gap-2">
-                            {tags.slice(0, 2).map((tag) => (
-                                <span
-                                    key={tag}
-                                    className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full"
-                                >
-                                    <Tag className="w-3 h-3" />
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
+                        {tags && tags.length > 0 && (
+                            <div className="flex items-center gap-2">
+                                {tags.slice(0, 2).map((tag) => (
+                                    <span
+                                        key={tag}
+                                        className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full"
+                                    >
+                                        <Tag className="w-3 h-3" />
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     {/* Title */}
