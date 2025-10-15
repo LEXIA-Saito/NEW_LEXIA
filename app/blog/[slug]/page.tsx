@@ -179,7 +179,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
 
       return { ...section, headingId: uniqueId }
     })
-  })() satisfies Array<BlogPostSection & { headingId?: string }>
+  })()
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { microcmsFetch, type MicroCMSListResponse } from "./microcms"
 import type { BlogPost, BlogGenre, BlogHeading } from "./blog-posts.types"
 import { withComputedReadingTime } from "./reading-time"
-import { extractHeadingsFromHtml } from "./extract-headings"
+import { extractHeadingsFromHtml, parseHeadingsText } from "./extract-headings"
 
 /**
  * microCMSから取得するブログ記事の型定義
@@ -19,11 +19,8 @@ export type MicroCMSBlogPost = {
   heroImageAlt?: string
   // アプローチA: contentHtml（リッチエディタV2で全文を管理）
   contentHtml?: string
-  // contentHtml使用時の目次用見出し情報（繰り返しフィールド）
-  headings?: Array<{
-    text: string
-    level: 2 | 3 | 4 | 5 | 6
-  }>
+  // contentHtml使用時の目次用見出し情報（テキストエリア：改行区切り）
+  headingsText?: string
   // アプローチB: sections（構造化データ）
   sections?: {
     heading?: string
@@ -73,10 +70,10 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: 
     // contentHtmlがある場合はそれを使用
     contentHtml: post.contentHtml,
     // contentHtml使用時の見出し情報（目次用）
-    // microCMSのheadingsフィールドがあればそれを使用、なければHTMLから自動抽出
+    // 1. headingsTextがあればパース、2. なければHTMLから自動抽出
     headings: post.contentHtml 
-      ? (post.headings && post.headings.length > 0 
-          ? post.headings 
+      ? (post.headingsText && post.headingsText.trim().length > 0
+          ? parseHeadingsText(post.headingsText) 
           : extractHeadingsFromHtml(post.contentHtml))
       : undefined,
     // sectionsがある場合は変換、ない場合は空配列
