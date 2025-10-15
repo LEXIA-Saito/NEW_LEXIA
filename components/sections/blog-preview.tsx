@@ -33,7 +33,7 @@ export default async function BlogPreview() {
           <div>
             <span className="text-sm uppercase tracking-[0.3em] text-neutral-400">LEXIA BLOG</span>
             <h2 id="blog-preview-heading" className="mt-3 text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100">
-              制作の裏側と集客ノウハウを発信中
+              WEB制作 × AI 最前線 — 未来を創るトレンド発信ブログ
             </h2>
             <p className="mt-4 max-w-2xl text-neutral-600 dark:text-neutral-300">
               WEB制作事業LEXIAがWEB制作技術やITの最新トレンドを発信します。
