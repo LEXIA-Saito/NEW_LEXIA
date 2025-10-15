@@ -52,7 +52,33 @@ import { generateHeadingId } from './heading-id'
 import type { BlogHeading } from './blog-posts.types'
 
 /**
- * contentHtmlから見出し（h2-h6）を自動抽出
+ * テキストエリア（改行区切り）から見出しリストを解析
+ * フォーマット: "見出しテキスト" または "## 見出しテキスト" (レベル指定)
+ */
+export function parseHeadingsText(headingsText: string): BlogHeading[] {
+  if (!headingsText || headingsText.trim().length === 0) {
+    return []
+  }
+
+  return headingsText
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+    .map((line) => {
+      // "## 見出し" 形式の場合はレベルを抽出
+      const hashMatch = line.match(/^(#{2,6})\s+(.+)$/)
+      if (hashMatch) {
+        const level = hashMatch[1].length as 2 | 3 | 4 | 5 | 6
+        const text = hashMatch[2].trim()
+        return { text, level }
+      }
+      // レベル指定なしの場合はh2として扱う
+      return { text: line, level: 2 as const }
+    })
+}
+
+/**
+ * HTMLから見出し（h2-h6）を自動抽出
  */
 export function extractHeadingsFromHtml(html: string): Array<BlogHeading & { id: string }> {
   // cheerioでHTMLをパース
@@ -84,14 +110,25 @@ export function extractHeadingsFromHtml(html: string): Array<BlogHeading & { id:
  */
 export function addIdsToHeadings(
   html: string, 
-  headings: Array<{ id: string }>
+  headings: Array<BlogHeading>
 ): string {
   const $ = cheerio.load(html)
+  const headingCounts = new Map<string, number>()
+
+  // 見出しごとにIDを生成
+  const headingIds = headings.map((heading) => {
+    const baseId = generateHeadingId(heading.text)
+    const count = headingCounts.get(baseId) ?? 0
+    const uniqueId = count === 0 ? baseId : `${baseId}-${count + 1}`
+    headingCounts.set(baseId, count + 1)
+    return uniqueId
+  })
+
   let headingIndex = 0
 
   $('h2, h3, h4, h5, h6').each((_, element) => {
-    if (headingIndex < headings.length) {
-      $(element).attr('id', headings[headingIndex].id)
+    if (headingIndex < headingIds.length) {
+      $(element).attr('id', headingIds[headingIndex])
       headingIndex++
     }
   })
@@ -104,14 +141,11 @@ export function addIdsToHeadings(
 
 **`lib/microcms-blog.ts`**
 ```typescript
-import { extractHeadingsFromHtml } from './extract-headings'
+import { extractHeadingsFromHtml, parseHeadingsText } from './extract-headings'
 
 export type MicroCMSBlogPost = {
   // ... 既存フィールド
-  headings?: Array<{
-    text: string
-    level: 2 | 3 | 4 | 5 | 6
-  }>
+  headingsText?: string // テキストエリア：改行区切りの見出しリスト
 }
 
 // データ変換処理
@@ -119,8 +153,8 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost {
   return {
     // ... 既存フィールド
     headings: post.contentHtml 
-      ? (post.headings && post.headings.length > 0 
-          ? post.headings // 手動設定があれば優先
+      ? (post.headingsText && post.headingsText.trim().length > 0
+          ? parseHeadingsText(post.headingsText) // 手動設定があれば優先
           : extractHeadingsFromHtml(post.contentHtml)) // なければ自動抽出
       : undefined
   }

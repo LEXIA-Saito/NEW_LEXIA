@@ -1,0 +1,65 @@
+{
+  "apiFields": [
+    {
+      "fieldId": "headingsText",
+      "name": "目次の見出し（オプショナル）",
+      "kind": "textArea",
+      "required": false,
+      "description": "目次をカスタマイズしたい場合のみ使用。改行区切りで見出しを入力。空の場合はcontentHtmlから自動抽出されます。"
+    }
+  ],
+  "inputFormat": {
+    "description": "改行区切りで見出しを入力。レベル指定はMarkdown形式（## = h2, ### = h3）またはレベル指定なし（デフォルトh2）",
+    "examples": [
+      {
+        "name": "レベル指定なし（デフォルトh2）",
+        "input": "見出し1\n見出し2\n見出し3",
+        "output": [
+          { "text": "見出し1", "level": 2 },
+          { "text": "見出し2", "level": 2 },
+          { "text": "見出し3", "level": 2 }
+        ]
+      },
+      {
+        "name": "Markdown形式でレベル指定",
+        "input": "## 見出し1\n### 見出し2\n## 見出し3",
+        "output": [
+          { "text": "見出し1", "level": 2 },
+          { "text": "見出し2", "level": 3 },
+          { "text": "見出し3", "level": 2 }
+        ]
+      },
+      {
+        "name": "混在形式",
+        "input": "見出し1\n## 見出し2\n### 見出し3\n見出し4",
+        "output": [
+          { "text": "見出し1", "level": 2 },
+          { "text": "見出し2", "level": 2 },
+          { "text": "見出し3", "level": 3 },
+          { "text": "見出し4", "level": 2 }
+        ]
+      }
+    ]
+  },
+  "exampleData": {
+    "slug": "example-article",
+    "title": "サンプル記事タイトル",
+    "description": "記事の要約",
+    "genre": ["tech"],
+    "tags": ["Next.js", "microCMS"],
+    "date": "2025-10-15",
+    "heroImage": {
+      "url": "https://images.microcms-assets.io/assets/.../hero.webp",
+      "width": 1200,
+      "height": 675
+    },
+    "contentHtml": "<h2>はじめに</h2><p>本文...</p><h2>詳細</h2><h3>実装例</h3><p>...</p>",
+    "headingsText": "はじめに\n詳細\n### 実装例"
+  },
+  "notes": [
+    "headingsTextが空の場合、contentHtmlから全ての見出し（h2-h6）が自動抽出されます",
+    "見出しテキストはcontentHtml内のテキストと完全一致する必要があります",
+    "## から ##### までの5段階（h2-h6）をサポート",
+    "h1は記事タイトル専用のため使用不可"
+  ]
+}
