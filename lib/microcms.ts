@@ -1,5 +1,3 @@
-import "server-only"
-
 export class MicroCMSApiError extends Error {
   status: number
   statusText: string
@@ -40,6 +38,11 @@ export async function microcmsFetch<T>(
   queries: QueryRecord = {},
   init: FetchOptions = {},
 ): Promise<T> {
+  // サーバーサイドでのみ実行されることを確認
+  if (typeof window !== 'undefined') {
+    throw new Error("microcmsFetch can only be called on the server side")
+  }
+  
   ensureConfigured()
 
   const url = new URL(`https://${serviceDomain}.microcms.io/api/v1/${endpoint}`)
@@ -51,7 +54,7 @@ export async function microcmsFetch<T>(
   const response = await fetch(url.toString(), {
     ...init,
     headers: {
-      "X-MICROCMS-API-KEY": apiKey,
+      "X-MICROCMS-API-KEY": apiKey!,
       ...init.headers,
     },
     next: {
