@@ -1,5 +1,3 @@
-import "server-only"
-
 import { microcmsFetch, type MicroCMSListResponse } from "./microcms"
 import type { BlogPost, BlogGenre } from "./blog-posts.types"
 import { withComputedReadingTime } from "./reading-time"
