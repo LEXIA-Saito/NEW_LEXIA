@@ -2,14 +2,19 @@
 // so it can be used safely from both Server and Client Components.
 // Heading text -> stable fragment id generator.
 export function generateHeadingId(heading: string): string {
-  return heading
-    .trim()
+  // 日本語を含む文字列を英数字のみのIDに変換
+  // 方法: Base64エンコード後、URL-safeな形式に変換
+  const base64 = typeof window !== 'undefined' 
+    ? btoa(unescape(encodeURIComponent(heading.trim())))
+    : Buffer.from(heading.trim(), 'utf-8').toString('base64')
+  
+  // Base64のURL-safe変換（+→-, /→_, =を削除）
+  return base64
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '')
     .toLowerCase()
-    // allow Latin letters, combining accents, and common CJK ranges (Hiragana/Katakana/Kanji)
-    .replace(/[^\w\u00C0-\u024f\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uF900-\uFAFF\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/--+/g, "-")
-    .replace(/^-+|-+$/g, "") // strip leading/trailing hyphens
+    .slice(0, 32) // 長さを制限
 }
 
 // If a heading somehow results in an empty id (very uncommon), produce a safe fallback.
