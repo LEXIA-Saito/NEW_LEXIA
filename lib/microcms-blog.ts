@@ -11,10 +11,10 @@ export type MicroCMSBlogPost = {
   slug: string
   title: string
   description: string
-  genre: BlogGenre
+  genre: BlogGenre | BlogGenre[]  // microCMSは配列で返す場合がある
   tags: string[]
   date: string
-  heroImage?: string
+  heroImage?: string | { url: string; width?: number; height?: number }  // microCMSは画像をオブジェクトで返す
   heroImageAlt?: string
   // アプローチA: contentHtml（リッチエディタV2で全文を管理）
   contentHtml?: string
@@ -45,14 +45,24 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: 
     throw new Error(`Invalid title in microCMS post with slug: ${post.slug}`)
   }
   
+  // genreが配列の場合は最初の要素を取得（microCMSのセレクトフィールドが配列を返す場合がある）
+  const genre: BlogGenre = Array.isArray(post.genre) 
+    ? (post.genre[0] as BlogGenre) || "tech"
+    : (post.genre as BlogGenre) || "tech"
+  
+  // heroImageがオブジェクトの場合はURLを抽出
+  const heroImage = post.heroImage 
+    ? (typeof post.heroImage === 'string' ? post.heroImage : post.heroImage.url)
+    : undefined
+  
   const blogPost: BlogPost = {
     slug: post.slug.trim(),
     title: post.title,
     description: post.description || "",
-    genre: post.genre || "tech",
+    genre: genre,
     tags: Array.isArray(post.tags) ? post.tags : [],
     date: post.date,
-    heroImage: post.heroImage,
+    heroImage: heroImage,
     heroImageAlt: post.heroImageAlt,
     // contentHtmlがある場合はそれを使用
     contentHtml: post.contentHtml,
