@@ -56,10 +56,6 @@ next-env.d.ts
 *~
 .DS_Store
 
-# sanity
-.sanity
-dist/
-
 # cache
 .cache
 node_modules/.cache

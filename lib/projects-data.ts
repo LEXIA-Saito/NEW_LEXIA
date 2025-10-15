@@ -116,7 +116,7 @@ export const projectsData: Project[] = [
       author: "みの建築 代表",
       rating: 5,
     },
-    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Sanity CMS", "Vercel"],
+    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "microCMS", "Vercel"],
   },
   {
     id: "3",

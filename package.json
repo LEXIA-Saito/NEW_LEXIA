@@ -14,10 +14,7 @@
     "test:i18n": "node ./tests/i18n.test.js",
     "test:pricing": "node ./tests/dev-pricing.test.js && node ./tests/design-pricing.test.js && node ./tests/web-pricing.test.js",
     "clean": "rimraf .next out .turbo node_modules/.cache",
-    "clean:all": "rimraf .next out .turbo node_modules",
-    "sanity-dev": "sanity dev --host 0.0.0.0 --port 3333",
-    "sanity-build": "sanity build",
-    "sanity-deploy": "sanity deploy"
+    "clean:all": "rimraf .next out .turbo node_modules"
   },
   "browserslist": {
     "production": [
@@ -58,8 +55,6 @@
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@react-three/fiber": "^8.15.12",
-    "@sanity/client": "^6.29.1",
-    "@sanity/vision": "^4.10.3",
     "@vercel/analytics": "^1.2.2",
     "@vercel/blob": "^1.1.1",
     "autoprefixer": "^10.4.20",
@@ -98,7 +93,6 @@
     "eslint": "^9.33.0",
     "eslint-config-next": "^15.5.0",
     "postcss": "^8.5",
-    "sanity": "^4.10.2",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
   },

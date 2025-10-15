@@ -48,12 +48,11 @@ export async function getRelatedArticles(
 }
 
 /**
- * 特定の記事を関連記事として取得する（手動指定用）
+ * 特定の記事を関連記事として取得する(手動指定用)
  * @param slug 取得したい記事のスラッグ
  * @returns 記事データまたはnull
  */
 export async function getSpecificArticle(slug: string): Promise<(BlogPost & { readingTime: string }) | null> {
-  // fetchBlogPostを使用してSanityとfallbackの両方をサポート
   const { fetchBlogPost } = await import("./blog-posts")
   const post = await fetchBlogPost(slug)
   return post || null
