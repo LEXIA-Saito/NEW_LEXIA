@@ -18,7 +18,9 @@ export async function generateStaticParams() {
   const posts = await fetchBlogPosts()
   const tagSet = new Set<string>()
   for (const p of posts) {
-    for (const t of p.tags) tagSet.add(t)
+    if (p.tags) {
+      for (const t of p.tags) tagSet.add(t)
+    }
   }
   return Array.from(tagSet).map((tag) => ({ tag }))
 }
@@ -54,7 +56,7 @@ function formatJapaneseDate(date: string) {
 export default async function TagIndexPage({ params }: Params) {
   const tag = params.tag
   const posts = (await fetchBlogPosts())
-    .filter((p) => p.tags.includes(tag))
+    .filter((p) => p.tags?.includes(tag))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   const breadcrumbs = [
@@ -114,7 +116,7 @@ export default async function TagIndexPage({ params }: Params) {
                     <p className="mt-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
                       <LinkifyText text={post.description} />
                     </p>
-                    {post.tags.length > 0 ? (
+                    {post.tags && post.tags.length > 0 ? (
                       <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
                         {post.tags.slice(0, 3).map((t) => (
                           <Link

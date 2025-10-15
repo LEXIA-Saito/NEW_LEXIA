@@ -155,7 +155,7 @@ export default async function BlogIndexPage(props: PageProps) {
                         <span>{latestPost.readingTime}</span>
                         <span>{formatJapaneseDate(latestPost.date)} 公開</span>
                       </div>
-                      {latestPost.tags.length > 0 ? (
+                      {latestPost.tags && latestPost.tags.length > 0 ? (
                         <div className="mt-3 flex flex-wrap gap-2 text-xs font-medium text-neutral-200/90">
                           {latestPost.tags.slice(0, 3).map((tag) => (
                             <Link
@@ -241,7 +241,7 @@ export default async function BlogIndexPage(props: PageProps) {
                           <p className="mt-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
                             <LinkifyText text={post.description} />
                           </p>
-                          {post.tags.length > 0 ? (
+                          {post.tags && post.tags.length > 0 ? (
                             <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
                               {post.tags.slice(0, 3).map((tag) => (
                                 <Link

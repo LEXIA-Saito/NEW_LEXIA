@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
       description: post.description,
       images: post.heroImage ? [post.heroImage] : undefined,
     },
-    keywords: post.tags.length > 0 ? post.tags : undefined,
+    keywords: post.tags && post.tags.length > 0 ? post.tags : undefined,
   }
 }
 
@@ -139,7 +139,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     },
     url: `${SITE_URL.replace(/\/$/, "")}/blog/${post.slug}`,
     image: post.heroImage,
-    keywords: post.tags.length > 0 ? post.tags.join(", ") : undefined,
+    keywords: post.tags && post.tags.length > 0 ? post.tags.join(", ") : undefined,
   }
 
   return (
@@ -166,7 +166,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 <span aria-hidden="true">•</span>
                 <span>執筆：齋藤雅人</span>
               </div>
-              {post.tags.length > 0 ? (
+              {post.tags && post.tags.length > 0 ? (
                 <div className="mt-4 flex flex-wrap gap-2 text-xs font-medium text-neutral-500 dark:text-neutral-400">
                   {post.tags.slice(0, 3).map((tag) => (
                     <Link
