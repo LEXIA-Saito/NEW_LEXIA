@@ -1,0 +1,68 @@
+{
+  "apiFields": [
+    {
+      "fieldId": "headings",
+      "name": "見出し（目次用）",
+      "kind": "repeater",
+      "required": false,
+      "description": "contentHtml使用時の目次生成用。記事内の見出しと同じテキスト・順序で入力してください。",
+      "repeaterFields": [
+        {
+          "fieldId": "text",
+          "name": "見出しテキスト",
+          "kind": "text",
+          "required": true,
+          "description": "記事内の見出しと完全一致するテキストを入力（スペース・句読点も含む）"
+        },
+        {
+          "fieldId": "level",
+          "name": "見出しレベル",
+          "kind": "select",
+          "required": true,
+          "selectItems": [
+            { "value": 2, "label": "2 (h2)" },
+            { "value": 3, "label": "3 (h3)" },
+            { "value": 4, "label": "4 (h4)" },
+            { "value": 5, "label": "5 (h5)" },
+            { "value": 6, "label": "6 (h6)" }
+          ],
+          "description": "h1はタイトル専用のため選択不可"
+        }
+      ]
+    }
+  ],
+  "exampleData": {
+    "slug": "example-article",
+    "title": "サンプル記事タイトル",
+    "description": "記事の要約",
+    "genre": ["tech"],
+    "tags": ["Next.js", "microCMS"],
+    "date": "2025-10-15",
+    "heroImage": {
+      "url": "https://images.microcms-assets.io/assets/.../hero.webp",
+      "width": 1200,
+      "height": 675
+    },
+    "contentHtml": "<h2>はじめに</h2><p>本文...</p><h2>詳細</h2><h3>実装例</h3><p>...</p>",
+    "headings": [
+      {
+        "text": "はじめに",
+        "level": 2
+      },
+      {
+        "text": "詳細",
+        "level": 2
+      },
+      {
+        "text": "実装例",
+        "level": 3
+      }
+    ]
+  },
+  "notes": [
+    "headingsフィールドはcontentHtml使用時のみ必要です",
+    "sectionsフィールド使用時はheadingsは不要（自動生成されます）",
+    "見出しテキストは記事内の見出しと完全一致させてください",
+    "見出しの順序は記事内の登場順と一致させてください"
+  ]
+}

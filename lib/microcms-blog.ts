@@ -1,5 +1,5 @@
 import { microcmsFetch, type MicroCMSListResponse } from "./microcms"
-import type { BlogPost, BlogGenre } from "./blog-posts.types"
+import type { BlogPost, BlogGenre, BlogHeading } from "./blog-posts.types"
 import { withComputedReadingTime } from "./reading-time"
 
 /**
@@ -18,6 +18,11 @@ export type MicroCMSBlogPost = {
   heroImageAlt?: string
   // アプローチA: contentHtml（リッチエディタV2で全文を管理）
   contentHtml?: string
+  // contentHtml使用時の目次用見出し情報（繰り返しフィールド）
+  headings?: Array<{
+    text: string
+    level: 2 | 3 | 4 | 5 | 6
+  }>
   // アプローチB: sections（構造化データ）
   sections?: {
     heading?: string
@@ -66,6 +71,8 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: 
     heroImageAlt: post.heroImageAlt,
     // contentHtmlがある場合はそれを使用
     contentHtml: post.contentHtml,
+    // contentHtml使用時の見出し情報（目次用）
+    headings: post.headings,
     // sectionsがある場合は変換、ない場合は空配列
     sections: post.sections ? post.sections.map((section) => {
       const converted: any = {

@@ -144,9 +144,27 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     keywords: post.tags.length > 0 ? post.tags.join(", ") : undefined,
   }
 
+  // contentHtmlがある場合はheadingsから目次を生成、sectionsがある場合はそれを使用
   const sectionsWithHeadingIds = (() => {
     const headingCounts = new Map<string, number>()
 
+    // contentHtmlを使用している場合はheadingsから目次を生成
+    if (post.contentHtml && post.headings && post.headings.length > 0) {
+      return post.headings.map((heading) => {
+        const baseId = generateHeadingId(heading.text)
+        const count = headingCounts.get(baseId) ?? 0
+        const uniqueId = count === 0 ? baseId : `${baseId}-${count + 1}`
+        
+        headingCounts.set(baseId, count + 1)
+        
+        return {
+          heading: heading.text,
+          headingId: uniqueId,
+        }
+      })
+    }
+
+    // sectionsを使用している場合は従来通り
     return (post.sections ?? []).map((section) => {
       if (!section.heading) {
         return { ...section, headingId: undefined }
@@ -221,7 +239,39 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
             {post.contentHtml ? (
               <div 
                 className="prose prose-lg prose-neutral max-w-none dark:prose-invert mt-12"
-                dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+                dangerouslySetInnerHTML={{ 
+                  __html: (() => {
+                    // 見出しにID属性を追加（アンカーリンク用）
+                    if (!post.headings || post.headings.length === 0) {
+                      return post.contentHtml
+                    }
+                    
+                    let html = post.contentHtml
+                    const headingCounts = new Map<string, number>()
+                    
+                    // 各見出しに対応するIDを生成
+                    post.headings.forEach((heading) => {
+                      const baseId = generateHeadingId(heading.text)
+                      const count = headingCounts.get(baseId) ?? 0
+                      const uniqueId = count === 0 ? baseId : `${baseId}-${count + 1}`
+                      headingCounts.set(baseId, count + 1)
+                      
+                      // 見出しテキストに対応するh2-h6タグにIDを追加
+                      const escapedText = heading.text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+                      const headingRegex = new RegExp(
+                        `<h${heading.level}([^>]*)>\\s*${escapedText}\\s*</h${heading.level}>`,
+                        'i'
+                      )
+                      html = html.replace(headingRegex, (match, attrs) => {
+                        // すでにIDがある場合はスキップ
+                        if (attrs.includes('id=')) return match
+                        return `<h${heading.level}${attrs} id="${uniqueId}">${heading.text}</h${heading.level}>`
+                      })
+                    })
+                    
+                    return html
+                  })()
+                }}
               />
             ) : (
               /* sectionsがある場合は従来の構造化表示 */

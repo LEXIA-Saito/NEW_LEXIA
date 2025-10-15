@@ -1,15 +1,67 @@
 # 🧩 Agent Notes — Blog Article Workflow
 
-このリポジトリは、ブログをローカルデータのみでレンダリングします（外部CMSなし）。エージェントが記事を追加・更新する際は以下の手順と規約に従ってください。
+このリポジトリは、ブログをmicroCMSとローカルフォールバックデータで管理します。エージェントが記事を追加・更新する際は以下の手順と規約に従ってください。
 
 ## Where Blog Data Lives
-- Posts source: `lib/blog-posts-fallback.ts`
-- Types: `lib/blog-posts.types.ts`（`BlogPost`, `BlogPostSection`）
+- **microCMS**: 主要なデータソース（`lib/microcms-blog.ts`）
+- Fallback source: `lib/blog-posts-fallback.ts`
+- Types: `lib/blog-posts.types.ts`（`BlogPost`, `BlogPostSection`, `BlogHeading`）
 - Fetch helpers / genre metadata: `lib/blog-posts.ts`
 
-アプリは `fallbackBlogPosts` のみを参照します（microCMS統合は除去済み）。並び替え・描画は `app/blog/page.tsx`（一覧/カード）および `app/blog/[slug]/page.tsx`（記事ページ・meta）で行われます。
+アプリは優先的にmicroCMSから記事を取得し、取得できない場合は `fallbackBlogPosts` を使用します。並び替え・描画は `app/blog/page.tsx`（一覧/カード）および `app/blog/[slug]/page.tsx`（記事ページ・meta）で行われます。
 
-## Minimal Post Shape (example)
+## microCMS Article Creation (Recommended)
+
+### 1. リッチエディタV2使用時（contentHtml）
+
+microCMS管理画面で以下のフィールドを設定:
+
+```ts
+{
+  slug: "example-slug",
+  title: "記事タイトル",
+  description: "一覧・OGに使われる短い要約",
+  genre: ["tech"], // または ["trends"], ["ideas"]
+  tags: ["Tag1", "Tag2"],
+  date: "2025-10-15",
+  heroImage: { url: "https://.../hero.webp" },
+  contentHtml: "<h2>見出し1</h2><p>本文...</p><h2>見出し2</h2>...",
+  headings: [
+    { text: "見出し1", level: 2 },
+    { text: "見出し2", level: 2 }
+  ]
+}
+```
+
+**重要**: `headings` は目次表示に必要です。記事内の見出しと完全一致するテキスト・順序で入力してください。
+詳細: [MICROCMS_HEADINGS_GUIDE.md](./MICROCMS_HEADINGS_GUIDE.md)
+
+### 2. 構造化データ使用時（sections）
+
+```ts
+{
+  slug: "example-slug",
+  title: "記事タイトル",
+  description: "要約",
+  genre: ["tech"],
+  tags: ["Tag1"],
+  date: "2025-10-15",
+  heroImage: { url: "https://.../hero.webp" },
+  sections: [
+    {
+      heading: "見出し",
+      body: "段落1\n段落2",
+      list: "項目1\n項目2",
+      image: "https://.../inline.webp"
+    }
+  ]
+}
+```
+
+sections使用時は `headings` 不要（自動生成されます）。
+
+## Fallback Article Shape (Local Development)
+
 ```ts
 {
   slug: "example-slug",
@@ -19,14 +71,14 @@
   tags: ["Tag1", "Tag2"],
   date: "YYYY-MM-DD",
   readingTime: "6分",
-  heroImage: "https://.../path.webp", // カード・OG/Twitter用サムネ（任意だが推奨）
+  heroImage: "https://.../path.webp",
   sections: [
     { body: ["導入文を1〜2段落で。"] },
     {
       heading: "見出し（任意）",
       body: ["本文段落…"],
       list: ["箇条書き…"],
-      image: "https://.../inline-image.webp" // セクション内に表示する画像（任意）
+      image: "https://.../inline-image.webp"
     }
   ]
 }
