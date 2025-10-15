@@ -73,9 +73,117 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: 'none',
+            color: 'inherit',
+            a: {
+              color: '#0ea5e9',
+              textDecoration: 'underline',
+              fontWeight: '500',
+              '&:hover': {
+                color: '#0284c7',
+              },
+            },
+            'h1, h2, h3, h4, h5, h6': {
+              color: 'inherit',
+              fontWeight: '600',
+            },
+            h1: {
+              fontSize: '2.25rem',
+              marginTop: '0',
+              marginBottom: '1rem',
+            },
+            h2: {
+              fontSize: '1.875rem',
+              marginTop: '2rem',
+              marginBottom: '1rem',
+            },
+            h3: {
+              fontSize: '1.5rem',
+              marginTop: '1.5rem',
+              marginBottom: '0.75rem',
+            },
+            h4: {
+              fontSize: '1.25rem',
+              marginTop: '1.25rem',
+              marginBottom: '0.5rem',
+            },
+            p: {
+              marginTop: '1rem',
+              marginBottom: '1rem',
+            },
+            ul: {
+              marginTop: '1rem',
+              marginBottom: '1rem',
+            },
+            ol: {
+              marginTop: '1rem',
+              marginBottom: '1rem',
+            },
+            li: {
+              marginTop: '0.5rem',
+              marginBottom: '0.5rem',
+            },
+            code: {
+              color: '#e11d48',
+              backgroundColor: '#f1f5f9',
+              padding: '0.2rem 0.4rem',
+              borderRadius: '0.25rem',
+              fontSize: '0.875em',
+            },
+            'code::before': {
+              content: '""',
+            },
+            'code::after': {
+              content: '""',
+            },
+            pre: {
+              backgroundColor: '#1e293b',
+              color: '#e2e8f0',
+              padding: '1rem',
+              borderRadius: '0.5rem',
+              overflowX: 'auto',
+            },
+            'pre code': {
+              backgroundColor: 'transparent',
+              color: 'inherit',
+              padding: '0',
+            },
+            blockquote: {
+              borderLeftWidth: '4px',
+              borderLeftColor: '#cbd5e1',
+              paddingLeft: '1rem',
+              fontStyle: 'italic',
+              color: '#64748b',
+            },
+            img: {
+              marginTop: '2rem',
+              marginBottom: '2rem',
+              borderRadius: '0.5rem',
+            },
+            table: {
+              width: '100%',
+              marginTop: '2rem',
+              marginBottom: '2rem',
+            },
+            th: {
+              textAlign: 'left',
+              padding: '0.75rem',
+              backgroundColor: '#f1f5f9',
+              fontWeight: '600',
+            },
+            td: {
+              padding: '0.75rem',
+              borderTop: '1px solid #e2e8f0',
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config
 
 export default config
