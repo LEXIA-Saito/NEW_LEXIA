@@ -38,6 +38,10 @@ async function fetchAllBlogPosts(): Promise<(BlogPost & { readingTime: string })
   try {
     // microCMSから記事を取得
     const microCMSPosts = await fetchMicroCMSBlogPosts()
+    console.log(`[fetchAllBlogPosts] Fetched ${microCMSPosts.length} posts from microCMS`)
+    if (microCMSPosts.length > 0) {
+      console.log(`[fetchAllBlogPosts] microCMS slugs:`, microCMSPosts.map(p => p.slug))
+    }
     
     // fallbackBlogPostsも含める
     const fallbackPostsWithReadingTime = fallbackBlogPosts.map(withComputedReadingTime)
@@ -50,29 +54,38 @@ async function fetchAllBlogPosts(): Promise<(BlogPost & { readingTime: string })
     
     // microCMS記事とfallback記事を結合
     const allPosts = [...microCMSPosts, ...uniqueFallbackPosts]
+    console.log(`[fetchAllBlogPosts] Total posts: ${allPosts.length} (microCMS: ${microCMSPosts.length}, fallback: ${uniqueFallbackPosts.length})`)
     
     // 日付順でソート
     return allPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   } catch (error) {
-    console.warn('microCMS fetch failed, using fallback posts only:', error)
+    console.warn('[fetchAllBlogPosts] microCMS fetch failed, using fallback posts only:', error)
     // microCMSが利用できない場合はfallbackBlogPostsのみを使用
     return fallbackBlogPosts.map(withComputedReadingTime)
   }
 }
 
 async function fetchSingleBlogPost(slug: string): Promise<(BlogPost & { readingTime: string }) | undefined> {
+  console.log(`[fetchSingleBlogPost] Fetching post with slug: ${slug}`)
   try {
     // まずmicroCMSから取得を試行
     const microCMSPost = await fetchMicroCMSBlogPost(slug)
     if (microCMSPost) {
+      console.log(`[fetchSingleBlogPost] Found in microCMS: ${slug}`)
       return microCMSPost
     }
+    console.log(`[fetchSingleBlogPost] Not found in microCMS: ${slug}`)
   } catch (error) {
-    console.warn(`microCMS fetch failed for slug ${slug}, trying fallback:`, error)
+    console.warn(`[fetchSingleBlogPost] microCMS fetch failed for slug ${slug}, trying fallback:`, error)
   }
   
   // microCMSにない場合はfallbackBlogPostsから取得
   const fallbackPost = fallbackBlogPosts.find((post) => post.slug === slug)
+  if (fallbackPost) {
+    console.log(`[fetchSingleBlogPost] Found in fallback: ${slug}`)
+  } else {
+    console.warn(`[fetchSingleBlogPost] Not found anywhere: ${slug}`)
+  }
   return fallbackPost ? withComputedReadingTime(fallbackPost) : undefined
 }
 

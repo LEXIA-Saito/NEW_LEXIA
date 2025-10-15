@@ -27,16 +27,22 @@ interface BlogArticlePageProps {
 export async function generateStaticParams() {
   try {
     const posts = await fetchBlogPosts()
+    console.log(`[generateStaticParams] Generating params for ${posts.length} posts`)
     // スラッグが有効な記事のみを返す（undefinedやnullを除外）
-    return posts
+    const validParams = posts
       .filter((post) => post && post.slug && typeof post.slug === "string" && post.slug.trim().length > 0)
       .map((post) => ({ slug: post.slug }))
+    console.log(`[generateStaticParams] Valid slugs:`, validParams.map(p => p.slug))
+    return validParams
   } catch (error) {
     console.error("Failed to generate static params for blog posts:", error)
     // エラーが発生した場合は空配列を返す（フォールバック記事はISRで生成される）
     return []
   }
 }
+
+// 動的パラメータの処理を許可（ISR対応）
+export const dynamicParams = true
 
 export async function generateMetadata({ params }: BlogArticlePageProps): Promise<Metadata> {
   const post = await fetchBlogPost(params.slug)
