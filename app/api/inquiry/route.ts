@@ -93,7 +93,7 @@ ${additionalRequests || '未記入'}`
     await resend.emails.send({
       from: "LEXIA <noreply@lexia-hp.com>",
       to: ["lexia0web@gmail.com"],
-      replyTo: email,
+      reply_to: email,
       subject: "【ヒヤリングシート】新しいホームページ制作のご相談",
       text,
     })

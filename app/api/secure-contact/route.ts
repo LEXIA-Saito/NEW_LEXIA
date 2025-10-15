@@ -128,7 +128,7 @@ URL: ${sanitizedData.url}
     const notificationResult = await resend.emails.send({
       from: config.resend.from,
       to: [config.resend.to],
-      replyTo: sanitizedData.email,
+      reply_to: sanitizedData.email,
       subject: `🔒 セキュア問い合わせ - ${sanitizedData.name}様`,
       text: emailText,
       attachments: attachment ? [

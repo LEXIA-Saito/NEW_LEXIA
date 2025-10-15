@@ -57,7 +57,7 @@ URL: ${url}
     await resend.emails.send({
       from: config.resend.from,
       to: [config.resend.to],
-      replyTo: email,
+      reply_to: email,
       subject: "新しいお問い合わせ (v2)",
       text,
       attachments: attachment ? [

@@ -811,6 +811,9 @@ fallbackBlogPosts.push({
       heading: "5. Gemini（AIエージェント）を使う",
       body: [
         "Firebase Studio右上の「Gemini」アイコン、または下部のチャットバーから起動します。AIモデルには Gemini Pro が使用され、コード補完・提案・解説が可能です。",
+        "",
+        "AIはプロジェクト内の文脈を参照し、コードを提案します。ただし、生成内容は常に検証が必要です。",
+        "参考: Gemini safety notice — https://firebase.google.com/docs/studio/ai-assistance",
       ],
       table: {
         headers: ["用途", "指示例（英語推奨）"],
@@ -821,10 +824,6 @@ fallbackBlogPosts.push({
           ["コード解説", "Explain what this function does"],
         ],
       },
-      body: [
-        "AIはプロジェクト内の文脈を参照し、コードを提案します。ただし、生成内容は常に検証が必要です。",
-        "参考: Gemini safety notice — https://firebase.google.com/docs/studio/ai-assistance",
-      ],
     },
     {
       heading: "6. Firebaseサービスの統合（Auth／Firestoreなど）",
