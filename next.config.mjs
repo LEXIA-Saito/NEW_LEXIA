@@ -4,6 +4,34 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   
+  // Performance optimizations
+  swcMinify: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
+  },
+  
+  // Experimental performance features
+  experimental: {
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-accordion',
+      '@radix-ui/react-alert-dialog',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-dropdown-menu',
+      '@radix-ui/react-navigation-menu',
+      '@radix-ui/react-popover',
+      '@radix-ui/react-select',
+      '@radix-ui/react-tabs',
+      '@radix-ui/react-toast',
+      'framer-motion',
+      'recharts',
+    ],
+    optimizeCss: true,
+    webpackBuildWorker: true,
+  },
+  
   // Runtime configuration
   publicRuntimeConfig: {
     // Public configuration - no sensitive data
@@ -117,22 +145,55 @@ const nextConfig = {
     ]
   },
   
-  webpack(config) {
-    // Bundle all three.js related modules together
-    config.optimization = {
-      ...config.optimization,
-      splitChunks: {
-        ...config.optimization?.splitChunks,
-        cacheGroups: {
-          ...(config.optimization?.splitChunks?.cacheGroups ?? {}),
-          three: {
-            test: /[\\/]node_modules[\\/](three|@react-three)[\\/]/,
-            name: 'three',
-            chunks: 'all',
+  webpack(config, { dev, isServer }) {
+    // Production optimizations
+    if (!dev) {
+      config.optimization = {
+        ...config.optimization,
+        moduleIds: 'deterministic',
+        runtimeChunk: 'single',
+        splitChunks: {
+          ...config.optimization?.splitChunks,
+          chunks: 'all',
+          cacheGroups: {
+            ...(config.optimization?.splitChunks?.cacheGroups ?? {}),
+            // Framework bundle (React, Next.js)
+            framework: {
+              test: /[\\/]node_modules[\\/](react|react-dom|next)[\\/]/,
+              name: 'framework',
+              priority: 40,
+              enforce: true,
+            },
+            // Three.js bundle
+            three: {
+              test: /[\\/]node_modules[\\/](three|@react-three)[\\/]/,
+              name: 'three',
+              priority: 30,
+              enforce: true,
+            },
+            // UI libraries bundle
+            ui: {
+              test: /[\\/]node_modules[\\/](@radix-ui|framer-motion|lucide-react)[\\/]/,
+              name: 'ui-libs',
+              priority: 20,
+            },
+            // Common vendor bundle
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendor',
+              priority: 10,
+            },
           },
         },
-      },
+      }
     }
+    
+    // SVG optimization
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    })
+    
     return config
   },
 }

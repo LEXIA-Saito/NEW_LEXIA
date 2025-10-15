@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState, memo } from "react"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -13,6 +13,50 @@ type Props = {
   genres: { id: BlogGenre; label: string }[]
   initialGenre?: BlogGenre | "all"
 }
+
+// Memoized card component for better performance
+const BlogCardItem = memo(function BlogCardItem({ post }: { post: BlogPost }) {
+  return (
+    <Link
+      href={`/blog/${post.slug}`}
+      className="group block overflow-hidden rounded-2xl border border-neutral-200 bg-white transition hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900"
+    >
+      <div className="relative aspect-video overflow-hidden bg-neutral-100 dark:bg-neutral-800">
+        {post.heroImage ? (
+          <Image
+            src={post.heroImage}
+            alt={post.title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+        ) : (
+          <Image
+            src={PLACEHOLDER_IMG}
+            alt="Placeholder"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover"
+            loading="lazy"
+          />
+        )}
+      </div>
+      <div className="p-5">
+        <div className="mb-2 flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
+          <span className="rounded-full bg-neutral-100 px-3 py-1 font-medium text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
+            {getBlogGenreLabel(post.genre)}
+          </span>
+          <span>{post.date}</span>
+        </div>
+        <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+          {post.title}
+        </h3>
+        <p className="line-clamp-2 text-sm text-neutral-600 dark:text-neutral-400">{post.description}</p>
+      </div>
+    </Link>
+  )
+})
 
 export default function GenreFilterList({ posts, genres, initialGenre = "all" }: Props) {
   const [active, setActive] = useState<BlogGenre | "all">(initialGenre)
@@ -71,30 +115,8 @@ export default function GenreFilterList({ posts, genres, initialGenre = "all" }:
 
       <ul className="mt-8 grid gap-8 md:grid-cols-2">
         {filtered.map((post) => (
-          <li key={post.slug} className="flex h-full flex-col justify-between rounded-3xl border border-neutral-200 bg-white/90 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70">
-            <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
-              <span className="inline-flex items-center gap-1">{getBlogGenreLabel(post.genre)}</span>
-              <span>{post.readingTime}</span>
-            </div>
-            <h3 className="mt-3 text-xl font-semibold text-neutral-900 dark:text-neutral-100">
-              <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-            </h3>
-            <div className="relative mt-3 h-44 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
-              <Image
-                src={post.heroImage || PLACEHOLDER_IMG}
-                alt={post.title}
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 40vw, 100vw"
-              />
-            </div>
-            <p className="mt-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">{post.description}</p>
-            <div className="mt-4 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
-              <span>{new Date(post.date).toLocaleDateString("ja-JP", { year: "numeric", month: "long", day: "numeric" })}</span>
-              <Link href={`/blog/${post.slug}`} className="inline-flex items-center gap-1 font-medium text-neutral-900 dark:text-neutral-100">
-                記事を読む <span aria-hidden>→</span>
-              </Link>
-            </div>
+          <li key={post.slug}>
+            <BlogCardItem post={post} />
           </li>
         ))}
       </ul>

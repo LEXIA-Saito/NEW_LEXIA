@@ -1,8 +1,10 @@
 {
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install --frozen-lockfile",
   "functions": {
     "app/api/**/*": {
       "maxDuration": 30
     }
   },
-  "installCommand": "pnpm install --no-frozen-lockfile"
+  "crons": []
 }

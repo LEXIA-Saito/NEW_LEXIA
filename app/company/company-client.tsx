@@ -2,13 +2,13 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import dynamic from "next/dynamic"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
-import LexiaLogoParticles from "@/components/lexia-logo-particles"
 import LexiaPrinciples from "@/components/sections/lexia-principles"
 import CompanyInfoTable from "@/components/company-info-table"
 import Script from "next/script"
@@ -16,6 +16,19 @@ import { Lightbulb, Zap, RefreshCcw, ChevronDown } from "lucide-react"
 import { projectsData } from "@/lib/projects-data"
 import { useState, type ReactNode } from "react"
 import Features from "@/components/Features"
+
+// Canvas heavy component - load dynamically
+const LexiaLogoParticles = dynamic(
+  () => import("@/components/lexia-logo-particles"),
+  {
+    loading: () => (
+      <div className="w-full h-[600px] flex items-center justify-center bg-gradient-to-br from-blue-600 to-purple-600">
+        <div className="text-white text-6xl font-bold">LEXIA</div>
+      </div>
+    ),
+    ssr: false,
+  }
+)
 
 function FAQItem({ q, a }: { q: string; a: ReactNode }) {
   const [open, setOpen] = useState(false)
