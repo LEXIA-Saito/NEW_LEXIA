@@ -156,7 +156,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               >
                 {getBlogGenreLabel(post.genre)}
               </Link>
-              <h1 className="mt-6 text-2xl md:text-3xl font-light text-neutral-900 dark:text-neutral-100">
+              <h1 className="mt-6 text-3xl md:text-4xl lg:text-5xl font-light text-neutral-900 dark:text-neutral-100">
                 {post.title}
               </h1>
               <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-neutral-500 dark:text-neutral-400">
@@ -207,7 +207,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 {(post.sections ?? []).map((section, index) => (
                   <section key={section.heading ?? index}>
                     {section.heading ? (
-                      <h2 className="text-lg md:text-xl font-semibold text-neutral-900 dark:text-neutral-100">
+                      <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900 dark:text-neutral-100">
                         <LinkifyText text={section.heading} />
                       </h2>
                     ) : null}
