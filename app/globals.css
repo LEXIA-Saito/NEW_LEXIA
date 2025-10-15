@@ -107,3 +107,51 @@ html {
     contain-intrinsic-size: 1000px;
   }
 }
+
+/* Blog article typography adjustments - smaller font sizes */
+@layer components {
+  .prose {
+    @apply text-base leading-7;
+  }
+
+  .prose h1 {
+    @apply text-3xl font-semibold mt-8 mb-4;
+  }
+
+  .prose h2 {
+    @apply text-xl font-semibold mt-6 mb-3;
+  }
+
+  .prose h3 {
+    @apply text-lg font-semibold mt-5 mb-2;
+  }
+
+  .prose h4 {
+    @apply text-base font-semibold mt-4 mb-2;
+  }
+
+  .prose p {
+    @apply text-base leading-relaxed my-3;
+  }
+
+  .prose ul,
+  .prose ol {
+    @apply text-base my-4;
+  }
+
+  .prose li {
+    @apply my-1;
+  }
+
+  .prose blockquote {
+    @apply text-base;
+  }
+
+  .prose code {
+    @apply text-sm;
+  }
+
+  .prose pre {
+    @apply text-sm;
+  }
+}
