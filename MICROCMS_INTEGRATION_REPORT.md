@@ -56,12 +56,9 @@ MICROCMS_API_KEY=your-api-key-here
 ### `lib/blog-posts.ts`
 **変更内容**:
 ```diff
-- import { fetchSanityBlogPosts, fetchSanityBlogPost } from "./sanity"
-- import { convertSanityBlogPosts, convertSanityBlogPostSingle } from "./sanity-blog-adapter"
+- // 以前はSanityを使用していました
 + import { fetchMicroCMSBlogPosts, fetchMicroCMSBlogPost } from "./microcms-blog"
 
-- // Sanityから記事を取得
-- const sanityPosts = await fetchSanityBlogPosts()
 + // microCMSから記事を取得
 + const microCMSPosts = await fetchMicroCMSBlogPosts()
 ```

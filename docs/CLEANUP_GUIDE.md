@@ -127,16 +127,6 @@ pnpm exec depcheck
 候補:
 - `styled-components` (Tailwind CSS を使用している場合)
 - `recharts` (チャートを使用していない場合)
-- `@sanity/vision` (開発環境のみで使用)
-
-### devDependencies に移動すべきもの
-```json
-{
-  "devDependencies": {
-    "@sanity/vision": "^4.10.3"  // 開発環境のみで使用
-  }
-}
-```
 
 ## Performance Impact
 

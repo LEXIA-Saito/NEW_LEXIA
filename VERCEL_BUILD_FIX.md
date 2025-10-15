@@ -101,7 +101,6 @@ git push
 - `components/sections/lexia-principles.tsx` (line 99)
 - `lib/three.ts` (Vector2/Vector3 types)
 - `lib/microcms.ts` (fetch types)
-- `lib/sanity-blog-adapter.ts` (readingTime types)
 - `image-combiner/**` (サブプロジェクト - メインビルドに影響なし)
 - `precise-ui-features/**` (サブプロジェクト - メインビルドに影響なし)
 
