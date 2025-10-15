@@ -14,7 +14,6 @@ import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
 import TableOfContents from "@/components/blog/TableOfContents"
 import { generateHeadingId } from "@/lib/heading-id"
-import { addIdsToHeadings } from "@/lib/extract-headings"
 import type { BlogPostSection } from "@/lib/blog-posts.types"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
@@ -149,20 +148,12 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
   const sectionsWithHeadingIds = (() => {
     const headingCounts = new Map<string, number>()
 
-    // contentHtmlを使用している場合はheadingsから目次を生成
+    // contentHtmlを使用している場合はheadingsから目次を生成（IDは既に含まれている）
     if (post.contentHtml && post.headings && post.headings.length > 0) {
-      return post.headings.map((heading) => {
-        const baseId = generateHeadingId(heading.text)
-        const count = headingCounts.get(baseId) ?? 0
-        const uniqueId = count === 0 ? baseId : `${baseId}-${count + 1}`
-        
-        headingCounts.set(baseId, count + 1)
-        
-        return {
-          heading: heading.text,
-          headingId: uniqueId,
-        }
-      })
+      return post.headings.map((heading) => ({
+        heading: heading.text,
+        headingId: heading.id, // parseHeadingsText()で既に生成済み
+      }))
     }
 
     // sectionsを使用している場合は従来通り

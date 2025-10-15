@@ -58,7 +58,6 @@
     "@vercel/analytics": "^1.2.2",
     "@vercel/blob": "^1.1.1",
     "autoprefixer": "^10.4.20",
-    "cheerio": "^1.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^0.2.1",
