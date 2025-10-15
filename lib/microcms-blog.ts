@@ -18,14 +18,12 @@ export type MicroCMSBlogPost = {
   heroImageAlt?: string
   sections: {
     heading?: string
-    body?: string[]
-    list?: string[]
+    body?: string      // 改行区切りの文字列
+    list?: string      // 改行区切りの文字列
     image?: string
     imageAlt?: string
-    table?: {
-      headers: string[]
-      rows: string[][]
-    }
+    tableHeaders?: string  // カンマ区切りの文字列
+    tableRows?: string     // 改行区切り、各行はカンマ区切り
   }[]
   publishedAt?: string
   updatedAt?: string
@@ -44,7 +42,53 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: 
     date: post.date,
     heroImage: post.heroImage,
     heroImageAlt: post.heroImageAlt,
-    sections: post.sections,
+    sections: post.sections.map((section) => {
+      const converted: any = {
+        heading: section.heading,
+        image: section.image,
+        imageAlt: section.imageAlt,
+      }
+
+      // body: 改行区切り → 配列に変換
+      if (section.body) {
+        converted.body = section.body
+          .split("\n")
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0)
+      }
+
+      // list: 改行区切り → 配列に変換
+      if (section.list) {
+        converted.list = section.list
+          .split("\n")
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0)
+      }
+
+      // table: tableHeadersとtableRowsから構築
+      if (section.tableHeaders && section.tableRows) {
+        const headers = section.tableHeaders
+          .split(",")
+          .map((h) => h.trim())
+          .filter((h) => h.length > 0)
+
+        const rows = section.tableRows
+          .split("\n")
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0)
+          .map((row) =>
+            row
+              .split(",")
+              .map((cell) => cell.trim())
+          )
+
+        if (headers.length > 0 && rows.length > 0) {
+          converted.table = { headers, rows }
+        }
+      }
+
+      return converted
+    }),
     // readingTimeはフォールバックとして設定（後で自動計算される）
     readingTime: "5分",
   }
