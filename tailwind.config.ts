@@ -91,22 +91,22 @@ const config = {
               fontWeight: '600',
             },
             h1: {
-              fontSize: '2.25rem',
+              fontSize: '1.8rem',
               marginTop: '0',
               marginBottom: '1rem',
             },
             h2: {
-              fontSize: '1.875rem',
+              fontSize: '1.5rem',
               marginTop: '2rem',
               marginBottom: '1rem',
             },
             h3: {
-              fontSize: '1.5rem',
+              fontSize: '1.25rem',
               marginTop: '1.5rem',
               marginBottom: '0.75rem',
             },
             h4: {
-              fontSize: '1.25rem',
+              fontSize: '1.15rem',
               marginTop: '1.25rem',
               marginBottom: '0.5rem',
             },
