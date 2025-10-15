@@ -218,6 +218,12 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                         <LinkifyText text={paragraph} />
                       </p>
                     ))}
+                    {section.richtext ? (
+                      <div 
+                        className="prose prose-neutral max-w-none dark:prose-invert"
+                        dangerouslySetInnerHTML={{ __html: section.richtext }}
+                      />
+                    ) : null}
                     {section.table ? (
                       <div className="overflow-x-auto mt-4">
                         <table className="min-w-full border-collapse border border-neutral-300 dark:border-neutral-700">
