@@ -12,7 +12,6 @@ import Script from "next/script"
 import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
-import TableOfContents from "@/components/blog/TableOfContents"
 import { generateHeadingId } from "@/lib/heading-id"
 import { addIdsToHeadings } from "@/lib/extract-headings"
 import type { BlogPostSection } from "@/lib/blog-posts.types"
@@ -225,8 +224,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 </div>
               ) : null}
             </header>
-
-            <TableOfContents sections={sectionsWithHeadingIds} />
 
             {/* contentHtmlがある場合はそれを表示（リッチエディタV2） */}
             {post.contentHtml ? (
