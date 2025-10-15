@@ -14,6 +14,7 @@ import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
 import TableOfContents from "@/components/blog/TableOfContents"
 import { generateHeadingId } from "@/lib/heading-id"
+import { addIdsToHeadings } from "@/lib/extract-headings"
 import type { BlogPostSection } from "@/lib/blog-posts.types"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
@@ -149,7 +150,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     const headingCounts = new Map<string, number>()
 
     // contentHtmlを使用している場合はheadingsから目次を生成（IDは既に含まれている）
-    if (post.contentHtml && post.headings && post.headings.length > 0) {
+    if (post.contentHtml && post.headings && Array.isArray(post.headings) && post.headings.length > 0) {
       return post.headings.map((heading) => ({
         heading: heading.text,
         headingId: heading.id, // parseHeadingsText()で既に生成済み
@@ -232,14 +233,8 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               <div 
                 className="prose prose-lg prose-neutral max-w-none dark:prose-invert mt-12"
                 dangerouslySetInnerHTML={{ 
-                  __html: post.headings && post.headings.length > 0
-                    ? addIdsToHeadings(
-                        post.contentHtml,
-                        post.headings.map((h, i) => ({
-                          ...h,
-                          id: sectionsWithHeadingIds[i]?.headingId ?? generateHeadingId(h.text)
-                        }))
-                      )
+                  __html: post.headings && Array.isArray(post.headings) && post.headings.length > 0
+                    ? addIdsToHeadings(post.contentHtml, post.headings)
                     : post.contentHtml
                 }}
               />
