@@ -44,6 +44,42 @@ export function parseHeadingsText(headingsText: string): Array<BlogHeading & { i
 }
 
 /**
+ * HTMLから見出しを自動抽出してID付きの配列を生成
+ * @param html HTML文字列
+ * @returns 見出しの配列（ID付き）
+ */
+export function extractHeadingsFromHtml(html: string): Array<BlogHeading & { id: string }> {
+  if (!html) {
+    return []
+  }
+
+  const headingCounts = new Map<string, number>()
+  const headings: Array<BlogHeading & { id: string }> = []
+
+  // h2〜h6タグを順番に抽出
+  const headingRegex = /<h([2-6])(?![^>]*\sid=)[^>]*>(.*?)<\/h\1>/gi
+  let match
+
+  while ((match = headingRegex.exec(html)) !== null) {
+    const level = parseInt(match[1]) as 2 | 3 | 4 | 5 | 6
+    // HTMLタグを除去してテキストのみ抽出
+    const text = match[2].replace(/<[^>]+>/g, '').trim()
+
+    if (!text) continue
+
+    // ユニークなIDを生成
+    const baseId = generateHeadingId(text)
+    const count = headingCounts.get(baseId) ?? 0
+    const uniqueId = count === 0 ? baseId : `${baseId}-${count + 1}`
+    headingCounts.set(baseId, count + 1)
+
+    headings.push({ text, level, id: uniqueId })
+  }
+
+  return headings
+}
+
+/**
  * HTMLの見出しにID属性を追加（正規表現ベース）
  * @param html 元のHTML
  * @param headings 見出し情報（ID付き）
@@ -58,20 +94,23 @@ export function addIdsToHeadings(
   }
 
   let result = html
+  let headingIndex = 0
   
-  headings.forEach((heading) => {
-    // 見出しテキストをエスケープ
-    const escapedText = heading.text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  // h2〜h6タグを順番に探してIDを付与
+  result = result.replace(/<h([2-6])(?![^>]*\sid=)([^>]*)>(.*?)<\/h\1>/gi, (match, level, attrs, content) => {
+    if (headingIndex >= headings.length) {
+      return match // 見出しリストを超えた場合はそのまま
+    }
     
-    // 該当レベルの見出しタグを検索（既にID属性がない場合のみ）
-    const regex = new RegExp(
-      `<h${heading.level}(?![^>]*\\sid=)([^>]*)>\\s*${escapedText}\\s*</h${heading.level}>`,
-      'i'
-    )
+    const heading = headings[headingIndex]
     
-    result = result.replace(regex, (match, attrs) => {
-      return `<h${heading.level}${attrs} id="${heading.id}">${heading.text}</h${heading.level}>`
-    })
+    // レベルが一致する場合のみIDを付与
+    if (parseInt(level) === heading.level) {
+      headingIndex++
+      return `<h${level}${attrs} id="${heading.id}">${content}</h${level}>`
+    }
+    
+    return match
   })
 
   return result
