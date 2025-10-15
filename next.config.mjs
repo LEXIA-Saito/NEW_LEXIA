@@ -5,7 +5,6 @@ const nextConfig = {
   compress: true,
   
   // Performance optimizations
-  swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production' ? {
       exclude: ['error', 'warn'],
@@ -28,7 +27,6 @@ const nextConfig = {
       'framer-motion',
       'recharts',
     ],
-    optimizeCss: true,
     webpackBuildWorker: true,
   },
   
