@@ -145,7 +145,7 @@ import { extractHeadingsFromHtml, parseHeadingsText } from './extract-headings'
 
 export type MicroCMSBlogPost = {
   // ... 既存フィールド
-  headingsText?: string // テキストエリア：改行区切りの見出しリスト
+  headings?: string // テキストエリア：改行区切りの見出しリスト
 }
 
 // データ変換処理
@@ -153,8 +153,8 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost {
   return {
     // ... 既存フィールド
     headings: post.contentHtml 
-      ? (post.headingsText && post.headingsText.trim().length > 0
-          ? parseHeadingsText(post.headingsText) // 手動設定があれば優先
+      ? (post.headings && post.headings.trim().length > 0
+          ? parseHeadingsText(post.headings) // 手動設定があれば優先
           : extractHeadingsFromHtml(post.contentHtml)) // なければ自動抽出
       : undefined
   }

@@ -20,7 +20,7 @@ export type MicroCMSBlogPost = {
   // アプローチA: contentHtml（リッチエディタV2で全文を管理）
   contentHtml?: string
   // contentHtml使用時の目次用見出し情報（テキストエリア：改行区切り）
-  headingsText?: string
+  headings?: string
   // アプローチB: sections（構造化データ）
   sections?: {
     heading?: string
@@ -70,10 +70,10 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: 
     // contentHtmlがある場合はそれを使用
     contentHtml: post.contentHtml,
     // contentHtml使用時の見出し情報（目次用）
-    // 1. headingsTextがあればパース、2. なければHTMLから自動抽出
+    // 1. headingsテキストエリアがあればパース、2. なければHTMLから自動抽出
     headings: post.contentHtml 
-      ? (post.headingsText && post.headingsText.trim().length > 0
-          ? parseHeadingsText(post.headingsText) 
+      ? (post.headings && post.headings.trim().length > 0
+          ? parseHeadingsText(post.headings) 
           : extractHeadingsFromHtml(post.contentHtml))
       : undefined,
     // sectionsがある場合は変換、ない場合は空配列
