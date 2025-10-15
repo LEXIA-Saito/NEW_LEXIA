@@ -108,35 +108,35 @@ html {
   }
 }
 
-/* Blog article typography adjustments - smaller font sizes */
+/* Blog article typography adjustments - smaller font sizes with responsive design */
 @layer components {
   .prose {
-    @apply text-base leading-7;
+    @apply text-sm md:text-base leading-6 md:leading-7;
   }
 
   .prose h1 {
-    @apply text-3xl font-semibold mt-8 mb-4;
+    @apply text-2xl md:text-3xl font-semibold mt-6 md:mt-8 mb-3 md:mb-4;
   }
 
   .prose h2 {
-    @apply text-xl font-semibold mt-6 mb-3;
+    @apply text-lg md:text-xl font-semibold mt-5 md:mt-6 mb-2 md:mb-3;
   }
 
   .prose h3 {
-    @apply text-lg font-semibold mt-5 mb-2;
+    @apply text-base md:text-lg font-semibold mt-4 md:mt-5 mb-2;
   }
 
   .prose h4 {
-    @apply text-base font-semibold mt-4 mb-2;
+    @apply text-sm md:text-base font-semibold mt-3 md:mt-4 mb-2;
   }
 
   .prose p {
-    @apply text-base leading-relaxed my-3;
+    @apply text-sm md:text-base leading-relaxed my-2 md:my-3;
   }
 
   .prose ul,
   .prose ol {
-    @apply text-base my-4;
+    @apply text-sm md:text-base my-3 md:my-4;
   }
 
   .prose li {
@@ -144,14 +144,14 @@ html {
   }
 
   .prose blockquote {
-    @apply text-base;
+    @apply text-sm md:text-base;
   }
 
   .prose code {
-    @apply text-sm;
+    @apply text-xs md:text-sm;
   }
 
   .prose pre {
-    @apply text-sm;
+    @apply text-xs md:text-sm;
   }
 }

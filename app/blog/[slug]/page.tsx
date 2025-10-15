@@ -203,11 +203,11 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               />
             ) : (
               /* sectionsがある場合は従来の構造化表示 */
-              <div className="space-y-12 text-neutral-800 dark:text-neutral-200">
+              <div className="space-y-8 md:space-y-12 text-neutral-800 dark:text-neutral-200">
                 {(post.sections ?? []).map((section, index) => (
                   <section key={section.heading ?? index}>
                     {section.heading ? (
-                      <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
+                      <h2 className="text-lg md:text-xl font-semibold text-neutral-900 dark:text-neutral-100">
                         <LinkifyText text={section.heading} />
                       </h2>
                     ) : null}
