@@ -16,7 +16,10 @@ export type MicroCMSBlogPost = {
   date: string
   heroImage?: string
   heroImageAlt?: string
-  sections: {
+  // アプローチA: contentHtml（リッチエディタV2で全文を管理）
+  contentHtml?: string
+  // アプローチB: sections（構造化データ）
+  sections?: {
     heading?: string
     body?: string      // 改行区切りの文字列（プレーンテキスト）
     richtext?: string  // リッチエディタV2（HTML）
@@ -51,7 +54,10 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: 
     date: post.date,
     heroImage: post.heroImage,
     heroImageAlt: post.heroImageAlt,
-    sections: post.sections.map((section) => {
+    // contentHtmlがある場合はそれを使用
+    contentHtml: post.contentHtml,
+    // sectionsがある場合は変換、ない場合は空配列
+    sections: post.sections ? post.sections.map((section) => {
       const converted: any = {
         heading: section.heading,
         image: section.image,
@@ -102,7 +108,7 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: 
       }
 
       return converted
-    }),
+    }) : [],
     // readingTimeはフォールバックとして設定（後で自動計算される）
     readingTime: "5分",
   }

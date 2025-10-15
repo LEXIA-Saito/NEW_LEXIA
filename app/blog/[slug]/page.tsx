@@ -205,19 +205,27 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
 
             <TableOfContents sections={sectionsWithHeadingIds} />
 
-            <div className="space-y-12 text-neutral-800 dark:text-neutral-200">
-              {sectionsWithHeadingIds.map((section, index) => (
-                <section
-                  key={section.heading ?? index}
-                  id={section.headingId}
-                >
-                  {section.heading ? (
-                    <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 scroll-mt-24">
-                      <LinkifyText text={section.heading} />
-                    </h2>
-                  ) : null}
-                  {section.image ? (
-                    <div className="mt-4">
+            {/* contentHtmlがある場合はそれを表示（リッチエディタV2） */}
+            {post.contentHtml ? (
+              <div 
+                className="prose prose-lg prose-neutral max-w-none dark:prose-invert mt-12"
+                dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+              />
+            ) : (
+              /* sectionsがある場合は従来の構造化表示 */
+              <div className="space-y-12 text-neutral-800 dark:text-neutral-200">
+                {sectionsWithHeadingIds.map((section, index) => (
+                  <section
+                    key={section.heading ?? index}
+                    id={section.headingId}
+                  >
+                    {section.heading ? (
+                      <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 scroll-mt-24">
+                        <LinkifyText text={section.heading} />
+                      </h2>
+                    ) : null}
+                    {section.image ? (
+                      <div className="mt-4">
                       <Image
                         src={section.image}
                         alt={section.imageAlt ?? section.heading ?? `${post.title} image ${index + 1}`}
@@ -289,13 +297,8 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                   </div>
                 </section>
               ))}
-
-              {post.contentHtml ? (
-                <section className="prose prose-neutral max-w-none dark:prose-invert">
-                  <div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
-                </section>
-              ) : null}
             </div>
+            )}
 
             {(sameGenrePosts.length > 0 || latestPosts.length > 0) && (
               <section className="mt-16">
