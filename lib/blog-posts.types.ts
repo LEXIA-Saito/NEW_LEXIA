@@ -1,6 +1,7 @@
 export type BlogPostSection = {
   heading?: string
   body?: string[]
+  richtext?: string  // リッチエディタV2（HTML）
   image?: string
   imageAlt?: string
   list?: string[]

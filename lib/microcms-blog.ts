@@ -18,7 +18,8 @@ export type MicroCMSBlogPost = {
   heroImageAlt?: string
   sections: {
     heading?: string
-    body?: string      // 改行区切りの文字列
+    body?: string      // 改行区切りの文字列（プレーンテキスト）
+    richtext?: string  // リッチエディタV2（HTML）
     list?: string      // 改行区切りの文字列
     image?: string
     imageAlt?: string
@@ -49,12 +50,17 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: 
         imageAlt: section.imageAlt,
       }
 
-      // body: 改行区切り → 配列に変換
+      // body: 改行区切り → 配列に変換（プレーンテキスト）
       if (section.body) {
         converted.body = section.body
           .split("\n")
           .map((line) => line.trim())
           .filter((line) => line.length > 0)
+      }
+
+      // richtext: そのままHTML文字列として保持
+      if (section.richtext) {
+        converted.richtext = section.richtext
       }
 
       // list: 改行区切り → 配列に変換
