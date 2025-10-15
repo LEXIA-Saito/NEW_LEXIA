@@ -96,18 +96,30 @@ function formatJapaneseDate(date: string) {
 }
 
 export default async function BlogArticlePage({ params }: BlogArticlePageProps) {
-  const post = await fetchBlogPost(params.slug)
+  try {
+    const post = await fetchBlogPost(params.slug)
 
-  if (!post) {
-    notFound()
-  }
+    if (!post) {
+      console.error(`[BlogArticlePage] Post not found: ${params.slug}`)
+      notFound()
+    }
 
-  const allPosts = await fetchBlogPosts()
-  const sameGenrePosts = allPosts
-    .filter((p) => p.slug !== post.slug && p.genre === post.genre)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 3)
-  const latestPosts = allPosts
+    // データの整合性チェック
+    if (!post.title || !post.slug || !post.date) {
+      console.error(`[BlogArticlePage] Invalid post data for slug: ${params.slug}`, {
+        title: post.title,
+        slug: post.slug,
+        date: post.date,
+      })
+      notFound()
+    }
+
+    const allPosts = await fetchBlogPosts()
+    const sameGenrePosts = allPosts
+      .filter((p) => p.slug !== post.slug && p.genre === post.genre)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 3)
+    const latestPosts = allPosts
     .filter((p) => p.slug !== post.slug && !sameGenrePosts.find((s) => s.slug === p.slug))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3)
@@ -444,4 +456,8 @@ var u=this||self;function v(a,b){a:{var c=["CLOSURE_FLAGS"];for(var d=u,e=0;e<c.
       />
     </>
   )
+  } catch (error) {
+    console.error(`[BlogArticlePage] Error rendering page for slug: ${params.slug}`, error)
+    notFound()
+  }
 }
