@@ -31,7 +31,8 @@ const BLOG_GENRE_LIST = (Object.keys(GENRE_METADATA) as BlogGenre[]).map((id) =>
 // If microCMS is unavailable, fallback to local data in blog-posts-fallback.ts
 
 // Temporary: Exclude problematic slugs from microCMS
-const EXCLUDED_SLUGS = ['bolt-new-ai-code-generator']
+// TODO: Remove slugs from this list after fixing the data in microCMS
+const EXCLUDED_SLUGS: string[] = []
 
 // --- Reading Time Calculation ------------------------------------------------
 // NOTE: Reading time calculation logic has been moved to lib/reading-time.ts
