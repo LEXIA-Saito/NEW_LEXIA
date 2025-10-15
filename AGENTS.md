@@ -26,15 +26,11 @@ microCMS管理画面で以下のフィールドを設定:
   date: "2025-10-15",
   heroImage: { url: "https://.../hero.webp" },
   contentHtml: "<h2>見出し1</h2><p>本文...</p><h2>見出し2</h2>...",
-  headings: [
-    { text: "見出し1", level: 2 },
-    { text: "見出し2", level: 2 }
-  ]
+  // headingsフィールドは省略可能 - contentHtmlから自動抽出されます
 }
 ```
 
-**重要**: `headings` は目次表示に必要です。記事内の見出しと完全一致するテキスト・順序で入力してください。
-詳細: [MICROCMS_HEADINGS_GUIDE.md](./MICROCMS_HEADINGS_GUIDE.md)
+**重要**: 目次（ToC）は `contentHtml` 内のh2〜h6タグから自動的に抽出されます。`headings` フィールドは省略できます。手動でカスタマイズしたい場合のみ設定してください。
 
 ### 2. 構造化データ使用時（sections）
 
