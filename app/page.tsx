@@ -67,9 +67,7 @@ export default function Home() {
         <Hero />
       </section>
 
-      <section id="about" className="py-24 md:py-32 below-fold">
-        <About />
-      </section>
+      <BlogPreview />
 
       <section id="services" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
         <ServicesCTA />
@@ -89,11 +87,14 @@ export default function Home() {
         <Team />
       </section>
 
-      <BlogPreview />
+      <section id="about" className="py-24 md:py-32 below-fold">
+        <About />
+      </section>
 
       <section id="contact" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
         <Contact />
       </section>
+
       <Footer />
       <Script
         id="home-jsonld"
