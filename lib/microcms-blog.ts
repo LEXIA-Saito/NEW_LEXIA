@@ -34,12 +34,20 @@ export type MicroCMSBlogPost = {
  * microCMSの記事データをアプリケーション内部の型に変換
  */
 function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: string } {
+  // 必須フィールドのバリデーション
+  if (!post.slug || typeof post.slug !== "string" || post.slug.trim().length === 0) {
+    throw new Error(`Invalid slug in microCMS post: ${JSON.stringify(post)}`)
+  }
+  if (!post.title || typeof post.title !== "string") {
+    throw new Error(`Invalid title in microCMS post with slug: ${post.slug}`)
+  }
+  
   const blogPost: BlogPost = {
-    slug: post.slug,
+    slug: post.slug.trim(),
     title: post.title,
-    description: post.description,
-    genre: post.genre,
-    tags: post.tags,
+    description: post.description || "",
+    genre: post.genre || "tech",
+    tags: Array.isArray(post.tags) ? post.tags : [],
     date: post.date,
     heroImage: post.heroImage,
     heroImageAlt: post.heroImageAlt,
@@ -124,7 +132,24 @@ export async function fetchMicroCMSBlogPosts(
       },
     )
 
-    return response.contents.map(convertMicroCMSPost)
+    // レスポンスデータのバリデーション
+    if (!response || !Array.isArray(response.contents)) {
+      console.warn("Invalid response from microCMS:", response)
+      return []
+    }
+
+    // 各記事を変換し、エラーがあるものはスキップ
+    const validPosts: (BlogPost & { readingTime: string })[] = []
+    for (const post of response.contents) {
+      try {
+        validPosts.push(convertMicroCMSPost(post))
+      } catch (conversionError) {
+        console.error("Failed to convert microCMS post:", conversionError)
+        // 変換エラーがあった記事はスキップして続行
+      }
+    }
+
+    return validPosts
   } catch (error) {
     console.error("Failed to fetch blog posts from microCMS:", error)
     throw error
