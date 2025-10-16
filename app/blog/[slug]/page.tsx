@@ -367,7 +367,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
 
             <footer className="mt-16 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300">
               <p>
-                WEB制作事業LEXIAがWEB制作技術やITの最新トレンドを発信します。
+                このブログの運営はホームページ制作やデザイン制作、動画制作などを行うWEB制作事業LEXIA（レキシア）が行っています。
               </p>
               <p className="mt-4">
                 <Link
