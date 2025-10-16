@@ -13,6 +13,7 @@ import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
 import type { BlogPostSection } from "@/lib/blog-posts.types"
+import A8Banner from "@/components/ads/A8Banner"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
@@ -286,6 +287,9 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               ))}
             </div>
             )}
+
+            {/* A8.net アフィリエイト広告 - 記事本文直後（最も効果的な配置） */}
+            <A8Banner />
 
             {(sameGenrePosts.length > 0 || latestPosts.length > 0) && (
               <section className="mt-16">
