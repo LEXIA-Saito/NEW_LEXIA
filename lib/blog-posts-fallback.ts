@@ -280,7 +280,7 @@ export const fallbackBlogPosts: BlogPost[] = [
   },
   {
     slug: "stremio-web-overview",
-    title: "Stremio / stremio-web とは？技術的価値と合法性・リスクを徹底解説 — 将来性も含めて",
+    title: "Stremio / stremio-web とは？危険性と合法性を調査 — 将来性も含めて",
     description:
       "動画体験の統合を実現するStremioとstremio-webの技術的構造、合法性、安全対策、そして将来性を包括的に解説します。",
     genre: "Full-stack",
