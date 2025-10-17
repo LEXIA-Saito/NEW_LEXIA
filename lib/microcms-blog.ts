@@ -4,7 +4,7 @@ import { withComputedReadingTime } from "./reading-time"
 
 /**
  * microCMSから取得するブログ記事の型定義
- * microCMSのAPIスキーマに合わせて調整してください
+ * 2025-10-17スキーマ変更対応
  */
 export type MicroCMSBlogPost = {
   id: string
@@ -12,13 +12,13 @@ export type MicroCMSBlogPost = {
   title: string
   description: string
   genre: BlogGenre | BlogGenre[]  // microCMSは配列で返す場合がある
-  tags: string[]
+  tags?: string[]  // オプショナル（スキーマから削除）
   date: string
   heroImage?: string | { url: string; width?: number; height?: number }  // microCMSは画像をオブジェクトで返す
   heroImageAlt?: string
   // アプローチA: contentHtml（リッチエディタV2で全文を管理）
   contentHtml?: string
-  // アプローチB: sections（構造化データ）
+  // アプローチB: sections（構造化データ - fallback互換用）
   sections?: {
     heading?: string
     body?: string      // 改行区切りの文字列（プレーンテキスト）
@@ -28,6 +28,16 @@ export type MicroCMSBlogPost = {
     imageAlt?: string
     tableHeaders?: string  // カンマ区切りの文字列
     tableRows?: string     // 改行区切り、各行はカンマ区切り
+  }[]
+  // アプローチC: custom（新スキーマ - 繰り返し本文ブロック）
+  custom?: {
+    body_text?: string  // リッチエディタV2（HTML）
+    body_img?: { url: string } | string  // 本文中の画像
+    others_cta?: {
+      id: string
+      slug?: string
+      title?: string
+    }  // 他記事導線
   }[]
   publishedAt?: string
   updatedAt?: string
@@ -55,17 +65,32 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: 
     ? (typeof post.heroImage === 'string' ? post.heroImage : post.heroImage.url)
     : undefined
   
+  // customフィールド（新スキーマ）の処理
+  const customBlocks = post.custom?.map((block) => {
+    const imageUrl = block.body_img 
+      ? (typeof block.body_img === 'string' ? block.body_img : block.body_img.url)
+      : undefined
+
+    return {
+      body_text: block.body_text,
+      body_img: imageUrl,
+      others_cta: block.others_cta,
+    }
+  })
+
   const blogPost: BlogPost = {
     slug: post.slug.trim(),
     title: post.title,
     description: post.description || "",
     genre: genre,
-    tags: Array.isArray(post.tags) ? post.tags : undefined, // tagsが存在しない場合はundefined
+    tags: Array.isArray(post.tags) && post.tags.length > 0 ? post.tags : undefined, // tagsが存在しない場合はundefined
     date: post.date,
     heroImage: heroImage,
     heroImageAlt: post.heroImageAlt,
     // contentHtmlがある場合はそれを使用
     contentHtml: post.contentHtml,
+    // customブロック（新スキーマ）
+    custom: customBlocks,
     // sectionsがある場合は変換、ない場合は空配列
     sections: post.sections ? post.sections.map((section) => {
       const converted: any = {
