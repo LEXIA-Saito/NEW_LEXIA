@@ -133,6 +133,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     author: {
       "@type": "Person",
       name: "齋藤雅人",
+      url: `${SITE_URL.replace(/\/$/, "")}/team/masato-saito`,
     },
     publisher: {
       "@type": "Organization",
@@ -165,7 +166,16 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 <span aria-hidden="true">•</span>
                 <span>{post.readingTime}</span>
                 <span aria-hidden="true">•</span>
-                <span>執筆：齋藤雅人</span>
+                <span>
+                  執筆：
+                  <Link 
+                    href="/team/masato-saito" 
+                    className="text-neutral-700 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100 underline-offset-4 hover:underline transition-colors"
+                    aria-label="齋藤雅人のプロフィールを見る"
+                  >
+                    齋藤雅人
+                  </Link>
+                </span>
               </div>
               {post.tags && post.tags.length > 0 ? (
                 <div className="mt-4 flex flex-wrap gap-2 text-xs font-medium text-neutral-500 dark:text-neutral-400">
