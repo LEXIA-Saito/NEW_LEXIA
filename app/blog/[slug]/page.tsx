@@ -206,14 +206,57 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               ) : null}
             </header>
 
-            {/* contentHtmlがある場合はそれを表示（リッチエディタV2） */}
+            {/* 優先度1: contentHtml（リッチエディタV2全文） */}
             {post.contentHtml ? (
               <div 
                 className="prose prose-neutral max-w-none dark:prose-invert mt-12"
                 dangerouslySetInnerHTML={{ __html: post.contentHtml }}
               />
+            ) : post.custom && post.custom.length > 0 ? (
+              /* 優先度2: custom（新スキーマ - 繰り返し本文ブロック） */
+              <div className="space-y-8 md:space-y-12 mt-12">
+                {post.custom.map((block, index) => (
+                  <div key={index} className="space-y-6">
+                    {/* 本文テキスト（リッチエディタV2） */}
+                    {block.body_text && (
+                      <div 
+                        className="prose prose-neutral max-w-none dark:prose-invert"
+                        dangerouslySetInnerHTML={{ __html: block.body_text }}
+                      />
+                    )}
+                    
+                    {/* 本文中の画像 */}
+                    {block.body_img && (
+                      <div className="mt-6">
+                        <Image
+                          src={block.body_img}
+                          alt={`記事画像 ${index + 1}`}
+                          width={1200}
+                          height={700}
+                          className="w-full rounded-lg object-cover"
+                        />
+                      </div>
+                    )}
+                    
+                    {/* 他記事導線（CTA） */}
+                    {block.others_cta && (
+                      <div className="mt-6 p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
+                        <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2">
+                          関連記事
+                        </p>
+                        <Link 
+                          href={`/blog/${block.others_cta.slug || block.others_cta.id}`}
+                          className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                        >
+                          {block.others_cta.title || "関連記事を読む"}
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             ) : (
-              /* sectionsがある場合は従来の構造化表示 */
+              /* 優先度3: sections（従来の構造化表示 - fallback用） */
               <div className="space-y-8 md:space-y-12 text-neutral-800 dark:text-neutral-200">
                 {(post.sections ?? []).map((section, index) => (
                   <section key={section.heading ?? index}>
