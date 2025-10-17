@@ -1260,122 +1260,6 @@ fallbackBlogPosts.push({
   ],
 })
 
-
-// Append XYFlow post to the fallback posts array
-fallbackBlogPosts.push({
-  slug: "xyflow-overview-2025",
-  title: "XYFlow（React Flow 後継）入門：モダンなノード・グラフエディタをプロダクションへ",
-  description:
-    "GitHub トレンド入りの XYFlow を一次情報ベースで整理。主要機能、活用シーン、導入手順、運用のコツをまとめました。",
-  genre: "Frontend",
-  tags: ["XYFlow", "React Flow", "グラフ", "ノードエディタ"],
-  date: "2025-10-11",
-  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/xyflow/xyflow-playground-screenshot.webp",
-  heroImageAlt: "XYFlow Playground のスクリーンショット",
-  sections: [
-    {
-      heading: "はじめに：なぜいま XYFlow が注目？",
-      body: [
-        "ワークフロー・データフロー・オートメーションなど、ノードとエッジで表現する UI 需要が急増しています。XYFlow は React Flow の流れを汲むモダンなグラフエンジンで、実装とデザインの両立、拡張性、開発体験の良さが評価され GitHub トレンド入りしています。",
-        "本記事では XYFlow のコア機能と導入方法、プロダクションでの運用ポイントを初学者にも分かる形で整理します。",
-      ],
-    },
-    {
-      heading: "XYFlow とは",
-      body: [
-        "XYFlow は、キャンバス上にノード（処理単位）とエッジ（接続）を配置して、対話的にフローを構築できるオープンソースの UI コンポーネント群です。",
-        "拡張が容易で、カスタムノード・独自のエッジ形状・コンテキストメニュー・ズーム/パン・スナップなど、実用的な機能が標準で揃います。",
-      ],
-      list: [
-        "React を中心に、他フレームワーク向けアダプタも整備が進行",
-        "ドラッグ＆ドロップ、ズーム/パン、選択、スナップなどの基本操作",
-        "カスタムノード/エッジの拡張 API と豊富なイベント",
-        "レイアウト、マルチビュー、ミニマップなどの UX 補助",
-      ],
-      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/xyflow/react-flow-animated-example.gif",
-      imageAlt: "XYFlow/React Flow 系のアニメーション動作例",
-    },
-    {
-      heading: "主なユースケース",
-      list: [
-        "業務フロー/オートメーションのビルダー UI（IFTTT 的な体験）",
-        "データパイプライン/ETL、IoT のシグナル伝搬可視化",
-        "ゲーム/クリエイティブツールのノードベース編集",
-        "コーディング教育/可視化、AI エージェントのプラン表示",
-      ],
-    },
-    {
-      heading: "導入（React の例）",
-      body: [
-        "1) パッケージを追加",
-        "npm i @xyflow/react",
-        "2) ベースとなるコンポーネントを配置（最小構成）",
-        "import { ReactFlow } from '@xyflow/react'",
-        "export default function Graph() { return <div style={{height:400}}><ReactFlow /></div> }",
-        "3) 状態制御：nodes, edges, onNodesChange, onEdgesChange を useState/useCallback で制御し、コントロール可能な描画に",
-        "4) カスタムノード/エッジやミニマップ、背景グリッドを必要に応じて追加",
-      ],
-    },
-    {
-      heading: "開発・運用のコツ（プロダクション視点）",
-      list: [
-        "制御型（controlled）で状態を一元管理：コラボや Undo/Redo に強い",
-        "仮想化/可視範囲の工夫：ノード数が多い場合のパフォーマンス確保",
-        "レイアウトは段階的に：自動整列（Dagre など）と手動調整の併用",
-        "永続化は差分保存：全量よりも操作差分（op）で履歴/スナップショット",
-        "アクセシビリティ：キーボード操作とフォーカスリングを明確に",
-      ],
-    },
-    {
-      heading: "他ツールとの比較（要点）",
-      table: {
-        headers: ["観点", "XYFlow", "D3.js", "GoJS/商用"],
-        rows: [
-          ["学習/導入コスト", "低〜中（React 前提）", "中（自由度高い）", "中（ドキュメント充実）"],
-          ["拡張性", "高い（カスタム容易）", "最高（生DOM制御）", "高い（機能多い）"],
-          ["速度/描画", "実運用十分", "最適化次第", "最適化済み"],
-          ["ライセンス", "OSS（要確認）", "OSS", "商用ライセンス"],
-        ],
-      },
-    },
-    {
-      heading: "よくある落とし穴",
-      list: [
-        "巨大グラフを一気に描画→初回コストが跳ねる：段階的レンダリングを",
-        "カスタムノードの再レンダリング頻発：memo 化や選択的更新を徹底",
-        "座標/スケールの取り扱い：ズーム時のヒットテスト/座標変換に注意",
-        "ドラッグ操作とスクロール/選択の競合：優先度とハンドラ設計を整理",
-      ],
-    },
-    {
-      heading: "まとめ",
-      body: [
-        "XYFlow は“つくりやすさ”と“拡張性”を両立したグラフ/ノードエディタ基盤です。PoC からプロダクションまでスムーズに繋げやすく、開発速度と UI 品質を両立できます。",
-        "業務フローやデータフローの可視化が求められるプロジェクトで、まず検討すべき選択肢の一つと言えるでしょう。",
-      ],
-    },
-    {
-      heading: "ブランドロゴ（ダーク）",
-      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/xyflow/xyflow-logo-dark.svg",
-      imageAlt: "XYFlow ロゴ（ダークバージョン）",
-    },
-    {
-      heading: "ブランドロゴ（ライト）",
-      image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/xyflow/xyflow-logo-light.svg",
-      imageAlt: "XYFlow ロゴ（ライトバージョン）",
-    },
-    {
-      heading: "参考リンク",
-      list: [
-        "GitHub: xyflow/xyflow",
-        "https://github.com/xyflow/xyflow",
-        "ドキュメント/サイト（該当する場合）",
-        "https://xyflow.com/",
-      ],
-    },
-  ],
-})
-
 // Append LanceDB post to the fallback posts array
 fallbackBlogPosts.push({
   slug: "lancedb-vector-search-guide",
@@ -1385,8 +1269,9 @@ fallbackBlogPosts.push({
   genre: "AI",
   tags: ["AI", "VectorDB", "Rust", "Python", "Database"],
   date: "2025-10-14",
-  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/LanceDB/vector-db-architecture.webp",
-  heroImageAlt: "ベクトルデータベースのアーキテクチャ概念図",
+  heroImage:
+    "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/lancedb/lancedb-architecture-illustration.webp",
+  heroImageAlt: "LanceDB の基本アーキテクチャと検索フロー図解",
   sections: [
     {
       heading: "この記事でわかること",
