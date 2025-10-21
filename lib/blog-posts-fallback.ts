@@ -2,64 +2,6 @@ import { BlogPost } from "./blog-posts.types"
 
 export const fallbackBlogPosts: BlogPost[] = [
   {
-    slug: "infisical-introduction",
-    title: "Infisical: オープンソースのシークレット管理プラットフォーム",
-    description: "GitHubでトレンドになっているInfisicalは、開発チームとインフラストラクチャ全体でシークレットを同期し、シークレットの漏洩を防ぐためのオープンソースプラットフォームです。この記事では、Infisicalの主な機能と始め方について解説します。",
-    genre: "Security",
-    tags: ["Infisical", "セキュリティ", "オープンソース"],
-    date: "2025-10-09",
-    latest_update: "2025-10-09",
-    heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/cover.webp",
-    heroImageAlt: "Infisical のロゴとダッシュボードイメージ",
-    sections: [
-      {
-        heading: "はじめに",
-        body: [
-          "開発プロセスにおいて、APIキーやデータベースの認証情報などの「シークレット」の管理は、セキュリティを確保する上で非常に重要です。これらの情報を安全に、かつ効率的にチームやインフラ間で共有するためのツールとして、オープンソースのシークレット管理プラットフォーム「Infisical」が注目を集めています。",
-          "Infisicalは、GitHubのトレンドリポジトリにも登場するほど人気があり、開発者体験全体を再設計することで、セキュリティツールを誰もが利用しやすいものにすることを目指しています。"
-        ],
-        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/Infisical-logo.webp",
-        imageAlt: "Infisical のロゴ",
-      },
-      {
-        heading: "Infisicalの主な機能",
-        body: [
-          "Infisicalは、シークレット管理を容易にするための多くの機能を提供しています。"
-        ],
-        list: [
-          "ダッシュボードによる一元管理: 使いやすいダッシュボードで、プロジェクトや環境ごとにシークレットを一元管理できます。",
-          "ネイティブ統合: GitHub ActionsやVercel、AWSなどのプラットフォームとネイティブに統合できます。",
-          "バージョン管理とポイントインタイムリカバリ: シークレットの変更履歴を記録し、必要に応じて復元できます。",
-          "シークレットローテーションと動的シークレット: 定期的なローテーションや一時的なシークレットの生成が可能です。",
-          "シークレットのスキャンと漏洩防止: Gitリポジトリへのシークレットのコミットを防ぎます。"
-        ],
-        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/best-secret-management-tools.webp",
-        imageAlt: "シークレット管理ツール比較のイメージ",
-      },
-      {
-        heading: "始め方",
-        body: [
-          "Infisicalを始めるには、いくつかの方法があります。"
-        ],
-        list: [
-          "Infisical Cloud: 最も手軽な方法で、無料で利用を開始できます。",
-          "セルフホスティング: 自身のインフラで運用することも可能です。Dockerを使って簡単にセットアップできます。"
-        ]
-        ,
-        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/infisical-1500-color.webp",
-        imageAlt: "Infisical のセットアップ画面イメージ",
-      },
-      {
-        heading: "まとめ",
-        body: [
-          "Infisicalは、開発者にとって非常に強力なシークレット管理プラットフォームです。オープンソースであるため、誰でも利用でき、コミュニティによる活発な開発も行われています。シークレット管理に課題を感じている方は、ぜひ一度試してみてはいかがでしょうか。"
-        ],
-        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/secrets-management-cicd.webp",
-        imageAlt: "シークレット管理とCI/CD連携のイメージ",
-      }
-    ]
-  },
-  {
     slug: "studio-ai-status-2025",
     title: "STUDIOアップデート総点検：あの「STUDIO AI」は今どこに？",
     description:
@@ -283,30 +225,26 @@ export const fallbackBlogPosts: BlogPost[] = [
   },
 ]
 
-// Append Firebase Studio post to the fallback posts array (SEO-optimized)
+// Append Firebase Studio Getting Started Guide (detailed tutorial)
 fallbackBlogPosts.push({
-  slug: "what-is-firebase-studio-overview",
-  title: "Firebase Studioとは？Googleが描くAI時代の新しい開発環境を徹底解説",
+  slug: "firebase-studio-getting-started-lexia",
+  title: "Firebase Studioの始め方｜登録からAIプロトタイプ作成・デプロイまで完全ガイド",
   description:
-    "Firebase StudioはGoogleが提供するAI統合型クラウド開発環境（IDE）。Project IDXを継承し、Geminiによるコード生成やFirebaseとの連携を実現。この記事では、Firebase Studioの仕組み・特徴・使い方・注意点までをわかりやすく紹介します。",
+    "Firebase StudioはGoogleが提供するAI統合クラウド開発環境。ブラウザだけでアプリ開発・プレビュー・デプロイまで完結します。本記事では、ワークスペース作成、Geminiの活用、Firebase連携、Hostingへの公開手順、注意点までを公式情報に基づいて解説。",
   genre: "AI",
-  tags: ["Firebase", "AI", "開発環境"],
+  tags: ["Firebase", "AI", "開発環境", "チュートリアル"],
   date: "2025-10-14",
   latest_update: "2025-10-14",
-  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-logo-hero-banner.webp",
-  heroImageAlt: "Firebase Studioロゴとブランディング",
+  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-getting-started-tutorial-hero.webp",
+  heroImageAlt: "Firebase Studio始め方チュートリアル - ワークスペース作成からデプロイまでの完全ガイド",
   sections: [
     {
-      // 導入（冒頭パート）
       body: [
-        "AIがコードを書く時代、Googleの答えは『Firebase Studio』だった。",
-        "2025年、Googleは『Project IDX』を進化させた新たな開発環境 Firebase Studio を発表しました。クラウド上でアプリを構築し、AIがリアルタイムでサポートする——まさに次世代の開発体験です。",
-        "この記事では、Firebase Studioの概要から特徴、使い方、注意点、そして今後の展望までを、一次情報（公式ドキュメント・Google開発者ブログ）に基づいて詳しく解説します。これからFirebase Studioを試したい開発者や、AI時代の新しいIDEを探している方に最適な内容です。",
-        "画像提供: Google Firebase Studio ／ 引用元: https://firebase.studio/",
+        "本記事は一次情報（Firebase公式ドキュメント、Google Developers Blog、Firebase Blog）に基づき構成しています。Firebase Studioは現在プレビュー段階のため、機能や仕様は今後変更される可能性があります。",
       ],
     },
     {
-      heading: "Firebase Studioとは？【概要と基本コンセプト】",
+      heading: "この記事でわかること",
       body: [
         "Firebase StudioはGoogleが開発したクラウドベースのAI対応開発環境です。ブラウザ上でアプリを構築・テスト・デプロイでき、FirebaseサービスやGemini AIとシームレスに連携します。",
         "公式には“agentic cloud-based development environment”として紹介され、フロントエンド/バックエンド/モバイルを横断する開発を1つのワークスペースで完結できるよう設計されています。",
