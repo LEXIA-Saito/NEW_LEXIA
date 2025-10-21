@@ -45,13 +45,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   }
 }
 
-function formatJapaneseDate(date: string) {
-  return new Date(date).toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
-}
+import { formatJapaneseDate } from "@/lib/utils"
 
 export default async function TagIndexPage({ params }: Params) {
   const tag = params.tag

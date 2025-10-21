@@ -7,6 +7,7 @@ import Image from "next/image"
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 import type { BlogPost, BlogGenre } from "@/lib/blog-posts"
 import { getBlogGenreLabel } from "@/lib/blog-posts"
+import { formatJapaneseDate } from "@/lib/utils"
 
 type Props = {
   posts: BlogPost[]
@@ -47,7 +48,12 @@ const BlogCardItem = memo(function BlogCardItem({ post }: { post: BlogPost }) {
           <span className="rounded-full bg-neutral-100 px-3 py-1 font-medium text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
             {getBlogGenreLabel(post.genre)}
           </span>
-          <span>{post.date}</span>
+          <div className="flex flex-col gap-0.5">
+            <span>公開: {formatJapaneseDate(post.date)}</span>
+            {post.latest_update && post.latest_update !== post.date && (
+              <span>更新: {formatJapaneseDate(post.latest_update)}</span>
+            )}
+          </div>
         </div>
         <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-neutral-900 dark:text-neutral-100">
           {post.title}

@@ -83,8 +83,12 @@ async function fetchAllBlogPosts(): Promise<(BlogPost & { readingTime: string })
     const allPosts = [...filteredMicroCMSPosts, ...uniqueFallbackPosts]
     console.log(`[fetchAllBlogPosts] Total posts: ${allPosts.length} (microCMS: ${filteredMicroCMSPosts.length}, fallback: ${uniqueFallbackPosts.length})`)
     
-    // 日付順でソート
-    return allPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    // latest_update優先でソート (更新日がない場合は公開日を使用)
+    return allPosts.sort((a, b) => {
+      const dateA = new Date(a.latest_update || a.date).getTime()
+      const dateB = new Date(b.latest_update || b.date).getTime()
+      return dateB - dateA
+    })
   } catch (error) {
     console.warn('[fetchAllBlogPosts] microCMS fetch failed, using fallback posts only:', error)
     // microCMSが利用できない場合はfallbackBlogPostsのみを使用

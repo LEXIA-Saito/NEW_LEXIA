@@ -8,6 +8,7 @@ export const fallbackBlogPosts: BlogPost[] = [
     genre: "Security",
     tags: ["Infisical", "セキュリティ", "オープンソース"],
     date: "2025-10-09",
+    latest_update: "2025-10-09",
     heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/Infisical/cover.webp",
     heroImageAlt: "Infisical のロゴとダッシュボードイメージ",
     sections: [
@@ -66,6 +67,7 @@ export const fallbackBlogPosts: BlogPost[] = [
   genre: "Update",
     tags: ["Studio", "ノーコード", "AI"],
     date: "2025-10-08",
+    latest_update: "2025-10-08",
     heroImage:
       "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/studio-ai-status-2025/STUDIO%20AI%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E7%94%BB%E5%83%8F.webp",
     heroImageAlt: "Studio / STUDIO AI に関する公式ビジュアル",
@@ -150,12 +152,13 @@ export const fallbackBlogPosts: BlogPost[] = [
   },
   {
     slug: "what-is-onlook",
-    title: "Onlookとは？ReactとTailwindを直感的に操る“デザイナー向けCursor”の全貌",
+    title: "Onlookとは？ReactとTailwindを直感的に操る\"デザイナー向けCursor\"の全貌",
     description:
       "コードとデザインの境界を溶かす次世代ビジュアルエディタ「Onlook」の特徴、アーキテクチャ、利点と課題をLEXIA視点で解説します。",
     genre: "tech",
     tags: ["Onlook", "React", "Tailwind"],
     date: "2025-10-06",
+    latest_update: "2025-10-06",
     heroImage:
       "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-hero-cursor-for-designers.avif",
     heroImageAlt: "Onlook のメインビジュアル（デザイン編集 UI）",
@@ -289,6 +292,7 @@ fallbackBlogPosts.push({
   genre: "AI",
   tags: ["Firebase", "AI", "開発環境"],
   date: "2025-10-14",
+  latest_update: "2025-10-14",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-logo-hero-banner.webp",
   heroImageAlt: "Firebase Studioロゴとブランディング",
   sections: [
@@ -434,6 +438,7 @@ fallbackBlogPosts.push({
   genre: "AI",
   tags: ["Firebase", "AI", "開発環境", "チュートリアル"],
   date: "2025-10-14",
+  latest_update: "2025-10-14",
   heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-getting-started-tutorial-hero.webp",
   heroImageAlt: "Firebase Studio始め方チュートリアル - ワークスペース作成からデプロイまでの完全ガイド",
   sections: [

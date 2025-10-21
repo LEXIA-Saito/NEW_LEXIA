@@ -14,6 +14,7 @@ export type MicroCMSBlogPost = {
   genre: BlogGenre | BlogGenre[]  // microCMSは配列で返す場合がある
   tags?: string[]  // オプショナル（スキーマから削除）
   date: string
+  latest_update?: string  // 最終更新日（新規フィールド）
   heroImage?: string | { url: string; width?: number; height?: number }  // microCMSは画像をオブジェクトで返す
   heroImageAlt?: string
   // アプローチA: contentHtml（リッチエディタV2で全文を管理）
@@ -85,6 +86,7 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost & { readingTime: 
     genre: genre,
     tags: Array.isArray(post.tags) && post.tags.length > 0 ? post.tags : undefined, // tagsが存在しない場合はundefined
     date: post.date,
+    latest_update: post.latest_update, // 最終更新日を追加
     heroImage: heroImage,
     heroImageAlt: post.heroImageAlt,
     // contentHtmlがある場合はそれを使用

@@ -43,13 +43,7 @@ export const metadata: Metadata = {
 
 export const revalidate = 60
 
-function formatJapaneseDate(date: string) {
-  return new Date(date).toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
-}
+import { formatJapaneseDate } from "@/lib/utils"
 
 function createGenreAnchor(genre: BlogGenre) {
   return `genre-${genre}`
@@ -256,7 +250,12 @@ export default async function BlogIndexPage(props: PageProps) {
                           ) : null}
                         </div>
                         <div className="px-8 pb-8 pt-2 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
-                          <span>{formatJapaneseDate(post.date)}</span>
+                          <div className="flex flex-col gap-1">
+                            <span>公開: {formatJapaneseDate(post.date)}</span>
+                            {post.latest_update && post.latest_update !== post.date && (
+                              <span>更新: {formatJapaneseDate(post.latest_update)}</span>
+                            )}
+                          </div>
                           <Link
                             href={`/blog/${post.slug}`}
                             className="inline-flex items-center gap-1 font-medium text-neutral-900 dark:text-neutral-100"

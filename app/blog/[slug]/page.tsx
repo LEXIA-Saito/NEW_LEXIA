@@ -86,13 +86,7 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
 
 export const revalidate = 60
 
-function formatJapaneseDate(date: string) {
-  return new Date(date).toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
-}
+import { formatJapaneseDate } from "@/lib/utils"
 
 export default async function BlogArticlePage({ params }: BlogArticlePageProps) {
   try {
@@ -162,7 +156,13 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 {post.title}
               </h1>
               <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-neutral-500 dark:text-neutral-400">
-                <span>{formatJapaneseDate(post.date)}</span>
+                <span>公開: {formatJapaneseDate(post.date)}</span>
+                {post.latest_update && post.latest_update !== post.date && (
+                  <>
+                    <span aria-hidden="true">•</span>
+                    <span>更新: {formatJapaneseDate(post.latest_update)}</span>
+                  </>
+                )}
                 <span aria-hidden="true">•</span>
                 <span>{post.readingTime}</span>
                 <span aria-hidden="true">•</span>

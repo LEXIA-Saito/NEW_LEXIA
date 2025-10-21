@@ -18,9 +18,10 @@ export type BlogPost = {
   title: string
   description: string
   genre: BlogGenre
-  tags?: string[] // オプショナルに変更（microCMSスキーマから削除された）
+  tags?: string[] // オプショナルに変更(microCMSスキーマから削除された)
   date: string
-  readingTime?: string // オプショナルに変更（計算時に自動設定）
+  latest_update?: string // 最終更新日（新規フィールド）
+  readingTime?: string // オプショナルに変更(計算時に自動設定)
   heroImage?: string
   heroImageAlt?: string
   sections?: BlogPostSection[]

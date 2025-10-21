@@ -24,13 +24,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   }
 }
 
-function formatJapaneseDate(date: string) {
-  return new Date(date).toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
-}
+import { formatJapaneseDate } from "@/lib/utils"
 
 export const revalidate = 60
 
@@ -81,7 +75,12 @@ export default async function GenreListPage({ params }: { params: Params }) {
                   <div className="p-6">
                     <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
                       <span>{post.readingTime}</span>
-                      <span>{formatJapaneseDate(post.date)}</span>
+                      <div className="flex flex-col gap-1 text-right">
+                        <span>公開: {formatJapaneseDate(post.date)}</span>
+                        {post.latest_update && post.latest_update !== post.date && (
+                          <span>更新: {formatJapaneseDate(post.latest_update)}</span>
+                        )}
+                      </div>
                     </div>
                     <h2 className="mt-3 text-xl font-semibold text-neutral-900 dark:text-neutral-100">
                       <Link href={`/blog/${post.slug}`}>{post.title}</Link>

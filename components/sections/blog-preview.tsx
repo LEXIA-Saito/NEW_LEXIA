@@ -2,14 +2,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { fetchBlogPosts, getBlogGenreLabel } from "@/lib/blog-posts"
+import { formatJapaneseDate } from "@/lib/utils"
 
-function formatJapaneseDate(date: string) {
-  return new Date(date).toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
-}
 
 function truncateDescription(text: string, maxLength: number = 150): string {
   if (text.length <= maxLength) return text
@@ -100,7 +94,12 @@ export default async function BlogPreview() {
                   </div>
                 ) : null}
                 <div className="mt-6 flex items-center justify-between text-sm text-neutral-500 dark:text-neutral-400">
-                  <span>{formatJapaneseDate(post.date)}</span>
+                  <div className="flex flex-col gap-1">
+                    <span>公開: {formatJapaneseDate(post.date)}</span>
+                    {post.latest_update && post.latest_update !== post.date && (
+                      <span>更新: {formatJapaneseDate(post.latest_update)}</span>
+                    )}
+                  </div>
                   <span>{post.readingTime}</span>
                 </div>
                 <Link
