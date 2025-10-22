@@ -11,6 +11,7 @@ export function formatJapaneseDate(date: string) {
       year: "numeric",
       month: "long",
       day: "numeric",
+      timeZone: "Asia/Tokyo",
     })
   } catch {
     return date
