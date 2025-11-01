@@ -325,3 +325,106 @@ fallbackBlogPosts.push({
     },
   ],
 })
+
+// Append Claude Code post to the fallback posts array
+fallbackBlogPosts.push({
+  slug: "claude-code-overview-2025-10-14",
+  title: "Claude Code入門：ターミナルで動く“エージェント型”コーディングアシスタント",
+  description:
+    "GitHubトレンド入りのAnthropic製『Claude Code』を、機能・導入手順・安全性・活用シーンまで一次情報ベースで整理します。",
+  genre: "tech",
+  tags: ["Claude Code", "Anthropic", "AI", "開発支援", "エージェント"],
+  date: "2025-10-14",
+  readingTime: "5分",
+  sections: [
+    {
+      body: [
+        "Claude Codeは、ターミナルから自然言語で指示できる“エージェント型”のコーディングツールです。コードベースの理解、ルーチンタスクの自動化、Gitワークフロー支援、複雑なコードの説明などを一体化し、開発スピードと作業品質の向上を狙います。",
+        "本記事では、公式ドキュメントとリポジトリREADMEをもとに、安全に導入・運用するための要点を整理します。",
+      ],
+    },
+    {
+      heading: "主な機能（要点）",
+      list: [
+        "自然言語での操作：ターミナル/IDE/GitHub上で@claudeに指示",
+        "ルーチンタスクの自動化：ファイル操作、変更提案、説明生成など",
+        "Git支援：コミットやブランチ運用の下支え（対話での段取り共有）",
+        "コード読解支援：既存コードの要約・影響範囲の説明",
+      ],
+    },
+    {
+      heading: "インストールと起動（最短）",
+      body: [
+        "グローバルにインストール：",
+        "npm install -g @anthropic-ai/claude-code",
+        "プロジェクト直下で起動：",
+        "claude",
+        "以降は、対話形式でコマンド提案・実行を進められます。",
+      ],
+    },
+    {
+      heading: "活用シーン",
+      list: [
+        "既存リポジトリの読解・概要把握（初見コードのキャッチアップ）",
+        "反復作業の短縮（設定ファイルの生成や修正、テスト整備）",
+        "Git運用の補助（コミット粒度やPR説明のたたき台生成）",
+        "学習・共有（社内向け説明資料や変更サマリーの作成）",
+      ],
+    },
+    {
+      heading: "アーキテクチャの見取り図（概要）",
+      body: [
+        "READMEと公式ドキュメントの説明から読み取れる範囲では、ターミナル/IDE上のエージェント体験を軸に、コードベースの解析・提案・実行を一連で扱う設計です。低レベルの内部実装は公開資料上の説明に留まるため、詳細はドキュメントの更新に追随してください。",
+      ],
+    },
+    {
+      heading: "データの取り扱いとプライバシー",
+      body: [
+        "READMEには、使用状況（提案の受諾/却下など）、会話データ、/bugで送信するフィードバック等を収集する旨が明記されています。",
+        "機密情報の取り扱い、保持期間、アクセス制限、学習用途への利用有無などの方針は、公式のデータ使用ポリシー/プライバシーポリシー/商用利用規約を参照してください。",
+      ],
+      list: [
+        "Data usage: https://docs.anthropic.com/en/docs/claude-code/data-usage",
+        "Commercial Terms: https://www.anthropic.com/legal/commercial-terms",
+        "Privacy Policy: https://www.anthropic.com/legal/privacy",
+      ],
+    },
+    {
+      heading: "注意点（安全・品質のために）",
+      list: [
+        "エージェントの提案は必ずレビュー：誤変更・過剰修正を防ぐ",
+        "権限と秘密情報の扱いを最小化：不要な権限付与を避ける",
+        "ログ/差分の可視化：提案の採否をチームで検証できる状態に",
+        "導入範囲を段階的に：まずは補助タスクから適用し、影響を観察",
+      ],
+    },
+    {
+      heading: "トラブル対応",
+      body: [
+        "不具合報告は /bug コマンド、もしくはGitHub Issuesへ。Discordコミュニティも案内されています。",
+      ],
+      list: [
+        "Issues: https://github.com/anthropics/claude-code/issues",
+        "Discord: https://anthropic.com/discord",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "Claude Codeは、自然言語インタフェースと開発フローを結びつける“実務寄りのAIアシスタント”です。導入は簡単で、まずはドキュメント生成やリファクタ提案などリスクの低い領域から試すのが現実的です。",
+        "ツールの進化に合わせてルールと運用を見直し、レビュー/監査の仕組みとセットで活用することで、品質とスピードを両立できます。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "GitHub: anthropics/claude-code",
+        "https://github.com/anthropics/claude-code",
+        "Overview Docs",
+        "https://docs.anthropic.com/en/docs/claude-code/overview",
+        "Data usage",
+        "https://docs.anthropic.com/en/docs/claude-code/data-usage",
+      ],
+    },
+  ],
+})
