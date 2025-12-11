@@ -1,9 +1,9 @@
-import { BlogPost } from "./blog-posts.types"
+import type { BlogPost } from "./blog-posts.types"
 
 export const fallbackBlogPosts: BlogPost[] = [
   {
     slug: "what-is-onlook",
-    title: "Onlookとは？ReactとTailwindを直感的に操る\"デザイナー向けCursor\"の全貌",
+    title: 'Onlookとは？ReactとTailwindを直感的に操る"デザイナー向けCursor"の全貌',
     description:
       "コードとデザインの境界を溶かす次世代ビジュアルエディタ「Onlook」の特徴、アーキテクチャ、利点と課題をLEXIA視点で解説します。",
     genre: "tech",
@@ -76,8 +76,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           "OnlookはFree（無料）プランのほか、Pro（$25/月）やEnterpriseプランを提供しています。無料プランにはプロジェクト数やAIの利用回数に制限があり、Proではそれらの上限が緩和されます。",
           "注意点として、コミュニティの情報には旧来の価格や回数制限が混在しているため、公式のPricingページで最新情報を確認してください。",
         ],
-        image:
-          "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-pricing-plans.jpg",
+        image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-pricing-plans.jpg",
         imageAlt: "Onlook の料金プラン表イメージ",
       },
       {
@@ -134,7 +133,6 @@ export const fallbackBlogPosts: BlogPost[] = [
   },
 ]
 
-
 // Append Firebase Studio Getting Started Guide (detailed tutorial)
 fallbackBlogPosts.push({
   slug: "firebase-studio-getting-started-lexia",
@@ -145,7 +143,8 @@ fallbackBlogPosts.push({
   tags: ["Firebase", "AI", "開発環境", "チュートリアル"],
   date: "2025-10-14",
   latest_update: "2025-10-14",
-  heroImage: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-getting-started-tutorial-hero.webp",
+  heroImage:
+    "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-getting-started-tutorial-hero.webp",
   heroImageAlt: "Firebase Studio始め方チュートリアル - ワークスペース作成からデプロイまでの完全ガイド",
   sections: [
     {
@@ -204,11 +203,7 @@ fallbackBlogPosts.push({
     },
     {
       heading: "3. 既存リポジトリをインポートする（任意）",
-      body: [
-        "GitHub／GitLab／Bitbucketから既存プロジェクトを取り込むことも可能です。",
-        "",
-        "手順:",
-      ],
+      body: ["GitHub／GitLab／Bitbucketから既存プロジェクトを取り込むことも可能です。", "", "手順:"],
       list: [
         "1. メニューから Import from GitHub を選択",
         "2. リポジトリを選択 → Import",
@@ -315,9 +310,7 @@ fallbackBlogPosts.push({
     },
     {
       heading: "関連記事",
-      body: [
-        "{{RELATED_ARTICLE:what-is-firebase-studio-overview}}",
-      ],
+      body: ["{{RELATED_ARTICLE:what-is-firebase-studio-overview}}"],
       list: [
         "公式ドキュメント：Get started with Firebase Studio",
         "https://firebase.google.com/docs/studio/get-started",
@@ -400,13 +393,8 @@ fallbackBlogPosts.push({
     },
     {
       heading: "トラブル対応",
-      body: [
-        "不具合報告は /bug コマンド、もしくはGitHub Issuesへ。Discordコミュニティも案内されています。",
-      ],
-      list: [
-        "Issues: https://github.com/anthropics/claude-code/issues",
-        "Discord: https://anthropic.com/discord",
-      ],
+      body: ["不具合報告は /bug コマンド、もしくはGitHub Issuesへ。Discordコミュニティも案内されています。"],
+      list: ["Issues: https://github.com/anthropics/claude-code/issues", "Discord: https://anthropic.com/discord"],
     },
     {
       heading: "まとめ",
