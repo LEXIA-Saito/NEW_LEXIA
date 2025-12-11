@@ -184,11 +184,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preload" as="style" href="/deferred.css" />
-        <link rel="stylesheet" href="/deferred.css" media="print" onLoad="this.media='all'" />
-        <noscript>
-          <link rel="stylesheet" href="/deferred.css" />
-        </noscript>
+        <link rel="stylesheet" href="/deferred.css" />
       </head>
       <body className={`${notoSansJP.className} antialiased`}>
         <Script

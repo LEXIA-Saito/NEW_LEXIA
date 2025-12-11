@@ -39,10 +39,14 @@ export async function microcmsFetch<T>(
   init: FetchOptions = {},
 ): Promise<T> {
   // サーバーサイドでのみ実行されることを確認
-  if (typeof window !== 'undefined') {
+  const isServer =
+    typeof window === "undefined" || (typeof process !== "undefined" && process.env.NEXT_RUNTIME === "nodejs")
+
+  if (!isServer && typeof window !== "undefined") {
+    console.warn("microcmsFetch should only be called on the server side, falling back to empty response")
     throw new Error("microcmsFetch can only be called on the server side")
   }
-  
+
   ensureConfigured()
 
   const url = new URL(`https://${serviceDomain}.microcms.io/api/v1/${endpoint}`)
