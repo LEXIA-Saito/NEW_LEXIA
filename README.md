@@ -87,16 +87,6 @@ Next.js の `useSearchParams` フックを使用する際は、非同期処理�
 ブログ記事は microCMS で管理します。以下の環境変数を `.env.local` などに設定してください。
 
 \`\`\`
-
-## 2025-10-10 画像 alt と型の改善
-
-このリポジトリのブログ機能について、アクセシビリティとSEO向上のために以下の変更を行いました：
-
-- ブログ記事データ型に `heroImageAlt` と `sections[].imageAlt` を追加しました（`lib/blog-posts.types.ts`）。
-- 既存のフォールバック記事（`lib/blog-posts-fallback.ts`）に対して、すべての hero / section 画像に対して明示的な alt テキストを埋め込みました。
-- 記事ページのレンダラー（`app/blog/[slug]/page.tsx`）を更新し、alt が明示されていればそれを優先して使用するようになりました。
-
-確認方法：ローカルで `pnpm dev` を起動し、記事ページを開いて画像要素の `alt` 属性が適切にセットされていることを確認してください。
 MICROCMS_SERVICE_DOMAIN=<サービスドメイン>
 MICROCMS_API_KEY=<API キー>
 # 任意: ブログのエンドポイントを変更したい場合のみ
@@ -106,16 +96,6 @@ MICROCMS_BLOG_ENDPOINT=blog
 - microCMS のコンテンツ ID をブログ記事のスラッグと同じにすると、ビルド時の静的生成がスムーズです。別フィールドにスラッグを保持する場合は `slug` というフィールド名で作成してください。
 - 記事本文は `sections`（繰り返しフィールド）または `content` / `contentHtml` / `body` といったリッチテキストで取得できます。`sections` を設定している場合は従来どおり見出しと本文・リストで段落を描画し、リッチテキストのみの場合は HTML をそのまま出力します。
 - 環境変数が未設定の場合は、開発中に既存のサンプル記事がフォールバックとして表示されます。
-
-## Google Maps の埋め込み
-
-会社概要ページのアクセスセクションでは Google Maps Embed API を利用しています。地図を表示するには以下の環境変数を設定し、対象ドメインを許可した API キーを用意してください。
-
-\`\`\`
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=<Google Maps API キー>
-\`\`\`
-
-API キーは Vercel のダッシュボードなど、ホスティング環境で設定してください。
 
 ## 料金シミュレーション
 
