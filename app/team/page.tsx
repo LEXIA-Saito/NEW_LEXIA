@@ -6,6 +6,7 @@ import { SITE_URL } from "@/lib/config"
 import Image from "next/image"
 import Link from "next/link"
 import Script from "next/script"
+import { redirect } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "チーム | LEXIA",
@@ -49,6 +50,7 @@ const members = [
 ]
 
 export default function TeamIndexPage() {
+  redirect("/company#team")
   return (
     <>
       {/* <Navigation /> */}
@@ -72,16 +74,14 @@ export default function TeamIndexPage() {
                 >
                   <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4">
                     <Image
-                      src={m.img}
+                      src={m.img || "/placeholder.svg"}
                       alt={`${m.name}のプロフィール写真`}
                       fill
                       className="object-cover"
                       sizes="96px"
                     />
                   </div>
-                  <h2 className="text-xl font-light text-neutral-900 dark:text-neutral-100">
-                    {m.name}
-                  </h2>
+                  <h2 className="text-xl font-light text-neutral-900 dark:text-neutral-100">{m.name}</h2>
                   <p className="text-sm text-neutral-600 dark:text-neutral-400">{m.role}</p>
                   <span className="mt-4 inline-block text-sm text-neutral-900 dark:text-neutral-100 group-hover:underline">
                     プロフィールを見る →

@@ -13,24 +13,110 @@ import "@/styles/globals.css"
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": `${SITE_URL}#organization`,
   name: "LEXIA",
+  alternateName: "レクシア",
   url: SITE_URL,
-  logo: `${SITE_URL.replace(/\/$/, "")}/favicon/lexia_logo_square.png`,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE_URL.replace(/\/$/, "")}/favicon/lexia_logo_square.png`,
+    width: 512,
+    height: 512,
+  },
+  image: `${SITE_URL.replace(/\/$/, "")}/og/og-image.png`,
+  description: "愛知県碧南市のホームページ制作・WEB制作会社。システム開発・AI活用・デザインまで一貫対応。",
   address: {
     "@type": "PostalAddress",
     addressCountry: "JP",
     addressRegion: "愛知県",
-    addressLocality: "愛知県碧南市",
+    addressLocality: "碧南市",
     streetAddress: "川端町1-45",
+    postalCode: "447-0000",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 34.8847,
+    longitude: 136.9936,
   },
   contactPoint: [
     {
       "@type": "ContactPoint",
-      telephone: "+81-0000-000-000",
       email: "lexia0web@gmail.com",
       contactType: "customer service",
+      availableLanguage: ["Japanese"],
     },
   ],
+  sameAs: [],
+  founder: {
+    "@type": "Person",
+    name: "齋藤雅人",
+    jobTitle: "代表",
+  },
+  foundingDate: "2023",
+  areaServed: {
+    "@type": "Place",
+    name: "愛知県",
+  },
+}
+
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${SITE_URL}#localbusiness`,
+  name: "LEXIA",
+  image: `${SITE_URL.replace(/\/$/, "")}/og/og-image.png`,
+  url: SITE_URL,
+  telephone: "",
+  email: "lexia0web@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "川端町1-45",
+    addressLocality: "碧南市",
+    addressRegion: "愛知県",
+    postalCode: "447-0000",
+    addressCountry: "JP",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 34.8847,
+    longitude: 136.9936,
+  },
+  priceRange: "¥¥",
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "09:00",
+      closes: "18:00",
+    },
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "WEB制作サービス",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "ホームページ制作",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "システム開発",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "動画制作",
+        },
+      },
+    ],
+  },
 }
 
 const notoSansJP = Noto_Sans_JP({
@@ -99,12 +185,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preload" as="style" href="/deferred.css" />
-        <link
-          rel="stylesheet"
-          href="/deferred.css"
-          media="print"
-          onLoad="this.media='all'"
-        />
+        <link rel="stylesheet" href="/deferred.css" media="print" onLoad="this.media='all'" />
         <noscript>
           <link rel="stylesheet" href="/deferred.css" />
         </noscript>
@@ -124,8 +205,12 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
+              "@id": `${SITE_URL}#website`,
               name: "LEXIA",
               url: SITE_URL,
+              publisher: {
+                "@id": `${SITE_URL}#organization`,
+              },
               potentialAction: {
                 "@type": "SearchAction",
                 target: `${SITE_URL.replace(/\/$/, "")}/projects?query={search_term_string}`,
@@ -139,6 +224,12 @@ export default function RootLayout({
           type="application/ld+json"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <Script
+          id="localbusiness-jsonld"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
         <ThemeProvider defaultTheme="light" storageKey="lexia-theme">
           <div className="isolate">

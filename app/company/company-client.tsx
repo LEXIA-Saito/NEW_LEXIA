@@ -18,17 +18,14 @@ import { useState, type ReactNode } from "react"
 import Features from "@/components/Features"
 
 // Canvas heavy component - load dynamically
-const LexiaLogoParticles = dynamic(
-  () => import("@/components/lexia-logo-particles"),
-  {
-    loading: () => (
-      <div className="w-full h-[600px] flex items-center justify-center bg-gradient-to-br from-blue-600 to-purple-600">
-        <div className="text-white text-6xl font-bold">LEXIA</div>
-      </div>
-    ),
-    ssr: false,
-  }
-)
+const LexiaLogoParticles = dynamic(() => import("@/components/lexia-logo-particles"), {
+  loading: () => (
+    <div className="w-full h-[600px] flex items-center justify-center bg-gradient-to-br from-blue-600 to-purple-600">
+      <div className="text-white text-6xl font-bold">LEXIA</div>
+    </div>
+  ),
+  ssr: false,
+})
 
 function FAQItem({ q, a }: { q: string; a: ReactNode }) {
   const [open, setOpen] = useState(false)
@@ -68,11 +65,7 @@ export default function CompanyClient() {
           料金を確認する
         </Button>
       </Link>
-      <Button
-        variant="outline"
-        className="w-full sm:w-auto bg-transparent"
-        asChild
-      >
+      <Button variant="outline" className="w-full sm:w-auto bg-transparent" asChild>
         <Link href="#principles">理念を見る</Link>
       </Button>
     </div>
@@ -135,24 +128,125 @@ export default function CompanyClient() {
     },
   ]
 
+  const teamMembers = [
+    {
+      name: "齋藤雅人",
+      role: "代表・WEBディレクター",
+      href: "/team/masato-saito",
+      img: "/images/saito_profile.webp",
+      description: "要件定義から実装まで一貫して担当。技術選定とプロジェクト管理を行います。",
+    },
+    {
+      name: "齋藤李保",
+      role: "デザイナー",
+      href: "/team/riho-saito",
+      img: "/images/riho-saito-profile.webp",
+      description: "UI/UXデザインとビジュアル制作を担当。ユーザー体験を重視したデザインを提供します。",
+    },
+    {
+      name: "アシスタント",
+      role: "アシスタント",
+      href: "/team/assistant",
+      img: "/placeholder-user.svg",
+      description: "チームの作業を支援し、効率的なワークフローを提供します。",
+    },
+  ]
+
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": ["Organization", "LocalBusiness"],
-    name: "LEXIA",
-    url: "https://lexia-hp.com/",
-    logo: "https://lexia-hp.com/ogp.png",
-    description: "愛知県碧南市のWEB制作・システム開発。要件整理からUI実装、運用改善まで一貫対応。",
-    telephone: "090-1742-3456",
-    email: "lexia0web@gmail.com",
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: "JP",
-      addressRegion: "愛知県",
-      addressLocality: "愛知県碧南市",
-      streetAddress: "川端町1-45",
-    },
-    areaServed: ["Japan"],
-    sameAs: ["https://www.instagram.com/lexia_web", "https://x.com/lexia_web"],
+    "@graph": [
+      {
+        "@type": ["Organization", "LocalBusiness"],
+        "@id": "https://lexia-hp.com/#organization",
+        name: "LEXIA",
+        url: "https://lexia-hp.com/",
+        logo: "https://lexia-hp.com/ogp.png",
+        description: "愛知県碧南市のWEB制作・システム開発。要件整理からUI実装、運用改善まで一貫対応。",
+        telephone: "090-1742-3456",
+        email: "lexia0web@gmail.com",
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: "JP",
+          addressRegion: "愛知県",
+          addressLocality: "碧南市",
+          streetAddress: "川端町1-45",
+          postalCode: "447-0876",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: 34.867852,
+          longitude: 136.99312,
+        },
+        founder: { "@id": "https://lexia-hp.com/#founder" },
+        employee: [{ "@id": "https://lexia-hp.com/#founder" }, { "@id": "https://lexia-hp.com/#designer" }],
+        sameAs: ["https://www.instagram.com/lexia_web", "https://x.com/lexia_web"],
+      },
+      {
+        "@type": "Person",
+        "@id": "https://lexia-hp.com/#founder",
+        name: "齋藤雅人",
+        jobTitle: "代表・WEBディレクター",
+        worksFor: { "@id": "https://lexia-hp.com/#organization" },
+        image: "https://lexia-hp.com/images/saito_profile.webp",
+        description: "要件定義から実装まで一貫して担当。技術選定とプロジェクト管理を行います。",
+        sameAs: ["https://x.com/lexia_web"],
+      },
+      {
+        "@type": "Person",
+        "@id": "https://lexia-hp.com/#designer",
+        name: "齋藤李保",
+        jobTitle: "デザイナー",
+        worksFor: { "@id": "https://lexia-hp.com/#organization" },
+        image: "https://lexia-hp.com/images/riho-saito-profile.webp",
+        description: "UI/UXデザインとビジュアル制作を担当。ユーザー体験を重視したデザインを提供します。",
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://lexia-hp.com/company#faq",
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "納期の目安は？",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "一般的なコーポレートサイトで約1〜2ヶ月を想定しています。要件により変動します。",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "費用の考え方は？",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "規模や機能に応じてお見積もりします。料金ページで詳細を確認できます。",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "進め方は？",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "要件整理→設計→開発→検証→公開の流れで進行します。制作工程の流れページで詳しく解説しています。",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "権利は？",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "納品後、テキストと画像の権利は原則としてお客様に帰属します。",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "保守は？",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "公開後の保守・改善も継続的にサポートします。内容に応じて保守プランをご提案します。",
+            },
+          },
+        ],
+      },
+    ],
   }
 
   return (
@@ -242,63 +336,93 @@ export default function CompanyClient() {
         <Features id="strengths" title="LEXIAの強み" />
 
         {/* Representative & Team */}
-        <section className="container mx-auto px-4 py-24 space-y-8" data-testid="team" id="team">
-          <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">代表メッセージ</h2>
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-4">
-              <div className="text-neutral-700 dark:text-neutral-300 text-sm space-y-3">
-                <p>
-                  LEXIAという名前は、
-                  “LEGEND（伝説）”と“AXIA（価値）”を掛け合わせた造語です。<br />
-                  「価値を技術で深化させ、語り継がれる成果を構築する」──その想いが、私たちの原点です。
-                </p>
-                <p>
-                  WEBという形のない媒体に、
-                  お客様の軌跡や想い、情報を刻み、
-                  そこに更なる価値を創造すること。<br />
-                  それこそが、私たちLEXIAの使命です。
-                </p>
-                <p>私たちは、5つの指針を胸に日々の事業活動に向き合っています。</p>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>
-                    <p className="font-medium">L：Lead with Value（価値で導く）</p>
-                    <p>価値あるデジタル資産を創出し、クライアントや社会の未来を切り拓く。</p>
-                  </li>
-                  <li>
-                    <p className="font-medium">E：Evolve Constantly（常に進化する）</p>
-                    <p>技術や思考を磨き続け、変化を恐れず挑戦を重ねる。</p>
-                  </li>
-                  <li>
-                    <p className="font-medium">X：Xperience by Design（体験をデザインする）</p>
-                    <p>見る・触れる・使う、その瞬間の体験をデザインに宿す。</p>
-                  </li>
-                  <li>
-                    <p className="font-medium">I：Inspire Connection（つながりを生む）</p>
-                    <p>人と人、企業と顧客を結ぶ架け橋となる。</p>
-                  </li>
-                  <li>
-                    <p className="font-medium">A：Achieve Together（共に成し遂げる）</p>
-                    <p>クライアントと共に語り継がれる成果を構築する。</p>
-                  </li>
-                </ul>
-                <p>
-                  LEXIAは事業活動を通じて、
-                  お客様の“価値”を技術で向上し、“伝説”を共に創る存在であり続けます。
-                </p>
-                <p className="mt-4">LEXIA代表　齋藤 雅人</p>
+        <section className="container mx-auto px-4 py-24 space-y-12" data-testid="team" id="team">
+          <div className="space-y-8">
+            <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">代表メッセージ</h2>
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="space-y-4">
+                <div className="text-neutral-700 dark:text-neutral-300 text-sm space-y-3">
+                  <p>
+                    LEXIAという名前は、 "LEGEND（伝説）"と"AXIA（価値）"を掛け合わせた造語です。
+                    <br />
+                    「価値を技術で深化させ、語り継がれる成果を構築する」──その想いが、私たちの原点です。
+                  </p>
+                  <p>
+                    WEBという形のない媒体に、 お客様の軌跡や想い、情報を刻み、 そこに更なる価値を創造すること。
+                    <br />
+                    それこそが、私たちLEXIAの使命です。
+                  </p>
+                  <p>私たちは、5つの指針を胸に日々の事業活動に向き合っています。</p>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>
+                      <p className="font-medium">L：Lead with Value（価値で導く）</p>
+                      <p>価値あるデジタル資産を創出し、クライアントや社会の未来を切り拓く。</p>
+                    </li>
+                    <li>
+                      <p className="font-medium">E：Evolve Constantly（常に進化する）</p>
+                      <p>技術や思考を磨き続け、変化を恐れず挑戦を重ねる。</p>
+                    </li>
+                    <li>
+                      <p className="font-medium">X：Xperience by Design（体験をデザインする）</p>
+                      <p>見る・触れる・使う、その瞬間の体験をデザインに宿す。</p>
+                    </li>
+                    <li>
+                      <p className="font-medium">I：Inspire Connection（つながりを生む）</p>
+                      <p>人と人、企業と顧客を結ぶ架け橋となる。</p>
+                    </li>
+                    <li>
+                      <p className="font-medium">A：Achieve Together（共に成し遂げる）</p>
+                      <p>クライアントと共に語り継がれる成果を構築する。</p>
+                    </li>
+                  </ul>
+                  <p>LEXIAは事業活動を通じて、 お客様の"価値"を技術で向上し、"伝説"を共に創る存在であり続けます。</p>
+                  <p className="mt-4">LEXIA代表　齋藤 雅人</p>
+                </div>
+              </div>
+              <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden">
+                <Image src="/images/saito_profile.webp" alt="代表 齋藤雅人" fill className="object-cover" />
               </div>
             </div>
-            <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden">
-              <Image src="/placeholder.svg" alt="代表 齋藤雅人" fill className="object-cover" />
-            </div>
           </div>
-          <div className="pt-4">
-            <Link
-              href="/team"
-              className="inline-flex items-center justify-center rounded-md bg-neutral-900 text-white px-5 py-2.5 text-sm font-medium hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200 transition-colors"
-            >
-              チーム一覧を見る
-            </Link>
+
+          <div className="space-y-8 pt-8 border-t border-neutral-200 dark:border-neutral-700">
+            <h3 className="text-2xl font-light text-neutral-900 dark:text-neutral-100">チームメンバー</h3>
+            <p className="text-neutral-700 dark:text-neutral-300">LEXIAを支えるメンバーをご紹介します。</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {teamMembers.map((member, index) => (
+                <motion.div
+                  key={member.href}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  variants={fadeIn}
+                >
+                  <Link
+                    href={member.href}
+                    className="group block rounded-lg border border-neutral-200 dark:border-neutral-700 p-6 hover:shadow-md transition-shadow bg-white dark:bg-neutral-800 h-full"
+                  >
+                    <div className="relative w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto">
+                      <Image
+                        src={member.img || "/placeholder.svg"}
+                        alt={`${member.name}のプロフィール写真`}
+                        fill
+                        className="object-cover"
+                        sizes="80px"
+                      />
+                    </div>
+                    <h4 className="text-lg font-medium text-neutral-900 dark:text-neutral-100 text-center">
+                      {member.name}
+                    </h4>
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400 text-center mb-2">{member.role}</p>
+                    <p className="text-xs text-neutral-500 dark:text-neutral-400 text-center">{member.description}</p>
+                    <span className="mt-4 block text-sm text-center text-primary group-hover:underline">
+                      詳細を見る →
+                    </span>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -370,8 +494,8 @@ export default function CompanyClient() {
               title="LEXIA所在地"
               src={
                 process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-                  ? `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=${encodeURIComponent('愛知県碧南市川端町1-45')}`
-                  : 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3273.5372830014103!2d136.99312047575168!3d34.86785227286076!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6004912fde7e69e1%3A0xacdd229f402ed916!2sLEXIA!5e0!3m2!1sja!2sjp!4v1758245732121!5m2!1sja!2sjp'
+                  ? `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=${encodeURIComponent("愛知県碧南市川端町1-45")}`
+                  : "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3273.5372830014103!2d136.99312047575168!3d34.86785227286076!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6004912fde7e69e1%3A0xacdd229f402ed916!2sLEXIA!5e0!3m2!1sja!2sjp!4v1758245732121!5m2!1sja!2sjp"
               }
               width="100%"
               height="100%"
@@ -383,7 +507,7 @@ export default function CompanyClient() {
           </div>
           <p className="text-neutral-700 dark:text-neutral-300">
             <a
-              href={`https://maps.google.com/?q=${encodeURIComponent('愛知県碧南市川端町1-45')}`}
+              href={`https://maps.google.com/?q=${encodeURIComponent("愛知県碧南市川端町1-45")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="underline"
