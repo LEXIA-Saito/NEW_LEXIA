@@ -144,7 +144,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-white dark:bg-neutral-900">
+    <main className="min-h-screen bg-background text-foreground">
       <Navigation />
 
       <section id="hero">
@@ -153,13 +153,13 @@ export default function Home() {
 
       <BlogPreview />
 
-      <section id="services" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
+      <section id="services" className="py-24 md:py-32 bg-secondary/50 below-fold">
         <ServicesCTA />
       </section>
 
       <Features className="below-fold" />
 
-      <section id="pricing" className="py-24 md:py-32 below-fold">
+      <section id="pricing" className="py-24 md:py-32 bg-secondary/50 below-fold">
         <PricingCTA />
       </section>
 
@@ -167,7 +167,7 @@ export default function Home() {
         <Work />
       </section>
 
-      <section id="team" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
+      <section id="team" className="py-24 md:py-32 bg-secondary/50 below-fold">
         <Team />
       </section>
 
@@ -175,7 +175,7 @@ export default function Home() {
         <About />
       </section>
 
-      <section id="contact" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
+      <section id="contact" className="py-24 md:py-32 bg-secondary/50 below-fold">
         <Contact />
       </section>
 
