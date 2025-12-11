@@ -26,14 +26,14 @@ LEXIAプロジェクトにエンタープライズレベルのセキュリティ
 - **文字数制限**
 
 #### 4. **セキュリティヘッダー**
-```http
+\`\`\`http
 Content-Security-Policy: 厳格なCSP設定
 X-Frame-Options: DENY
 X-Content-Type-Options: nosniff  
 X-XSS-Protection: 1; mode=block
 Referrer-Policy: strict-origin-when-cross-origin
 Permissions-Policy: 不要な機能を無効化
-```
+\`\`\`
 
 #### 5. **APIセキュリティ**
 - **HTTPメソッド制限**（POSTのみ許可）
@@ -43,13 +43,13 @@ Permissions-Policy: 不要な機能を無効化
 
 ## 🧪 セキュリティテスト結果
 
-```
+\`\`\`
 ✅ 暗号化設定読み込み: 成功
 ✅ メール送信: 成功 (ID: 577c849f-2205-42b8-a130-d1f006a878a7)
 ✅ レート制限: 動作確認済み (3回目で429エラー)
 ✅ セキュリティヘッダー: 全て適用済み
 ✅ 入力検証: 動作確認済み
-```
+\`\`\`
 
 ## 🔐 実装されたAPI
 
@@ -68,7 +68,7 @@ Permissions-Policy: 不要な機能を無効化
 ## 🔒 暗号化設定詳細
 
 ### 設定データ構造
-```typescript
+\`\`\`typescript
 {
   resend: {
     apiKey: "<YOUR_RESEND_API_KEY>",
@@ -81,7 +81,7 @@ Permissions-Policy: 不要な機能を無効化
     maxAttachmentSize: 5242880
   }
 }
-```
+\`\`\`
 
 ### 暗号化仕様
 - **アルゴリズム**: AES-256-CBC
@@ -138,11 +138,11 @@ Permissions-Policy: 不要な機能を無効化
 ## 🔄 セキュリティメンテナンス
 
 ### APIキーローテーション
-```typescript
+\`\`\`typescript
 // 新しいAPIキーでの暗号化設定更新
 const newConfig = encryptConfig(newConfigData)
 // ENCRYPTED_CONFIG を更新後、再デプロイ
-```
+\`\`\`
 
 ### 監視推奨項目
 1. **レート制限ヒット数**

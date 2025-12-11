@@ -6,10 +6,10 @@
 
 ### Old ESLint Config
 - `.eslintrc.json` → `eslint.config.mjs` に移行済み
-  ```bash
+  \`\`\`bash
   # 削除コマンド
   rm .eslintrc.json
-  ```
+  \`\`\`
 
 ### Test Scripts (Root Level)
 開発用のテストスクリプトを `tests/` ディレクトリに移動:
@@ -34,10 +34,10 @@
 ### Lock Files
 - `package-lock.json` → pnpm を使用しているため不要
 
-```bash
+\`\`\`bash
 # 削除コマンド
 rm package-lock.json
-```
+\`\`\`
 
 ### 重複ドキュメント
 以下のドキュメントを統合・整理:
@@ -51,7 +51,7 @@ rm package-lock.json
 
 ## Recommended Directory Structure
 
-```
+\`\`\`
 NEW_LEXIA/
 ├── app/                    # Next.js app directory
 ├── components/             # React components
@@ -73,12 +73,12 @@ NEW_LEXIA/
 │   ├── railway/
 │   └── pm2/
 └── [config files]         # Root config files
-```
+\`\`\`
 
 ## Cleanup Commands
 
 ### 安全な削除（推奨）
-```bash
+\`\`\`bash
 # 古いESLint設定を削除
 rm .eslintrc.json
 
@@ -106,23 +106,23 @@ mv VERCEL_ENV_TROUBLESHOOTING.md docs/deployment/
 mkdir -p tests/api
 mv test-contact-api.js tests/api/contact-api.test.js
 mv test-secure-contact.js tests/api/secure-contact.test.js
-```
+\`\`\`
 
 ### .gitignore に archive/ を追加
-```gitignore
+\`\`\`gitignore
 # Archive (deprecated configs)
 /archive/
-```
+\`\`\`
 
 ## Dependencies Review
 
 ### 未使用の可能性がある依存関係
 以下のパッケージは使用状況を確認して削除を検討:
 
-```bash
+\`\`\`bash
 # 確認コマンド
 pnpm exec depcheck
-```
+\`\`\`
 
 候補:
 - `styled-components` (Tailwind CSS を使用している場合)

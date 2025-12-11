@@ -130,4 +130,3 @@ function processTextWithLinks(text: string, linkClassName?: string): React.React
   if (nodes.length === 0) return [text]
   return nodes
 }
-

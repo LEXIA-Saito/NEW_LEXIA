@@ -44,4 +44,3 @@ export default function LinkifyOnlook({ text, className }: Props) {
   if (nodes.length === 0) return <>{text}</>
   return <>{nodes}</>
 }
-

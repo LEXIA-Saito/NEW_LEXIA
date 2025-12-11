@@ -228,4 +228,3 @@ function SmileIcon() {
     </svg>
   )
 }
-

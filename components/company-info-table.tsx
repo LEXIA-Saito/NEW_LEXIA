@@ -46,4 +46,3 @@ const CompanyInfoTable: FC = () => {
 }
 
 export default CompanyInfoTable
-

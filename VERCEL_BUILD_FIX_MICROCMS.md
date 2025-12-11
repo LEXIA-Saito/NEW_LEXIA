@@ -9,7 +9,7 @@
 
 ### エラー1: `lib/microcms-blog.ts`
 
-```
+\`\`\`
 Error: You're importing a component that needs "server-only". 
 That only works in a Server Component which is not supported in the pages/ directory.
 
@@ -17,11 +17,11 @@ Import trace:
 ./lib/microcms-blog.ts
 ./lib/blog-posts.ts
 ./components/blog/GenreFilterList.tsx (Client Component)
-```
+\`\`\`
 
 ### エラー2: `lib/microcms.ts`
 
-```
+\`\`\`
 Error: You're importing a component that needs "server-only". 
 That only works in a Server Component which is not supported in the pages/ directory.
 
@@ -30,7 +30,7 @@ Import trace:
 ./lib/microcms-blog.ts
 ./lib/blog-posts.ts
 ./components/blog/GenreFilterList.tsx (Client Component)
-```
+\`\`\`
 
 ---
 
@@ -38,7 +38,7 @@ Import trace:
 
 ### インポートチェーン
 
-```
+\`\`\`
 components/blog/GenreFilterList.tsx (Client Component)
   ↓ import
 lib/blog-posts.ts
@@ -48,7 +48,7 @@ lib/microcms-blog.ts
   ↓ import
 lib/microcms.ts
   ↓ import "server-only"  ❌ エラー
-```
+\`\`\`
 
 ### 問題点
 
@@ -69,36 +69,36 @@ lib/microcms.ts
 ### 修正1: `lib/microcms-blog.ts`
 
 **変更前**:
-```typescript
+\`\`\`typescript
 import "server-only"
 
 import { microcmsFetch, type MicroCMSListResponse } from "./microcms"
 import type { BlogPost, BlogGenre } from "./blog-posts.types"
 import { withComputedReadingTime } from "./reading-time"
-```
+\`\`\`
 
 **変更後**:
-```typescript
+\`\`\`typescript
 import { microcmsFetch, type MicroCMSListResponse } from "./microcms"
 import type { BlogPost, BlogGenre } from "./blog-posts.types"
 import { withComputedReadingTime } from "./reading-time"
-```
+\`\`\`
 
 ---
 
 ### 修正2: `lib/microcms.ts`
 
 **変更前**:
-```typescript
+\`\`\`typescript
 import "server-only"
 
 export class MicroCMSApiError extends Error {
   // ...
 }
-```
+\`\`\`
 
 **変更後**:
-```typescript
+\`\`\`typescript
 export class MicroCMSApiError extends Error {
   // ...
 }
@@ -118,7 +118,7 @@ export async function microcmsFetch<T>(
   ensureConfigured()
   // ...
 }
-```
+\`\`\`
 
 ---
 
@@ -140,10 +140,10 @@ export async function microcmsFetch<T>(
 
 ### 環境変数の保護
 
-```typescript
+\`\`\`typescript
 const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN
 const apiKey = process.env.MICROCMS_API_KEY
-```
+\`\`\`
 
 - `process.env`はサーバーサイドでのみアクセス可能
 - クライアントサイドでは`undefined`になり、`ensureConfigured()`でエラーがスローされる
@@ -154,7 +154,7 @@ const apiKey = process.env.MICROCMS_API_KEY
 
 ### サーバーサイド（正常動作）
 
-```
+\`\`\`
 app/blog/page.tsx (Server Component)
   ↓ await
 lib/blog-posts.ts :: fetchBlogPosts()
@@ -164,18 +164,18 @@ lib/microcms-blog.ts :: fetchMicroCMSBlogPosts()
 lib/microcms.ts :: microcmsFetch()
   ✅ process.env.MICROCMS_API_KEY でAPIリクエスト
   ✅ データ取得成功
-```
+\`\`\`
 
 ### クライアントサイド（型定義のみ使用）
 
-```
+\`\`\`
 components/blog/GenreFilterList.tsx (Client Component)
   ↓ import type
 lib/blog-posts.ts :: BlogPost, BlogGenre型
   ↓ import type
 lib/blog-posts.types.ts :: 型定義
   ✅ 型チェックのみ（実行時コードなし）
-```
+\`\`\`
 
 ---
 
@@ -211,7 +211,7 @@ lib/blog-posts.types.ts :: 型定義
 
 ### 1. 変更をコミット
 
-```powershell
+\`\`\`powershell
 git add lib/microcms.ts lib/microcms-blog.ts
 git commit -m "fix: remove server-only directives to fix build error
 
@@ -219,7 +219,7 @@ git commit -m "fix: remove server-only directives to fix build error
 - Add runtime check to prevent client-side execution
 - Maintain security with process.env and React cache"
 git push origin main
-```
+\`\`\`
 
 ### 2. Vercelで自動デプロイ
 
@@ -228,12 +228,12 @@ git push origin main
 
 ### 3. 動作確認
 
-```
+\`\`\`
 ✅ https://your-domain.vercel.app/blog
 ✅ 記事一覧が表示される
 ✅ ジャンルフィルタが動作する
 ✅ 個別記事ページが表示される
-```
+\`\`\`
 
 ---
 

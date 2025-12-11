@@ -30,7 +30,7 @@
 
 ## 🏃 クイックスタート
 
-```bash
+\`\`\`bash
 # 依存関係のインストール
 pnpm install
 
@@ -45,7 +45,7 @@ pnpm lint
 
 # 本番ビルド
 pnpm build
-```
+\`\`\`
 
 詳細は [docs/QUICK_START.md](./docs/QUICK_START.md) を参照してください。
 
@@ -86,7 +86,7 @@ Next.js の `useSearchParams` フックを使用する際は、非同期処理�
 
 ブログ記事は microCMS で管理します。以下の環境変数を `.env.local` などに設定してください。
 
-```
+\`\`\`
 
 ## 2025-10-10 画像 alt と型の改善
 
@@ -101,7 +101,7 @@ MICROCMS_SERVICE_DOMAIN=<サービスドメイン>
 MICROCMS_API_KEY=<API キー>
 # 任意: ブログのエンドポイントを変更したい場合のみ
 MICROCMS_BLOG_ENDPOINT=blog
-```
+\`\`\`
 
 - microCMS のコンテンツ ID をブログ記事のスラッグと同じにすると、ビルド時の静的生成がスムーズです。別フィールドにスラッグを保持する場合は `slug` というフィールド名で作成してください。
 - 記事本文は `sections`（繰り返しフィールド）または `content` / `contentHtml` / `body` といったリッチテキストで取得できます。`sections` を設定している場合は従来どおり見出しと本文・リストで段落を描画し、リッチテキストのみの場合は HTML をそのまま出力します。
@@ -111,9 +111,9 @@ MICROCMS_BLOG_ENDPOINT=blog
 
 会社概要ページのアクセスセクションでは Google Maps Embed API を利用しています。地図を表示するには以下の環境変数を設定し、対象ドメインを許可した API キーを用意してください。
 
-```
+\`\`\`
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=<Google Maps API キー>
-```
+\`\`\`
 
 API キーは Vercel のダッシュボードなど、ホスティング環境で設定してください。
 

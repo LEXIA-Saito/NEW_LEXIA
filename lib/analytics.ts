@@ -9,4 +9,3 @@ export function trackEvent(name: string, params?: Record<string, any>) {
     ;(window as any).va?.track?.(name, params || {})
   } catch {}
 }
-

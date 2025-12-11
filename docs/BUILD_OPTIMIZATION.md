@@ -8,31 +8,31 @@
 ### 1. Next.js Configuration (`next.config.mjs`)
 
 #### SWC Minification
-```javascript
+\`\`\`javascript
 swcMinify: true
-```
+\`\`\`
 - Babel の代わりに Rust ベースの SWC を使用してビルド速度を向上
 - 本番環境で約 17倍高速なミニファイ
 
 #### Compiler Optimizations
-```javascript
+\`\`\`javascript
 compiler: {
   removeConsole: process.env.NODE_ENV === 'production' ? {
     exclude: ['error', 'warn'],
   } : false,
 }
-```
+\`\`\`
 - 本番環境で `console.log` を自動削除（エラーと警告は保持）
 - バンドルサイズの削減
 
 #### Experimental Features
-```javascript
+\`\`\`javascript
 experimental: {
   optimizePackageImports: [...],
   optimizeCss: true,
   webpackBuildWorker: true,
 }
-```
+\`\`\`
 - **optimizePackageImports**: 主要UIライブラリの Tree-shaking を最適化
   - lucide-react, @radix-ui/*, framer-motion, recharts など
 - **optimizeCss**: CSS バンドルの最適化
@@ -53,40 +53,40 @@ experimental: {
 ### 2. TypeScript Configuration (`tsconfig.json`)
 
 #### Incremental Compilation
-```json
+\`\`\`json
 "incremental": true,
 "tsBuildInfoFile": ".next/cache/tsconfig.tsbuildinfo"
-```
+\`\`\`
 - 変更されたファイルのみを再コンパイル
 - ビルド時間を大幅に短縮
 
 #### Stricter Exclusions
-```json
+\`\`\`json
 "exclude": ["node_modules", ".next", "out", "dist", "build"]
-```
+\`\`\`
 - 不要なディレクトリをスキャン対象から除外
 - 型チェックの高速化
 
 ### 3. Package Scripts (`package.json`)
 
 #### Development
-```bash
+\`\`\`bash
 pnpm dev  # Turbopack を使用した高速開発サーバー
-```
+\`\`\`
 - Next.js 15 の Turbopack で開発サーバーの起動が最大 700% 高速化
 
 #### Build Scripts
-```bash
+\`\`\`bash
 pnpm build              # 本番ビルド
 pnpm build:analyze      # バンドル分析付きビルド
 pnpm type-check         # 型チェックのみ
-```
+\`\`\`
 
 #### Maintenance Scripts
-```bash
+\`\`\`bash
 pnpm clean      # ビルドキャッシュをクリア
 pnpm clean:all  # 全キャッシュと node_modules をクリア
-```
+\`\`\`
 
 ### 4. ESLint Configuration (`eslint.config.mjs`)
 
@@ -123,13 +123,13 @@ pnpm clean:all  # 全キャッシュと node_modules をクリア
 ## 使用方法
 
 ### 開発開始
-```bash
+\`\`\`bash
 pnpm install
 pnpm dev
-```
+\`\`\`
 
 ### ビルドとデプロイ
-```bash
+\`\`\`bash
 # 型チェック
 pnpm type-check
 
@@ -141,15 +141,15 @@ pnpm build
 
 # バンドル分析（推奨：定期的に実行）
 pnpm build:analyze
-```
+\`\`\`
 
 ### トラブルシューティング
-```bash
+\`\`\`bash
 # キャッシュをクリアして再ビルド
 pnpm clean
 pnpm install
 pnpm build
-```
+\`\`\`
 
 ## メンテナンス
 

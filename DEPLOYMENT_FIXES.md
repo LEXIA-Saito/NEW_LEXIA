@@ -45,39 +45,39 @@ This document addresses the Vercel deployment errors and contact form 500 error 
 ### For Vercel Deployment
 
 1. **Environment Variables** (Required):
-   ```
+   \`\`\`
    RESEND_API_KEY=your_real_resend_api_key_here
-   ```
+   \`\`\`
 
 2. **Deploy Command**:
-   ```bash
+   \`\`\`bash
    git push origin main
-   ```
+   \`\`\`
    
    The updated `pnpm-lock.yaml` will now work with Vercel's build system.
 
 ### For Local Development
 
 1. **Install Dependencies**:
-   ```bash
+   \`\`\`bash
    npm install --legacy-peer-deps
    # or
    pnpm install
-   ```
+   \`\`\`
 
 2. **Start Development Server**:
-   ```bash
+   \`\`\`bash
    # Using PM2 (recommended)
    pm2 start ecosystem.config.js
    
    # Or direct Next.js
    npm run dev
-   ```
+   \`\`\`
 
 3. **Test Contact Form**:
-   ```bash
+   \`\`\`bash
    node test-contact-api.js
-   ```
+   \`\`\`
 
 ## 📧 Resend Email Configuration
 
@@ -109,7 +109,7 @@ When `RESEND_API_KEY` is not configured:
 
 ### Contact Form Test
 
-```bash
+\`\`\`bash
 # Test API endpoint directly
 node test-contact-api.js
 
@@ -122,7 +122,7 @@ Response data: {
   message: '開発環境では実際のメール送信は行われません。本番環境ではRESEND_API_KEYを設定してください。'
 }
 ✅ Contact API test passed!
-```
+\`\`\`
 
 ### Production Test
 
@@ -136,9 +136,9 @@ With valid RESEND_API_KEY:
 ### Still Getting 500 Error?
 
 1. Check server logs:
-   ```bash
+   \`\`\`bash
    pm2 logs lexia-dev-server --nostream
-   ```
+   \`\`\`
 
 2. Verify RESEND_API_KEY format:
    - Should start with `re_`

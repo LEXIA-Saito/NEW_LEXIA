@@ -46,22 +46,22 @@ LEXIAブログのCMS統合を**SanityからmicroCMSに完全移行**しました
 **目的**: 環境変数のテンプレート
 
 **設定項目**:
-```bash
+\`\`\`bash
 MICROCMS_SERVICE_DOMAIN=your-service-name
 MICROCMS_API_KEY=your-api-key-here
-```
+\`\`\`
 
 ## 🔄 更新ファイル
 
 ### `lib/blog-posts.ts`
 **変更内容**:
-```diff
+\`\`\`diff
 - // 以前はSanityを使用していました
 + import { fetchMicroCMSBlogPosts, fetchMicroCMSBlogPost } from "./microcms-blog"
 
 + // microCMSから記事を取得
 + const microCMSPosts = await fetchMicroCMSBlogPosts()
-```
+\`\`\`
 
 **動作**:
 1. microCMSから記事取得を試行
@@ -89,7 +89,7 @@ MICROCMS_API_KEY=your-api-key-here
 ### package.json
 
 **削除**:
-```json
+\`\`\`json
 {
   "dependencies": {
     "@sanity/client": "^6.x.x"
@@ -104,7 +104,7 @@ MICROCMS_API_KEY=your-api-key-here
     "sanity-deploy": "sanity deploy"
   }
 }
-```
+\`\`\`
 
 **追加**: なし（microCMSはREST APIのみ、追加パッケージ不要）
 
@@ -147,11 +147,11 @@ MICROCMS_API_KEY=your-api-key-here
 ### 2. 環境変数設定
 
 **ローカル開発**:
-```powershell
+\`\`\`powershell
 # .env.local を作成
 MICROCMS_SERVICE_DOMAIN=lexia-blog
 MICROCMS_API_KEY=your-api-key-here
-```
+\`\`\`
 
 **Vercel**:
 1. プロジェクト → Settings → Environment Variables
@@ -163,7 +163,7 @@ microCMSダッシュボードで記事を作成（詳細は `MICROCMS_BLOG_GUIDE
 
 ### 4. 動作確認
 
-```powershell
+\`\`\`powershell
 # 依存関係インストール
 pnpm install
 
@@ -172,11 +172,11 @@ pnpm dev
 
 # ブログページを確認
 # http://localhost:3000/blog
-```
+\`\`\`
 
 ## ✅ 動作フロー
 
-```
+\`\`\`
 ┌─────────────────────────────────────────┐
 │ ユーザーがブログページにアクセス      │
 └─────────────────┬───────────────────────┘
@@ -219,7 +219,7 @@ pnpm dev
 ┌─────────────────────────────────────────┐
 │ ブログ一覧/個別ページに記事を表示      │
 └─────────────────────────────────────────┘
-```
+\`\`\`
 
 ## 🔍 フォールバック戦略
 
@@ -237,14 +237,14 @@ microCMSへの接続が失敗した場合の動作:
 ## 📈 パフォーマンス最適化
 
 ### ISR（Incremental Static Regeneration）
-```typescript
+\`\`\`typescript
 {
   next: {
     revalidate: 60,  // 60秒ごとに再検証
     tags: ["microcms-blog"]
   }
 }
-```
+\`\`\`
 
 ### キャッシュ戦略
 - 記事一覧: 60秒間隔で更新チェック
@@ -288,13 +288,13 @@ microCMSへの接続が失敗した場合の動作:
 1. microCMSの画像URLが公開されているか確認
 2. `next.config.mjs` の `images.remotePatterns` を確認
 3. 必要に応じて microCMS のドメインを追加:
-   ```javascript
+   \`\`\`javascript
    images: {
      remotePatterns: [
        { hostname: "images.microcms-assets.io" }
      ]
    }
-   ```
+   \`\`\`
 
 ## 📚 関連ドキュメント
 
@@ -329,11 +329,11 @@ microCMSへの接続が失敗した場合の動作:
    - または `lib/blog-posts-fallback.ts` で管理
 
 4. **デプロイ**
-   ```powershell
+   \`\`\`powershell
    git add .
    git commit -m "feat: integrate microCMS for blog management"
    git push origin main
-   ```
+   \`\`\`
 
 5. **動作確認**
    - https://your-domain.vercel.app/blog

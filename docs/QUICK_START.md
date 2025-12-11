@@ -5,15 +5,15 @@
 ## 🚀 セットアップ
 
 ### 1. 依存関係のインストール
-```bash
+\`\`\`bash
 pnpm install
-```
+\`\`\`
 
 ### 2. 開発サーバーの起動
-```bash
+\`\`\`bash
 # Turbopack を使用した高速開発サーバー
 pnpm dev
-```
+\`\`\`
 
 開発サーバーは `http://localhost:3000` で起動します。
 
@@ -22,53 +22,53 @@ pnpm dev
 ## 📝 開発ワークフロー
 
 ### コードを書く前に
-```bash
+\`\`\`bash
 # 型チェック
 pnpm type-check
 
 # Lint チェック
 pnpm lint
-```
+\`\`\`
 
 ### コードを書いた後
-```bash
+\`\`\`bash
 # 自動修正可能な Lint エラーを修正
 pnpm lint:fix
 
 # 型チェック
 pnpm type-check
-```
+\`\`\`
 
 ### ビルド前の確認
-```bash
+\`\`\`bash
 # 本番ビルド
 pnpm build
 
 # ビルド成功後、ローカルで確認
 pnpm start
-```
+\`\`\`
 
 ### バンドルサイズの確認（月1回推奨）
-```bash
+\`\`\`bash
 pnpm build:analyze
-```
+\`\`\`
 
 ---
 
 ## 🧹 メンテナンス
 
 ### キャッシュのクリア（ビルドエラー時）
-```bash
+\`\`\`bash
 # ビルドキャッシュのみクリア
 pnpm clean
 
 # 完全クリーンアップ（node_modules も削除）
 pnpm clean:all
 pnpm install
-```
+\`\`\`
 
 ### 依存関係の更新（週次推奨）
-```bash
+\`\`\`bash
 # 依存関係の更新
 pnpm update
 
@@ -77,23 +77,23 @@ pnpm audit
 
 # 未使用の依存関係チェック（月次）
 pnpm exec depcheck
-```
+\`\`\`
 
 ---
 
 ## 🎨 コンポーネント開発のベストプラクティス
 
 ### 1. Server Component をデフォルトに
-```tsx
+\`\`\`tsx
 // ✅ Good - Server Component (デフォルト)
 export default async function BlogPage() {
   const posts = await getPosts()
   return <PostList posts={posts} />
 }
-```
+\`\`\`
 
 ### 2. Client Component は必要な場合のみ
-```tsx
+\`\`\`tsx
 // ✅ Good - インタラクティブな機能がある場合のみ
 'use client'
 
@@ -103,10 +103,10 @@ export function InteractiveButton() {
   const [count, setCount] = useState(0)
   return <button onClick={() => setCount(c => c + 1)}>{count}</button>
 }
-```
+\`\`\`
 
 ### 3. 重いコンポーネントは動的インポート
-```tsx
+\`\`\`tsx
 // ✅ Good - Canvas/Three.js など重いコンポーネント
 import dynamic from 'next/dynamic'
 
@@ -117,40 +117,40 @@ const HeavyComponent = dynamic(
     ssr: false,
   }
 )
-```
+\`\`\`
 
 ### 4. リストアイテムは React.memo
-```tsx
+\`\`\`tsx
 // ✅ Good - 頻繁に再レンダリングされるリストアイテム
 import { memo } from 'react'
 
 export const ListItem = memo(function ListItem({ item }) {
   return <div>{item.name}</div>
 })
-```
+\`\`\`
 
 ### 5. 計算コストの高い処理は useMemo
-```tsx
+\`\`\`tsx
 // ✅ Good - フィルタリング、ソート、変換処理
 const filtered = useMemo(() => {
   return items.filter(item => item.active)
 }, [items])
-```
+\`\`\`
 
 ### 6. イベントハンドラーは useCallback
-```tsx
+\`\`\`tsx
 // ✅ Good - 子コンポーネントに渡すハンドラー
 const handleClick = useCallback(() => {
   doSomething(value)
 }, [value])
-```
+\`\`\`
 
 ---
 
 ## 🖼️ 画像最適化
 
 ### next/image を常に使用
-```tsx
+\`\`\`tsx
 import Image from 'next/image'
 
 <Image
@@ -161,7 +161,7 @@ import Image from 'next/image'
   priority // Above the fold のみ
   placeholder="blur" // 推奨
 />
-```
+\`\`\`
 
 ### サイズ指定のガイドライン
 - Hero画像: `priority` を設定
@@ -174,7 +174,7 @@ import Image from 'next/image'
 ## 🔍 デバッグとパフォーマンス測定
 
 ### ローカルでのパフォーマンス測定
-```bash
+\`\`\`bash
 # 本番ビルド
 pnpm build
 
@@ -185,7 +185,7 @@ pnpm start
 # または
 # http://localhost:3000 を開いて
 # F12 → Lighthouse → Analyze page load
-```
+\`\`\`
 
 ### Vercel でのモニタリング
 - Vercel Dashboard → Analytics
@@ -199,7 +199,7 @@ pnpm start
 ## 🐛 トラブルシューティング
 
 ### ビルドエラー時
-```bash
+\`\`\`bash
 # 1. キャッシュクリア
 pnpm clean
 
@@ -211,25 +211,25 @@ pnpm type-check
 
 # 4. 再ビルド
 pnpm build
-```
+\`\`\`
 
 ### 型エラーが出る場合
-```bash
+\`\`\`bash
 # TypeScript サーバーを再起動
 # VS Code: Ctrl+Shift+P → "TypeScript: Restart TS Server"
 
 # または
 pnpm type-check
-```
+\`\`\`
 
 ### Lint エラーが出る場合
-```bash
+\`\`\`bash
 # 自動修正
 pnpm lint:fix
 
 # それでもエラーが残る場合は手動で修正
 pnpm lint
-```
+\`\`\`
 
 ---
 

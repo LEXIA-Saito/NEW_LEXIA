@@ -26,12 +26,12 @@ microCMSの見出し管理を**繰り返しフィールド（repeater）**から
 
 特定の見出しだけを目次に表示したい場合:
 
-```
+\`\`\`
 見出し1
 見出し2
 ## 見出し3
 ### 見出し4
-```
+\`\`\`
 
 #### フォーマット
 
@@ -48,7 +48,7 @@ microCMSの見出し管理を**繰り返しフィールド（repeater）**から
 
 **`lib/extract-headings.ts`**
 
-```typescript
+\`\`\`typescript
 export function parseHeadingsText(headingsText: string): BlogHeading[] {
   return headingsText
     .split("\n")
@@ -66,13 +66,13 @@ export function parseHeadingsText(headingsText: string): BlogHeading[] {
       return { text: line, level: 2 as const }
     })
 }
-```
+\`\`\`
 
 ### 2. microCMS型定義更新
 
 **`lib/microcms-blog.ts`**
 
-```typescript
+\`\`\`typescript
 // 変更前
 headings?: Array<{
   text: string
@@ -81,30 +81,30 @@ headings?: Array<{
 
 // 変更後
 headingsText?: string
-```
+\`\`\`
 
 ### 3. 変換ロジック更新
 
-```typescript
+\`\`\`typescript
 headings: post.contentHtml 
   ? (post.headingsText && post.headingsText.trim().length > 0
       ? parseHeadingsText(post.headingsText) // テキストをパース
       : extractHeadingsFromHtml(post.contentHtml)) // 自動抽出
   : undefined
-```
+\`\`\`
 
 ## 📝 microCMSスキーマ設定
 
 ### 現在のフィールド設定（確認済み）
 
-```json
+\`\`\`json
 {
   "fieldId": "headings",
   "name": "目次",
   "kind": "textArea",
   "required": false
 }
-```
+\`\`\`
 
 ✅ **既に正しく設定されています！**
 
@@ -112,9 +112,9 @@ headings: post.contentHtml
 
 microCMS管理画面で `headings` フィールドの説明を以下に更新することを推奨します:
 
-```
+\`\`\`
 目次をカスタマイズしたい場合のみ使用。改行区切りで見出しを入力。空の場合はcontentHtmlから自動抽出されます。
-```
+\`\`\`
 
 ## 🚀 移行手順
 
@@ -129,9 +129,9 @@ microCMSのAPIスキーマを確認したところ、`headings` フィールド�
    - 説明文: 「目次をカスタマイズしたい場合のみ使用。改行区切りで見出しを入力。空の場合はcontentHtmlから自動抽出されます。」
 
 2. **cheerioパッケージをインストール**
-   ```bash
+   \`\`\`bash
    pnpm install
-   ```
+   \`\`\`
 
 3. **動作確認**
    - 既存記事: `headings` フィールドが空 → 自動抽出が動作

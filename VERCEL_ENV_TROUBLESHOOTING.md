@@ -10,23 +10,23 @@
 
 ### 1. Vercelダッシュボードでの設定確認
 
-```bash
+\`\`\`bash
 # Vercel CLIを使用して環境変数を確認（推奨）
 npx vercel env ls
 
 # 特定の環境変数を確認
 npx vercel env pull .env.vercel.local
-```
+\`\`\`
 
 ### 2. 環境変数設定の正しい手順
 
 1. **Vercel Dashboard** → **プロジェクト選択** → **Settings** → **Environment Variables**
 2. 以下の設定を確認：
-   ```
+   \`\`\`
    Name: RESEND_API_KEY
    Value: <YOUR_RESEND_API_KEY>
    Environment: Production, Preview, Development (全て選択)
-   ```
+   \`\`\`
 
 ### 3. よくある問題と解決策
 
@@ -50,17 +50,17 @@ npx vercel env pull .env.vercel.local
 
 デプロイ後、以下のエンドポイントで環境変数を確認：
 
-```bash
+\`\`\`bash
 # 環境変数の存在確認
 curl https://your-vercel-domain.vercel.app/api/debug-env
 
 # Resend API テスト（実際にメール送信）
 curl -X POST https://your-vercel-domain.vercel.app/api/debug-env
-```
+\`\`\`
 
 ### 5. Vercel CLI を使用した確認
 
-```bash
+\`\`\`bash
 # プロジェクトにログイン
 npx vercel login
 
@@ -72,7 +72,7 @@ npx vercel env add RESEND_API_KEY
 
 # 強制的に再デプロイ
 npx vercel --prod --force
-```
+\`\`\`
 
 ## 🚀 推奨される解決手順
 
@@ -85,21 +85,21 @@ npx vercel --prod --force
    - Environment: ✅ Production ✅ Preview ✅ Development
 
 ### ステップ2: 再デプロイ
-```bash
+\`\`\`bash
 git push origin main
 # または
 npx vercel --prod --force
-```
+\`\`\`
 
 ### ステップ3: 診断API で確認
-```bash
+\`\`\`bash
 curl https://your-domain.vercel.app/api/debug-env
-```
+\`\`\`
 
 ### ステップ4: 実際のメール送信テスト
-```bash
+\`\`\`bash
 curl -X POST https://your-domain.vercel.app/api/debug-env
-```
+\`\`\`
 
 ## 🔍 追加の確認事項
 
@@ -117,18 +117,18 @@ curl -X POST https://your-domain.vercel.app/api/debug-env
 もし上記で解決しない場合：
 
 1. **ハードコーディング（テスト用のみ）**:
-   ```typescript
+   \`\`\`typescript
    // app/api/contact/route.ts (本番環境でのみ一時的に)
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) {
     throw new Error('RESEND_API_KEY is not configured')
   }
-   ```
+   \`\`\`
 
 2. **Vercel Functions の環境変数ログ**:
-   ```typescript
+   \`\`\`typescript
    console.log('Available env vars:', Object.keys(process.env).filter(k => k.includes('RESEND')))
-   ```
+   \`\`\`
 
 ## 📞 サポート情報
 

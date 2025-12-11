@@ -9,71 +9,71 @@ microCMSには「複数テキストエリア」という種類が存在しない
 ### ✅ 段落の入力（`body`フィールド）
 
 **microCMSでの入力**:
-```
+\`\`\`
 段落1です。この文章は最初の段落。
 
 段落2です。空行を入れても大丈夫です。
 段落3です。
-```
+\`\`\`
 
 **変換後（コード内部）**:
-```typescript
+\`\`\`typescript
 body: [
   "段落1です。この文章は最初の段落。",
   "段落2です。空行を入れても大丈夫です。",
   "段落3です。"
 ]
-```
+\`\`\`
 
 ---
 
 ### ✅ 箇条書きの入力（`list`フィールド）
 
 **microCMSでの入力**:
-```
+\`\`\`
 リスト項目1
 リスト項目2
 リスト項目3
-```
+\`\`\`
 
 **変換後（コード内部）**:
-```typescript
+\`\`\`typescript
 list: [
   "リスト項目1",
   "リスト項目2",
   "リスト項目3"
 ]
-```
+\`\`\`
 
 ---
 
 ### ✅ テーブルヘッダーの入力（`tableHeaders`フィールド）
 
 **microCMSでの入力**:
-```
+\`\`\`
 列1,列2,列3
-```
+\`\`\`
 
 **変換後（コード内部）**:
-```typescript
+\`\`\`typescript
 table: {
   headers: ["列1", "列2", "列3"]
 }
-```
+\`\`\`
 
 ---
 
 ### ✅ テーブル行の入力（`tableRows`フィールド）
 
 **microCMSでの入力**:
-```
+\`\`\`
 値1,値2,値3
 値4,値5,値6
 値7,値8,値9
-```
+\`\`\`
 
 **変換後（コード内部）**:
-```typescript
+\`\`\`typescript
 table: {
   headers: ["列1", "列2", "列3"],
   rows: [
@@ -82,7 +82,7 @@ table: {
     ["値7", "値8", "値9"]
   ]
 }
-```
+\`\`\`
 
 ---
 
@@ -90,7 +90,7 @@ table: {
 
 ### microCMSでのセクション入力
 
-```
+\`\`\`
 ■ セクション[0]
 見出し: Infisicalの主な機能
 本文:
@@ -105,11 +105,11 @@ Infisicalは、シークレット管理を容易にするための多くの機�
 
 画像: https://example.com/image.webp
 画像Alt: Infisicalのダッシュボード画面
-```
+\`\`\`
 
 ### 変換後のデータ構造
 
-```typescript
+\`\`\`typescript
 {
   heading: "Infisicalの主な機能",
   body: [
@@ -125,7 +125,7 @@ Infisicalは、シークレット管理を容易にするための多くの機�
   image: "https://example.com/image.webp",
   imageAlt: "Infisicalのダッシュボード画面"
 }
-```
+\`\`\`
 
 ---
 
@@ -133,7 +133,7 @@ Infisicalは、シークレット管理を容易にするための多くの機�
 
 `lib/microcms-blog.ts`の`convertMicroCMSPost`関数で以下の処理を実行:
 
-```typescript
+\`\`\`typescript
 // body: 改行区切り → 配列
 if (section.body) {
   converted.body = section.body
@@ -166,44 +166,44 @@ if (section.tableRows) {
     .filter((line) => line.length > 0)
     .map((row) => row.split(",").map((cell) => cell.trim()))
 }
-```
+\`\`\`
 
 ---
 
 ## ❌ よくある間違い
 
 ### 間違い1: カンマ区切りで段落を入力
-```
+\`\`\`
 ❌ 本文: 段落1,段落2,段落3
-```
+\`\`\`
 → **正解**: 改行で区切る
 
 ### 間違い2: 箇条書きに記号を付ける
-```
+\`\`\`
 ❌ 箇条書き:
 - リスト項目1
 - リスト項目2
-```
+\`\`\`
 → **正解**: 記号なしで改行のみ（UI側で自動的に`<ul><li>`が生成されます）
 
 ### 間違い3: テーブルヘッダーを改行で入力
-```
+\`\`\`
 ❌ テーブルヘッダー:
 列1
 列2
 列3
-```
+\`\`\`
 → **正解**: カンマ区切り（`列1,列2,列3`）
 
 ### 間違い4: テーブル行をカンマのみで入力
-```
+\`\`\`
 ❌ テーブル行: 値1,値2,値3,値4,値5,値6
-```
+\`\`\`
 → **正解**: 改行で行を区切り、各行内はカンマ区切り
-```
+\`\`\`
 値1,値2,値3
 値4,値5,値6
-```
+\`\`\`
 
 ---
 
@@ -211,28 +211,28 @@ if (section.tableRows) {
 
 ### 1. ローカル開発環境でテスト
 
-```bash
+\`\`\`bash
 # .env.local を確認
 LEXIA_MICROCMS_DOMAIN=lexia
 MICROCMS_API_KEY=your-api-key
 
 # 開発サーバー起動
 pnpm dev
-```
+\`\`\`
 
 ### 2. ブラウザで確認
 
-```
+\`\`\`
 http://localhost:3000/blog
 → 記事一覧に表示されるか確認
 
 http://localhost:3000/blog/your-article-slug
 → 段落・リスト・テーブルが正しく表示されるか確認
-```
+\`\`\`
 
 ### 3. デバッグ方法
 
-```typescript
+\`\`\`typescript
 // app/blog/[slug]/page.tsx などでconsole.log
 console.log('Sections:', post.sections)
 
@@ -244,7 +244,7 @@ console.log('Sections:', post.sections)
 //     list: ["項目1", "項目2"]  // ← 配列になっているか確認
 //   }
 // ]
-```
+\`\`\`
 
 ---
 
