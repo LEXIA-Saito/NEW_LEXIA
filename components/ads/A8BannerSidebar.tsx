@@ -3,6 +3,7 @@
  * 120×90px スクエア広告
  */
 export default function A8BannerSidebar() {
+  console.log("[v0] A8BannerSidebar rendered")
   return (
     <div className="flex justify-center" aria-label="広告">
       <div className="inline-block">
