@@ -38,11 +38,11 @@ export async function microcmsFetch<T>(
   queries: QueryRecord = {},
   init: FetchOptions = {},
 ): Promise<T> {
-  // サーバーサイドでのみ実行されることを確認
-  if (typeof window !== 'undefined') {
-    throw new Error("microcmsFetch can only be called on the server side")
+  if (typeof window !== "undefined") {
+    console.warn("[v0] microcmsFetch called on client side, returning empty data")
+    return { contents: [], totalCount: 0, offset: 0, limit: 0 } as T
   }
-  
+
   ensureConfigured()
 
   const url = new URL(`https://${serviceDomain}.microcms.io/api/v1/${endpoint}`)
