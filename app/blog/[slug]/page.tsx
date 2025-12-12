@@ -1,10 +1,6 @@
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
-import {
-  fetchBlogPost,
-  fetchBlogPosts,
-  getBlogGenreLabel,
-} from "@/lib/blog-posts"
+import { fetchBlogPost, fetchBlogPosts, getBlogGenreLabel } from "@/lib/blog-posts"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import { notFound } from "next/navigation"
@@ -12,8 +8,8 @@ import Script from "next/script"
 import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
-import type { BlogPostSection } from "@/lib/blog-posts.types"
 import A8Banner from "@/components/ads/A8Banner"
+import A8BannerSidebar from "@/components/ads/A8BannerSidebar"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
@@ -31,7 +27,10 @@ export async function generateStaticParams() {
     const validParams = posts
       .filter((post) => post && post.slug && typeof post.slug === "string" && post.slug.trim().length > 0)
       .map((post) => ({ slug: post.slug }))
-    console.log(`[generateStaticParams] Valid slugs:`, validParams.map(p => p.slug))
+    console.log(
+      `[generateStaticParams] Valid slugs:`,
+      validParams.map((p) => p.slug),
+    )
     return validParams
   } catch (error) {
     console.error("Failed to generate static params for blog posts:", error)
@@ -113,326 +112,365 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 3)
     const latestPosts = allPosts
-    .filter((p) => p.slug !== post.slug && !sameGenrePosts.find((s) => s.slug === p.slug))
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 3)
+      .filter((p) => p.slug !== post.slug && !sameGenrePosts.find((s) => s.slug === p.slug))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 3)
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.description,
-    datePublished: post.date,
-    articleSection: getBlogGenreLabel(post.genre),
-    author: {
-      "@type": "Person",
-      name: "齋藤雅人",
-      url: `${SITE_URL.replace(/\/$/, "")}/team/masato-saito`,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "LEXIA",
-    },
-    url: `${SITE_URL.replace(/\/$/, "")}/blog/${post.slug}`,
-    image: post.heroImage,
-    keywords: post.tags && post.tags.length > 0 ? post.tags.join(", ") : undefined,
-  }
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: post.title,
+      description: post.description,
+      datePublished: post.date,
+      articleSection: getBlogGenreLabel(post.genre),
+      author: {
+        "@type": "Person",
+        name: "齋藤雅人",
+        url: `${SITE_URL.replace(/\/$/, "")}/team/masato-saito`,
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "LEXIA",
+      },
+      url: `${SITE_URL.replace(/\/$/, "")}/blog/${post.slug}`,
+      image: post.heroImage,
+      keywords: post.tags && post.tags.length > 0 ? post.tags.join(", ") : undefined,
+    }
 
-  return (
-    <>
-      <main className="min-h-screen bg-white dark:bg-neutral-900">
-        <div className="container mx-auto px-4 py-24 md:py-32 max-w-3xl">
-          <Breadcrumbs dynamicLabels={{ [post.slug]: post.title }} />
-          <article>
-            <header className="mb-12">
-              <Link
-                href={`/blog?genre=${post.genre}#genre-filter`}
-                className="inline-flex items-center rounded-full bg-neutral-900 px-4 py-1 text-xs font-medium tracking-wide text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200"
-                aria-label={`${getBlogGenreLabel(post.genre)} の記事一覧`}
-              >
-                {getBlogGenreLabel(post.genre)}
-              </Link>
-              <h1 className="mt-6 text-3xl md:text-4xl lg:text-5xl font-light text-neutral-900 dark:text-neutral-100">
-                {post.title}
-              </h1>
-              <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-neutral-500 dark:text-neutral-400">
-                <span>公開: {formatJapaneseDate(post.date)}</span>
-                {post.latest_update && post.latest_update !== post.date && (
-                  <>
-                    <span aria-hidden="true">•</span>
-                    <span>更新: {formatJapaneseDate(post.latest_update)}</span>
-                  </>
-                )}
-                <span aria-hidden="true">•</span>
-                <span>{post.readingTime}</span>
-                <span aria-hidden="true">•</span>
-                <span>
-                  執筆：
-                  <Link 
-                    href="/team/masato-saito" 
-                    className="text-neutral-700 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100 underline-offset-4 hover:underline transition-colors"
-                    aria-label="齋藤雅人のプロフィールを見る"
-                  >
-                    齋藤雅人
-                  </Link>
-                </span>
-              </div>
-              {post.tags && post.tags.length > 0 ? (
-                <div className="mt-4 flex flex-wrap gap-2 text-xs font-medium text-neutral-500 dark:text-neutral-400">
-                  {post.tags.slice(0, 3).map((tag) => (
-                    <Link
-                      key={tag}
-                      href={`/blog/tags/${encodeURIComponent(tag)}`}
-                      className="inline-flex items-center rounded-full border border-neutral-300 px-3 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:border-neutral-600"
-                    >
-                      #{tag}
-                    </Link>
-                  ))}
-                </div>
-              ) : null}
-              {post.heroImage ? (
-                <div className="mt-8">
-                  <Image
-                    src={post.heroImage}
-                    alt={(post as any).heroImageAlt ?? post.title}
-                    width={1200}
-                    height={675}
-                    priority
-                    fetchPriority="high"
-                    sizes="(min-width: 1024px) 70vw, 100vw"
-                    className="w-full rounded-xl object-cover"
-                  />
-                </div>
-              ) : null}
-            </header>
-
-            {/* 優先度1: contentHtml（リッチエディタV2全文） */}
-            {post.contentHtml ? (
-              <div 
-                className="prose prose-neutral max-w-none dark:prose-invert mt-12"
-                dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-              />
-            ) : post.custom && post.custom.length > 0 ? (
-              /* 優先度2: custom（新スキーマ - 繰り返し本文ブロック） */
-              <div className="space-y-8 md:space-y-12 mt-12">
-                {post.custom.map((block, index) => (
-                  <div key={index} className="space-y-6">
-                    {/* 本文テキスト（リッチエディタV2） */}
-                    {block.body_text && (
-                      <div 
-                        className="prose prose-neutral max-w-none dark:prose-invert"
-                        dangerouslySetInnerHTML={{ __html: block.body_text }}
-                      />
-                    )}
-                    
-                    {/* 本文中の画像 */}
-                    {block.body_img && (
-                      <div className="mt-6">
-                        <Image
-                          src={block.body_img}
-                          alt={`記事画像 ${index + 1}`}
-                          width={1200}
-                          height={700}
-                          className="w-full rounded-lg object-cover"
-                        />
-                      </div>
-                    )}
-                    
-                    {/* 他記事導線（CTA） */}
-                    {block.others_cta && (
-                      <div className="mt-6 p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
-                        <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2">
-                          関連記事
-                        </p>
-                        <Link 
-                          href={`/blog/${block.others_cta.slug || block.others_cta.id}`}
-                          className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                        >
-                          {block.others_cta.title || "関連記事を読む"}
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              /* 優先度3: sections（従来の構造化表示 - fallback用） */
-              <div className="space-y-8 md:space-y-12 text-neutral-800 dark:text-neutral-200">
-                {(post.sections ?? []).map((section, index) => (
-                  <section key={section.heading ?? index}>
-                    {section.heading ? (
-                      <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900 dark:text-neutral-100">
-                        <LinkifyText text={section.heading} />
-                      </h2>
-                    ) : null}
-                    {section.image ? (
-                      <div className="mt-4">
-                      <Image
-                        src={section.image}
-                        alt={section.imageAlt ?? section.heading ?? `${post.title} image ${index + 1}`}
-                        width={1200}
-                        height={700}
-                        className="w-full rounded-lg object-cover"
-                      />
-                    </div>
-                  ) : null}
-                  <div className="mt-4 space-y-4">
-                    {section.body?.map((paragraph, i) => (
-                      <p key={i} className="leading-relaxed">
-                        <LinkifyText text={paragraph} />
-                      </p>
-                    ))}
-                    {section.richtext ? (
-                      <div 
-                        className="prose prose-neutral max-w-none dark:prose-invert"
-                        dangerouslySetInnerHTML={{ __html: section.richtext }}
-                      />
-                    ) : null}
-                    {section.table ? (
-                      <div className="overflow-x-auto mt-4">
-                        <table className="min-w-full border-collapse border border-neutral-300 dark:border-neutral-700">
-                          <thead className="bg-neutral-100 dark:bg-neutral-800">
-                            <tr>
-                              {section.table.headers.map((header, i) => (
-                                <th
-                                  key={i}
-                                  className="border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-left font-semibold text-neutral-900 dark:text-neutral-100"
-                                >
-                                  {header}
-                                </th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {section.table.rows.map((row, i) => (
-                              <tr key={i} className="hover:bg-neutral-50 dark:hover:bg-neutral-800/50">
-                                {row.map((cell, j) => (
-                                  <td
-                                    key={j}
-                                    className="border border-neutral-300 dark:border-neutral-700 px-4 py-2"
-                                  >
-                                    <LinkifyText text={cell} />
-                                  </td>
-                                ))}
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    ) : null}
-                    {section.list ? (
-                      (() => {
-                        const visibleItems = section.list.filter((li) => li && li.trim().length > 0)
-                        if (visibleItems.length === 0) return null
-                        return (
-                          <ul className="list-disc space-y-2 pl-6">
-                            {visibleItems.map((item, i) => (
-                              <li key={i} className="leading-relaxed">
-                                <LinkifyText text={item} />
-                              </li>
-                            ))}
-                          </ul>
-                        )
-                      })()
-                    ) : null}
-                  </div>
-                </section>
-              ))}
-            </div>
-            )}
-
-            {/* A8.net アフィリエイト広告 - 記事本文直後（最も効果的な配置） */}
-            <A8Banner />
-
-            {(sameGenrePosts.length > 0 || latestPosts.length > 0) && (
-              <section className="mt-16">
-                <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">他の記事も見る</h2>
-                {sameGenrePosts.length > 0 && (
-                  <div className="mt-6">
-                    <div className="flex items-end justify-between">
-                      <h3 className="text-lg font-medium text-neutral-800 dark:text-neutral-200">同じジャンルのおすすめ</h3>
+    return (
+      <>
+        <main className="min-h-screen bg-white dark:bg-neutral-900">
+          <div className="container mx-auto px-4 py-24 md:py-32 max-w-7xl">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              {/* Main content - 3 columns on desktop */}
+              <div className="lg:col-span-3">
+                <div className="max-w-3xl">
+                  <Breadcrumbs dynamicLabels={{ [post.slug]: post.title }} />
+                  <article>
+                    <header className="mb-12">
                       <Link
                         href={`/blog?genre=${post.genre}#genre-filter`}
-                        className="text-sm text-neutral-700 underline-offset-4 hover:underline dark:text-neutral-300"
-                        aria-label={`${getBlogGenreLabel(post.genre)} の記事一覧へ`}
+                        className="inline-flex items-center rounded-full bg-neutral-900 px-4 py-1 text-xs font-medium tracking-wide text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200"
+                        aria-label={`${getBlogGenreLabel(post.genre)} の記事一覧`}
                       >
-                        もっと見る →
+                        {getBlogGenreLabel(post.genre)}
                       </Link>
-                    </div>
-                    <div className="mt-4 grid gap-6 md:grid-cols-3">
-                      {sameGenrePosts.map((p) => (
-                        <article
-                          key={p.slug}
-                          className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
-                        >
-                          <div className="relative h-40 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
-                            <Image src={p.heroImage || PLACEHOLDER_IMG} alt={p.title} fill className="object-cover" sizes="(min-width: 768px) 30vw, 100vw" />
-                          </div>
-                          <h4 className="mt-3 text-base font-semibold text-neutral-900 dark:text-neutral-100">
-                            <Link href={`/blog/${p.slug}`}>{p.title}</Link>
-                          </h4>
-                          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
-                            <LinkifyText text={p.description} />
-                          </p>
-                          <div className="mt-3 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
-                            <span>{formatJapaneseDate(p.date)}</span>
-                            <Link href={`/blog/${p.slug}`} className="inline-flex items-center gap-1 font-medium text-neutral-900 dark:text-neutral-100" aria-label={`${p.title}を読む`}>
-                              続きを読む <span aria-hidden>→</span>
+                      <h1 className="mt-6 text-3xl md:text-4xl lg:text-5xl font-light text-neutral-900 dark:text-neutral-100">
+                        {post.title}
+                      </h1>
+                      <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-neutral-500 dark:text-neutral-400">
+                        <span>公開: {formatJapaneseDate(post.date)}</span>
+                        {post.latest_update && post.latest_update !== post.date && (
+                          <>
+                            <span aria-hidden="true">•</span>
+                            <span>更新: {formatJapaneseDate(post.latest_update)}</span>
+                          </>
+                        )}
+                        <span aria-hidden="true">•</span>
+                        <span>{post.readingTime}</span>
+                        <span aria-hidden="true">•</span>
+                        <span>
+                          執筆：
+                          <Link
+                            href="/team/masato-saito"
+                            className="text-neutral-700 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100 underline-offset-4 hover:underline transition-colors"
+                            aria-label="齋藤雅人のプロフィールを見る"
+                          >
+                            齋藤雅人
+                          </Link>
+                        </span>
+                      </div>
+                      {post.tags && post.tags.length > 0 ? (
+                        <div className="mt-4 flex flex-wrap gap-2 text-xs font-medium text-neutral-500 dark:text-neutral-400">
+                          {post.tags.slice(0, 3).map((tag) => (
+                            <Link
+                              key={tag}
+                              href={`/blog/tags/${encodeURIComponent(tag)}`}
+                              className="inline-flex items-center rounded-full border border-neutral-300 px-3 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:border-neutral-600"
+                            >
+                              #{tag}
                             </Link>
+                          ))}
+                        </div>
+                      ) : null}
+                      {post.heroImage ? (
+                        <div className="mt-8">
+                          <Image
+                            src={post.heroImage || "/placeholder.svg"}
+                            alt={(post as any).heroImageAlt ?? post.title}
+                            width={1200}
+                            height={675}
+                            priority
+                            fetchPriority="high"
+                            sizes="(min-width: 1024px) 70vw, 100vw"
+                            className="w-full rounded-xl object-cover"
+                          />
+                        </div>
+                      ) : null}
+                    </header>
+
+                    {/* 優先度1: contentHtml（リッチエディタV2全文） */}
+                    {post.contentHtml ? (
+                      <div
+                        className="prose prose-neutral max-w-none dark:prose-invert mt-12"
+                        dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+                      />
+                    ) : post.custom && post.custom.length > 0 ? (
+                      /* 優先度2: custom（新スキーマ - 繰り返し本文ブロック） */
+                      <div className="space-y-8 md:space-y-12 mt-12">
+                        {post.custom.map((block, index) => (
+                          <div key={index} className="space-y-6">
+                            {/* 本文テキスト（リッチエディタV2） */}
+                            {block.body_text && (
+                              <div
+                                className="prose prose-neutral max-w-none dark:prose-invert"
+                                dangerouslySetInnerHTML={{ __html: block.body_text }}
+                              />
+                            )}
+
+                            {/* 本文中の画像 */}
+                            {block.body_img && (
+                              <div className="mt-6">
+                                <Image
+                                  src={block.body_img || "/placeholder.svg"}
+                                  alt={`記事画像 ${index + 1}`}
+                                  width={1200}
+                                  height={700}
+                                  className="w-full rounded-lg object-cover"
+                                />
+                              </div>
+                            )}
+
+                            {/* 他記事導線（CTA） */}
+                            {block.others_cta && (
+                              <div className="mt-6 p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
+                                <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2">
+                                  関連記事
+                                </p>
+                                <Link
+                                  href={`/blog/${block.others_cta.slug || block.others_cta.id}`}
+                                  className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                                >
+                                  {block.others_cta.title || "関連記事を読む"}
+                                </Link>
+                              </div>
+                            )}
                           </div>
-                        </article>
-                      ))}
-                    </div>
-                  </div>
+                        ))}
+                      </div>
+                    ) : (
+                      /* 優先度3: sections（従来の構造化表示 - fallback用） */
+                      <div className="space-y-8 md:space-y-12 text-neutral-800 dark:text-neutral-200">
+                        {(post.sections ?? []).map((section, index) => (
+                          <section key={section.heading ?? index}>
+                            {section.heading ? (
+                              <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900 dark:text-neutral-100">
+                                <LinkifyText text={section.heading} />
+                              </h2>
+                            ) : null}
+                            {section.image ? (
+                              <div className="mt-4">
+                                <Image
+                                  src={section.image || "/placeholder.svg"}
+                                  alt={section.imageAlt ?? section.heading ?? `${post.title} image ${index + 1}`}
+                                  width={1200}
+                                  height={700}
+                                  className="w-full rounded-lg object-cover"
+                                />
+                              </div>
+                            ) : null}
+                            <div className="mt-4 space-y-4">
+                              {section.body?.map((paragraph, i) => (
+                                <p key={i} className="leading-relaxed">
+                                  <LinkifyText text={paragraph} />
+                                </p>
+                              ))}
+                              {section.richtext ? (
+                                <div
+                                  className="prose prose-neutral max-w-none dark:prose-invert"
+                                  dangerouslySetInnerHTML={{ __html: section.richtext }}
+                                />
+                              ) : null}
+                              {section.table ? (
+                                <div className="overflow-x-auto mt-4">
+                                  <table className="min-w-full border-collapse border border-neutral-300 dark:border-neutral-700">
+                                    <thead className="bg-neutral-100 dark:bg-neutral-800">
+                                      <tr>
+                                        {section.table.headers.map((header, i) => (
+                                          <th
+                                            key={i}
+                                            className="border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-left font-semibold text-neutral-900 dark:text-neutral-100"
+                                          >
+                                            {header}
+                                          </th>
+                                        ))}
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {section.table.rows.map((row, i) => (
+                                        <tr key={i} className="hover:bg-neutral-50 dark:hover:bg-neutral-800/50">
+                                          {row.map((cell, j) => (
+                                            <td
+                                              key={j}
+                                              className="border border-neutral-300 dark:border-neutral-700 px-4 py-2"
+                                            >
+                                              <LinkifyText text={cell} />
+                                            </td>
+                                          ))}
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              ) : null}
+                              {section.list
+                                ? (() => {
+                                    const visibleItems = section.list.filter((li) => li && li.trim().length > 0)
+                                    if (visibleItems.length === 0) return null
+                                    return (
+                                      <ul className="list-disc space-y-2 pl-6">
+                                        {visibleItems.map((item, i) => (
+                                          <li key={i} className="leading-relaxed">
+                                            <LinkifyText text={item} />
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    )
+                                  })()
+                                : null}
+                            </div>
+                          </section>
+                        ))}
+                      </div>
+                    )}
+                  </article>
+                </div>
+
+                {/* A8.net アフィリエイト広告 - 記事本文直後 */}
+                <A8Banner />
+
+                {(sameGenrePosts.length > 0 || latestPosts.length > 0) && (
+                  <section className="mt-16">
+                    <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">他の記事も見る</h2>
+                    {sameGenrePosts.length > 0 && (
+                      <div className="mt-6">
+                        <div className="flex items-end justify-between">
+                          <h3 className="text-lg font-medium text-neutral-800 dark:text-neutral-200">
+                            同じジャンルのおすすめ
+                          </h3>
+                          <Link
+                            href={`/blog?genre=${post.genre}#genre-filter`}
+                            className="text-sm text-neutral-700 underline-offset-4 hover:underline dark:text-neutral-300"
+                            aria-label={`${getBlogGenreLabel(post.genre)} の記事一覧へ`}
+                          >
+                            もっと見る →
+                          </Link>
+                        </div>
+                        <div className="mt-4 grid gap-6 md:grid-cols-3">
+                          {sameGenrePosts.map((p) => (
+                            <article
+                              key={p.slug}
+                              className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
+                            >
+                              <div className="relative h-40 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+                                <Image
+                                  src={p.heroImage || PLACEHOLDER_IMG}
+                                  alt={p.title}
+                                  fill
+                                  className="object-cover"
+                                  sizes="(min-width: 768px) 30vw, 100vw"
+                                />
+                              </div>
+                              <h4 className="mt-3 text-base font-semibold text-neutral-900 dark:text-neutral-100">
+                                <Link href={`/blog/${p.slug}`}>{p.title}</Link>
+                              </h4>
+                              <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
+                                <LinkifyText text={p.description} />
+                              </p>
+                              <div className="mt-3 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
+                                <span>{formatJapaneseDate(p.date)}</span>
+                                <Link
+                                  href={`/blog/${p.slug}`}
+                                  className="inline-flex items-center gap-1 font-medium text-neutral-900 dark:text-neutral-100"
+                                  aria-label={`${p.title}を読む`}
+                                >
+                                  続きを読む <span aria-hidden>→</span>
+                                </Link>
+                              </div>
+                            </article>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {latestPosts.length > 0 && (
+                      <div className="mt-12">
+                        <h3 className="text-lg font-medium text-neutral-800 dark:text-neutral-200">新着記事</h3>
+                        <div className="mt-4 grid gap-6 md:grid-cols-3">
+                          {latestPosts.map((p) => (
+                            <article
+                              key={p.slug}
+                              className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
+                            >
+                              <div className="relative h-40 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+                                <Image
+                                  src={p.heroImage || PLACEHOLDER_IMG}
+                                  alt={p.title}
+                                  fill
+                                  className="object-cover"
+                                  sizes="(min-width: 768px) 30vw, 100vw"
+                                />
+                              </div>
+                              <h4 className="mt-3 text-base font-semibold text-neutral-900 dark:text-neutral-100">
+                                <Link href={`/blog/${p.slug}`}>{p.title}</Link>
+                              </h4>
+                              <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
+                                <LinkifyText text={p.description} />
+                              </p>
+                              <div className="mt-3 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
+                                <span>{formatJapaneseDate(p.date)}</span>
+                                <Link
+                                  href={`/blog/${p.slug}`}
+                                  className="inline-flex items-center gap-1 font-medium text-neutral-900 dark:text-neutral-100"
+                                  aria-label={`${p.title}を読む`}
+                                >
+                                  続きを読む <span aria-hidden>→</span>
+                                </Link>
+                              </div>
+                            </article>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </section>
                 )}
 
-                {latestPosts.length > 0 && (
-                  <div className="mt-12">
-                    <h3 className="text-lg font-medium text-neutral-800 dark:text-neutral-200">新着記事</h3>
-                    <div className="mt-4 grid gap-6 md:grid-cols-3">
-                      {latestPosts.map((p) => (
-                        <article
-                          key={p.slug}
-                          className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
-                        >
-                          <div className="relative h-40 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
-                            <Image src={p.heroImage || PLACEHOLDER_IMG} alt={p.title} fill className="object-cover" sizes="(min-width: 768px) 30vw, 100vw" />
-                          </div>
-                          <h4 className="mt-3 text-base font-semibold text-neutral-900 dark:text-neutral-100">
-                            <Link href={`/blog/${p.slug}`}>{p.title}</Link>
-                          </h4>
-                          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
-                            <LinkifyText text={p.description} />
-                          </p>
-                          <div className="mt-3 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
-                            <span>{formatJapaneseDate(p.date)}</span>
-                            <Link href={`/blog/${p.slug}`} className="inline-flex items-center gap-1 font-medium text-neutral-900 dark:text-neutral-100" aria-label={`${p.title}を読む`}>
-                              続きを読む <span aria-hidden>→</span>
-                            </Link>
-                          </div>
-                        </article>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </section>
-            )}
+                <footer className="mt-16 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300">
+                  <p>
+                    このブログの運営はホームページ制作やデザイン制作、動画制作などを行うWEB制作事業LEXIA（レキシア）が行っています。
+                  </p>
+                  <p className="mt-4">
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2 text-white dark:bg-neutral-100 dark:text-neutral-900"
+                    >
+                      制作の相談をする
+                      <span aria-hidden="true">→</span>
+                    </Link>
+                  </p>
+                </footer>
+              </div>
 
-            <footer className="mt-16 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300">
-              <p>
-                このブログの運営はホームページ制作やデザイン制作、動画制作などを行うWEB制作事業LEXIA（レキシア）が行っています。
-              </p>
-              <p className="mt-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2 text-white dark:bg-neutral-100 dark:text-neutral-900"
-                >
-                  制作の相談をする
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </p>
-            </footer>
-          </article>
+              <aside className="hidden lg:block h-fit sticky top-24">
+                <div className="rounded-lg border border-neutral-200 dark:border-neutral-800 p-4 bg-neutral-50 dark:bg-neutral-900/50">
+                  <p className="text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wide mb-4">
+                    広告
+                  </p>
+                  <A8BannerSidebar />
+                </div>
+              </aside>
+            </div>
+          </div>
 
           <div className="mt-16 text-center">
             <Link
@@ -443,27 +481,25 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               <span>記事一覧に戻る</span>
             </Link>
           </div>
-
-        </div>
-      </main>
-      <Footer />
-      <Script
-        async
-        src="https://fundingchoicesmessages.google.com/i/pub-8789901212664644?ers=1"
-        strategy="afterInteractive"
-      />
-      <Script
-        id={`google-fc-signal-${post.slug}`}
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();`,
-        }}
-      />
-      <Script
-        id={`google-fc-closure-${post.slug}`}
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `(function(){'use strict';function aa(a){var b=0;return function(){return b<a.length?{done:!1,value:a[b++]}:{done:!0}}}var ba=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,c){if(a==Array.prototype||a==Object.prototype)return a;a[b]=c.value;return a};
+        </main>
+        <Footer />
+        <Script
+          async
+          src="https://fundingchoicesmessages.google.com/i/pub-8789901212664644?ers=1"
+          strategy="afterInteractive"
+        />
+        <Script
+          id={`google-fc-signal-${post.slug}`}
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();`,
+          }}
+        />
+        <Script
+          id={`google-fc-closure-${post.slug}`}
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){'use strict';function aa(a){var b=0;return function(){return b<a.length?{done:!1,value:a[b++]}:{done:!0}}}var ba=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,c){if(a==Array.prototype||a==Object.prototype)return a;a[b]=c.value;return a};
 function ca(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var c=a[b];if(c&&c.Math==Math)return c}throw Error("Cannot find global object");}var da=ca(this);function l(a,b){if(b)a:{var c=da;a=a.split(".");for(var d=0;d<a.length-1;d++){var e=a[d];if(!(e in c))break a;c=c[e]}a=a[a.length-1];d=c[a];b=b(d);b!=d&&b!=null&&ba(c,a,{configurable:!0,writable:!0,value:b})}} 
 function ea(a){return a.raw=a}function n(a){var b=typeof Symbol!="undefined"&&Symbol.iterator&&a[Symbol.iterator];if(b)return b.call(a);if(typeof a.length=="number")return{next:aa(a)};throw Error(String(a)+" is not an iterable or ArrayLike");}function fa(a){for(var b,c=[];!(b=a.next()).done;)c.push(b.value);return c}var ha=typeof Object.create=="function"?Object.create:function(a){function b(){}b.prototype=a;return new b},p;
 if(typeof Object.setPrototypeOf=="function")p=Object.setPrototypeOf;else{var q;a:{var ja={a:!0},ka={};try{ka.__proto__=ja;q=ka.a;break a}catch(a){}q=!1}p=q?function(a,b){a.__proto__=b;if(a.__proto__!==b)throw new TypeError(a+" is not extensible");return a}:null}var la=p;function t(a,b){a.prototype=ha(b.prototype);a.prototype.constructor=a;if(la)la(a,b);else for(var c in b)if(c!="prototype")if(Object.defineProperties){var d=Object.getOwnPropertyDescriptor(b,c);d&&Object.defineProperty(a,c,d)}else a[c]=b[c];a.A=b.prototype}function ma(){for(var a=Number(this),b=[],c=a;c<arguments.length;c++)b[c-a]=arguments[c];return b}l("Object.is",function(a){return a?a:function(b,c){return b===c?b!==0||1/b===1/c:b!==b&&c!==c}});
@@ -478,16 +514,16 @@ var u=this||self;function v(a,b){a:{var c=["CLOSURE_FLAGS"];for(var d=u,e=0;e<c.
 /* ... (script truncated for brevity in this view) ... */
  (function(){ /* long closure-based script originally provided by the user */ })();
 `,
-        }}
-      />
-      <Script
-        id={`blog-article-${post.slug}`}
-        type="application/ld+json"
-        strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-    </>
-  )
+          }}
+        />
+        <Script
+          id={`blog-article-${post.slug}`}
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </>
+    )
   } catch (error) {
     console.error(`[BlogArticlePage] Error rendering page for slug: ${params.slug}`, error)
     notFound()
