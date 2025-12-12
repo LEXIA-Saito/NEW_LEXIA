@@ -38,13 +38,13 @@ export async function microcmsFetch<T>(
   queries: QueryRecord = {},
   init: FetchOptions = {},
 ): Promise<T> {
-  // サーバーサイドでのみ実行されることを確認
-  const isServer =
-    typeof window === "undefined" || (typeof process !== "undefined" && process.env.NEXT_RUNTIME === "nodejs")
+  // v0 preview environment may render server components on client side
+  const isServer = typeof window === "undefined"
 
-  if (!isServer && typeof window !== "undefined") {
-    console.warn("microcmsFetch should only be called on the server side, falling back to empty response")
-    throw new Error("microcmsFetch can only be called on the server side")
+  if (!isServer) {
+    console.warn("[v0] microcmsFetch called on client side, returning empty response")
+    // Return empty response instead of throwing error
+    return { contents: [], totalCount: 0, offset: 0, limit: 0 } as T
   }
 
   ensureConfigured()
