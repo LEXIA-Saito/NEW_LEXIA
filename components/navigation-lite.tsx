@@ -4,12 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 
-import {
-  LOGO_TEXT_URL,
-  LOGO_TEXT_WHITE_URL,
-  LOGO_URL,
-  LOGO_WHITE_URL,
-} from "@/lib/config"
+import { LOGO_TEXT_URL, LOGO_TEXT_WHITE_URL, LOGO_URL, LOGO_WHITE_URL } from "@/lib/config"
 
 const defaultNavLinks = [
   { href: "/company", label: "事業概要" },
@@ -29,7 +24,6 @@ export default function NavigationLite() {
     { href: "/blog/genres/Backend", label: "バックエンド" },
     { href: "/blog/genres/Full-stack", label: "フルスタック" },
     { href: "/blog/genres/Security", label: "セキュリティ" },
-    { href: "/blog/genres/Api", label: "API" },
     { href: "/blog/genres/Update", label: "アップデート" },
   ] as const
 
@@ -97,21 +91,21 @@ export default function NavigationLite() {
             {/* Dropdown panel positioned below header */}
             <div className="absolute left-0 right-0 top-full z-40 mx-auto max-w-6xl px-4">
               <div className="mt-2 flex flex-col gap-2 rounded-2xl border border-neutral-200 bg-white p-4 shadow-lg ring-1 ring-black/5 dark:border-neutral-800 dark:bg-neutral-900">
-              {navLinks.map((item) => (
+                {navLinks.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-lg px-2 py-1 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
                 <Link
-                  key={item.href}
-                  href={item.href}
-                  className="rounded-lg px-2 py-1 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800"
+                  href="/contact"
+                  className="rounded-lg bg-neutral-900 px-3 py-2 text-center text-sm font-semibold text-white dark:bg-neutral-100 dark:text-neutral-900"
                 >
-                  {item.label}
+                  無料相談
                 </Link>
-              ))}
-              <Link
-                href="/contact"
-                className="rounded-lg bg-neutral-900 px-3 py-2 text-center text-sm font-semibold text-white dark:bg-neutral-100 dark:text-neutral-900"
-              >
-                無料相談
-              </Link>
               </div>
             </div>
           </details>

@@ -68,7 +68,6 @@ export default function Navigation() {
     { name: "バックエンド", href: "/blog/genres/Backend", subItems: [] },
     { name: "フルスタック", href: "/blog/genres/Full-stack", subItems: [] },
     { name: "セキュリティ", href: "/blog/genres/Security", subItems: [] },
-    { name: "API", href: "/blog/genres/Api", subItems: [] },
     { name: "アップデート", href: "/blog/genres/Update", subItems: [] },
   ] as const
 
@@ -79,8 +78,6 @@ export default function Navigation() {
   const [snsOpen, setSnsOpen] = useState(false)
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
-
-
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -180,8 +177,6 @@ export default function Navigation() {
     }
   }
 
-  
-
   const isBlog = pathname?.startsWith("/blog")
 
   return (
@@ -189,232 +184,215 @@ export default function Navigation() {
       <motion.header
         ref={headerRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm py-3"
-            : "bg-transparent py-5"
+          isScrolled ? "bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"
         }`}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        onMouseEnter={() => { if (!isBlog) setMegaMenuOpen(true) }}
-        onMouseLeave={() => { if (!isBlog) setMegaMenuOpen(false) }}
+        onMouseEnter={() => {
+          if (!isBlog) setMegaMenuOpen(true)
+        }}
+        onMouseLeave={() => {
+          if (!isBlog) setMegaMenuOpen(false)
+        }}
       >
-          <div className="container mx-auto px-4 flex justify-between items-center">
-            <Link href="/" className="flex items-center" aria-label="LEXIA">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <div className="flex items-center">
-                  <Image
-                    src={LOGO_URL || "/placeholder.svg"}
-                    alt="LEXIA"
-                    width={120}
-                    height={24}
-                    className="h-6 w-auto block dark:hidden"
-                    priority
-                    fetchPriority="high"
-                  />
-                  <Image
-                    src={LOGO_TEXT_URL || "/placeholder.svg"}
-                    alt="LEXIA text"
-                    width={120}
-                    height={24}
-                    className="h-6 w-auto ml-2 block dark:hidden"
-                    priority
-                    fetchPriority="high"
-                  />
-                  <Image
-                    src={LOGO_WHITE_URL || "/placeholder.svg"}
-                    alt="LEXIA"
-                    width={120}
-                    height={24}
-                    className="h-6 w-auto hidden dark:block"
-                    priority
-                    fetchPriority="high"
-                  />
-                  <Image
-                    src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
-                    alt="LEXIA text"
-                    width={120}
-                    height={24}
-                    className="h-6 w-auto ml-2 hidden dark:block"
-                    priority
-                    fetchPriority="high"
-                  />
-                </div>
-              </motion.div>
-            </Link>
-
-            <div className="hidden md:flex items-center space-x-8">
-              <nav>
-                <ul className="flex space-x-8">
-                  {displayItems.map((item, index) => (
-                    <motion.li
-                      key={item.name}
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: 0.1 * index }}
-                    >
-                  <Link
-                    href={item.href}
-                    className={`text-sm transition-colors relative ${
-                          activeSection === getSectionFromHref(item.href)
-                            ? "text-neutral-900 dark:text-neutral-100"
-                            : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-                        }`}
-                    onClick={(e) => handleNavigation(e, item.href)}
-                  >
-                    {item.name}
-                    {activeSection === getSectionFromHref(item.href) && (
-                      <motion.span
-                        layoutId="activeSection"
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-neutral-900 dark:bg-neutral-100"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                      />
-                    )}
-                  </Link>
-                    </motion.li>
-                  ))}
-                </ul>
-              </nav>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.8 }}
-              >
-                <ThemeToggle />
-              </motion.div>
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.9 }}
-                className="relative"
-                onClick={() => setSnsOpen((prev) => !prev)}
-                aria-label="SNS"
-              >
-                <Share2
-                  className={`h-5 w-5 transition-colors ${
-                    snsOpen
-                      ? "text-neutral-900 dark:text-neutral-100"
-                      : "text-neutral-500 dark:text-neutral-400"
-                  }`}
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <Link href="/" className="flex items-center" aria-label="LEXIA">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
+              <div className="flex items-center">
+                <Image
+                  src={LOGO_URL || "/placeholder.svg"}
+                  alt="LEXIA"
+                  width={120}
+                  height={24}
+                  className="h-6 w-auto block dark:hidden"
+                  priority
+                  fetchPriority="high"
                 />
-                <div
-                  className={`absolute left-1/2 top-full mt-2 -translate-x-1/2 ${
-                    snsOpen ? "flex" : "hidden"
-                  } space-x-2`}
-                >
-                  <a
-                    href="https://www.instagram.com/lexia_web/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-                    aria-label="Instagram"
-                  >
-                    <Instagram className="h-5 w-5" />
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/lexia-saito/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin className="h-5 w-5" />
-                  </a>
-                </div>
-              </motion.button>
-            </div>
-
-            <div className="flex items-center space-x-4 md:hidden">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.4 }}
-              >
-                <ThemeToggle />
-              </motion.div>
-              <motion.a
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.5 }}
-                href="tel:+819017423456"
-                aria-label="今すぐ電話"
-                className="text-neutral-900 dark:text-neutral-100"
-                onClick={() => trackEvent("tel_click", { location: "header", phone: "09017423456" })}
-              >
-                <Phone className="h-5 w-5" />
-              </motion.a>
-              <motion.a
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.55 }}
-                href="/contact"
-                aria-label="お問い合わせ"
-                className="text-neutral-900 dark:text-neutral-100"
-                onClick={() => trackEvent("contact_click", { location: "header", type: "form" })}
-              >
-                <Mail className="h-5 w-5" />
-              </motion.a>
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.6 }}
-                className="text-neutral-900 dark:text-neutral-100"
-                onClick={() => {
-                  setMobileMenuOpen(true)
-                  trackEvent("menu_open", { location: "header" })
-                }}
-                aria-label="メニューを開く"
-              >
-                <Menu />
-              </motion.button>
-            </div>
-          </div>
-        </motion.header>
-
-        <AnimatePresence>
-          {!isBlog && megaMenuOpen && (
-            <motion.div
-              className="fixed top-[var(--header-height)] left-0 right-0 z-40 hidden md:block bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              onMouseEnter={() => setMegaMenuOpen(true)}
-              onMouseLeave={() => setMegaMenuOpen(false)}
-            >
-              <div className="container mx-auto px-4 py-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8">
-                {navItems.map((item) => (
-                  <div key={item.name}>
-                    <Link
-                      href={item.href}
-                      className="font-medium text-neutral-900 dark:text-neutral-100 hover:underline"
-                    >
-                      {item.name}
-                    </Link>
-                    {item.subItems && item.subItems.length > 0 && (
-                      <ul className="mt-2 space-y-2">
-                        {item.subItems.map((sub) => (
-                          <li key={sub.name}>
-                            <Link
-                              href={sub.href}
-                              className="text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-                            >
-                              {sub.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ))}
+                <Image
+                  src={LOGO_TEXT_URL || "/placeholder.svg"}
+                  alt="LEXIA text"
+                  width={120}
+                  height={24}
+                  className="h-6 w-auto ml-2 block dark:hidden"
+                  priority
+                  fetchPriority="high"
+                />
+                <Image
+                  src={LOGO_WHITE_URL || "/placeholder.svg"}
+                  alt="LEXIA"
+                  width={120}
+                  height={24}
+                  className="h-6 w-auto hidden dark:block"
+                  priority
+                  fetchPriority="high"
+                />
+                <Image
+                  src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
+                  alt="LEXIA text"
+                  width={120}
+                  height={24}
+                  className="h-6 w-auto ml-2 hidden dark:block"
+                  priority
+                  fetchPriority="high"
+                />
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
+          </Link>
+
+          <div className="hidden md:flex items-center space-x-8">
+            <nav>
+              <ul className="flex space-x-8">
+                {displayItems.map((item, index) => (
+                  <motion.li
+                    key={item.name}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 * index }}
+                  >
+                    <Link
+                      href={item.href}
+                      className={`text-sm transition-colors relative ${
+                        activeSection === getSectionFromHref(item.href)
+                          ? "text-neutral-900 dark:text-neutral-100"
+                          : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                      }`}
+                      onClick={(e) => handleNavigation(e, item.href)}
+                    >
+                      {item.name}
+                      {activeSection === getSectionFromHref(item.href) && (
+                        <motion.span
+                          layoutId="activeSection"
+                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-neutral-900 dark:bg-neutral-100"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                    </Link>
+                  </motion.li>
+                ))}
+              </ul>
+            </nav>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.8 }}>
+              <ThemeToggle />
+            </motion.div>
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.9 }}
+              className="relative"
+              onClick={() => setSnsOpen((prev) => !prev)}
+              aria-label="SNS"
+            >
+              <Share2
+                className={`h-5 w-5 transition-colors ${
+                  snsOpen ? "text-neutral-900 dark:text-neutral-100" : "text-neutral-500 dark:text-neutral-400"
+                }`}
+              />
+              <div
+                className={`absolute left-1/2 top-full mt-2 -translate-x-1/2 ${snsOpen ? "flex" : "hidden"} space-x-2`}
+              >
+                <a
+                  href="https://www.instagram.com/lexia_web/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/lexia-saito/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </a>
+              </div>
+            </motion.button>
+          </div>
+
+          <div className="flex items-center space-x-4 md:hidden">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.4 }}>
+              <ThemeToggle />
+            </motion.div>
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.5 }}
+              href="tel:+819017423456"
+              aria-label="今すぐ電話"
+              className="text-neutral-900 dark:text-neutral-100"
+              onClick={() => trackEvent("tel_click", { location: "header", phone: "09017423456" })}
+            >
+              <Phone className="h-5 w-5" />
+            </motion.a>
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.55 }}
+              href="/contact"
+              aria-label="お問い合わせ"
+              className="text-neutral-900 dark:text-neutral-100"
+              onClick={() => trackEvent("contact_click", { location: "header", type: "form" })}
+            >
+              <Mail className="h-5 w-5" />
+            </motion.a>
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.6 }}
+              className="text-neutral-900 dark:text-neutral-100"
+              onClick={() => {
+                setMobileMenuOpen(true)
+                trackEvent("menu_open", { location: "header" })
+              }}
+              aria-label="メニューを開く"
+            >
+              <Menu />
+            </motion.button>
+          </div>
+        </div>
+      </motion.header>
+
+      <AnimatePresence>
+        {!isBlog && megaMenuOpen && (
+          <motion.div
+            className="fixed top-[var(--header-height)] left-0 right-0 z-40 hidden md:block bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            onMouseEnter={() => setMegaMenuOpen(true)}
+            onMouseLeave={() => setMegaMenuOpen(false)}
+          >
+            <div className="container mx-auto px-4 py-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8">
+              {navItems.map((item) => (
+                <div key={item.name}>
+                  <Link href={item.href} className="font-medium text-neutral-900 dark:text-neutral-100 hover:underline">
+                    {item.name}
+                  </Link>
+                  {item.subItems && item.subItems.length > 0 && (
+                    <ul className="mt-2 space-y-2">
+                      {item.subItems.map((sub) => (
+                        <li key={sub.name}>
+                          <Link
+                            href={sub.href}
+                            className="text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                          >
+                            {sub.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {mobileMenuOpen && (
@@ -528,7 +506,10 @@ export default function Navigation() {
 
             {/* Bottom fixed CTA bar */}
             <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white/95 dark:bg-neutral-900/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:dark:bg-neutral-900/60">
-              <div className="container mx-auto px-4 py-3 flex gap-3 items-center" style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 12px)" }}>
+              <div
+                className="container mx-auto px-4 py-3 flex gap-3 items-center"
+                style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 12px)" }}
+              >
                 <a
                   href="tel:+819017423456"
                   className="flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 dark:border-neutral-700 py-3 text-base text-neutral-900 dark:text-neutral-100"
