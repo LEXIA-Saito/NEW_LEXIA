@@ -31,7 +31,7 @@ microCMSでリッチエディタV2（`contentHtml`）を使用した記事に目
 ### 1. 型定義の追加
 
 **`lib/blog-posts.types.ts`**
-\`\`\`typescript
+```typescript
 export type BlogHeading = {
   text: string
   level: 2 | 3 | 4 | 5 | 6
@@ -41,12 +41,12 @@ export type BlogPost = {
   // ... 既存フィールド
   headings?: BlogHeading[] // contentHtml使用時の目次用（オプショナル）
 }
-\`\`\`
+```
 
 ### 2. HTML解析ユーティリティの追加
 
 **`lib/extract-headings.ts`**（新規作成）
-\`\`\`typescript
+```typescript
 import * as cheerio from 'cheerio'
 import { generateHeadingId } from './heading-id'
 import type { BlogHeading } from './blog-posts.types'
@@ -135,12 +135,12 @@ export function addIdsToHeadings(
 
   return $.html()
 }
-\`\`\`
+```
 
 ### 3. microCMS型定義の更新
 
 **`lib/microcms-blog.ts`**
-\`\`\`typescript
+```typescript
 import { extractHeadingsFromHtml, parseHeadingsText } from './extract-headings'
 
 export type MicroCMSBlogPost = {
@@ -159,13 +159,13 @@ function convertMicroCMSPost(post: MicroCMSBlogPost): BlogPost {
       : undefined
   }
 }
-\`\`\`
+```
 
 ### 4. 記事ページでの使用
 
 **`app/blog/[slug]/page.tsx`**
 
-\`\`\`typescript
+```typescript
 import { addIdsToHeadings } from '@/lib/extract-headings'
 
 // 目次データの生成（headingsフィールドから）
@@ -186,7 +186,7 @@ const sectionsWithHeadingIds = post.headings?.map((heading) => ({
   // sections使用時は従来通り
   <article>{/* ... */}</article>
 )}
-\`\`\`
+```
 
 **変更点**:
 - 複雑な正規表現処理を削除
@@ -197,7 +197,7 @@ const sectionsWithHeadingIds = post.headings?.map((heading) => ({
 
 ### headingsフィールド（繰り返しフィールド）- **オプショナル**
 
-\`\`\`json
+```json
 {
   "fieldId": "headings",
   "name": "見出し（目次用）- オプショナル",
@@ -225,7 +225,7 @@ const sectionsWithHeadingIds = post.headings?.map((heading) => ({
     }
   ]
 }
-\`\`\`
+```
 
 ## ✅ 動作確認
 

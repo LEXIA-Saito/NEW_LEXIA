@@ -20,13 +20,13 @@
 - `/api/secure-contact` - Enhanced security version
 
 ### Security Test Results
-\`\`\`
+```
 ✅ Encrypted config: SUCCESS
 ✅ Email sending: SUCCESS (ID: 577c849f-2205-42b8-a130-d1f006a878a7)
 ✅ Rate limiting: VERIFIED
 ✅ Security headers: APPLIED
 ✅ Input validation: WORKING
-\`\`\`
+```
 
 ## 🎯 Deployment Configuration
 

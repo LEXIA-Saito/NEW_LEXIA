@@ -3,20 +3,20 @@
 ## 🐛 発生していたエラー
 
 ### 1. Content Security Policy (CSP) 違反
-\`\`\`
+```
 Refused to load the script 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js' 
 because it violates the following Content Security Policy directive
-\`\`\`
+```
 
 ### 2. React Hydration エラー
-\`\`\`
+```
 Uncaught Error: Minified React error #231
-\`\`\`
+```
 
 ### 3. CSS MIME type エラー
-\`\`\`
+```
 Refused to execute script from '...css' because its MIME type ('text/css') is not executable
-\`\`\`
+```
 
 ---
 
@@ -26,13 +26,13 @@ Refused to execute script from '...css' because its MIME type ('text/css') is no
 
 Google AdSenseのドメインをCSPに追加:
 
-\`\`\`javascript
+```javascript
 // 変更前
 "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://www.googletagmanager.com https://www.google-analytics.com"
 
 // 変更後
 "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com"
-\`\`\`
+```
 
 追加したドメイン:
 - `script-src`: `https://pagead2.googlesyndication.com`
@@ -43,7 +43,7 @@ Google AdSenseのドメインをCSPに追加:
 
 Next.jsの `<Script>` コンポーネントでは `strategy` プロパティを使用するため、`async` 属性は不要:
 
-\`\`\`tsx
+```tsx
 // 変更前
 <Script
   id="google-adsense"
@@ -60,7 +60,7 @@ Next.jsの `<Script>` コンポーネントでは `strategy` プロパティを�
   src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8789901212664644"
   crossOrigin="anonymous"
 />
-\`\`\`
+```
 
 ---
 

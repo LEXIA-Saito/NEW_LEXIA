@@ -24,7 +24,7 @@
 
 以下のファイルとディレクトリを削除してください:
 
-\`\`\`bash
+```bash
 # Sanity設定ファイル
 rm sanity.config.ts
 
@@ -38,10 +38,10 @@ rm -rf dist/
 # Sanity関連のlibファイル
 rm lib/sanity.ts
 rm lib/sanity-blog-adapter.ts
-\`\`\`
+```
 
 PowerShellの場合:
-\`\`\`powershell
+```powershell
 # Sanity設定ファイル
 Remove-Item sanity.config.ts -ErrorAction SilentlyContinue
 
@@ -55,7 +55,7 @@ Remove-Item dist -Recurse -Force -ErrorAction SilentlyContinue
 # Sanity関連のlibファイル
 Remove-Item lib/sanity.ts -ErrorAction SilentlyContinue
 Remove-Item lib/sanity-blog-adapter.ts -ErrorAction SilentlyContinue
-\`\`\`
+```
 
 ### 3. コード内の参照削除
 
@@ -72,12 +72,12 @@ Remove-Item lib/sanity-blog-adapter.ts -ErrorAction SilentlyContinue
 
 `.env.local` に以下を設定:
 
-\`\`\`env
+```env
 # microCMS設定
 MICROCMS_SERVICE_DOMAIN=your-service-domain
 MICROCMS_API_KEY=your-api-key
 MICROCMS_BLOG_ENDPOINT=blog
-\`\`\`
+```
 
 ### ブログ記事の管理
 
@@ -95,17 +95,17 @@ microCMSが利用できない場合、または環境変数が未設定の場合
 ## 🔄 ブログデータの流れ
 
 ### 以前（Sanity + microCMS + Fallback）
-\`\`\`
+```
 1. Sanity からフェッチ（優先）
 2. microCMS からフェッチ
 3. fallback記事
-\`\`\`
+```
 
 ### 現在（microCMS + Fallback）
-\`\`\`
+```
 1. microCMS からフェッチ（優先）
 2. fallback記事
-\`\`\`
+```
 
 実装: `lib/blog-posts.ts` の `fetchBlogPosts()` 関数
 
@@ -142,10 +142,10 @@ microCMSが利用できない場合、または環境変数が未設定の場合
 ## 🚀 次のステップ
 
 1. **ローカル環境で確認**
-   \`\`\`bash
+   ```bash
    pnpm install  # Sanity依存関係を削除
    pnpm dev      # 開発サーバー起動
-   \`\`\`
+   ```
 
 2. **ブログページを確認**
    - `http://localhost:3000/blog` にアクセス
@@ -155,11 +155,11 @@ microCMSが利用できない場合、または環境変数が未設定の場合
    - 上記のコマンドで削除
 
 4. **コミット**
-   \`\`\`bash
+   ```bash
    git add .
    git commit -m "refactor: remove Sanity CMS, use microCMS only"
    git push
-   \`\`\`
+   ```
 
 ---
 

@@ -5,36 +5,36 @@
 Vercelビルドで以下の2つのエラーが発生していました:
 
 ### 1. pnpm-lock.yaml の不整合
-\`\`\`
+```
 ERR_PNPM_OUTDATED_LOCKFILE  Cannot install with "frozen-lockfile" 
 because pnpm-lock.yaml is not up to date with package.json
-\`\`\`
+```
 
 ### 2. postinstall での型チェックエラー
-\`\`\`
+```
 > postinstall
 > pnpm run type-check
 
 [多数のTypeScriptエラー]
-\`\`\`
+```
 
 ## 解決策
 
 ### 1. `vercel.json` の修正
-\`\`\`json
+```json
 {
   "installCommand": "pnpm install --no-frozen-lockfile"
 }
-\`\`\`
+```
 
 CI環境で `pnpm-lock.yaml` が自動更新されるように変更しました。
 
 ### 2. `package.json` の修正
 `postinstall` スクリプトを削除しました:
 
-\`\`\`diff
+```diff
 - "postinstall": "pnpm run type-check",
-\`\`\`
+```
 
 理由:
 - `next.config.mjs` で既に `typescript.ignoreBuildErrors: true` が設定されている
@@ -51,7 +51,7 @@ Resend の最新APIでは `replyTo` ではなく `reply_to` を使用します:
 - `app/api/inquiry/route.ts`
 - `app/api/secure-contact/route.ts`
 
-\`\`\`diff
+```diff
 await resend.emails.send({
   from: config.resend.from,
   to: [config.resend.to],
@@ -59,7 +59,7 @@ await resend.emails.send({
 + reply_to: email,
   subject: "...",
 })
-\`\`\`
+```
 
 ### 4. `blog-posts-fallback.ts` の重複プロパティ修正
 オブジェクトリテラルで `body` プロパティが重複していた箇所を修正しました（行795, 824）。
@@ -68,7 +68,7 @@ await resend.emails.send({
 
 次回ローカルで作業する際に、以下を実行してください:
 
-\`\`\`bash
+```bash
 # pnpmがインストールされていない場合
 npm install -g pnpm@10.15.0
 
@@ -79,7 +79,7 @@ pnpm install
 git add pnpm-lock.yaml
 git commit -m "chore: update pnpm-lock.yaml"
 git push
-\`\`\`
+```
 
 ## 今後の運用
 

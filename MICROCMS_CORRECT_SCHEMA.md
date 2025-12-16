@@ -9,11 +9,11 @@
 ### エンドポイント作成
 1. microCMSダッシュボード → **API作成**
 2. 以下を入力:
-   \`\`\`
+   ```
    API名: ブログ
    エンドポイント: blog
    API型: リスト形式
-   \`\`\`
+   ```
 
 ---
 
@@ -31,7 +31,7 @@
 | `date` | 公開日 | 日時 | ✅ | 記事の公開日時 |
 
 #### 📌 `genre`（セレクトフィールド）の設定
-\`\`\`
+```
 選択肢:
 - tech (技術解説・実装ガイド)
 - trends (業界動向・ニュース)
@@ -39,10 +39,10 @@
 
 初期値: tech
 複数選択: OFF
-\`\`\`
+```
 
 #### 📌 `tags`（複数選択フィールド）の設定
-\`\`\`
+```
 選択肢の管理: カスタムフィールドで管理
 または
 選択肢を手動追加:
@@ -55,7 +55,7 @@
 （必要に応じて追加）
 
 複数選択: ON
-\`\`\`
+```
 
 ---
 
@@ -118,14 +118,14 @@
 ## 🎯 microCMS管理画面での設定例
 
 ### ステップ1: API作成
-\`\`\`
+```
 API名: ブログ
 エンドポイント: blog
 API型: リスト形式
-\`\`\`
+```
 
 ### ステップ2: フィールド追加順序
-\`\`\`
+```
 1. title (テキストフィールド) ✅必須
 2. slug (テキストフィールド) ✅必須
 3. description (テキストエリア) ✅必須
@@ -139,7 +139,7 @@ API型: リスト形式
 9. sections (繰り返しフィールド) ❌任意
    → サブフィールド7つ（上記参照）
 10. contentHtml (リッチエディタV2) ❌任意
-\`\`\`
+```
 
 ---
 
@@ -147,7 +147,7 @@ API型: リスト形式
 
 ### 例: Firebase Studioの記事
 
-\`\`\`
+```
 ■ 基本情報
 タイトル: Firebase Studio完全ガイド
 スラッグ: firebase-studio-complete-guide
@@ -195,7 +195,7 @@ Alt: Firebase Studio活用のイメージ
 スタンダード,1000円,50
 プレミアム,5000円,無制限
 （各行を改行、セルをカンマ区切り）
-\`\`\`
+```
 
 ---
 
@@ -203,7 +203,7 @@ Alt: Firebase Studio活用のイメージ
 
 ### microCMSレスポンス → BlogPost型への変換
 
-\`\`\`typescript
+```typescript
 // lib/microcms-blog.ts の convertMicroCMSPost() 関数
 {
   id: "abc123",                          // microCMS側のID
@@ -227,7 +227,7 @@ Alt: Firebase Studio活用のイメージ
     }
   ]
 }
-\`\`\`
+```
 
 ### 自動処理される項目
 - `readingTime`: 本文から自動計算（`lib/reading-time.ts`）
@@ -239,37 +239,37 @@ Alt: Firebase Studio活用のイメージ
 ## ⚠️ よくある間違い
 
 ### ❌ NG: `category`フィールドを作る
-\`\`\`json
+```json
 {
   "category": "tech"  // ← 間違い
 }
-\`\`\`
+```
 → **正解**: `genre`フィールドを使う
 
 ### ❌ NG: `sections`を選択式フィールドにする
-\`\`\`json
+```json
 {
   "sections": {
     "kind": "select",
     "selectItems": ["見出し", "本文", "画像"]
   }
 }
-\`\`\`
+```
 → **正解**: 繰り返しフィールド（複数セクション入力可能）
 
 ### ❌ NG: `tags`を単一選択にする
-\`\`\`json
+```json
 {
   "tags": {
     "kind": "select",
     "multipleSelect": false  // ← 間違い
   }
 }
-\`\`\`
+```
 → **正解**: 複数選択ON（`multipleSelect: true`）
 
 ### ❌ NG: `body`や`list`を単一テキストにする
-\`\`\`
+```
 ❌ 間違った入力:
 本文: 段落1,段落2,段落3  （カンマ区切りは不可）
 
@@ -279,7 +279,7 @@ Alt: Firebase Studio活用のイメージ
 段落2です。
 段落3です。
 （改行で区切る）
-\`\`\`
+```
 → **正解**: 改行で段落/リスト項目を区切る
 
 ---
@@ -287,7 +287,7 @@ Alt: Firebase Studio活用のイメージ
 ## 🧪 動作確認手順
 
 ### 1. ローカルテスト
-\`\`\`bash
+```bash
 # .env.local を作成
 LEXIA_MICROCMS_DOMAIN=lexia
 MICROCMS_API_KEY=×
@@ -297,10 +297,10 @@ pnpm dev
 
 # ブログページで確認
 http://localhost:3000/blog
-\`\`\`
+```
 
 ### 2. データ確認
-\`\`\`typescript
+```typescript
 // lib/blog-posts.ts の fetchAllBlogPosts() が以下を返すか確認
 {
   slug: "your-article-slug",
@@ -310,7 +310,7 @@ http://localhost:3000/blog
   date: "2025-10-15",     // ← YYYY-MM-DD形式
   sections: [...]         // ← 配列
 }
-\`\`\`
+```
 
 ---
 

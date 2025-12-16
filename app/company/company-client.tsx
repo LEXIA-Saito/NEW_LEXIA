@@ -379,7 +379,7 @@ export default function CompanyClient() {
                   <p className="mt-4">LEXIA代表　齋藤 雅人</p>
                 </div>
               </div>
-              <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden">
+              <div className="relative aspect-square w-full rounded-lg overflow-hidden">
                 <Image src="/images/saito_profile.webp" alt="代表 齋藤雅人" fill className="object-cover" />
               </div>
             </div>

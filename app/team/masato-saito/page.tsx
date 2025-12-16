@@ -131,7 +131,7 @@ export default function MasatoSaitoProfile() {
           >
             <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
               <Image
-                src="/images/saito_profile.webp"
+                src="https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/profile/profile_saito.webp"
                 alt="齋藤雅人"
                 fill
                 className="object-cover"
@@ -283,12 +283,7 @@ export default function MasatoSaitoProfile() {
                 />
               </div>
               <div className="academy-badge">
-                <Image
-                  src="/images/deep-learning.png"
-                  alt="Deep Learning バッジ"
-                  width={150}
-                  height={150}
-                />
+                <Image src="/images/deep-learning.png" alt="Deep Learning バッジ" width={150} height={150} />
               </div>
             </div>
           </motion.div>
@@ -306,12 +301,9 @@ export default function MasatoSaitoProfile() {
             name: "齋藤雅人",
             jobTitle: "代表・WEBディレクター",
             url: `${SITE_URL.replace(/\/$/, "")}/team/masato-saito`,
-            image: `${SITE_URL.replace(/\/$/, "")}/images/saito_profile.webp`,
+            image: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/profile/profile_saito.webp",
             worksFor: { "@type": "Organization", name: "LEXIA", url: SITE_URL },
-            sameAs: [
-              "https://www.linkedin.com/in/lexia-saito/",
-              "https://www.instagram.com/lexia_web/"
-            ],
+            sameAs: ["https://www.linkedin.com/in/lexia-saito/", "https://www.instagram.com/lexia_web/"],
           }),
         }}
       />

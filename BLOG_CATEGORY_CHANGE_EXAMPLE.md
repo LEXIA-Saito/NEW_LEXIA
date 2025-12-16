@@ -13,16 +13,16 @@
 
 ## 1. 型定義を更新 (`lib/blog-posts.types.ts`)
 
-\`\`\`diff
+```diff
 - export type BlogGenre = "tech" | "trends" | "ideas"
 + export type BlogGenre = "tech" | "trends" | "ideas" | "design"
-\`\`\`
+```
 
 ---
 
 ## 2. ジャンルメタデータを追加 (`lib/blog-posts.ts`)
 
-\`\`\`diff
+```diff
 const GENRE_METADATA: Record<BlogGenre, { label: string; description: string }> = {
   tech: {
     label: "技術・実装（Tech / Implementation）",
@@ -41,13 +41,13 @@ const GENRE_METADATA: Record<BlogGenre, { label: string; description: string }> 
 +    description: "UIデザイン、UX設計、デザインシステム、アクセシビリティ、ビジュアル表現など。",
 +  },
 }
-\`\`\`
+```
 
 ---
 
 ## 3. ナビゲーションに追加 (`components/navigation.tsx`)
 
-\`\`\`diff
+```diff
 const navigation = [
   {
     name: "ブログ",
@@ -60,38 +60,38 @@ const navigation = [
   },
   // ...
 ]
-\`\`\`
+```
 
 ---
 
 ## 4. 軽量ナビゲーションに追加 (`components/navigation-lite.tsx`)
 
-\`\`\`diff
+```diff
 const subItems = [
   { href: "/blog/genres/tech", label: "技術（Tech）" },
   { href: "/blog/genres/ideas", label: "アイデア（Ideas）" },
 +  { href: "/blog/genres/design", label: "デザイン（Design）" },
 ]
-\`\`\`
+```
 
 ---
 
 ## 5. ジャンルページに追加 (`app/blog/genres/[genre]/page.tsx`)
 
-\`\`\`diff
+```diff
 export async function generateStaticParams() {
 -  const genres: BlogGenre[] = ["tech", "ideas"]
 +  const genres: BlogGenre[] = ["tech", "ideas", "design"]
   return genres.map((genre) => ({ genre }))
 }
-\`\`\`
+```
 
 ---
 
 ## 6. microCMS設定
 
 ### APIスキーマ（genre フィールド）
-\`\`\`json
+```json
 {
   "fieldId": "genre",
   "name": "カテゴリ",
@@ -103,32 +103,32 @@ export async function generateStaticParams() {
     { "value": "design", "label": "デザイン・UI/UX" }
   ]
 }
-\`\`\`
+```
 
 ---
 
 ## 7. デフォルト値の確認 (`lib/microcms-blog.ts`)
 
 デフォルト値が適切か確認（通常は変更不要）:
-\`\`\`typescript
+```typescript
 const genre: BlogGenre = Array.isArray(post.genre) 
   ? (post.genre[0] as BlogGenre) || "tech"  // デフォルトは "tech" のまま
   : (post.genre as BlogGenre) || "tech"
-\`\`\`
+```
 
 ---
 
 ## テスト手順
 
 1. **TypeScriptコンパイル**
-   \`\`\`bash
+   ```bash
    pnpm build
-   \`\`\`
+   ```
 
 2. **ローカル確認**
-   \`\`\`bash
+   ```bash
    pnpm dev
-   \`\`\`
+   ```
    - `/blog` でカテゴリフィルターに "デザイン" が表示されるか
    - `/blog/genres/design` にアクセスできるか
 
@@ -155,21 +155,21 @@ const genre: BlogGenre = Array.isArray(post.genre)
 カテゴリIDはURLに影響するため、変更には注意が必要：
 
 ### ラベルのみ変更（推奨）
-\`\`\`diff
+```diff
 tech: {
 -  label: "技術・実装（Tech / Implementation）",
 +  label: "技術解説（Tech Guide）",
   description: "...",
 }
-\`\`\`
+```
 ✅ URLは `/blog/genres/tech` のまま  
 ✅ 既存記事に影響なし
 
 ### IDを変更（非推奨）
-\`\`\`diff
+```diff
 - export type BlogGenre = "tech" | "trends" | "ideas"
 + export type BlogGenre = "technology" | "trends" | "ideas"
-\`\`\`
+```
 ❌ URL変更: `/blog/genres/tech` → `/blog/genres/technology`  
 ❌ 既存記事のgenre値を一括更新が必要  
 ❌ SEO影響あり（リダイレクト設定が必要）

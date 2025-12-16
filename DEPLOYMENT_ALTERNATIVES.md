@@ -16,10 +16,10 @@
 1. **Railway アカウント作成**: https://railway.app
 2. **GitHubリポジトリ接続**
 3. **環境変数設定**:
-   \`\`\`
+   ```
    RESEND_API_KEY = re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
    NODE_ENV = production
-   \`\`\`
+   ```
 4. **自動デプロイ開始**
 
 ---
@@ -38,14 +38,14 @@
 2. **"New site from Git"** を選択
 3. **GitHub連携** → **リポジトリ選択**
 4. **Build設定**:
-   \`\`\`
+   ```
    Build command: npm run build
    Publish directory: .next
-   \`\`\`
+   ```
 5. **Environment variables**:
-   \`\`\`
+   ```
    RESEND_API_KEY = re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-   \`\`\`
+   ```
 
 ---
 
@@ -62,16 +62,16 @@
 1. **Cloudflare アカウント**: https://dash.cloudflare.com
 2. **Pages** → **Create a project** → **Connect to Git**
 3. **Build設定**:
-   \`\`\`
+   ```
    Build command: npm run build
    Build output directory: .next
    Root directory: /
-   \`\`\`
+   ```
 4. **Environment variables**:
-   \`\`\`
+   ```
    RESEND_API_KEY = re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
    NODE_VERSION = 18
-   \`\`\`
+   ```
 
 ---
 
@@ -89,30 +89,30 @@
 ## 🎯 **今すぐ試せる: Railway デプロイ**
 
 ### 手順1: Railway準備
-\`\`\`bash
+```bash
 # 1. Railway サイトでアカウント作成
 # https://railway.app/
 
 # 2. "New Project" → "Deploy from GitHub repo"
 # 3. LEXIA-Saito/NEW_LEXIA リポジトリを選択
-\`\`\`
+```
 
 ### 手順2: 環境変数設定
 Railway Dashboard で:
-\`\`\`
+```
 RESEND_API_KEY = re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NODE_ENV = production
 PORT = 3000
-\`\`\`
+```
 
 ### 手順3: ドメイン設定
-\`\`\`bash
+```bash
 # Railway が自動生成するドメイン:
 # https://your-app-name.up.railway.app
 
 # カスタムドメイン設定も可能:
 # lexia-hp.com → Railway IP
-\`\`\`
+```
 
 ## 🔧 各プラットフォーム比較表
 
@@ -126,7 +126,7 @@ PORT = 3000
 
 ## ⚡ **緊急デプロイ: Railway 5分セットアップ**
 
-\`\`\`bash
+```bash
 # 現在のVercel問題を即座に解決:
 
 1. Railway.app にアクセス
@@ -138,7 +138,7 @@ PORT = 3000
 6. Deploy 完了を待つ（約3-5分）
 
 完了！ https://your-app.up.railway.app でアクセス可能
-\`\`\`
+```
 
 ## 🔄 **移行時のメリット**
 

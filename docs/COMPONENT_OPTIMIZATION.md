@@ -7,19 +7,19 @@
 ## 1. 動的インポート (Code Splitting)
 
 ### Before
-\`\`\`tsx
+```tsx
 import HeavyComponent from '@/components/HeavyComponent'
-\`\`\`
+```
 
 ### After
-\`\`\`tsx
+```tsx
 import dynamic from 'next/dynamic'
 
 const HeavyComponent = dynamic(() => import('@/components/HeavyComponent'), {
   loading: () => <div>Loading...</div>,
   ssr: false, // クライアントサイドのみで必要な場合
 })
-\`\`\`
+```
 
 ### 適用候補
 - `vr-viewer.tsx` (Three.js依存)
@@ -30,20 +30,20 @@ const HeavyComponent = dynamic(() => import('@/components/HeavyComponent'), {
 ## 2. React.memo による再レンダリング防止
 
 ### Before
-\`\`\`tsx
+```tsx
 export function Card({ title, description }: CardProps) {
   return (...)
 }
-\`\`\`
+```
 
 ### After
-\`\`\`tsx
+```tsx
 import { memo } from 'react'
 
 export const Card = memo(function Card({ title, description }: CardProps) {
   return (...)
 })
-\`\`\`
+```
 
 ### 適用候補
 - リスト内のアイテムコンポーネント
@@ -53,18 +53,18 @@ export const Card = memo(function Card({ title, description }: CardProps) {
 ## 3. useMemo と useCallback
 
 ### useMemo - 計算結果のメモ化
-\`\`\`tsx
+```tsx
 const expensiveValue = useMemo(() => {
   return computeExpensiveValue(a, b)
 }, [a, b])
-\`\`\`
+```
 
 ### useCallback - 関数のメモ化
-\`\`\`tsx
+```tsx
 const handleClick = useCallback(() => {
   doSomething(a, b)
 }, [a, b])
-\`\`\`
+```
 
 ### 適用候補
 - フィルタリング/ソート処理
@@ -74,7 +74,7 @@ const handleClick = useCallback(() => {
 ## 4. 画像最適化
 
 ### next/image の活用
-\`\`\`tsx
+```tsx
 import Image from 'next/image'
 
 <Image
@@ -86,20 +86,20 @@ import Image from 'next/image'
   placeholder="blur" // ぼかし効果付きローディング
   blurDataURL="data:image/..." // 小さなbase64画像
 />
-\`\`\`
+```
 
 ### 設定 (next.config.mjs)
-\`\`\`javascript
+```javascript
 images: {
   formats: ['image/webp', 'image/avif'],
   deviceSizes: [640, 750, 828, 1080, 1200, 1920],
 }
-\`\`\`
+```
 
 ## 5. Font Optimization
 
 ### next/font の活用
-\`\`\`tsx
+```tsx
 import { Noto_Sans_JP } from 'next/font/google'
 
 const notoSansJP = Noto_Sans_JP({
@@ -109,37 +109,37 @@ const notoSansJP = Noto_Sans_JP({
   preload: true,
   variable: '--font-noto-sans-jp',
 })
-\`\`\`
+```
 
 ## 6. バンドル分析
 
 ### パッケージインポートの最適化
 
 #### Before
-\`\`\`tsx
+```tsx
 import { Button, Card, Dialog } from '@radix-ui/react-*'
-\`\`\`
+```
 
 #### After
-\`\`\`tsx
+```tsx
 // next.config.mjs で optimizePackageImports 設定済み
 // そのままインポート可能（自動的に最適化される）
 import { Button } from '@radix-ui/react-button'
-\`\`\`
+```
 
 ### Tree-shaking の確保
-\`\`\`tsx
+```tsx
 // ❌ Bad - 全体をインポート
 import * as Icons from 'lucide-react'
 
 // ✅ Good - 必要なものだけインポート
 import { ChevronRight, Menu, X } from 'lucide-react'
-\`\`\`
+```
 
 ## 7. Server Components vs Client Components
 
 ### Server Components (デフォルト)
-\`\`\`tsx
+```tsx
 // app/blog/page.tsx
 // "use client" なし = Server Component
 
@@ -147,10 +147,10 @@ export default async function BlogPage() {
   const posts = await getPosts() // サーバーサイドで実行
   return <PostList posts={posts} />
 }
-\`\`\`
+```
 
 ### Client Components
-\`\`\`tsx
+```tsx
 // components/interactive-button.tsx
 'use client'
 
@@ -160,7 +160,7 @@ export function InteractiveButton() {
   const [count, setCount] = useState(0)
   return <button onClick={() => setCount(c => c + 1)}>{count}</button>
 }
-\`\`\`
+```
 
 ### ガイドライン
 - デフォルトは Server Component
@@ -173,7 +173,7 @@ export function InteractiveButton() {
 ## 8. Suspense Boundaries
 
 ### データフェッチの最適化
-\`\`\`tsx
+```tsx
 import { Suspense } from 'react'
 
 export default function Page() {
@@ -190,12 +190,12 @@ export default function Page() {
     </>
   )
 }
-\`\`\`
+```
 
 ## 9. Parallel Route Loading
 
 ### 並列データ取得
-\`\`\`tsx
+```tsx
 // ❌ Bad - 直列
 const user = await getUser()
 const posts = await getPosts()
@@ -205,12 +205,12 @@ const [user, posts] = await Promise.all([
   getUser(),
   getPosts(),
 ])
-\`\`\`
+```
 
 ## 10. CSS-in-JS の最適化
 
 ### Tailwind CSS の最適化
-\`\`\`tsx
+```tsx
 // ❌ Bad - 動的クラス名
 <div className={`text-${color}-500`}>
 
@@ -220,7 +220,7 @@ const [user, posts] = await Promise.all([
 // または cn() ユーティリティを使用
 import { cn } from '@/lib/utils'
 <div className={cn('base-class', isActive && 'active-class')}>
-\`\`\`
+```
 
 ## 実装チェックリスト
 
@@ -236,14 +236,14 @@ import { cn } from '@/lib/utils'
 ## 測定とモニタリング
 
 ### ローカル
-\`\`\`bash
+```bash
 # Lighthouse
 pnpm build && pnpm start
 # Chrome DevTools > Lighthouse
 
 # Bundle Analyzer
 pnpm build:analyze
-\`\`\`
+```
 
 ### 本番
 - Vercel Analytics でパフォーマンスを監視

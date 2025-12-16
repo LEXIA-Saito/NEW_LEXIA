@@ -17,7 +17,7 @@ Vercelの環境変数管理を使わずに、APIキーを安全に管理する�
 - ✅ 開発・本番環境対応
 
 **動作方式**:
-\`\`\`typescript
+```typescript
 // lib/config.ts
 export const config = {
   resend: {
@@ -26,7 +26,7 @@ export const config = {
     to: "lexia0web@gmail.com"
   }
 }
-\`\`\`
+```
 
 ### 2. **External Configuration Service**
 
@@ -53,28 +53,28 @@ export const config = {
 
 **メインContact API** (`/api/contact`) は **Runtime Configuration** を使用：
 
-\`\`\`typescript
+```typescript
 import { config, validateConfig } from "@/lib/config"
 
 // APIキーは以下の優先順位で取得：
 // 1. ENCRYPTED_SECURE_CONFIG / ENCRYPTED_SECURE_CONFIG_IV (提供されている場合)
 // 2. process.env.RESEND_API_KEY (Vercel環境変数)
-\`\`\`
+```
 
 ## 🧪 テスト結果
 
-\`\`\`bash
+```bash
 # すべての方法でテスト成功
 ✅ Runtime Config: 200 OK
 ✅ External Config: 200 OK  
 ✅ Next.js Runtime: 200 OK
-\`\`\`
+```
 
 ## 📋 デプロイ手順
 
 ### 本番公開前に必ず実施
 
-\`\`\`bash
+```bash
 # 1. ResendダッシュボードでAPIキーを発行
 # 2. Vercel CLIで環境変数を登録
 npx vercel env add RESEND_API_KEY
@@ -88,7 +88,7 @@ git push origin main
 # 5. 動作確認
 curl https://your-domain.vercel.app/api/debug-env
 curl -X POST https://your-domain.vercel.app/api/contact
-\`\`\`
+```
 
 ## 🔒 セキュリティ考慮
 
@@ -125,7 +125,7 @@ curl -X POST https://your-domain.vercel.app/api/contact
 
 ### 実装例
 
-\`\`\`typescript
+```typescript
 // 将来の外部サービス連携
 async function fetchFromSecureVault() {
   const response = await fetch('https://your-vault-api.com/secrets/resend-key', {
@@ -133,7 +133,7 @@ async function fetchFromSecureVault() {
   })
   return response.json()
 }
-\`\`\`
+```
 
 ## ✅ 現在のステータス
 

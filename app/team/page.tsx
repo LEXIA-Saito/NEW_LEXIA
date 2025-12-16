@@ -32,7 +32,7 @@ const members = [
     name: "齋藤雅人",
     role: "代表・WEBディレクター",
     href: "/team/masato-saito",
-    img: "/images/saito_profile.webp",
+    img: "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/profile/profile_saito.webp",
   },
   {
     name: "齋藤李保",

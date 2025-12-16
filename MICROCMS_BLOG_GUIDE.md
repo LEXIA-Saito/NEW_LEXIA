@@ -17,11 +17,11 @@ LEXIAブログはmicroCMSで管理されています。このガイドでは、m
 
 プロジェクトルートに `.env.local` ファイルを作成し、以下の環境変数を設定します:
 
-\`\`\`bash
+```bash
 # microCMS設定
 LEXIA_MICROCMS_DOMAIN=your-service-name
 MICROCMS_API_KEY=your-api-key
-\`\`\`
+```
 
 ### 環境変数の取得方法
 
@@ -83,7 +83,7 @@ Vercelダッシュボードで環境変数を設定:
 
 1. microCMSダッシュボード → **blog** → **コンテンツを追加**
 2. 必須フィールドを入力:
-   \`\`\`
+   ```
    slug: nextjs-15-migration-guide
    title: Next.js 15 移行ガイド
    description: Next.js 15の新機能と移行手順を徹底解説
@@ -91,10 +91,10 @@ Vercelダッシュボードで環境変数を設定:
    tags: [Next.js, React, Web開発]
    date: 2025-10-15
    heroImage: [画像をアップロード]
-   \`\`\`
+   ```
 
 3. セクションを追加:
-   \`\`\`
+   ```
    sections[0]:
      body: ["導入文を1〜2段落で記述..."]
    
@@ -103,7 +103,7 @@ Vercelダッシュボードで環境変数を設定:
      body: ["本文段落1...", "本文段落2..."]
      list: ["機能1の説明", "機能2の説明"]
      image: [セクション内画像]
-   \`\`\`
+   ```
 
 4. **公開**ボタンをクリック
 
@@ -117,13 +117,13 @@ Vercelダッシュボードで環境変数を設定:
 
 ### 開発サーバーの起動
 
-\`\`\`powershell
+```powershell
 # 依存関係のインストール（初回のみ）
 pnpm install
 
 # 開発サーバー起動
 pnpm dev
-\`\`\`
+```
 
 ### ブログページの確認
 
@@ -134,14 +134,14 @@ pnpm dev
 
 ターミナルで以下をチェック:
 
-\`\`\`
+```
 ✓ microCMS connected: fetched 10 posts
-\`\`\`
+```
 
 エラーが出る場合:
-\`\`\`
+```
 ⚠ microCMS fetch failed, using fallback posts only
-\`\`\`
+```
 → 環境変数とAPIキーを確認
 
 ## 🚀 デプロイ設定
@@ -150,18 +150,18 @@ pnpm dev
 
 1. **環境変数の設定**（前述参照）
 2. **Git push**でデプロイ:
-   \`\`\`powershell
+   ```powershell
    git add .
    git commit -m "feat(blog): add new article via microCMS"
    git push origin main
-   \`\`\`
+   ```
 
 3. Vercelが自動ビルド・デプロイ
 4. デプロイログで確認:
-   \`\`\`
+   ```
    ✓ Fetching blog posts from microCMS...
    ✓ Successfully fetched 15 posts
-   \`\`\`
+   ```
 
 ### ISR（Incremental Static Regeneration）
 
@@ -206,10 +206,10 @@ pnpm dev
 - [ ] `date` フィールドが正しい形式か（YYYY-MM-DD）
 
 **デバッグ方法**:
-\`\`\`typescript
+```typescript
 // lib/microcms-blog.ts に追加
 console.log('Fetched microCMS posts:', response.contents)
-\`\`\`
+```
 
 ### フォールバックデータのみ表示される
 
@@ -217,9 +217,9 @@ console.log('Fetched microCMS posts:', response.contents)
 
 **確認手順**:
 1. ブラウザコンソールで警告を確認:
-   \`\`\`
+   ```
    ⚠ microCMS fetch failed, using fallback posts only
-   \`\`\`
+   ```
 2. ネットワークタブでAPIリクエストを確認
 3. microCMSのステータスページを確認: https://status.microcms.io/
 

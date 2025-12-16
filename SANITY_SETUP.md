@@ -6,31 +6,31 @@
 
 ### 1. 必要なパッケージのインストール
 
-\`\`\`bash
+```bash
 npm install @sanity/vision
-\`\`\`
+```
 
 ### 2. 環境変数の設定
 
 `.env.local`ファイルを作成し、以下の環境変数を設定してください：
 
-\`\`\`bash
+```bash
 SANITY_PROJECT_ID=your_project_id_here
 SANITY_DATASET=production
 SANITY_API_VERSION=2025-10-01
-\`\`\`
+```
 
 ### 3. Sanity Studioのビルド
 
-\`\`\`bash
+```bash
 npm run sanity-build
-\`\`\`
+```
 
 ### 4. Sanity Studioの起動
 
-\`\`\`bash
+```bash
 npm run sanity-dev
-\`\`\`
+```
 
 Sanity Studioが `http://localhost:3333` で起動します。
 
@@ -88,22 +88,22 @@ Sanity Studioが `http://localhost:3333` で起動します。
 
 記事内で関連記事CTAを表示するには、以下のプレースホルダーを使用：
 
-\`\`\`
+```
 {{RELATED_ARTICLE:記事のスラッグ}}
-\`\`\`
+```
 
 例：
-\`\`\`
+```
 {{RELATED_ARTICLE:firebase-studio-getting-started-lexia}}
-\`\`\`
+```
 
 ## デプロイメント
 
 ### Sanity Studioのデプロイ
 
-\`\`\`bash
+```bash
 npm run sanity-deploy
-\`\`\`
+```
 
 ### 本番環境での注意点
 
@@ -116,22 +116,22 @@ npm run sanity-deploy
 ### Sanity Studioが起動しない場合
 
 1. **設定ファイルエラー**
-   \`\`\`bash
+   ```bash
    # sanity.config.tsがプロジェクトルートにあることを確認
    ls sanity.config.ts
-   \`\`\`
+   ```
 
 2. **依存関係エラー**
-   \`\`\`bash
+   ```bash
    npm install @sanity/vision
    npm run sanity-build
-   \`\`\`
+   ```
 
 3. **ポート競合**
-   \`\`\`bash
+   ```bash
    # 別のポートで起動
    sanity dev --port 3334
-   \`\`\`
+   ```
 
 ### Sanityに接続できない場合
 
@@ -165,12 +165,12 @@ npm run sanity-deploy
 
 ### ビルドエラーが発生する場合
 
-\`\`\`bash
+```bash
 # 依存関係を再インストール
 npm install
 npm run sanity-build
 npm run build
-\`\`\`
+```
 
 ## よくある質問
 
@@ -199,11 +199,11 @@ Sanity Studioでテーブルを作成する際は、以下の手順に従って�
    - 必要な行数分繰り返し
 
 **例：**
-\`\`\`
+```
 Headers: ["名前", "年齢", "職業"]
 Row 1 Cells: ["田中太郎", "30", "エンジニア"]  
 Row 2 Cells: ["佐藤花子", "25", "デザイナー"]
-\`\`\`
+```
 
 ### 技術的な注意事項
 

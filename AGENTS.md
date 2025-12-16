@@ -16,7 +16,7 @@
 
 microCMS管理画面で以下のフィールドを設定:
 
-\`\`\`ts
+```ts
 {
   slug: "example-slug",
   title: "記事タイトル",
@@ -28,22 +28,22 @@ microCMS管理画面で以下のフィールドを設定:
   contentHtml: "<h2>見出し1</h2><p>本文...</p><h2>見出し2</h2>...",
   // headingsフィールドは省略可能 - contentHtmlから自動抽出されます
 }
-\`\`\`
+```
 
 **重要**: 目次（ToC）は `contentHtml` 内のh2〜h6タグから自動的に抽出されます。
 
 **オプション**: 目次をカスタマイズしたい場合は `headings` フィールド（テキストエリア）に改行区切りで入力:
-\`\`\`
+```
 見出し1
 見出し2
 ## 見出し3
-\`\`\`
+```
 - 行頭に `##` をつけるとh2、`###` でh3（最大h6まで）
 - レベル指定なしの場合はh2として扱われます
 
 ### 2. 構造化データ使用時（sections）
 
-\`\`\`ts
+```ts
 {
   slug: "example-slug",
   title: "記事タイトル",
@@ -61,13 +61,13 @@ microCMS管理画面で以下のフィールドを設定:
     }
   ]
 }
-\`\`\`
+```
 
 sections使用時は `headings` 不要（自動生成されます）。
 
 ## Fallback Article Shape (Local Development)
 
-\`\`\`ts
+```ts
 {
   slug: "example-slug",
   title: "記事タイトル",
@@ -87,7 +87,7 @@ sections使用時は `headings` 不要（自動生成されます）。
     }
   ]
 }
-\`\`\`
+```
 
 ## Image Usage
 ### Hero Image

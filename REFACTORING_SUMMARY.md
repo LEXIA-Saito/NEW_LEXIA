@@ -73,30 +73,30 @@
 
 #### 動的インポート (Code Splitting)
 **`app/company/company-client.tsx`**
-\`\`\`tsx
+```tsx
 const LexiaLogoParticles = dynamic(
   () => import("@/components/lexia-logo-particles"),
   { loading: () => <LoadingFallback />, ssr: false }
 )
-\`\`\`
+```
 **効果**: 初期バンドルから約50KB削減
 
 #### React.memo による最適化
 **`components/blog/GenreFilterList.tsx`**
-\`\`\`tsx
+```tsx
 const BlogCardItem = memo(function BlogCardItem({ post }) {
   // ... 
 })
-\`\`\`
+```
 **効果**: リスト再レンダリング時のパフォーマンス向上
 
 #### useMemo によるフィルタリング最適化
-\`\`\`tsx
+```tsx
 const filtered = useMemo(() => {
   if (active === "all") return posts
   return posts.filter((p) => p.genre === active)
 }, [posts, active])
-\`\`\`
+```
 
 ### 4. 未使用ファイルの整理
 
@@ -160,7 +160,7 @@ const filtered = useMemo(() => {
 ## 🔧 推奨される次のステップ
 
 ### 即座に実行可能
-\`\`\`bash
+```bash
 # 1. 古い設定ファイルを確認して削除
 # (すでに削除済みの可能性あり)
 
@@ -175,10 +175,10 @@ pnpm lint
 
 # 5. ビルドテスト
 pnpm build
-\`\`\`
+```
 
 ### チーム確認後に実行
-\`\`\`bash
+```bash
 # アーカイブディレクトリ作成
 mkdir -p archive/{docker,netlify,railway,cloudflare,pm2,docs}
 
@@ -188,10 +188,10 @@ mkdir -p archive/{docker,netlify,railway,cloudflare,pm2,docs}
 # ドキュメントを整理
 mkdir -p docs/deployment
 # 該当ファイルを移動
-\`\`\`
+```
 
 ### 定期的なメンテナンス
-\`\`\`bash
+```bash
 # 月次
 pnpm exec depcheck  # 未使用依存関係チェック
 pnpm build:analyze  # バンドルサイズ分析
@@ -199,7 +199,7 @@ pnpm build:analyze  # バンドルサイズ分析
 # 週次
 pnpm update        # 依存関係更新
 pnpm audit         # セキュリティチェック
-\`\`\`
+```
 
 ---
 
