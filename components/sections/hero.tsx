@@ -2,28 +2,16 @@
 
 import Link from "next/link"
 import React from "react"
-import { motion, useAnimation, useScroll } from "framer-motion"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowDown, ExternalLink } from "lucide-react"
 import ParticlesBackground from "@/components/kokonutui/particles-background"
-import { footerIcons, getRandomSpinDuration } from "@/lib/footerIcons"
+
 import { t } from "@/lib/i18n"
 import { trackEvent } from "@/lib/analytics"
 
 export default function Hero() {
-  const controls = useAnimation()
-  const { scrollY } = useScroll()
-  const randomDurations = React.useMemo(() => footerIcons.map(() => getRandomSpinDuration()), [])
 
-  React.useEffect(() => {
-    return scrollY.on("change", (y) => {
-      if (y > 100) {
-        controls.start({ y: 100, opacity: 0 })
-      } else {
-        controls.start({ y: 0, opacity: 1 })
-      }
-    })
-  }, [controls, scrollY])
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 bg-white dark:bg-neutral-900">
@@ -113,35 +101,7 @@ export default function Hero() {
         </Link>
       </motion.div>
 
-      <motion.div className="absolute bottom-4 right-4 flex space-x-2 z-20" animate={controls}>
-        {footerIcons.map((icon, index) => (
-          <motion.span
-            key={index}
-            animate={{ rotate: 360 }}
-            transition={{
-              repeat: Number.POSITIVE_INFINITY,
-              duration: randomDurations[index],
-              ease: "linear",
-            }}
-            className="block"
-          >
-            <img
-              src={icon.light || "/placeholder.svg"}
-              alt=""
-              aria-hidden="true"
-              className="w-4 h-4 block dark:hidden"
-              loading="lazy"
-            />
-            <img
-              src={icon.dark || "/placeholder.svg"}
-              alt=""
-              aria-hidden="true"
-              className="w-4 h-4 hidden dark:block"
-              loading="lazy"
-            />
-          </motion.span>
-        ))}
-      </motion.div>
+
     </div>
   )
 }

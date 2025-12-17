@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
-import SectionIcon from "@/components/section-icon"
+
 import { Linkedin, Mail, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import { t } from "@/lib/i18n"
@@ -60,7 +60,6 @@ export default function Team() {
         >
           <Chip>{t("team.chip")}</Chip>
           <div className="flex flex-col items-center mt-4 mb-6">
-            <SectionIcon index={3} className="mb-4" />
             <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100">
               {t("team.heading")}
             </h2>

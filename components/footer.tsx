@@ -5,7 +5,7 @@ import Image from "next/image"
 import React from "react"
 import { motion } from "framer-motion"
 import { LOGO_URL, LOGO_WHITE_URL, LOGO_TEXT_URL, LOGO_TEXT_WHITE_URL } from "@/lib/config"
-import { footerIcons, getRandomSpinDuration } from "@/lib/footerIcons"
+
 
 export default function Footer() {
   const fadeIn = {
@@ -30,7 +30,7 @@ export default function Footer() {
     { name: "電話", href: "tel:+81-0000-000-000" },
   ]
 
-  const randomDurations = React.useMemo(() => footerIcons.map(() => getRandomSpinDuration()), [])
+
 
   return (
     <footer className="bg-neutral-100 dark:bg-[#04070d] text-neutral-900 dark:text-white py-16">
@@ -146,35 +146,7 @@ export default function Footer() {
           </motion.div>
         </div>
 
-        <div className="mt-8 flex justify-center space-x-4">
-          {footerIcons.map((icon, index) => (
-            <motion.span
-              key={index}
-              className="w-6 h-6 flex items-center justify-center"
-              animate={{ rotate: 360 }}
-              transition={{
-                repeat: Number.POSITIVE_INFINITY,
-                duration: randomDurations[index],
-                ease: "linear",
-              }}
-            >
-              <Image
-                src={icon.light || "/placeholder.svg"}
-                alt="footer icon"
-                width={24}
-                height={24}
-                className="block dark:hidden"
-              />
-              <Image
-                src={icon.dark || "/placeholder.svg"}
-                alt="footer icon"
-                width={24}
-                height={24}
-                className="hidden dark:block"
-              />
-            </motion.span>
-          ))}
-        </div>
+
       </div>
     </footer>
   )
