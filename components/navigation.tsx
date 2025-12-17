@@ -423,30 +423,30 @@ export default function Navigation() {
                   <Image
                     src={LOGO_URL || "/placeholder.svg"}
                     alt="LEXIA"
-                    width={140}
-                    height={28}
-                    className="h-7 w-auto block dark:hidden"
+                    width={120}
+                    height={24}
+                    className="h-6 w-auto block dark:hidden"
                   />
                   <Image
                     src={LOGO_TEXT_URL || "/placeholder.svg"}
                     alt="LEXIA text"
-                    width={140}
-                    height={28}
-                    className="h-7 w-auto ml-2 block dark:hidden"
+                    width={120}
+                    height={24}
+                    className="h-6 w-auto ml-2 block dark:hidden"
                   />
                   <Image
                     src={LOGO_WHITE_URL || "/placeholder.svg"}
                     alt="LEXIA"
-                    width={140}
-                    height={28}
-                    className="h-7 w-auto hidden dark:block"
+                    width={120}
+                    height={24}
+                    className="h-6 w-auto hidden dark:block"
                   />
                   <Image
                     src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
                     alt="LEXIA text"
-                    width={140}
-                    height={28}
-                    className="h-7 w-auto ml-2 hidden dark:block"
+                    width={120}
+                    height={24}
+                    className="h-6 w-auto ml-2 hidden dark:block"
                   />
                 </div>
                 <p className="mt-4 text-base text-neutral-600 dark:text-neutral-400 text-center px-2">
