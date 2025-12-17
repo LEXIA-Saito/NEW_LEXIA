@@ -80,7 +80,7 @@
     "framer-motion": "latest",
     "input-otp": "latest",
     "lucide-react": "^0.454.0",
-    "next": "15.2.8",
+    "next": "15.3.3",
     "next-themes": "latest",
     "react": "^18.2.0",
     "react-day-picker": "latest",
@@ -112,7 +112,7 @@
     "@typescript-eslint/eslint-plugin": "^8.41.0",
     "@typescript-eslint/parser": "^8.41.0",
     "eslint": "^9.33.0",
-    "eslint-config-next": "^15.5.0",
+    "eslint-config-next": "15.3.3",
     "postcss": "^8.5",
     "tailwindcss": "^4.1.9",
     "typescript": "^5"
