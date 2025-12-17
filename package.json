@@ -97,7 +97,7 @@
     "sonner": "latest",
     "styled-components": "^6.1.19",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7",
+    "tailwindcss-animate": "1.0.7",
     "three": "latest",
     "tw-animate-css": "latest",
     "vaul": "latest",
@@ -113,7 +113,7 @@
     "eslint": "^9.33.0",
     "eslint-config-next": "^15.5.0",
     "postcss": "^8.5",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.1.9",
     "typescript": "^5"
   },
   "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b"
