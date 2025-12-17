@@ -363,7 +363,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                             key={p.slug}
                             className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
                           >
-                            <div className="relative h-40 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+                            <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
                               <Image
                                 src={p.heroImage || PLACEHOLDER_IMG}
                                 alt={p.title}
@@ -403,7 +403,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                             key={p.slug}
                             className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
                           >
-                            <div className="relative h-40 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+                            <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
                               <Image
                                 src={p.heroImage || PLACEHOLDER_IMG}
                                 alt={p.title}

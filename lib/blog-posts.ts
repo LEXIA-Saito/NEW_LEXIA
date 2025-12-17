@@ -31,10 +31,6 @@ const GENRE_METADATA: Record<BlogGenre, { label: string; description: string }> 
     label: "セキュリティ",
     description: "Webセキュリティ、脆弱性対策、認証・認可、HTTPS、CSPなど。",
   },
-  Api: {
-    label: "API",
-    description: "REST API、GraphQL、API設計、マイクロサービス、API統合など。",
-  },
 }
 
 const BLOG_GENRE_LIST = (Object.keys(GENRE_METADATA) as BlogGenre[]).map((id) => ({
@@ -59,30 +55,33 @@ async function fetchAllBlogPosts(): Promise<(BlogPost & { readingTime: string })
     const microCMSPosts = await fetchMicroCMSBlogPosts()
     console.log(`[fetchAllBlogPosts] Fetched ${microCMSPosts.length} posts from microCMS`)
     if (microCMSPosts.length > 0) {
-      console.log(`[fetchAllBlogPosts] microCMS slugs:`, microCMSPosts.map(p => p.slug))
+      console.log(
+        `[fetchAllBlogPosts] microCMS slugs:`,
+        microCMSPosts.map((p) => p.slug),
+      )
     }
-    
+
     // 除外対象のスラッグをフィルタリング
-    const filteredMicroCMSPosts = microCMSPosts.filter(
-      post => !EXCLUDED_SLUGS.includes(post.slug)
-    )
+    const filteredMicroCMSPosts = microCMSPosts.filter((post) => !EXCLUDED_SLUGS.includes(post.slug))
     if (filteredMicroCMSPosts.length !== microCMSPosts.length) {
-      console.warn(`[fetchAllBlogPosts] Excluded ${microCMSPosts.length - filteredMicroCMSPosts.length} problematic posts`)
+      console.warn(
+        `[fetchAllBlogPosts] Excluded ${microCMSPosts.length - filteredMicroCMSPosts.length} problematic posts`,
+      )
     }
-    
+
     // fallbackBlogPostsも含める
     const fallbackPostsWithReadingTime = fallbackBlogPosts.map(withComputedReadingTime)
-    
+
     // 重複を避けるため、microCMSにあるスラッグはfallbackから除外
-    const microCMSPostSlugs = new Set(filteredMicroCMSPosts.map(post => post.slug))
-    const uniqueFallbackPosts = fallbackPostsWithReadingTime.filter(
-      post => !microCMSPostSlugs.has(post.slug)
-    )
-    
+    const microCMSPostSlugs = new Set(filteredMicroCMSPosts.map((post) => post.slug))
+    const uniqueFallbackPosts = fallbackPostsWithReadingTime.filter((post) => !microCMSPostSlugs.has(post.slug))
+
     // microCMS記事とfallback記事を結合
     const allPosts = [...filteredMicroCMSPosts, ...uniqueFallbackPosts]
-    console.log(`[fetchAllBlogPosts] Total posts: ${allPosts.length} (microCMS: ${filteredMicroCMSPosts.length}, fallback: ${uniqueFallbackPosts.length})`)
-    
+    console.log(
+      `[fetchAllBlogPosts] Total posts: ${allPosts.length} (microCMS: ${filteredMicroCMSPosts.length}, fallback: ${uniqueFallbackPosts.length})`,
+    )
+
     // latest_update優先でソート (更新日がない場合は公開日を使用)
     return allPosts.sort((a, b) => {
       const dateA = new Date(a.latest_update || a.date).getTime()
@@ -90,7 +89,7 @@ async function fetchAllBlogPosts(): Promise<(BlogPost & { readingTime: string })
       return dateB - dateA
     })
   } catch (error) {
-    console.warn('[fetchAllBlogPosts] microCMS fetch failed, using fallback posts only:', error)
+    console.warn("[fetchAllBlogPosts] microCMS fetch failed, using fallback posts only:", error)
     // microCMSが利用できない場合はfallbackBlogPostsのみを使用
     return fallbackBlogPosts.map(withComputedReadingTime)
   }
@@ -98,13 +97,13 @@ async function fetchAllBlogPosts(): Promise<(BlogPost & { readingTime: string })
 
 async function fetchSingleBlogPost(slug: string): Promise<(BlogPost & { readingTime: string }) | undefined> {
   console.log(`[fetchSingleBlogPost] Fetching post with slug: ${slug}`)
-  
+
   // 除外対象のスラッグは即座にundefinedを返す
   if (EXCLUDED_SLUGS.includes(slug)) {
     console.warn(`[fetchSingleBlogPost] Slug is in exclusion list: ${slug}`)
     return undefined
   }
-  
+
   try {
     // まずmicroCMSから取得を試行
     const microCMSPost = await fetchMicroCMSBlogPost(slug)
@@ -116,7 +115,7 @@ async function fetchSingleBlogPost(slug: string): Promise<(BlogPost & { readingT
   } catch (error) {
     console.warn(`[fetchSingleBlogPost] microCMS fetch failed for slug ${slug}, trying fallback:`, error)
   }
-  
+
   // microCMSにない場合はfallbackBlogPostsから取得
   const fallbackPost = fallbackBlogPosts.find((post) => post.slug === slug)
   if (fallbackPost) {
@@ -137,28 +136,28 @@ export const BLOG_GENRES = BLOG_GENRE_LIST
 export function getBlogGenreLabel(genre: BlogGenre | string): string {
   // 旧カテゴリから新カテゴリへのマッピング（後方互換性のため）
   const legacyMapping: Record<string, BlogGenre> = {
-    "tech": "AI",
-    "trends": "Update",
-    "ideas": "Full-stack"
+    tech: "AI",
+    trends: "Update",
+    ideas: "Full-stack",
   }
-  
+
   // 旧カテゴリの場合は新カテゴリに変換
   const mappedGenre = (legacyMapping[genre] || genre) as BlogGenre
-  
+
   return GENRE_METADATA[mappedGenre]?.label || "その他"
 }
 
 export function getBlogGenreDescription(genre: BlogGenre | string): string {
   // 旧カテゴリから新カテゴリへのマッピング（後方互換性のため）
   const legacyMapping: Record<string, BlogGenre> = {
-    "tech": "AI",
-    "trends": "Update",
-    "ideas": "Full-stack"
+    tech: "AI",
+    trends: "Update",
+    ideas: "Full-stack",
   }
-  
+
   // 旧カテゴリの場合は新カテゴリに変換
   const mappedGenre = (legacyMapping[genre] || genre) as BlogGenre
-  
+
   return GENRE_METADATA[mappedGenre]?.description || ""
 }
 
