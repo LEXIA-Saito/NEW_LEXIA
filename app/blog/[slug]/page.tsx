@@ -9,6 +9,8 @@ import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
 import A8Banner from "@/components/ads/A8Banner"
+import EnhancedRichText from "@/components/blog/EnhancedRichText"
+import RichTextTableOfContents from "@/components/blog/RichTextTableOfContents"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
@@ -206,10 +208,16 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
 
               {/* 優先度1: contentHtml（リッチエディタV2全文） */}
               {post.contentHtml ? (
-                <div
-                  className="prose prose-neutral max-w-none dark:prose-invert mt-12"
-                  dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-                />
+                <>
+                  {/* 目次 */}
+                  <RichTextTableOfContents contentHtml={post.contentHtml} />
+                  
+                  {/* 拡張リッチテキスト（アンカーリンク・シンタックスハイライト・コピーボタン付き） */}
+                  <EnhancedRichText
+                    html={post.contentHtml}
+                    className="prose prose-neutral max-w-none dark:prose-invert mt-12"
+                  />
+                </>
               ) : post.custom && post.custom.length > 0 ? (
                 /* 優先度2: custom（新スキーマ - 繰り返し本文ブロック） */
                 <div className="space-y-8 md:space-y-12 mt-12">
@@ -217,9 +225,9 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                     <div key={index} className="space-y-6">
                       {/* 本文テキスト（リッチエディタV2） */}
                       {block.body_text && (
-                        <div
+                        <EnhancedRichText
+                          html={block.body_text}
                           className="prose prose-neutral max-w-none dark:prose-invert"
-                          dangerouslySetInnerHTML={{ __html: block.body_text }}
                         />
                       )}
 
