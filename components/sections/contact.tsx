@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Chip } from "@/components/ui/chip"
-import SectionIcon from "@/components/section-icon"
+
 import { ExternalLink, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -27,7 +27,6 @@ export default function Contact() {
         >
           <Chip>{t('contact.chip')}</Chip>
           <div className="flex flex-col items-center mt-4 mb-6">
-            <SectionIcon index={5} className="mb-4" />
             <h2 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100">
               まずはお気軽にご相談ください。
             </h2>
