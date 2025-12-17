@@ -1,8 +1,10 @@
 "use client"
 
+import type React from "react"
+
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { RotateCcw, ZoomIn, ZoomOut, Move } from 'lucide-react'
+import { RotateCcw, ZoomIn, ZoomOut, Move } from "lucide-react"
 
 interface VRViewerProps {
   imageUrl?: string
@@ -20,12 +22,12 @@ export function VRViewer({ imageUrl = "/vr/minimalist-villa-360.png" }: VRViewer
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext("2d")
     if (!ctx) return
 
     const img = new Image()
     img.crossOrigin = "anonymous"
-    
+
     img.onload = () => {
       setIsLoaded(true)
       drawPanorama(ctx, img, canvas.width, canvas.height)
@@ -33,16 +35,16 @@ export function VRViewer({ imageUrl = "/vr/minimalist-villa-360.png" }: VRViewer
 
     img.onerror = () => {
       // フォールバック: グラデーション背景を描画
-      ctx.fillStyle = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+      ctx.fillStyle = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
       ctx.fillRect(0, 0, canvas.width, canvas.height)
-      
+
       // テキストを描画
-      ctx.fillStyle = '#ffffff'
-      ctx.font = '24px sans-serif'
-      ctx.textAlign = 'center'
-      ctx.fillText('360° Virtual Tour', canvas.width / 2, canvas.height / 2)
-      ctx.font = '16px sans-serif'
-      ctx.fillText('Interactive panoramic view', canvas.width / 2, canvas.height / 2 + 30)
+      ctx.fillStyle = "#ffffff"
+      ctx.font = "24px sans-serif"
+      ctx.textAlign = "center"
+      ctx.fillText("360° Virtual Tour", canvas.width / 2, canvas.height / 2)
+      ctx.font = "16px sans-serif"
+      ctx.fillText("Interactive panoramic view", canvas.width / 2, canvas.height / 2 + 30)
       setIsLoaded(true)
     }
 
@@ -51,22 +53,22 @@ export function VRViewer({ imageUrl = "/vr/minimalist-villa-360.png" }: VRViewer
 
   const drawPanorama = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, width: number, height: number) => {
     ctx.clearRect(0, 0, width, height)
-    
+
     // 簡単なパノラマ効果をシミュレート
     const offsetX = (rotation.y * width) / 360
     const offsetY = (rotation.x * height) / 180
-    
+
     ctx.save()
     ctx.scale(zoom, zoom)
     ctx.translate(-offsetX, -offsetY)
-    
+
     // 画像を描画
     ctx.drawImage(img, 0, 0, width, height)
-    
+
     // 継ぎ目を隠すために画像を繰り返し描画
     ctx.drawImage(img, width, 0, width, height)
     ctx.drawImage(img, -width, 0, width, height)
-    
+
     ctx.restore()
   }
 
@@ -81,9 +83,9 @@ export function VRViewer({ imageUrl = "/vr/minimalist-villa-360.png" }: VRViewer
     const deltaX = e.clientX - lastMouse.x
     const deltaY = e.clientY - lastMouse.y
 
-    setRotation(prev => ({
+    setRotation((prev) => ({
       x: Math.max(-90, Math.min(90, prev.x + deltaY * 0.5)),
-      y: (prev.y + deltaX * 0.5) % 360
+      y: (prev.y + deltaX * 0.5) % 360,
     }))
 
     setLastMouse({ x: e.clientX, y: e.clientY })
@@ -99,11 +101,11 @@ export function VRViewer({ imageUrl = "/vr/minimalist-villa-360.png" }: VRViewer
   }
 
   const zoomIn = () => {
-    setZoom(prev => Math.min(3, prev + 0.2))
+    setZoom((prev) => Math.min(3, prev + 0.2))
   }
 
   const zoomOut = () => {
-    setZoom(prev => Math.max(0.5, prev - 0.2))
+    setZoom((prev) => Math.max(0.5, prev - 0.2))
   }
 
   return (
@@ -118,31 +120,16 @@ export function VRViewer({ imageUrl = "/vr/minimalist-villa-360.png" }: VRViewer
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       />
-      
+
       {/* コントロールパネル */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 bg-black/50 backdrop-blur-sm rounded-lg p-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={resetView}
-          className="text-white hover:bg-white/20"
-        >
+        <Button variant="ghost" size="sm" onClick={resetView} className="text-white hover:bg-white/20">
           <RotateCcw className="h-4 w-4" />
         </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={zoomOut}
-          className="text-white hover:bg-white/20"
-        >
+        <Button variant="ghost" size="sm" onClick={zoomOut} className="text-white hover:bg-white/20">
           <ZoomOut className="h-4 w-4" />
         </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={zoomIn}
-          className="text-white hover:bg-white/20"
-        >
+        <Button variant="ghost" size="sm" onClick={zoomIn} className="text-white hover:bg-white/20">
           <ZoomIn className="h-4 w-4" />
         </Button>
       </div>
@@ -160,7 +147,7 @@ export function VRViewer({ imageUrl = "/vr/minimalist-villa-360.png" }: VRViewer
       {!isLoaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-neutral-900">
           <div className="text-white text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
+            <div className="rounded-full h-8 w-8 border-2 border-white/30 border-t-white mx-auto mb-4"></div>
             <p>Loading Virtual Tour...</p>
           </div>
         </div>
