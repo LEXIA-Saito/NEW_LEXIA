@@ -7,7 +7,7 @@ import Footer from "@/components/footer"
 import Hero from "@/components/sections/hero"
 import PricingCTA from "@/components/sections/pricing-cta"
 import ServicesCTA from "@/components/sections/services-cta"
-import Features from "@/components/Features"
+import LexiaTools from "@/components/LexiaTools"
 import BlogPreview from "@/components/sections/blog-preview"
 import type { Metadata } from "next"
 import Script from "next/script"
@@ -157,7 +157,9 @@ export default function Home() {
         <ServicesCTA />
       </section>
 
-      <Features className="below-fold" />
+      <section id="lexia-tools" className="below-fold">
+        <LexiaTools />
+      </section>
 
       <section id="pricing" className="py-24 md:py-32 below-fold">
         <PricingCTA />
