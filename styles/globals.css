@@ -398,6 +398,7 @@ html {
   background-color: var(--color-muted);
   padding: 0.125rem 0.375rem;
   border-radius: 0.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 @media (min-width: 768px) {
@@ -414,6 +415,7 @@ html {
   overflow-x: auto;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 @media (min-width: 768px) {
@@ -425,6 +427,16 @@ html {
 .prose pre code {
   background-color: transparent;
   padding: 0;
+  font-size: inherit;
+}
+
+/* Code blocks that appear as paragraphs (MicroCMS rich editor output) */
+.prose p > code {
+  display: inline-block;
+  background-color: var(--color-muted);
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 .prose a {
@@ -450,7 +462,45 @@ html {
 .prose img {
   border-radius: 0.5rem;
   margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Image captions (paragraphs immediately after images) */
+.prose img + p,
+.prose figure figcaption,
+.prose p:has(img) + p {
+  font-size: 0.875rem;
+  color: var(--color-muted-foreground);
+  margin-top: 0.25rem;
   margin-bottom: 1rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .prose img + p,
+  .prose figure figcaption,
+  .prose p:has(img) + p {
+    font-size: 0.9375rem;
+  }
+}
+
+/* Specific style for caption text starting with ※ */
+.prose p:not(:has(img)):not(:has(code)):not(:has(a)) {
+  /* Check if paragraph starts with ※ using a subtle approach */
+}
+
+.prose p[class*="caption"],
+.prose p em:only-child:first-child:last-child {
+  font-size: 0.875rem;
+  color: var(--color-muted-foreground);
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .prose p[class*="caption"],
+  .prose p em:only-child:first-child:last-child {
+    font-size: 0.9375rem;
+  }
 }
 
 .prose table {
@@ -477,4 +527,27 @@ html {
   border-color: var(--color-border);
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+/* Additional utility: small text for captions */
+.prose .text-sm,
+.prose small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* MicroCMS specific: paragraphs that look like captions */
+.prose p:empty + p img + p,
+.prose > p:has(img) ~ p:first-of-type {
+  font-size: 0.875rem !important;
+  color: var(--color-muted-foreground) !important;
+  text-align: center;
+  margin-top: 0.25rem !important;
+}
+
+@media (min-width: 768px) {
+  .prose .text-sm,
+  .prose small {
+    font-size: 0.9375rem;
+  }
 }
