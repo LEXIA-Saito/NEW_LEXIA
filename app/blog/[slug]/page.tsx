@@ -11,8 +11,6 @@ import Image from "next/image"
 import A8Banner from "@/components/ads/A8Banner"
 import EnhancedRichText from "@/components/blog/EnhancedRichText"
 import RichTextTableOfContents from "@/components/blog/RichTextTableOfContents"
-import BlogSidebar from "@/components/blog/BlogSidebar"
-import StickyTableOfContents from "@/components/blog/StickyTableOfContents"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
@@ -143,17 +141,10 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     return (
       <>
         <main className="min-h-screen bg-white dark:bg-neutral-900">
-          <div className="max-w-screen-2xl mx-auto px-4 pt-24 md:pt-32 pb-12 md:pb-16">
+          <div className="container mx-auto px-4 pt-24 md:pt-32 pb-12 md:pb-16">
             <Breadcrumbs dynamicLabels={{ [post.slug]: post.title }} />
             
-            {/* 3カラムレイアウト: 左サイドバー、中央コンテンツ、右側目次 */}
-            <div className="flex gap-6 lg:gap-8 items-start">
-              {/* 左サイドバー: ナビゲーション・ジャンル・タグ */}
-              <BlogSidebar currentGenre={post.genre} />
-              
-              {/* 中央: メインコンテンツ */}
-              <div className="flex-1 min-w-0 max-w-3xl mx-auto lg:mx-0">
-            <article>
+            <article className="max-w-3xl mx-auto">
               <header className="mb-12">
                 <Link
                   href={`/blog?genre=${post.genre}#genre-filter`}
@@ -219,10 +210,8 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               {/* 優先度1: contentHtml（リッチエディタV2全文） */}
               {post.contentHtml ? (
                 <>
-                  {/* 目次（モバイル・タブレット表示用） */}
-                  <div className="lg:hidden">
-                    <RichTextTableOfContents contentHtml={post.contentHtml} />
-                  </div>
+                  {/* 目次 */}
+                  <RichTextTableOfContents contentHtml={post.contentHtml} />
                   
                   {/* 拡張リッチテキスト（アンカーリンク・シンタックスハイライト・コピーボタン付き） */}
                   <EnhancedRichText
@@ -481,17 +470,20 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 <span>記事一覧に戻る</span>
               </Link>
             </div>
-              </div>
-              
-              {/* 右サイドバー: 目次（sticky表示） */}
-              {post.contentHtml && (
-                <StickyTableOfContents contentHtml={post.contentHtml} />
-              )}
-            </div>
+            </article>
           </div>
         </main>
         <Footer />
-        {/* Google Funding Choices and Closure scripts temporarily removed for debugging appendChild errors */}
+        
+        {/* Google AdSense */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8789901212664644"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+        
+        {/* JSON-LD Structured Data */}
         <Script
           id={`blog-article-${post.slug}`}
           type="application/ld+json"
