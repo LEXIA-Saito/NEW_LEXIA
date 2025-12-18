@@ -94,6 +94,8 @@ export default function Navigation() {
 
   // Map route paths to homepage section ids for active indicator sync
   const routeToSection: Record<string, string> = {
+    "/company": "about",
+    "/blog": "blog",
     "/projects": "work",
     "/pricing": "pricing",
     "/contact": "contact",
@@ -197,7 +199,7 @@ export default function Navigation() {
           if (!isBlog) setMegaMenuOpen(false)
         }}
       >
-        <div className="container mx-auto px-4 flex justify-between items-center">
+        <div className="container mx-auto px-4 flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center" aria-label="LEXIA">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
               <div className="flex items-center">
@@ -241,10 +243,13 @@ export default function Navigation() {
             </motion.div>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-8">
-            <nav>
-              <ul className="flex space-x-8">
-                {displayItems.map((item, index) => (
+          <nav className="hidden md:flex flex-1 justify-center">
+            <ul className="flex items-center space-x-8">
+              {displayItems.map((item, index) => {
+                const isCurrentPath = pathname === item.href || pathname?.startsWith(`${item.href}/`)
+                const isActive = activeSection === getSectionFromHref(item.href) || isCurrentPath
+
+                return (
                   <motion.li
                     key={item.name}
                     initial={{ opacity: 0, y: -20 }}
@@ -254,14 +259,14 @@ export default function Navigation() {
                     <Link
                       href={item.href}
                       className={`text-xs sm:text-sm transition-colors relative ${
-                        activeSection === getSectionFromHref(item.href)
+                        isActive
                           ? "text-neutral-900 dark:text-neutral-100"
                           : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
                       }`}
                       onClick={(e) => handleNavigation(e, item.href)}
                     >
                       {item.name}
-                      {activeSection === getSectionFromHref(item.href) && (
+                      {isActive && (
                         <motion.span
                           layoutId="activeSection"
                           className="absolute -bottom-1 left-0 right-0 h-0.5 bg-neutral-900 dark:bg-neutral-100"
@@ -270,9 +275,12 @@ export default function Navigation() {
                       )}
                     </Link>
                   </motion.li>
-                ))}
-              </ul>
-            </nav>
+                )
+              })}
+            </ul>
+          </nav>
+
+          <div className="hidden md:flex items-center space-x-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.8 }}>
               <ThemeToggle />
             </motion.div>
@@ -415,44 +423,49 @@ export default function Navigation() {
                     height={24}
                     className="h-6 w-auto hidden dark:block"
                   />
-                <Image
-                  src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
-                  alt="LEXIA text"
-                  width={120}
-                  height={24}
-                  className="h-6 w-auto ml-2 hidden dark:block"
-                />
+                  <Image
+                    src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
+                    alt="LEXIA text"
+                    width={120}
+                    height={24}
+                    className="h-6 w-auto ml-2 hidden dark:block"
+                  />
+                </div>
+                <p className="mt-4 text-base text-neutral-600 dark:text-neutral-400 text-center px-2">
+                  愛知県を中心にWEB制作事業を展開
+                </p>
               </div>
-              <p className="mt-4 text-base text-neutral-600 dark:text-neutral-400 text-center px-2">
-                愛知県を中心にWEB制作事業を展開
-              </p>
-            </div>
 
               {/* Navigation */}
               <ul className="space-y-8 text-center mt-8">
-                {displayItems.map((item, index) => (
-                  <motion.li
-                    key={item.name}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 * index }}
-                  >
-                    <Link
-                      href={item.href}
-                      className={`text-2xl font-light ${
-                        activeSection === getSectionFromHref(item.href)
-                          ? "text-neutral-900 dark:text-neutral-100"
-                          : "text-neutral-500 dark:text-neutral-400"
-                      }`}
-                      onClick={(e) => {
-                        trackEvent("nav_click", { item: item.name, href: item.href, location: "mobile_menu" })
-                        handleNavigation(e, item.href)
-                      }}
+                {displayItems.map((item, index) => {
+                  const isCurrentPath = pathname === item.href || pathname?.startsWith(`${item.href}/`)
+                  const isActive = activeSection === getSectionFromHref(item.href) || isCurrentPath
+
+                  return (
+                    <motion.li
+                      key={item.name}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: 0.1 * index }}
                     >
-                      {item.name}
-                    </Link>
-                  </motion.li>
-                ))}
+                      <Link
+                        href={item.href}
+                        className={`text-2xl font-light ${
+                          isActive
+                            ? "text-neutral-900 dark:text-neutral-100"
+                            : "text-neutral-500 dark:text-neutral-400"
+                        }`}
+                        onClick={(e) => {
+                          trackEvent("nav_click", { item: item.name, href: item.href, location: "mobile_menu" })
+                          handleNavigation(e, item.href)
+                        }}
+                      >
+                        {item.name}
+                      </Link>
+                    </motion.li>
+                  )
+                })}
               </ul>
 
               {/* SNS */}
