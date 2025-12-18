@@ -461,7 +461,7 @@ export default function Navigation() {
                 />
               </div>
               <p className="mt-4 text-base text-neutral-600 dark:text-neutral-400 text-center px-2">
-                代表・齋藤が直接ヒアリングし、成果に直結するサイトをつくります。
+                愛知県を中心にWEB制作事業を展開
               </p>
             </div>
 

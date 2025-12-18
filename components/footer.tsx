@@ -97,9 +97,6 @@ export default function Footer() {
                   className="ml-2 h-6 w-auto hidden dark:block"
                 />
               </div>
-              <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300 max-w-2xl">
-                齋藤率いるLEXIAは、ブランドの強みを整理し、成果に直結するサイト体験をデザイン・開発するWEB制作チームです。
-              </p>
             </div>
 
             <div className="flex flex-wrap gap-3">
