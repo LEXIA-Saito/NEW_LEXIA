@@ -26,14 +26,23 @@ export const navItems = [
     ],
   },
   {
+    name: "料金プラン",
+    href: "/pricing",
+    subItems: [{ name: "料金シミュレーション", href: "/pricing" }],
+  },
+  {
     name: "制作実績",
     href: "/projects",
     subItems: [],
   },
   {
-    name: "料金プラン",
-    href: "/pricing",
-    subItems: [{ name: "料金シミュレーション", href: "/pricing" }],
+    name: "チーム",
+    href: "/team",
+    subItems: [
+      { name: "齋藤雅人", href: "/team/masato-saito" },
+      { name: "齋藤李保", href: "/team/riho-saito" },
+      { name: "アシスタント", href: "/team/assistant" },
+    ],
   },
   {
     name: "会社情報",
@@ -46,15 +55,6 @@ export const navItems = [
       { name: "制作工程", href: "/company/process" },
       { name: "FAQ", href: "/company#faq" },
       { name: "アクセス", href: "/company#access" },
-    ],
-  },
-  {
-    name: "チーム",
-    href: "/team",
-    subItems: [
-      { name: "齋藤雅人", href: "/team/masato-saito" },
-      { name: "齋藤李保", href: "/team/riho-saito" },
-      { name: "アシスタント", href: "/team/assistant" },
     ],
   },
   { name: "ブログ", href: "/blog", subItems: [] },
@@ -254,7 +254,7 @@ export default function Navigation() {
                   >
                     <Link
                       href={item.href}
-                      className={`text-sm transition-colors relative ${
+                      className={`text-xs sm:text-sm transition-colors relative ${
                         activeSection === getSectionFromHref(item.href)
                           ? "text-neutral-900 dark:text-neutral-100"
                           : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
