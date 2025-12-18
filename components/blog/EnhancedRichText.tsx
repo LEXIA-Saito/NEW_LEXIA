@@ -235,11 +235,19 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
     }
   }
 
+  // 文字列ベースの簡易サニタイズ（DOMParserを使わない）
+  // MicroCMSから配信される可能性のある不正なscriptタグなどを削除して
+  // ハイドレーションエラーやappendChildエラーを防ぐ
+  const sanitizedHtml = html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // scriptタグを削除
+    .replace(/<!\[CDATA\[(.*?)\]\]>/g, '') // CDATAセクションを削除
+    .replace(/<!--(.*?)-->/g, '') // コメントを削除
+
   return (
     <div
       ref={contentRef}
       className={className}
-      dangerouslySetInnerHTML={{ __html: html }}
+      dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
     />
   )
 }
