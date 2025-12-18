@@ -20,7 +20,10 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
       // 2. コードブロックにコピーボタンとシンタックスハイライトを追加
       enhanceCodeBlocks()
 
-      // 3. ページロード時のハッシュスクロール
+      // 3. テーブルをレスポンシブラッパーで囲む
+      wrapTablesForResponsive()
+
+      // 4. ページロード時のハッシュスクロール
       handleHashScroll()
     } catch (error) {
       console.error("EnhancedRichText: Error applying enhancements", error)
@@ -199,6 +202,25 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
 
       codeElement.innerHTML = highlighted
     }
+  }
+
+  const wrapTablesForResponsive = () => {
+    if (!contentRef.current) return
+
+    const tables = contentRef.current.querySelectorAll("table")
+
+    tables.forEach((table) => {
+      // 既にラッパーで囲まれているかチェック
+      if (table.parentElement?.classList.contains("table-wrapper")) return
+
+      // レスポンシブラッパーを作成
+      const wrapper = document.createElement("div")
+      wrapper.className = "table-wrapper overflow-x-auto -mx-4 sm:mx-0 my-6"
+      
+      // テーブルをラッパーで囲む
+      table.parentNode?.insertBefore(wrapper, table)
+      wrapper.appendChild(table)
+    })
   }
 
   const handleHashScroll = () => {

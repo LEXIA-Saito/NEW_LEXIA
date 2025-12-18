@@ -508,13 +508,50 @@ html {
   }
 }
 
+/* テーブルラッパー（JavaScriptで動的に追加） */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  /* モバイルで左右にはみ出させる */
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .table-wrapper {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* テーブル本体 */
 .prose table,
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
   border: 1px solid var(--color-border);
+}
+
+/* モバイルでのフォントサイズとパディング調整 */
+@media (max-width: 640px) {
+  .prose table,
+  table {
+    font-size: 0.813rem; /* 13px */
+  }
+  
+  .prose th,
+  table th,
+  .prose td,
+  table td {
+    padding: 0.5rem 0.625rem;
+    white-space: nowrap;
+  }
 }
 
 .prose thead {
