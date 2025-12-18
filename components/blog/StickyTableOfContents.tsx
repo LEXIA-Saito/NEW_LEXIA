@@ -85,7 +85,7 @@ export default function StickyTableOfContents({ contentHtml }: StickyTableOfCont
   }
 
   return (
-    <aside className="hidden xl:block sticky top-24 h-fit max-h-[calc(100vh-8rem)] overflow-y-auto">
+    <aside className="hidden lg:block w-64 shrink-0 sticky top-24 h-fit max-h-[calc(100vh-8rem)] overflow-y-auto">
       <nav
         className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 p-4"
         aria-label="目次"

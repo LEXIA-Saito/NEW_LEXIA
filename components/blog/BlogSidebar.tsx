@@ -19,7 +19,7 @@ export default function BlogSidebar({ currentGenre, currentTag }: BlogSidebarPro
   ]
 
   return (
-    <aside className="hidden xl:block sticky top-24 h-fit space-y-6">
+    <aside className="hidden lg:block w-64 shrink-0 sticky top-24 h-fit space-y-6">
       {/* ブログホーム */}
       <nav className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 p-4">
         <h3 className="flex items-center gap-2 text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-3">
