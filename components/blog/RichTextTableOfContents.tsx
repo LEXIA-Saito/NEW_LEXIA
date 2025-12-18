@@ -18,10 +18,18 @@ export default function RichTextTableOfContents({ contentHtml }: RichTextTableOf
   const [headings, setHeadings] = useState<Heading[]>([])
 
   useEffect(() => {
-    // HTMLから見出しを抽出
-    const parser = new DOMParser()
-    const doc = parser.parseFromString(contentHtml, "text/html")
-    const headingElements = doc.querySelectorAll("h1, h2, h3, h4, h5, h6")
+    try {
+      // HTMLから見出しを抽出
+      const parser = new DOMParser()
+      const doc = parser.parseFromString(contentHtml, "text/html")
+      
+      // パースエラーチェック
+      const parserError = doc.querySelector('parsererror')
+      if (parserError) {
+        console.warn("⚠️ RichTextTableOfContents: HTML parsing error", parserError.textContent)
+      }
+      
+      const headingElements = doc.querySelectorAll("h1, h2, h3, h4, h5, h6")
 
     const extractedHeadings: Heading[] = []
     headingElements.forEach((element, index) => {
@@ -42,6 +50,10 @@ export default function RichTextTableOfContents({ contentHtml }: RichTextTableOf
     })
 
     setHeadings(extractedHeadings)
+    } catch (error) {
+      console.error("❌ RichTextTableOfContents: Error parsing HTML", error)
+      setHeadings([])
+    }
   }, [contentHtml])
 
   if (headings.length === 0) {

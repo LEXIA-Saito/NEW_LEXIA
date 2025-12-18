@@ -9,9 +9,41 @@ type EnhancedRichTextProps = {
 
 export default function EnhancedRichText({ html, className = "" }: EnhancedRichTextProps) {
   const contentRef = useRef<HTMLDivElement>(null)
+  
+  // HTMLをサニタイズ（不正なタグを修正）
+  const sanitizeHTML = (html: string): string => {
+    try {
+      console.log("🧹 Sanitizing HTML...")
+      
+      // 一時的なDOMパーサーを使用してHTMLを検証
+      const parser = new DOMParser()
+      const doc = parser.parseFromString(html, 'text/html')
+      
+      // パースエラーがある場合は警告
+      const parserError = doc.querySelector('parsererror')
+      if (parserError) {
+        console.warn("⚠️ HTML parsing error detected:", parserError.textContent)
+      }
+      
+      // bodyの内容を取得（これにより不正なタグが自動修正される）
+      const sanitized = doc.body.innerHTML
+      
+      console.log("✅ HTML sanitized successfully")
+      return sanitized
+    } catch (error) {
+      console.error("❌ Error sanitizing HTML:", error)
+      // エラーの場合は元のHTMLを返す
+      return html
+    }
+  }
+  
+  const sanitizedHTML = sanitizeHTML(html)
 
   useEffect(() => {
-    console.log("📝 EnhancedRichText mounted", { htmlLength: html.length })
+    console.log("📝 EnhancedRichText mounted", { 
+      originalLength: html.length,
+      sanitizedLength: sanitizedHTML.length 
+    })
     
     if (!contentRef.current) {
       console.warn("⚠️ EnhancedRichText: contentRef is null")
@@ -32,7 +64,7 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
     } catch (error) {
       console.error("❌ EnhancedRichText: Error applying enhancements", error)
     }
-  }, [html])
+  }, [sanitizedHTML])
 
   const addHeadingAnchors = () => {
     if (!contentRef.current) return
@@ -224,7 +256,7 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
     <div
       ref={contentRef}
       className={className}
-      dangerouslySetInnerHTML={{ __html: html }}
+      dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
     />
   )
 }
