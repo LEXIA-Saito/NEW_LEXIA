@@ -470,7 +470,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 <span>記事一覧に戻る</span>
               </Link>
             </div>
-            </article>
           </div>
         </main>
         <Footer />
