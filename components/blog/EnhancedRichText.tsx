@@ -9,52 +9,10 @@ type EnhancedRichTextProps = {
 
 export default function EnhancedRichText({ html, className = "" }: EnhancedRichTextProps) {
   const contentRef = useRef<HTMLDivElement>(null)
-  
-  // HTMLをサニタイズ（不正なタグを修正）
-  const sanitizeHTML = (html: string): string => {
-    try {
-      console.log("🧹 Sanitizing HTML...", { length: html.length })
-      
-      // 一時的なDOMパーサーを使用してHTMLを検証
-      const parser = new DOMParser()
-      const doc = parser.parseFromString(html, 'text/html')
-      
-      // パースエラーがある場合は警告
-      const parserError = doc.querySelector('parsererror')
-      if (parserError) {
-        console.warn("⚠️ HTML parsing error detected:", parserError.textContent)
-        
-        // パースエラーがある場合、基本的なHTMLクリーニングを実行
-        const cleaned = html
-          .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // scriptタグを削除
-          .replace(/<!\[CDATA\[(.*?)\]\]>/g, '') // CDATAセクションを削除
-          .replace(/<!--(.*?)-->/g, '') // コメントを削除
-        
-        console.log("🔧 Applied basic HTML cleaning")
-        return cleaned
-      }
-      
-      // bodyの内容を取得（これにより不正なタグが自動修正される）
-      const sanitized = doc.body.innerHTML
-      
-      console.log("✅ HTML sanitized successfully", { 
-        originalLength: html.length,
-        sanitizedLength: sanitized.length 
-      })
-      return sanitized
-    } catch (error) {
-      console.error("❌ Error sanitizing HTML:", error)
-      // エラーの場合は元のHTMLを返す（ただしscriptタグは削除）
-      return html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-    }
-  }
-  
-  const sanitizedHTML = sanitizeHTML(html)
 
   useEffect(() => {
     console.log("📝 EnhancedRichText mounted", { 
-      originalLength: html.length,
-      sanitizedLength: sanitizedHTML.length 
+      htmlLength: html.length 
     })
     
     if (!contentRef.current) {
@@ -268,7 +226,7 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
     <div
       ref={contentRef}
       className={className}
-      dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
+      dangerouslySetInnerHTML={{ __html: html }}
     />
   )
 }

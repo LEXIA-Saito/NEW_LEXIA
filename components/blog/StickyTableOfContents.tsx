@@ -92,20 +92,13 @@ export default function StickyTableOfContents({ contentHtml }: StickyTableOfCont
     return () => window.removeEventListener("scroll", handleScroll)
   }, [headings])
 
-  useEffect(() => {
-    console.log("🔶 StickyTableOfContents mounted", { headingsCount: headings.length })
-  }, [headings])
-
   if (headings.length === 0) {
-    console.log("⚠️ StickyTableOfContents: No headings found, returning null")
     return null
   }
 
   return (
     <aside 
       className="hidden lg:block w-64 shrink-0 sticky top-24 h-fit max-h-[calc(100vh-8rem)] overflow-y-auto"
-      data-testid="sticky-toc"
-      style={{ border: "2px solid blue" }}
     >
       <nav
         className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 p-4"

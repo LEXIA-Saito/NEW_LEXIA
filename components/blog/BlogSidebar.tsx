@@ -18,15 +18,9 @@ export default function BlogSidebar({ currentGenre, currentTag }: BlogSidebarPro
     { id: "other", label: "その他" },
   ]
 
-  useEffect(() => {
-    console.log("🔷 BlogSidebar mounted", { currentGenre, currentTag })
-  }, [currentGenre, currentTag])
-
   return (
     <aside 
       className="hidden lg:block w-64 shrink-0 sticky top-24 h-fit space-y-6"
-      data-testid="blog-sidebar"
-      style={{ border: "2px solid red" }}
     >
       {/* ブログホーム */}
       <nav className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 p-4">
