@@ -1,9 +1,7 @@
 "use client"
 
 import React from "react"
-import Image from "next/image"
 import { motion } from "framer-motion"
-import { footerIcons, getRandomSpinDuration } from "@/lib/footerIcons"
 
 export default function SectionIcon({
   index,
@@ -12,38 +10,15 @@ export default function SectionIcon({
   index: number
   className?: string
 }) {
-  const icon = footerIcons[index % footerIcons.length]
+  // Decorative icon removed
   return (
     <motion.span
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className={`inline-block align-middle ${className ?? ''}`}
+      className={`inline-block align-middle ${className ?? ""}`}
     >
-      <motion.span
-        animate={{ rotate: 360 }}
-        transition={{
-          repeat: Infinity,
-          duration: getRandomSpinDuration(),
-          ease: "linear",
-        }}
-        className="inline-block"
-      >
-        <Image
-          src={icon.light}
-          alt="section icon"
-          width={20}
-          height={20}
-          className="block dark:hidden"
-        />
-        <Image
-          src={icon.dark}
-          alt="section icon"
-          width={20}
-          height={20}
-          className="hidden dark:block"
-        />
-      </motion.span>
+      <span className="inline-block w-5 h-5 rounded-full bg-gradient-to-tr from-neutral-200 to-neutral-100 dark:from-neutral-700 dark:to-neutral-800 shadow-inner" />
     </motion.span>
   )
 }
