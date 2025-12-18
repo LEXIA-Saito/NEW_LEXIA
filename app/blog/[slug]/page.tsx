@@ -147,12 +147,12 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
             <Breadcrumbs dynamicLabels={{ [post.slug]: post.title }} />
             
             {/* 3カラムレイアウト: 左サイドバー、中央コンテンツ、右側目次 */}
-            <div className="flex gap-8 xl:gap-12">
+            <div className="flex gap-6 lg:gap-8">
               {/* 左サイドバー: ナビゲーション・ジャンル・タグ */}
               <BlogSidebar currentGenre={post.genre} />
               
               {/* 中央: メインコンテンツ */}
-              <div className="flex-1 min-w-0 max-w-3xl mx-auto xl:mx-0">
+              <div className="flex-1 min-w-0 max-w-3xl mx-auto lg:mx-0">
             <article>
               <header className="mb-12">
                 <Link
@@ -220,7 +220,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               {post.contentHtml ? (
                 <>
                   {/* 目次（モバイル・タブレット表示用） */}
-                  <div className="xl:hidden">
+                  <div className="lg:hidden">
                     <RichTextTableOfContents contentHtml={post.contentHtml} />
                   </div>
                   
