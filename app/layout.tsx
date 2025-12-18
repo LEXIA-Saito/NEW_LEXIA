@@ -8,6 +8,7 @@ import { Analytics } from "@vercel/analytics/next"
 import GoogleAnalytics from "@/components/google-analytics"
 import { Suspense } from "react"
 import Script from "next/script"
+import AdSenseLoader from "@/components/ads/AdSenseLoader"
 import "@/styles/globals.css"
 
 const organizationJsonLd = {
@@ -191,12 +192,7 @@ export default function RootLayout({
         </noscript>
       </head>
       <body className={`${notoSansJP.className} antialiased`}>
-        <Script
-          id="google-adsense"
-          strategy="afterInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8789901212664644"
-          crossOrigin="anonymous"
-        />
+        <AdSenseLoader />
         <Script
           id="website-jsonld"
           type="application/ld+json"

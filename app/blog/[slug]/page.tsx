@@ -11,6 +11,7 @@ import Image from "next/image"
 import A8Banner from "@/components/ads/A8Banner"
 import EnhancedRichText from "@/components/blog/EnhancedRichText"
 import RichTextTableOfContents from "@/components/blog/RichTextTableOfContents"
+import { sanitizeBlogHtml } from "@/lib/sanitize-blog-html"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
@@ -106,6 +107,8 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
       })
       notFound()
     }
+
+    const safeContentHtml = post.contentHtml ? sanitizeBlogHtml(post.contentHtml) : undefined
 
     const allPosts = await fetchBlogPosts()
     const sameGenrePosts = allPosts
@@ -208,14 +211,14 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               </header>
 
               {/* 優先度1: contentHtml（リッチエディタV2全文） */}
-              {post.contentHtml ? (
+              {safeContentHtml ? (
                 <>
                   {/* 目次 */}
-                  <RichTextTableOfContents contentHtml={post.contentHtml} />
+                  <RichTextTableOfContents contentHtml={safeContentHtml} />
                   
                   {/* 拡張リッチテキスト（アンカーリンク・シンタックスハイライト・コピーボタン付き） */}
                   <EnhancedRichText
-                    html={post.contentHtml}
+                    html={safeContentHtml}
                     className="prose prose-neutral max-w-none dark:prose-invert mt-12"
                   />
                 </>
@@ -473,14 +476,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
           </div>
         </main>
         <Footer />
-        
-        {/* Google AdSense */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8789901212664644"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
         
         {/* JSON-LD Structured Data */}
         <Script
