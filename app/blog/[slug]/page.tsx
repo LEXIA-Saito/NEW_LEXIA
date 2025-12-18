@@ -92,12 +92,20 @@ import { formatJapaneseDate } from "@/lib/utils"
 
 export default async function BlogArticlePage({ params }: BlogArticlePageProps) {
   try {
+    console.log("🟢 BlogArticlePage rendering", { slug: params.slug })
     const post = await fetchBlogPost(params.slug)
 
     if (!post) {
       console.error(`[BlogArticlePage] Post not found: ${params.slug}`)
       notFound()
     }
+    
+    console.log("🟢 Post fetched successfully", { 
+      title: post.title, 
+      genre: post.genre, 
+      hasContentHtml: !!post.contentHtml,
+      contentHtmlLength: post.contentHtml?.length || 0
+    })
 
     // データの整合性チェック
     if (!post.title || !post.slug || !post.date) {
@@ -147,12 +155,12 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
             <Breadcrumbs dynamicLabels={{ [post.slug]: post.title }} />
             
             {/* 3カラムレイアウト: 左サイドバー、中央コンテンツ、右側目次 */}
-            <div className="flex gap-6 lg:gap-8 items-start">
+            <div className="flex gap-6 lg:gap-8 items-start" style={{ border: "3px solid green" }}>
               {/* 左サイドバー: ナビゲーション・ジャンル・タグ */}
               <BlogSidebar currentGenre={post.genre} />
               
               {/* 中央: メインコンテンツ */}
-              <div className="flex-1 min-w-0 max-w-3xl mx-auto lg:mx-0">
+              <div className="flex-1 min-w-0 max-w-3xl mx-auto lg:mx-0" style={{ border: "2px solid orange" }}>
             <article>
               <header className="mb-12">
                 <Link
