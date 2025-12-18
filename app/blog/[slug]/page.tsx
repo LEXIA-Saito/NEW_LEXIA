@@ -11,6 +11,8 @@ import Image from "next/image"
 import A8Banner from "@/components/ads/A8Banner"
 import EnhancedRichText from "@/components/blog/EnhancedRichText"
 import RichTextTableOfContents from "@/components/blog/RichTextTableOfContents"
+import BlogSidebar from "@/components/blog/BlogSidebar"
+import StickyTableOfContents from "@/components/blog/StickyTableOfContents"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
@@ -141,8 +143,16 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     return (
       <>
         <main className="min-h-screen bg-white dark:bg-neutral-900">
-          <div className="container mx-auto px-4 pt-24 md:pt-32 pb-12 md:pb-16 max-w-3xl">
+          <div className="container mx-auto px-4 pt-24 md:pt-32 pb-12 md:pb-16">
             <Breadcrumbs dynamicLabels={{ [post.slug]: post.title }} />
+            
+            {/* 3カラムレイアウト: 左サイドバー、中央コンテンツ、右側目次 */}
+            <div className="flex gap-8 xl:gap-12">
+              {/* 左サイドバー: ナビゲーション・ジャンル・タグ */}
+              <BlogSidebar currentGenre={post.genre} />
+              
+              {/* 中央: メインコンテンツ */}
+              <div className="flex-1 min-w-0 max-w-3xl mx-auto xl:mx-0">
             <article>
               <header className="mb-12">
                 <Link
@@ -209,8 +219,10 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               {/* 優先度1: contentHtml（リッチエディタV2全文） */}
               {post.contentHtml ? (
                 <>
-                  {/* 目次 */}
-                  <RichTextTableOfContents contentHtml={post.contentHtml} />
+                  {/* 目次（モバイル・タブレット表示用） */}
+                  <div className="xl:hidden">
+                    <RichTextTableOfContents contentHtml={post.contentHtml} />
+                  </div>
                   
                   {/* 拡張リッチテキスト（アンカーリンク・シンタックスハイライト・コピーボタン付き） */}
                   <EnhancedRichText
@@ -468,6 +480,13 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 <span>←</span>
                 <span>記事一覧に戻る</span>
               </Link>
+            </div>
+              </div>
+              
+              {/* 右サイドバー: 目次（sticky表示） */}
+              {post.contentHtml && (
+                <StickyTableOfContents contentHtml={post.contentHtml} />
+              )}
             </div>
           </div>
         </main>
