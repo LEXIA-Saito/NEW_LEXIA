@@ -50,7 +50,7 @@ export default function RichTextTableOfContents({ contentHtml }: RichTextTableOf
 
   return (
     <nav
-      className="mb-8 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/60 p-6 sticky top-24"
+      className="mb-8 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/60 p-6"
       aria-label="目次"
     >
       <button
