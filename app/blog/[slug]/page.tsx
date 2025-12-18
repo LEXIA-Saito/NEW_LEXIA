@@ -499,6 +499,8 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
           </div>
         </main>
         <Footer />
+        {/* Temporarily disabled for debugging appendChild errors */}
+        {/*
         <Script
           async
           src="https://fundingchoicesmessages.google.com/i/pub-8789901212664644?ers=1"
@@ -511,6 +513,9 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
             __html: `(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();`,
           }}
         />
+        */}
+        {/* Temporarily disabled for debugging appendChild errors */}
+        {/*
         <Script
           id={`google-fc-closure-${post.slug}`}
           strategy="afterInteractive"
@@ -532,6 +537,7 @@ var u=this||self;function v(a,b){a:{var c=["CLOSURE_FLAGS"];for(var d=u,e=0;e<c.
 `,
           }}
         />
+        */}
         <Script
           id={`blog-article-${post.slug}`}
           type="application/ld+json"
