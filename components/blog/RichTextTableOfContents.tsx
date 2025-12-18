@@ -70,7 +70,7 @@ export default function RichTextTableOfContents({ contentHtml }: RichTextTableOf
         className="flex w-full items-center justify-between text-left"
         aria-expanded={isOpen}
       >
-        <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">📑 目次</h2>
+        <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">目次</h2>
         {isOpen ? (
           <ChevronUp className="h-5 w-5 text-neutral-500" />
         ) : (
