@@ -60,11 +60,11 @@ function main() {
 
   // 1. AdSenseLoader コンポーネントの確認
   log('📋 1. AdSense スクリプトローダーの確認', 'blue');
-  allChecks &= checkFile(
+  allChecks = allChecks && checkFile(
     path.join(__dirname, 'components/ads/AdSenseLoader.tsx'),
     'AdSenseLoader コンポーネント'
   );
-  allChecks &= checkFileContent(
+  allChecks = allChecks && checkFileContent(
     path.join(__dirname, 'components/ads/AdSenseLoader.tsx'),
     'ca-pub-8789901212664644',
     'Publisher ID (ca-pub-8789901212664644)'
@@ -73,11 +73,11 @@ function main() {
 
   // 2. AdSenseUnit コンポーネントの確認
   log('📋 2. AdSense 広告ユニットコンポーネントの確認', 'blue');
-  allChecks &= checkFile(
+  allChecks = allChecks && checkFile(
     path.join(__dirname, 'components/ads/AdSenseUnit.tsx'),
     'AdSenseUnit コンポーネント'
   );
-  allChecks &= checkFile(
+  allChecks = allChecks && checkFile(
     path.join(__dirname, 'components/ads/AdSenseAds.tsx'),
     'AdSenseAds プリセットコンポーネント'
   );
@@ -85,12 +85,12 @@ function main() {
 
   // 3. Layout の確認
   log('📋 3. Layout での AdSenseLoader 使用確認', 'blue');
-  allChecks &= checkFileContent(
+  allChecks = allChecks && checkFileContent(
     path.join(__dirname, 'app/layout.tsx'),
     'AdSenseLoader',
     'app/layout.tsx で AdSenseLoader をインポート'
   );
-  allChecks &= checkFileContent(
+  allChecks = allChecks && checkFileContent(
     path.join(__dirname, 'app/layout.tsx'),
     '<AdSenseLoader',
     'app/layout.tsx で AdSenseLoader を使用'
@@ -100,17 +100,17 @@ function main() {
   // 4. CSP 設定の確認
   log('📋 4. Content Security Policy (CSP) 設定の確認', 'blue');
   const nextConfigPath = path.join(__dirname, 'next.config.mjs');
-  allChecks &= checkFileContent(
+  allChecks = allChecks && checkFileContent(
     nextConfigPath,
     'pagead2.googlesyndication.com',
     'CSP: pagead2.googlesyndication.com の許可'
   );
-  allChecks &= checkFileContent(
+  allChecks = allChecks && checkFileContent(
     nextConfigPath,
     'googleads.g.doubleclick.net',
     'CSP: googleads.g.doubleclick.net の許可'
   );
-  allChecks &= checkFileContent(
+  allChecks = allChecks && checkFileContent(
     nextConfigPath,
     'adservice.google.com',
     'CSP: adservice.google.com の許可'
@@ -120,9 +120,9 @@ function main() {
   // 5. ads.txt の確認
   log('📋 5. ads.txt ファイルの確認', 'blue');
   const adsTxtPath = path.join(__dirname, 'public/ads.txt');
-  allChecks &= checkFile(adsTxtPath, 'ads.txt ファイル');
+  allChecks = allChecks && checkFile(adsTxtPath, 'ads.txt ファイル');
   if (fs.existsSync(adsTxtPath)) {
-    allChecks &= checkFileContent(
+    allChecks = allChecks && checkFileContent(
       adsTxtPath,
       'google.com, pub-8789901212664644',
       'ads.txt に正しい Publisher ID'

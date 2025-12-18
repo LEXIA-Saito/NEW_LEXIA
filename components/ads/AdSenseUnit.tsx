@@ -64,7 +64,7 @@ export function AdSenseUnit({
   className = "",
   testMode = false,
 }: AdSenseUnitProps) {
-  const adRef = useRef<HTMLModElement>(null)
+  const adRef = useRef<HTMLElement>(null)
   const hasInitialized = useRef(false)
 
   useEffect(() => {
@@ -135,7 +135,7 @@ export function AdSenseUnit({
       ref={adRef}
       className={`adsbygoogle ${className}`}
       style={style}
-      data-ad-client="ca-pub-8789901212664644"
+      data-ad-client="ca-pub-8789901212664644" // Publisher ID - matches AdSenseLoader.tsx
       data-ad-slot={adSlot}
       data-ad-format={adFormat}
       data-ad-layout={adLayout}
