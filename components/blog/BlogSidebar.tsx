@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 import Link from "next/link"
 import { Home, List, Tag, Calendar, TrendingUp } from "lucide-react"
 
@@ -18,8 +18,16 @@ export default function BlogSidebar({ currentGenre, currentTag }: BlogSidebarPro
     { id: "other", label: "その他" },
   ]
 
+  useEffect(() => {
+    console.log("🔷 BlogSidebar mounted", { currentGenre, currentTag })
+  }, [currentGenre, currentTag])
+
   return (
-    <aside className="hidden lg:block w-64 shrink-0 sticky top-24 h-fit space-y-6">
+    <aside 
+      className="hidden lg:block w-64 shrink-0 sticky top-24 h-fit space-y-6"
+      data-testid="blog-sidebar"
+      style={{ border: "2px solid red" }}
+    >
       {/* ブログホーム */}
       <nav className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 p-4">
         <h3 className="flex items-center gap-2 text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-3">

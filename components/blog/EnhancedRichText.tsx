@@ -11,16 +11,27 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
   const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!contentRef.current) return
+    console.log("📝 EnhancedRichText mounted", { htmlLength: html.length })
+    
+    if (!contentRef.current) {
+      console.warn("⚠️ EnhancedRichText: contentRef is null")
+      return
+    }
 
-    // 1. 見出しにIDとアンカーリンクを追加
-    addHeadingAnchors()
+    try {
+      // 1. 見出しにIDとアンカーリンクを追加
+      addHeadingAnchors()
 
-    // 2. コードブロックにコピーボタンとシンタックスハイライトを追加
-    enhanceCodeBlocks()
+      // 2. コードブロックにコピーボタンとシンタックスハイライトを追加
+      enhanceCodeBlocks()
 
-    // 3. ページロード時のハッシュスクロール
-    handleHashScroll()
+      // 3. ページロード時のハッシュスクロール
+      handleHashScroll()
+      
+      console.log("✅ EnhancedRichText: All enhancements applied successfully")
+    } catch (error) {
+      console.error("❌ EnhancedRichText: Error applying enhancements", error)
+    }
   }, [html])
 
   const addHeadingAnchors = () => {
