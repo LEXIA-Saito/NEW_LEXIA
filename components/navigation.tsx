@@ -15,24 +15,9 @@ import { trackEvent } from "@/lib/analytics"
 // Japanese navigation items
 export const navItems = [
   {
-    name: "事業概要",
-    href: "/company",
-    subItems: [
-      { name: "ミッション＆バリュー", href: "/company#mission" },
-      { name: "LEXIA Principles", href: "/company#principles" },
-      { name: "事業情報", href: "/company#data" },
-      { name: "LEXIAの強み", href: "/company#strengths" },
-      { name: "代表＆チーム", href: "/company#team" },
-      { name: "実績", href: "/company#achievements" },
-      { name: "FAQ", href: "/company#faq" },
-      { name: "アクセス", href: "/company#access" },
-    ],
-  },
-  {
-    name: "サービス一覧",
+    name: "サービス",
     href: "/services",
     subItems: [
-      { name: "制作工程", href: "/company/process" },
       { name: "WEB制作", href: "/services/web" },
       { name: "デザイン制作", href: "/services/design" },
       { name: "システム開発", href: "/services/system" },
@@ -41,12 +26,28 @@ export const navItems = [
     ],
   },
   {
-    name: "料金詳細",
+    name: "制作実績",
+    href: "/projects",
+    subItems: [],
+  },
+  {
+    name: "料金プラン",
     href: "/pricing",
     subItems: [{ name: "料金シミュレーション", href: "/pricing" }],
   },
-  { name: "制作実績", href: "/projects", subItems: [] },
-  { name: "LEXIA BLOG", href: "/blog", subItems: [] },
+  {
+    name: "会社情報",
+    href: "/company",
+    subItems: [
+      { name: "ミッション＆バリュー", href: "/company#mission" },
+      { name: "LEXIA Principles", href: "/company#principles" },
+      { name: "LEXIAの強み", href: "/company#strengths" },
+      { name: "実績", href: "/company#achievements" },
+      { name: "制作工程", href: "/company/process" },
+      { name: "FAQ", href: "/company#faq" },
+      { name: "アクセス", href: "/company#access" },
+    ],
+  },
   {
     name: "チーム",
     href: "/team",
@@ -56,6 +57,7 @@ export const navItems = [
       { name: "アシスタント", href: "/team/assistant" },
     ],
   },
+  { name: "ブログ", href: "/blog", subItems: [] },
   { name: "お問い合わせ", href: "/contact", subItems: [] },
 ]
 
@@ -275,6 +277,15 @@ export default function Navigation() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.8 }}>
               <ThemeToggle />
             </motion.div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.85 }}>
+              <Link
+                href="/contact"
+                className="inline-flex items-center rounded-full bg-neutral-900 dark:bg-neutral-100 px-4 py-2 text-sm font-medium text-white dark:text-neutral-900 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                onClick={() => trackEvent("contact_click", { location: "header", type: "cta" })}
+              >
+                制作の相談
+              </Link>
+            </motion.div>
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -441,18 +452,18 @@ export default function Navigation() {
                     height={24}
                     className="h-6 w-auto hidden dark:block"
                   />
-                  <Image
-                    src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
-                    alt="LEXIA text"
-                    width={120}
-                    height={24}
-                    className="h-6 w-auto ml-2 hidden dark:block"
-                  />
-                </div>
-                <p className="mt-4 text-base text-neutral-600 dark:text-neutral-400 text-center px-2">
-                  価値を伝わるカタチに
-                </p>
+                <Image
+                  src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
+                  alt="LEXIA text"
+                  width={120}
+                  height={24}
+                  className="h-6 w-auto ml-2 hidden dark:block"
+                />
               </div>
+              <p className="mt-4 text-base text-neutral-600 dark:text-neutral-400 text-center px-2">
+                代表・齋藤が直接ヒアリングし、成果に直結するサイトをつくります。
+              </p>
+            </div>
 
               {/* Navigation */}
               <ul className="space-y-8 text-center mt-8">
