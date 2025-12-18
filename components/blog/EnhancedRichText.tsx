@@ -11,14 +11,7 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
   const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    console.log("📝 EnhancedRichText mounted", { 
-      htmlLength: html.length 
-    })
-    
-    if (!contentRef.current) {
-      console.warn("⚠️ EnhancedRichText: contentRef is null")
-      return
-    }
+    if (!contentRef.current) return
 
     try {
       // 1. 見出しにIDとアンカーリンクを追加
@@ -29,12 +22,10 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
 
       // 3. ページロード時のハッシュスクロール
       handleHashScroll()
-      
-      console.log("✅ EnhancedRichText: All enhancements applied successfully")
     } catch (error) {
-      console.error("❌ EnhancedRichText: Error applying enhancements", error)
+      console.error("EnhancedRichText: Error applying enhancements", error)
     }
-  }, [sanitizedHTML])
+  }, [html])
 
   const addHeadingAnchors = () => {
     if (!contentRef.current) return
