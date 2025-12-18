@@ -31,7 +31,7 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
         aria-expanded={isOpen}
       >
         <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-          📑 目次
+          目次
         </h2>
         {isOpen ? (
           <ChevronUp className="h-5 w-5 text-neutral-500" />
