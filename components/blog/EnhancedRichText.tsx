@@ -23,7 +23,10 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
       // 3. テーブルをレスポンシブラッパーで囲む
       wrapTablesForResponsive()
 
-      // 4. ページロード時のハッシュスクロール
+      // 4. 埋め込みコンテンツを処理（Twitter/Instagram/Facebook）
+      processEmbeds()
+
+      // 5. ページロード時のハッシュスクロール
       handleHashScroll()
     } catch (error) {
       console.error("EnhancedRichText: Error applying enhancements", error)
@@ -235,6 +238,82 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
     }
   }
 
+  const processEmbeds = () => {
+    if (!contentRef.current) return
+
+    // Twitter埋め込みの処理
+    const twitterEmbeds = contentRef.current.querySelectorAll('iframe[src*="twitter.com"], iframe[src*="x.com"], blockquote[class*="twitter-tweet"]')
+    if (twitterEmbeds.length > 0) {
+      loadTwitterWidgets()
+    }
+
+    // Instagram埋め込みの処理
+    const instagramEmbeds = contentRef.current.querySelectorAll('iframe[src*="instagram.com"], blockquote[class*="instagram-media"]')
+    if (instagramEmbeds.length > 0) {
+      loadInstagramEmbeds()
+    }
+
+    // Facebook埋め込みの処理
+    const facebookEmbeds = contentRef.current.querySelectorAll('iframe[src*="facebook.com"]')
+    if (facebookEmbeds.length > 0) {
+      loadFacebookSDK()
+    }
+
+    // YouTube埋め込みにレスポンシブラッパーを追加
+    const youtubeIframes = contentRef.current.querySelectorAll('iframe[src*="youtube.com"], iframe[src*="youtube-nocookie.com"]')
+    youtubeIframes.forEach((iframe) => {
+      if (!iframe.parentElement?.classList.contains('youtube-embed-wrapper')) {
+        const wrapper = document.createElement('div')
+        wrapper.className = 'youtube-embed-wrapper relative w-full pt-[56.25%] my-6'
+        iframe.parentNode?.insertBefore(wrapper, iframe)
+        wrapper.appendChild(iframe)
+        iframe.classList.add('absolute', 'top-0', 'left-0', 'w-full', 'h-full', 'rounded-lg')
+      }
+    })
+  }
+
+  const loadTwitterWidgets = () => {
+    const scriptId = "twitter-widgets-script"
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script")
+      script.id = scriptId
+      script.async = true
+      script.src = "https://platform.twitter.com/widgets.js"
+      script.charset = "utf-8"
+      document.head.appendChild(script)
+    } else if (window.twttr?.widgets && contentRef.current) {
+      window.twttr.widgets.load(contentRef.current)
+    }
+  }
+
+  const loadInstagramEmbeds = () => {
+    const scriptId = "instagram-embed-script"
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script")
+      script.id = scriptId
+      script.async = true
+      script.src = "https://www.instagram.com/embed.js"
+      document.head.appendChild(script)
+    } else if (window.instgrm?.Embeds) {
+      window.instgrm.Embeds.process()
+    }
+  }
+
+  const loadFacebookSDK = () => {
+    const scriptId = "facebook-jssdk"
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script")
+      script.id = scriptId
+      script.async = true
+      script.defer = true
+      script.crossOrigin = "anonymous"
+      script.src = "https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v12.0"
+      document.head.appendChild(script)
+    } else if (window.FB?.XFBML && contentRef.current) {
+      window.FB.XFBML.parse(contentRef.current)
+    }
+  }
+
   // 文字列ベースの簡易サニタイズ（DOMParserを使わない）
   // MicroCMSから配信される可能性のある不正なscriptタグなどを削除して
   // ハイドレーションエラーやappendChildエラーを防ぐ
@@ -250,4 +329,25 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
       dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
     />
   )
+}
+
+// グローバル型定義の拡張
+declare global {
+  interface Window {
+    twttr?: {
+      widgets?: {
+        load: (element?: HTMLElement) => void
+      }
+    }
+    instgrm?: {
+      Embeds?: {
+        process: () => void
+      }
+    }
+    FB?: {
+      XFBML?: {
+        parse: (element?: HTMLElement) => void
+      }
+    }
+  }
 }
