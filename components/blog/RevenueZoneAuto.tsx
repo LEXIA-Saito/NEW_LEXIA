@@ -103,17 +103,18 @@ function ShareButtons({ title, url }: { title: string; url: string }) {
 }
 
 // 記事カード（コンパクト版）
+// ヒーロー画像は16:9のアスペクト比で統一
 function ArticleCardCompact({ post }: { post: RelatedPost }) {
   return (
     <article className="flex gap-4 p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/70 hover:shadow-md transition-shadow">
       {post.heroImage && (
-        <div className="relative w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg">
+        <div className="relative w-32 flex-shrink-0 overflow-hidden rounded-lg aspect-video">
           <Image
             src={post.heroImage}
             alt={post.title}
             fill
             className="object-cover"
-            sizes="96px"
+            sizes="128px"
           />
         </div>
       )}
