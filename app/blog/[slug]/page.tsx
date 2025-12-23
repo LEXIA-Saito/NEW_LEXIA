@@ -8,10 +8,12 @@ import Script from "next/script"
 import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
-import A8Banner from "@/components/ads/A8Banner"
 import EnhancedRichText from "@/components/blog/EnhancedRichText"
 import RichTextTableOfContents from "@/components/blog/RichTextTableOfContents"
 import { sanitizeBlogHtml } from "@/lib/sanitize-blog-html"
+// 収益最大化コンポーネント（自動広告対応版）
+import AdSenseAutoPlaceholder from "@/components/ads/AdSenseAutoPlaceholder"
+import RevenueZoneAuto from "@/components/blog/RevenueZoneAuto"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
@@ -25,7 +27,6 @@ export async function generateStaticParams() {
   try {
     const posts = await fetchBlogPosts()
     console.log(`[generateStaticParams] Generating params for ${posts.length} posts`)
-    // スラッグが有効な記事のみを返す（undefinedやnullを除外）
     const validParams = posts
       .filter((post) => post && post.slug && typeof post.slug === "string" && post.slug.trim().length > 0)
       .map((post) => ({ slug: post.slug }))
@@ -36,12 +37,10 @@ export async function generateStaticParams() {
     return validParams
   } catch (error) {
     console.error("Failed to generate static params for blog posts:", error)
-    // エラーが発生した場合は空配列を返す（フォールバック記事はISRで生成される）
     return []
   }
 }
 
-// 動的パラメータの処理を許可（ISR対応）
 export const dynamicParams = true
 
 export async function generateMetadata({ params }: BlogArticlePageProps): Promise<Metadata> {
@@ -98,7 +97,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
       notFound()
     }
 
-    // データの整合性チェック
     if (!post.title || !post.slug || !post.date) {
       console.error(`[BlogArticlePage] Invalid post data for slug: ${params.slug}`, {
         title: post.title,
@@ -111,14 +109,21 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     const safeContentHtml = post.contentHtml ? sanitizeBlogHtml(post.contentHtml) : undefined
 
     const allPosts = await fetchBlogPosts()
+    
+    // 同ジャンルの関連記事
     const sameGenrePosts = allPosts
       .filter((p) => p.slug !== post.slug && p.genre === post.genre)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 3)
+    
+    // 新着記事（関連記事と重複しないもの）
     const latestPosts = allPosts
       .filter((p) => p.slug !== post.slug && !sameGenrePosts.find((s) => s.slug === p.slug))
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 3)
+
+    // 記事URL（SNSシェア用）
+    const articleUrl = `${SITE_URL.replace(/\/$/, "")}/blog/${post.slug}`
 
     const jsonLd = {
       "@context": "https://schema.org",
@@ -136,7 +141,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
         "@type": "Organization",
         name: "LEXIA",
       },
-      url: `${SITE_URL.replace(/\/$/, "")}/blog/${post.slug}`,
+      url: articleUrl,
       image: post.heroImage,
       keywords: post.tags && post.tags.length > 0 ? post.tags.join(", ") : undefined,
     }
@@ -150,6 +155,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
             </div>
 
             <article className="max-w-3xl mx-auto">
+              {/* ===== 記事ヘッダー ===== */}
               <header className="mb-12">
                 <Link
                   href={`/blog?genre=${post.genre}#genre-filter`}
@@ -212,32 +218,34 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 ) : null}
               </header>
 
-              {/* 優先度1: contentHtml（リッチエディタV2全文） */}
+              {/* ===== 目次 ===== */}
+              {safeContentHtml && (
+                <RichTextTableOfContents contentHtml={safeContentHtml} />
+              )}
+
+              {/* ===== 自動広告用スペース: 記事上部（目次の後、本文の前） ===== */}
+              <AdSenseAutoPlaceholder
+                position="article-top"
+                minHeight={100}
+                className="my-8"
+              />
+
+              {/* ===== 記事本文 ===== */}
               {safeContentHtml ? (
-                <>
-                  {/* 目次 */}
-                  <RichTextTableOfContents contentHtml={safeContentHtml} />
-                  
-                  {/* 拡張リッチテキスト（アンカーリンク・シンタックスハイライト・コピーボタン付き） */}
-                  <EnhancedRichText
-                    html={safeContentHtml}
-                    className="prose prose-neutral max-w-none dark:prose-invert mt-12"
-                  />
-                </>
+                <EnhancedRichText
+                  html={safeContentHtml}
+                  className="prose prose-neutral max-w-none dark:prose-invert mt-8"
+                />
               ) : post.custom && post.custom.length > 0 ? (
-                /* 優先度2: custom（新スキーマ - 繰り返し本文ブロック） */
-                <div className="space-y-8 md:space-y-12 mt-12">
+                <div className="space-y-8 md:space-y-12 mt-8">
                   {post.custom.map((block, index) => (
                     <div key={index} className="space-y-6">
-                      {/* 本文テキスト（リッチエディタV2） */}
                       {block.body_text && (
                         <EnhancedRichText
                           html={block.body_text}
                           className="prose prose-neutral max-w-none dark:prose-invert"
                         />
                       )}
-
-                      {/* 本文中の画像 */}
                       {block.body_img && (
                         <div className="mt-6">
                           <Image
@@ -249,8 +257,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                           />
                         </div>
                       )}
-
-                      {/* 他記事導線（CTA） */}
                       {block.others_cta && (
                         <div className="mt-6 p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
                           <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2">関連記事</p>
@@ -266,8 +272,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                   ))}
                 </div>
               ) : (
-                /* 優先度3: sections（従来の構造化表示 - fallback用） */
-                <div className="space-y-8 md:space-y-12 text-neutral-800 dark:text-neutral-200">
+                <div className="space-y-8 md:space-y-12 text-neutral-800 dark:text-neutral-200 mt-8">
                   {(post.sections ?? []).map((section, index) => (
                     <section key={section.heading ?? index}>
                       {section.heading ? (
@@ -346,124 +351,44 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                             })()
                           : null}
                       </div>
+
+                      {/* 2番目のセクション後に自動広告用スペースを挿入 */}
+                      {index === 1 && (
+                        <AdSenseAutoPlaceholder
+                          position="article-mid"
+                          minHeight={150}
+                          className="my-8"
+                        />
+                      )}
                     </section>
                   ))}
                 </div>
               )}
 
-              {/* A8.net アフィリエイト広告 - 記事本文直後（最も効果的な配置） */}
-              <A8Banner />
+              {/* ===== 収益ゾーン（記事下） ===== */}
+              <RevenueZoneAuto
+                articleTitle={post.title}
+                articleUrl={articleUrl}
+                genre={post.genre}
+                genreLabel={getBlogGenreLabel(post.genre)}
+                relatedPosts={sameGenrePosts.map(p => ({
+                  slug: p.slug,
+                  title: p.title,
+                  description: p.description,
+                  heroImage: p.heroImage,
+                  date: p.date,
+                  readingTime: p.readingTime,
+                }))}
+                latestPosts={latestPosts.map(p => ({
+                  slug: p.slug,
+                  title: p.title,
+                  description: p.description,
+                  heroImage: p.heroImage,
+                  date: p.date,
+                  readingTime: p.readingTime,
+                }))}
+              />
 
-              {(sameGenrePosts.length > 0 || latestPosts.length > 0) && (
-                <section className="mt-16">
-                  <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">他の記事も見る</h2>
-                  {sameGenrePosts.length > 0 && (
-                    <div className="mt-6">
-                      <div className="flex items-end justify-between">
-                        <h3 className="text-lg font-medium text-neutral-800 dark:text-neutral-200">
-                          同じジャンルのおすすめ
-                        </h3>
-                        <Link
-                          href={`/blog?genre=${post.genre}#genre-filter`}
-                          className="text-sm text-neutral-700 underline-offset-4 hover:underline dark:text-neutral-300"
-                          aria-label={`${getBlogGenreLabel(post.genre)} の記事一覧へ`}
-                        >
-                          もっと見る →
-                        </Link>
-                      </div>
-                      <div className="mt-4 grid gap-6 md:grid-cols-3">
-                        {sameGenrePosts.map((p) => (
-                          <article
-                            key={p.slug}
-                            className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
-                          >
-                            <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
-                              <Image
-                                src={p.heroImage || PLACEHOLDER_IMG}
-                                alt={p.title}
-                                fill
-                                className="object-cover"
-                                sizes="(min-width: 768px) 30vw, 100vw"
-                              />
-                            </div>
-                            <h4 className="mt-3 text-base font-semibold text-neutral-900 dark:text-neutral-100">
-                              <Link href={`/blog/${p.slug}`}>{p.title}</Link>
-                            </h4>
-                            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
-                              <LinkifyText text={p.description} />
-                            </p>
-                            <div className="mt-3 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
-                              <span>{formatJapaneseDate(p.date)}</span>
-                              <Link
-                                href={`/blog/${p.slug}`}
-                                className="inline-flex items-center gap-1 font-medium text-neutral-900 dark:text-neutral-100"
-                                aria-label={`${p.title}を読む`}
-                              >
-                                続きを読む <span aria-hidden>→</span>
-                              </Link>
-                            </div>
-                          </article>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {latestPosts.length > 0 && (
-                    <div className="mt-12">
-                      <h3 className="text-lg font-medium text-neutral-800 dark:text-neutral-200">新着記事</h3>
-                      <div className="mt-4 grid gap-6 md:grid-cols-3">
-                        {latestPosts.map((p) => (
-                          <article
-                            key={p.slug}
-                            className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/70"
-                          >
-                            <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
-                              <Image
-                                src={p.heroImage || PLACEHOLDER_IMG}
-                                alt={p.title}
-                                fill
-                                className="object-cover"
-                                sizes="(min-width: 768px) 30vw, 100vw"
-                              />
-                            </div>
-                            <h4 className="mt-3 text-base font-semibold text-neutral-900 dark:text-neutral-100">
-                              <Link href={`/blog/${p.slug}`}>{p.title}</Link>
-                            </h4>
-                            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
-                              <LinkifyText text={p.description} />
-                            </p>
-                            <div className="mt-3 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
-                              <span>{formatJapaneseDate(p.date)}</span>
-                              <Link
-                                href={`/blog/${p.slug}`}
-                                className="inline-flex items-center gap-1 font-medium text-neutral-900 dark:text-neutral-100"
-                                aria-label={`${p.title}を読む`}
-                              >
-                                続きを読む <span aria-hidden>→</span>
-                              </Link>
-                            </div>
-                          </article>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </section>
-              )}
-
-              <footer className="mt-16 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300">
-                <p>
-                  このブログの運営はホームページ制作やデザイン制作、動画制作などを行うWEB制作事業LEXIA（レキシア）が行っています。
-                </p>
-                <p className="mt-4">
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2 text-white dark:bg-neutral-100 dark:text-neutral-900"
-                  >
-                    制作の相談をする
-                    <span aria-hidden="true">→</span>
-                  </Link>
-                </p>
-              </footer>
             </article>
 
             <div className="mt-16 text-center">
@@ -479,7 +404,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
         </main>
         <Footer />
         
-        {/* JSON-LD Structured Data */}
         <Script
           id={`blog-article-${post.slug}`}
           type="application/ld+json"
