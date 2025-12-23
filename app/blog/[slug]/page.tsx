@@ -11,8 +11,7 @@ import Image from "next/image"
 import EnhancedRichText from "@/components/blog/EnhancedRichText"
 import RichTextTableOfContents from "@/components/blog/RichTextTableOfContents"
 import { sanitizeBlogHtml } from "@/lib/sanitize-blog-html"
-// 収益最大化コンポーネント（自動広告対応版）
-import AdSenseAutoPlaceholder from "@/components/ads/AdSenseAutoPlaceholder"
+// 回遊促進コンポーネント
 import RevenueZoneAuto from "@/components/blog/RevenueZoneAuto"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
@@ -223,13 +222,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 <RichTextTableOfContents contentHtml={safeContentHtml} />
               )}
 
-              {/* ===== 自動広告用スペース: 記事上部（目次の後、本文の前） ===== */}
-              <AdSenseAutoPlaceholder
-                position="article-top"
-                minHeight={100}
-                className="my-8"
-              />
-
               {/* ===== 記事本文 ===== */}
               {safeContentHtml ? (
                 <EnhancedRichText
@@ -352,14 +344,6 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                           : null}
                       </div>
 
-                      {/* 2番目のセクション後に自動広告用スペースを挿入 */}
-                      {index === 1 && (
-                        <AdSenseAutoPlaceholder
-                          position="article-mid"
-                          minHeight={150}
-                          className="my-8"
-                        />
-                      )}
                     </section>
                   ))}
                 </div>

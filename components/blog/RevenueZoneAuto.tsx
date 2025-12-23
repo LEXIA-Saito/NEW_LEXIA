@@ -4,14 +4,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Share2, Twitter, Facebook, Copy, Check } from 'lucide-react'
 import { useState } from 'react'
-import AdSenseAutoPlaceholder from '@/components/ads/AdSenseAutoPlaceholder'
-
 /**
- * 収益ゾーンコンポーネント（自動広告対応版）
+ * 回遊促進ゾーンコンポーネント
  * 
- * 記事読了後の最重要収益エリア
- * 自動広告が配置されやすいスペースを確保しつつ、
- * CTA → 広告スペース → 回遊 の順番を維持
+ * 記事読了後の回遊促進エリア
+ * 感謝CTA → SNSシェア → 関連記事 → 新着記事 の順番
+ * 
+ * ※ Google自動広告はコンテンツの区切りを自動検出し最適な位置に広告を配置するため、
+ *   広告スペースの事前確保は不要です
  */
 
 interface RelatedPost {
@@ -163,14 +163,7 @@ export default function RevenueZoneAuto({
         <ShareButtons title={articleTitle} url={articleUrl} />
       </div>
 
-      {/* 3. 自動広告用スペース（メイン） */}
-      <AdSenseAutoPlaceholder
-        position="article-bottom"
-        minHeight={250}
-        className="mx-auto max-w-xl"
-      />
-
-      {/* 4. 関連記事（同ジャンル優先） */}
+      {/* 3. 関連記事（同ジャンル優先） */}
       {relatedPosts.length > 0 && (
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4">
@@ -193,13 +186,7 @@ export default function RevenueZoneAuto({
         </div>
       )}
 
-      {/* 5. 自動広告用スペース（回遊前） */}
-      <AdSenseAutoPlaceholder
-        position="article-mid"
-        minHeight={150}
-      />
-
-      {/* 6. 新着記事（回遊促進） */}
+      {/* 4. 新着記事（回遊促進） */}
       {latestPosts.length > 0 && (
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
