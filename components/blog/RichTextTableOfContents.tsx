@@ -80,29 +80,41 @@ export default function RichTextTableOfContents({ contentHtml }: RichTextTableOf
 
       {isOpen && (
         <ol className="mt-4 space-y-2 text-sm">
-          {headings.map((heading, index) => (
-            <li
-              key={heading.id}
-              style={{ paddingLeft: `${(heading.level - 1) * 0.75}rem` }}
-            >
-              <a
-                href={`#${heading.id}`}
-                className="block py-1 text-neutral-600 transition-colors duration-200 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
-                onClick={(e) => {
-                  e.preventDefault()
-                  const element = document.getElementById(heading.id)
-                  if (element) {
-                    element.scrollIntoView({ behavior: "smooth", block: "start" })
-                    // URLを更新
-                    window.history.pushState(null, "", `#${heading.id}`)
-                  }
-                }}
-              >
-                {heading.level === 2 ? `${index + 1}. ` : ""}
-                {heading.text}
-              </a>
-            </li>
-          ))}
+          {(() => {
+            // h2の見出しだけに連番を振るため、h2のカウンターを管理
+            let h2Counter = 0
+            return headings.map((heading) => {
+              // h2の場合のみカウンターをインクリメント
+              if (heading.level === 2) {
+                h2Counter++
+              }
+              const displayNumber = heading.level === 2 ? `${h2Counter}. ` : ""
+              
+              return (
+                <li
+                  key={heading.id}
+                  style={{ paddingLeft: `${(heading.level - 2) * 1}rem` }}
+                >
+                  <a
+                    href={`#${heading.id}`}
+                    className="block py-1 text-neutral-600 transition-colors duration-200 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      const element = document.getElementById(heading.id)
+                      if (element) {
+                        element.scrollIntoView({ behavior: "smooth", block: "start" })
+                        // URLを更新
+                        window.history.pushState(null, "", `#${heading.id}`)
+                      }
+                    }}
+                  >
+                    {displayNumber}
+                    {heading.text}
+                  </a>
+                </li>
+              )
+            })
+          })()}
         </ol>
       )}
     </nav>
