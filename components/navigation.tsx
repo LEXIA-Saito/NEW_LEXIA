@@ -118,7 +118,7 @@ export default function Navigation() {
       lastIsScrolled = window.scrollY > 10
 
       // Determine active section based on scroll position
-      const sections = ["contact", "about", "team", "work", "pricing", "services", "hero"]
+      const sections = ["contact", "about", "team", "work", "pricing", "lexia-tools", "services", "blog", "hero"]
       for (const section of sections) {
         const element = document.getElementById(section)
         if (element) {
