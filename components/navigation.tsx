@@ -45,7 +45,7 @@ export const navItems = [
     ],
   },
   {
-    name: "会社情報",
+    name: "事業情報",
     href: "/company",
     subItems: [
       { name: "ミッション＆バリュー", href: "/company#mission" },
@@ -244,7 +244,7 @@ export default function Navigation() {
           </Link>
 
           <nav className="hidden md:flex flex-1 justify-center">
-            <ul className="flex items-center space-x-8">
+            <ul className="flex items-center justify-center gap-1 max-w-4xl mx-auto w-full">
               {displayItems.map((item, index) => {
                 const isCurrentPath = pathname === item.href || pathname?.startsWith(`${item.href}/`)
                 const isActive = activeSection === getSectionFromHref(item.href) || isCurrentPath
@@ -255,10 +255,11 @@ export default function Navigation() {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: 0.1 * index }}
+                    className="flex-1 flex justify-center"
                   >
                     <Link
                       href={item.href}
-                      className={`text-xs sm:text-sm transition-colors relative ${
+                      className={`text-xs sm:text-sm transition-colors relative text-center px-2 ${
                         isActive
                           ? "text-neutral-900 dark:text-neutral-100"
                           : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
