@@ -1,6 +1,7 @@
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
 import { fetchBlogPost, fetchBlogPosts, getBlogGenreLabel } from "@/lib/blog-posts"
+import { formatJapaneseDate } from "@/lib/utils"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import { notFound } from "next/navigation"
@@ -11,10 +12,7 @@ import Image from "next/image"
 import EnhancedRichText from "@/components/blog/EnhancedRichText"
 import RichTextTableOfContents from "@/components/blog/RichTextTableOfContents"
 import { sanitizeBlogHtml } from "@/lib/sanitize-blog-html"
-// 回遊促進コンポーネント
 import RevenueZoneAuto from "@/components/blog/RevenueZoneAuto"
-
-const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
 interface BlogArticlePageProps {
   params: {
@@ -25,14 +23,14 @@ interface BlogArticlePageProps {
 export async function generateStaticParams() {
   try {
     const posts = await fetchBlogPosts()
-    console.log(`[generateStaticParams] Generating params for ${posts.length} posts`)
     const validParams = posts
       .filter((post) => post && post.slug && typeof post.slug === "string" && post.slug.trim().length > 0)
       .map((post) => ({ slug: post.slug }))
-    console.log(
-      `[generateStaticParams] Valid slugs:`,
-      validParams.map((p) => p.slug),
-    )
+    
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[generateStaticParams] Generated ${validParams.length} blog post params`)
+    }
+    
     return validParams
   } catch (error) {
     console.error("Failed to generate static params for blog posts:", error)
@@ -47,10 +45,15 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
   if (!post) {
     return {
       title: "記事が見つかりません | LEXIA BLOG",
+      robots: {
+        index: false,
+        follow: false,
+      },
     }
   }
 
   const canonical = `${SITE_URL.replace(/\/$/, "")}/blog/${post.slug}`
+  const imageUrl = post.heroImage || `${SITE_URL}/images/og-default.png`
 
   return {
     title: `${post.title} | LEXIA BLOG`,
@@ -64,44 +67,60 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
       type: "article",
       url: canonical,
       publishedTime: post.date,
-      images: post.heroImage
-        ? [
-            {
-              url: post.heroImage,
-              alt: (post as any).heroImageAlt ?? post.title,
-            },
-          ]
-        : undefined,
+      modifiedTime: post.latest_update || post.date,
+      authors: ["齋藤雅人"],
+      tags: post.tags,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 675,
+          alt: (post as any).heroImageAlt || post.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${post.title} | LEXIA BLOG`,
       description: post.description,
-      images: post.heroImage ? [post.heroImage] : undefined,
+      images: [imageUrl],
+      creator: "@LEXIA_Tech",
     },
-    keywords: post.tags && post.tags.length > 0 ? post.tags : undefined,
-  }
+    keywords: post.tags && post.tags.length > 0 ? post.tags.join(", ") : undefined,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
 }
 
 export const revalidate = 60
-
-import { formatJapaneseDate } from "@/lib/utils"
 
 export default async function BlogArticlePage({ params }: BlogArticlePageProps) {
   try {
     const post = await fetchBlogPost(params.slug)
 
     if (!post) {
-      console.error(`[BlogArticlePage] Post not found: ${params.slug}`)
+      if (process.env.NODE_ENV === 'development') {
+        console.error(`[BlogArticlePage] Post not found: ${params.slug}`)
+      }
       notFound()
     }
 
     if (!post.title || !post.slug || !post.date) {
-      console.error(`[BlogArticlePage] Invalid post data for slug: ${params.slug}`, {
-        title: post.title,
-        slug: post.slug,
-        date: post.date,
-      })
+      if (process.env.NODE_ENV === 'development') {
+        console.error(`[BlogArticlePage] Invalid post data for slug: ${params.slug}`, {
+          title: post.title,
+          slug: post.slug,
+          date: post.date,
+        })
+      }
       notFound()
     }
 
@@ -130,19 +149,39 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
       headline: post.title,
       description: post.description,
       datePublished: post.date,
+      dateModified: post.latest_update || post.date,
       articleSection: getBlogGenreLabel(post.genre),
+      wordCount: post.contentHtml 
+        ? post.contentHtml.replace(/<[^>]*>/g, '').length 
+        : post.sections?.reduce((acc, s) => acc + (s.body?.join(' ').length || 0), 0) || 0,
       author: {
         "@type": "Person",
         name: "齋藤雅人",
         url: `${SITE_URL.replace(/\/$/, "")}/team/masato-saito`,
+        jobTitle: "Web Developer & Designer",
       },
       publisher: {
         "@type": "Organization",
         name: "LEXIA",
+        url: SITE_URL,
+        logo: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/logo.png`,
+        },
+      },
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": articleUrl,
       },
       url: articleUrl,
-      image: post.heroImage,
+      image: post.heroImage ? {
+        "@type": "ImageObject",
+        url: post.heroImage,
+        width: 1200,
+        height: 675,
+      } : undefined,
       keywords: post.tags && post.tags.length > 0 ? post.tags.join(", ") : undefined,
+      inLanguage: "ja-JP",
     }
 
     return (
@@ -397,7 +436,9 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
       </>
     )
   } catch (error) {
-    console.error(`[BlogArticlePage] Error rendering page for slug: ${params.slug}`, error)
+    if (process.env.NODE_ENV === 'development') {
+      console.error(`[BlogArticlePage] Error rendering page for slug: ${params.slug}`, error)
+    }
     notFound()
   }
 }
