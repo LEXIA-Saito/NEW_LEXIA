@@ -1,7 +1,7 @@
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
 import { fetchBlogPost, fetchBlogPosts, getBlogGenreLabel } from "@/lib/blog-posts"
-import { formatJapaneseDate } from "@/lib/utils"
+import { formatJapaneseDate, calculateWordCount } from "@/lib/utils"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import { notFound } from "next/navigation"
@@ -151,9 +151,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
       datePublished: post.date,
       dateModified: post.latest_update || post.date,
       articleSection: getBlogGenreLabel(post.genre),
-      wordCount: post.contentHtml 
-        ? post.contentHtml.replace(/<[^>]*>/g, '').length 
-        : post.sections?.reduce((acc, s) => acc + (s.body?.join(' ').length || 0), 0) || 0,
+      wordCount: calculateWordCount(post),
       author: {
         "@type": "Person",
         name: "齋藤雅人",

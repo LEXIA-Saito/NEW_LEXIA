@@ -206,7 +206,17 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
 
       codeElement.innerHTML = highlighted
     } else if (["bash", "sh", "shell", "zsh", "terminal"].includes(language)) {
-      const commands = /^(\s*)(sudo|npm|yarn|pnpm|git|docker|kubectl|cd|ls|mkdir|rm|cp|mv|cat|echo|curl|wget|grep|sed|awk|chmod|chown|find|ps|kill|top|htop|vim|nano|code|brew|apt|yum|dnf|pacman|systemctl|service|export|source|alias|[\w-]+)/gm
+      // Common shell commands to highlight
+      const commonCommands = [
+        "sudo", "npm", "yarn", "pnpm", "git", "docker", "kubectl",
+        "cd", "ls", "mkdir", "rm", "cp", "mv", "cat", "echo",
+        "curl", "wget", "grep", "sed", "awk", "chmod", "chown",
+        "find", "ps", "kill", "top", "htop", "vim", "nano",
+        "code", "brew", "apt", "yum", "dnf", "pacman",
+        "systemctl", "service", "export", "source", "alias"
+      ]
+      const commandPattern = `^(\\s*)(${commonCommands.join("|")}|[\\w-]+)`
+      const commands = new RegExp(commandPattern, "gm")
       const flags = /(\s-{1,2}[\w-]+)/g
       const strings = /("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')/g
       const comments = /(#.*$)/gm
@@ -351,7 +361,7 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
       const bold = /(\*\*|__)(.*?)\1/g
       const italic = /(\*|_)(.*?)\1/g
       const links = /(\[.*?\]\(.*?\))/g
-      const code = /(`[^`]+`)/g
+      const codeInline = /(`[^`]+`)/g
       const lists = /^(\s*[-*+]\s+)/gm
 
       let highlighted = escapeHtml(code)
@@ -361,7 +371,7 @@ export default function EnhancedRichText({ html, className = "" }: EnhancedRichT
         .replace(bold, '$1<span class="token-bold">$2</span>$1')
         .replace(italic, '$1<span class="token-italic">$2</span>$1')
         .replace(links, '<span class="token-link">$1</span>')
-        .replace(code, '<span class="token-code">$1</span>')
+        .replace(codeInline, '<span class="token-code">$1</span>')
         .replace(lists, '<span class="token-list">$1</span>')
 
       codeElement.innerHTML = highlighted
