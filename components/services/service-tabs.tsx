@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 import Image from "next/image"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Monitor, Smartphone, Camera, Mail, FileText, ShoppingCart, Globe, MousePointerClick } from "lucide-react"
+import { Monitor, Smartphone, Camera, Mail, FileText, ShoppingCart, Globe, MousePointerClick, Smile } from "lucide-react"
 
 type ServiceKey = "web" | "design" | "system" | "movie" | "pc"
 
@@ -251,7 +251,8 @@ const servicesData: ServiceData[] = [
                 スマホは使えるけどパソコンは苦手な方
               </li>
               <li className="flex items-start gap-3">
-                <span className="mt-1 h-5 w-5 text-neutral-500">😊</span>趣味や生活に役立てたいシニアの方
+                <Smile className="mt-1 h-5 w-5 text-neutral-500" aria-hidden />
+                趣味や生活に役立てたいシニアの方
               </li>
             </ul>
           </div>

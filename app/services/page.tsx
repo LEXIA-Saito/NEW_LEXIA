@@ -8,18 +8,18 @@ import Image from "next/image"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Suspense, useEffect, useState } from "react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Monitor, Smartphone, Camera, Mail, FileText, ShoppingCart, Globe, MousePointerClick } from "lucide-react"
+import { Monitor, Smartphone, Camera, Mail, FileText, ShoppingCart, Globe, MousePointerClick, Palette, Settings, Film, Smile } from "lucide-react"
 import OurProcess from "@/components/sections/OurProcess"
 import Script from "next/script"
 import { SITE_URL } from "@/lib/config"
 
 // Service tab definitions
 const SERVICE_TABS = [
-  { id: "web", label: "WEB制作", icon: "🌐" },
-  { id: "design", label: "デザイン", icon: "🎨" },
-  { id: "system", label: "システム開発", icon: "⚙️" },
-  { id: "movie", label: "動画制作", icon: "🎬" },
-  { id: "pc", label: "PC教室", icon: "🖥️" },
+  { id: "web", label: "WEB制作", Icon: Globe },
+  { id: "design", label: "デザイン", Icon: Palette },
+  { id: "system", label: "システム開発", Icon: Settings },
+  { id: "movie", label: "動画制作", Icon: Film },
+  { id: "pc", label: "PC教室", Icon: Monitor },
 ] as const
 
 type ServiceId = (typeof SERVICE_TABS)[number]["id"]
@@ -258,21 +258,24 @@ function ServicesContent() {
 
           {/* Tab Navigation */}
           <div className="flex flex-wrap justify-center gap-2 mb-8 border-b border-neutral-200 dark:border-neutral-800 pb-4">
-            {SERVICE_TABS.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => handleTabChange(tab.id)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  activeTab === tab.id
-                    ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900"
-                    : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
-                }`}
-                aria-pressed={activeTab === tab.id}
-              >
-                <span className="mr-1">{tab.icon}</span>
-                {tab.label}
-              </button>
-            ))}
+            {SERVICE_TABS.map((tab) => {
+              const IconComponent = tab.Icon
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => handleTabChange(tab.id)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+                    activeTab === tab.id
+                      ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900"
+                      : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                  }`}
+                  aria-pressed={activeTab === tab.id}
+                >
+                  <IconComponent className="h-4 w-4" />
+                  {tab.label}
+                </button>
+              )
+            })}
           </div>
 
           {/* Tab Content */}
@@ -677,7 +680,8 @@ function PcServiceContent() {
             スマホは使えるけどパソコンは苦手な方
           </li>
           <li className="flex items-start gap-3">
-            <span className="mt-1 h-5 w-5 text-neutral-500">😊</span>趣味や生活に役立てたいシニアの方
+            <Smile className="mt-1 h-5 w-5 text-neutral-500" />
+            趣味や生活に役立てたいシニアの方
           </li>
         </ul>
       </section>

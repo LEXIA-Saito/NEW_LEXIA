@@ -259,16 +259,7 @@ export default function CompanyClient() {
             <LexiaLogoParticles />
           </div>
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-white animate-bounce">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              aria-label="scroll down"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m0 0l-6-6m6 6l6-6" />
-            </svg>
+            <ChevronDown className="w-6 h-6" aria-label="scroll down" />
           </div>
         </section>
 
