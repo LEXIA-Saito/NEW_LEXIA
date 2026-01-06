@@ -19,9 +19,7 @@ const CompanyInfoTable: FC = () => {
           <li>動画制作</li>
           <li>デザイン制作</li>
           <li>システム開発</li>
-          <li>WEBアプリ開発</li>
           <li>PC教室</li>
-          <li>DX支援</li>
         </ul>
       )
     },

@@ -16,9 +16,9 @@ import { SITE_URL } from "@/lib/config"
 // Service tab definitions
 const SERVICE_TABS = [
   { id: "web", label: "WEB制作", Icon: Globe },
-  { id: "design", label: "デザイン", Icon: Palette },
-  { id: "system", label: "システム開発", Icon: Settings },
   { id: "movie", label: "動画制作", Icon: Film },
+  { id: "design", label: "デザイン制作", Icon: Palette },
+  { id: "system", label: "システム開発", Icon: Settings },
   { id: "pc", label: "PC教室", Icon: Monitor },
 ] as const
 
@@ -50,7 +50,7 @@ const servicesSchemaData = {
       item: {
         "@type": "Service",
         "@id": `${SITE_URL}/services#design`,
-        name: "デザイン各種",
+        name: "デザイン制作",
         description: "名刺デザインやチラシデザインなど、各種印刷物の制作も承ります。",
         provider: {
           "@type": "Organization",
@@ -406,7 +406,7 @@ function DesignServiceContent() {
   return (
     <div className="space-y-12">
       <div className="text-center">
-        <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900 dark:text-neutral-100">デザイン各種</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900 dark:text-neutral-100">デザイン制作</h2>
         <p className="text-neutral-700 dark:text-neutral-300 mt-4 max-w-2xl mx-auto">
           名刺デザインやチラシデザインなど、各種印刷物の制作も承ります。ブランド全体のトーンを統一した形で一括制作が可能です。
         </p>

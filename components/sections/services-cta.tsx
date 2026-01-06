@@ -15,9 +15,9 @@ export default function ServicesCTA() {
 
   const services = [
     { href: "/services/web", label: "WEB制作" },
-    { href: "/services/design", label: "デザイン各種" },
-    { href: "/services/system", label: "システム開発" },
     { href: "/services/movie", label: "動画制作" },
+    { href: "/services/design", label: "デザイン制作" },
+    { href: "/services/system", label: "システム開発" },
     { href: "/services/pc", label: "PC教室" },
   ]
 
