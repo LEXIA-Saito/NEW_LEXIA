@@ -58,7 +58,7 @@ export default function LexiaTools({ id = "lexia-tools", className = "" }: Lexia
     >
       <div className="text-center mb-16">
         <h2 id={`${id}-title`} className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4">
-          LEXIAが開発したツール
+          自社開発ツール
         </h2>
         <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
           日々の業務効率化のために開発した自社ツールを無料で公開しています
