@@ -21,7 +21,7 @@ export type MicroCMSProject = {
   solutions_design?: string
   solutions_tech?: string
   solutions_growth?: string
-  kpi?: any[] // Repeater field
+
   testimonial_text?: string
   testimonial_author?: string
   testimonial_rating?: number
@@ -63,20 +63,6 @@ function convertMicroCMSProject(post: MicroCMSProject): Project {
     images.unshift(image)
   }
 
-  // Extract KPI
-  const kpi: NonNullable<Project["kpi"]> = []
-  if (post.kpi && Array.isArray(post.kpi)) {
-    for (const item of post.kpi) {
-      if (item.metric && item.value && item.improvement) {
-        kpi.push({
-          metric: item.metric,
-          value: item.value,
-          improvement: item.improvement,
-          icon: item.icon,
-        })
-      }
-    }
-  }
 
   // Extract testimonial
   let testimonial: Project["testimonial"] = undefined
@@ -114,7 +100,7 @@ function convertMicroCMSProject(post: MicroCMSProject): Project {
     services: parseCommaSeparated(post.services).length > 0 ? parseCommaSeparated(post.services) : undefined,
     challenges: parseCommaSeparated(post.challenges).length > 0 ? parseCommaSeparated(post.challenges) : undefined,
     solutions,
-    kpi: kpi.length > 0 ? kpi : undefined,
+
     testimonial,
     techStack: parseCommaSeparated(post.techStack).length > 0 ? parseCommaSeparated(post.techStack) : undefined,
     url: post.url,

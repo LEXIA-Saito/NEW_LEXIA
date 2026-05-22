@@ -20,12 +20,7 @@ export interface Project {
     tech: string[]
     growth: string[]
   }
-  kpi?: {
-    metric: string
-    value: string
-    improvement: string
-    icon?: string
-  }[]
+
   testimonial?: {
     text: string
     author: string
@@ -66,11 +61,7 @@ export const projectsData: Project[] = [
       tech: ["Elasticsearch導入", "PWA対応", "リアルタイム同期"],
       growth: ["SEO対策", "物件アラート機能", "SNSシェア機能"],
     },
-    kpi: [
-      { metric: "検索速度", value: "0.3秒", improvement: "検索レスポンス向上", icon: "⚡" },
-      { metric: "モバイル利用", value: "+180%", improvement: "スマホ利用者増加", icon: "📱" },
-      { metric: "成約率", value: "+45%", improvement: "物件成約率向上", icon: "🏠" },
-    ],
+
     testimonial: {
       text: "検索機能が格段に向上し、お客様から「使いやすい」との声を多数いただいています。成約率も大幅に改善しました。",
       author: "JA.life 営業マネージャー",
@@ -107,11 +98,7 @@ export const projectsData: Project[] = [
       tech: ["高速表示の実現", "モバイル最適化", "問い合わせフォーム改善"],
       growth: ["施工事例の充実", "お客様の声の掲載", "SEO対策"],
     },
-    kpi: [
-      { metric: "問い合わせ", value: "+250%", improvement: "設計相談増加", icon: "🏗️" },
-      { metric: "滞在時間", value: "+400%", improvement: "サイト滞在時間延長", icon: "⏰" },
-      { metric: "新規顧客", value: "+180%", improvement: "若い世代からの相談増", icon: "👥" },
-    ],
+
     testimonial: {
       text: "私たちの技術と想いを的確に表現していただき、お客様からの信頼度が格段に向上しました。手刻みの価値を多くの方に伝えることができています。",
       author: "みの建築 代表",
@@ -148,11 +135,7 @@ export const projectsData: Project[] = [
       tech: ["Coubic予約システム連携", "レスポンシブ対応", "アクセシビリティ最適化"],
       growth: ["24時間予約受付体制", "Google マイビジネス最適化", "リピーター向け機能"],
     },
-    kpi: [
-      { metric: "予約数", value: "+300%", improvement: "月間予約数向上", icon: "📅" },
-      { metric: "高齢者利用率", value: "+65%", improvement: "60歳以上の利用者増加", icon: "👴" },
-      { metric: "リピート率", value: "+25%", improvement: "顧客リピート率向上", icon: "🔄" },
-    ],
+
     testimonial: {
       text: "高齢の患者様から「予約が簡単になった」と大変好評です。大きな文字とボタンで、スマートフォンでも迷わず予約できるようになりました。",
       author: "中村健康院 院長",
@@ -189,11 +172,7 @@ export const projectsData: Project[] = [
       tech: ["Next.js による高速表示", "レスポンシブ対応", "SEO最適化"],
       growth: ["問い合わせフォーム改善", "事例紹介の充実", "信頼性向上施策"],
     },
-    kpi: [
-      { metric: "PV増加", value: "+150%", improvement: "月間ページビュー向上", icon: "📈" },
-      { metric: "離脱率", value: "-40%", improvement: "ユーザー体験改善", icon: "⬇️" },
-      { metric: "問い合わせ", value: "+60件/月", improvement: "コンバージョン向上", icon: "📞" },
-    ],
+
     testimonial: {
       text: "LEXIAさんのおかげで、私たちの想いが形になりました。お客様からの反応も格段に良くなり、売上も向上しています。",
       author: "朝岡パック 代表取締役",
@@ -231,11 +210,7 @@ export const projectsData: Project[] = [
       tech: ["CMS導入による更新性向上", "求人情報の動的表示", "物件検索機能"],
       growth: ["SEO対策による集客向上", "SNS連携", "メルマガ配信システム"],
     },
-    kpi: [
-      { metric: "応募数", value: "+200%", improvement: "求人応募数向上", icon: "👥" },
-      { metric: "滞在時間", value: "+85%", improvement: "サイト滞在時間延長", icon: "⏱️" },
-      { metric: "資料請求", value: "+120%", improvement: "不動産資料請求増加", icon: "📋" },
-    ],
+
     testimonial: {
       text: "2つの事業を分かりやすく表現していただき、それぞれのターゲットに効果的にアプローチできるようになりました。",
       author: "中部開発株式会社 営業部長",
@@ -270,11 +245,7 @@ export const projectsData: Project[] = [
       tech: ["印刷適性を考慮したデザイン", "コスト効率の良い仕様設計"],
       growth: ["ブランド認知度向上", "店頭での視認性向上", "リピート購入促進"],
     },
-    kpi: [
-      { metric: "売上増加", value: "+180%", improvement: "パッケージリニューアル後", icon: "💰" },
-      { metric: "ブランド認知", value: "+120%", improvement: "SNSでの言及数増加", icon: "📢" },
-      { metric: "リピート率", value: "+60%", improvement: "顧客リピート率向上", icon: "🔄" },
-    ],
+
     testimonial: {
       text: "パッケージが変わってから、お客様の反応が全然違います。「これ、プロが作ったルアーですね」と言われることが増えました。",
       author: "Namix Lure Works 代表",
