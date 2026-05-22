@@ -32,8 +32,10 @@ export type MicroCMSProject = {
   updatedAt?: string
 }
 
-const parseCommaSeparated = (text?: string): string[] => {
+const parseCommaSeparated = (text?: string | string[] | any): string[] => {
   if (!text) return []
+  if (Array.isArray(text)) return text.map(String)
+  if (typeof text !== "string") return [String(text)]
   return text.split(",").map((s) => s.trim()).filter((s) => s.length > 0)
 }
 
@@ -85,7 +87,7 @@ function convertMicroCMSProject(post: MicroCMSProject): Project {
 
   return {
     id: post.id,
-    slug: post.slug,
+    slug: post.slug || post.id,
     title: post.title,
     description: post.description || "",
     image: image,
@@ -136,7 +138,7 @@ export async function fetchProjects(limit = 100): Promise<Project[]> {
     const validProjects: Project[] = []
     for (const post of response.contents) {
       try {
-        if (post.slug) {
+        if (post.slug || post.id) {
           validProjects.push(convertMicroCMSProject(post))
         }
       } catch (e) {

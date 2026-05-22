@@ -12,9 +12,7 @@ import { notFound } from "next/navigation"
 import { fetchProject, fetchProjects } from "@/lib/microcms-projects"
 
 interface ProjectPageProps {
-  params: {
-    slug: string
-  }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -24,8 +22,10 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
-  const project = await fetchProject(params.slug)
+export async function generateMetadata(props: ProjectPageProps): Promise<Metadata> {
+  const params = await props.params;
+  const slug = decodeURIComponent(params.slug);
+  const project = await fetchProject(slug)
 
   if (!project) {
     return {
@@ -65,8 +65,10 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   }
 }
 
-export default async function ProjectPage({ params }: ProjectPageProps) {
-  const project = await fetchProject(params.slug)
+export default async function ProjectPage(props: ProjectPageProps) {
+  const params = await props.params;
+  const slug = decodeURIComponent(params.slug);
+  const project = await fetchProject(slug)
 
   if (!project) {
     notFound()
