@@ -1,6 +1,7 @@
 import CompanyClient from "./company-client"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
+import { fetchProjects } from "@/lib/microcms-projects"
 
 export const metadata: Metadata = {
   title: "事業概要 | 愛知県碧南市のWEB制作事業LEXIA",
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default function CompanyPage() {
-  return <CompanyClient />
+export default async function CompanyPage() {
+  const projects = await fetchProjects(3) // Only need 3 for achievements
+  return <CompanyClient projects={projects} />
 }

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next"
-import { projectsData } from "@/lib/projects-data"
+import { fetchProjects } from "@/lib/microcms-projects"
 import { fetchBlogPosts } from "@/lib/blog-posts"
 import { SITE_URL } from "../lib/config"
 
@@ -16,6 +16,7 @@ function safeDate(input?: string | Date | undefined): Date {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await fetchBlogPosts()
+  const projects = await fetchProjects()
   const base = SITE_URL.replace(/\/$/, "")
 
   const routes = [
@@ -41,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === "" ? 1 : 0.8,
   }))
 
-  const projectRoutes = projectsData.map((project) => ({
+  const projectRoutes = projects.map((project) => ({
     url: `${base}/projects/${project.slug}`,
     lastModified: safeDate(project.year ? `${project.year}-01-01` : undefined),
     changeFrequency: "monthly" as const,

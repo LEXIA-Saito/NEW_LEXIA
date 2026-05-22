@@ -13,7 +13,7 @@ import LexiaPrinciples from "@/components/sections/lexia-principles"
 import CompanyInfoTable from "@/components/company-info-table"
 import Script from "next/script"
 import { Lightbulb, Zap, RefreshCcw, ChevronDown } from "lucide-react"
-import { projectsData } from "@/lib/projects-data"
+import type { Project } from "@/lib/projects-data"
 import { useState, type ReactNode } from "react"
 import Features from "@/components/Features"
 
@@ -44,7 +44,7 @@ function FAQItem({ q, a }: { q: string; a: ReactNode }) {
   )
 }
 
-export default function CompanyClient() {
+export default function CompanyClient({ projects }: { projects: Project[] }) {
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
@@ -422,7 +422,7 @@ export default function CompanyClient() {
           <div className="container mx-auto px-4 space-y-8">
             <h2 className="text-3xl font-light text-neutral-900 dark:text-neutral-100">実績</h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {projectsData.slice(0, 3).map((project, index) => (
+              {projects.slice(0, 3).map((project, index) => (
                 <motion.div
                   key={project.id}
                   initial="hidden"

@@ -3,6 +3,7 @@ import ProjectsClient from "./projects-client"
 import { SITE_URL } from "@/lib/config"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
+import { fetchProjects } from "@/lib/microcms-projects"
 
 export const metadata: Metadata = {
   title: "制作実績 | 愛知県碧南市のWeb制作事例 - LEXIA",
@@ -26,7 +27,8 @@ export const metadata: Metadata = {
   },
 }
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await fetchProjects()
   return (
     <>
       <Navigation />
@@ -34,7 +36,7 @@ export default function ProjectsPage() {
         className="min-h-screen bg-white dark:bg-neutral-900"
         style={{ paddingTop: "var(--header-height)" }}
       >
-        <ProjectsClient />
+        <ProjectsClient initialProjects={projects} />
       </main>
       <Footer />
     </>

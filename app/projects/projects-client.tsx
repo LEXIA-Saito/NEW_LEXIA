@@ -10,22 +10,8 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import Breadcrumbs from "@/components/breadcrumbs"
 import Image from "next/image"
-import { projectsData } from "@/lib/projects-data"
+import type { Project } from "@/lib/projects-data"
 import { ImageSlideshow } from "@/components/ui/image-slideshow"
-
-interface Project {
-  id: string
-  slug: string
-  title: string
-  description: string
-  image: string
-  images?: string[]
-  categories: string[]
-  featured: boolean
-  year?: string
-  tags: string[]
-  location: string
-}
 
 // HTMLタグを除去し、テキストを指定文字数で切り取る関数
 const stripHtmlAndTruncate = (html: string, maxLength = 150): string => {
@@ -52,9 +38,9 @@ const categories = [
   { id: "design", name: "デザイン" },
 ]
 
-export default function ProjectsClient() {
-  const [projects] = useState<Project[]>(projectsData)
-  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projectsData)
+export default function ProjectsClient({ initialProjects }: { initialProjects: Project[] }) {
+  const [projects] = useState<Project[]>(initialProjects)
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>(initialProjects)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")

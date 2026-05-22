@@ -5,11 +5,11 @@ import Breadcrumbs from "@/components/breadcrumbs"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { Chip } from "@/components/ui/chip"
-import { projectsData } from "@/lib/projects-data"
 import { ProjectSchema } from "@/components/schema/project-schema"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import { notFound } from "next/navigation"
+import { fetchProject, fetchProjects } from "@/lib/microcms-projects"
 
 interface ProjectPageProps {
   params: {
@@ -18,13 +18,14 @@ interface ProjectPageProps {
 }
 
 export async function generateStaticParams() {
-  return projectsData.map((project) => ({
+  const projects = await fetchProjects()
+  return projects.map((project) => ({
     slug: project.slug,
   }))
 }
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
-  const project = projectsData.find((p) => p.slug === params.slug)
+  const project = await fetchProject(params.slug)
 
   if (!project) {
     return {
@@ -64,18 +65,19 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   }
 }
 
-export default function ProjectPage({ params }: ProjectPageProps) {
-  const project = projectsData.find((p) => p.slug === params.slug)
+export default async function ProjectPage({ params }: ProjectPageProps) {
+  const project = await fetchProject(params.slug)
 
   if (!project) {
     notFound()
   }
 
-  const relatedProjects = projectsData
-    .filter((p) => p.slug !== project.slug && p.categories.some((cat) => project.categories.includes(cat)))
+  const allProjects = await fetchProjects()
+  const relatedProjects = allProjects
+    .filter((p) => p.slug !== project.slug && (p.categories || []).some((cat) => (project.categories || []).includes(cat)))
     .slice(0, 3)
 
-  const isDesignProject = project.categories.includes("design")
+  const isDesignProject = (project.categories || []).includes("design")
 
   return (
     <>
@@ -84,11 +86,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
       <main className="min-h-screen bg-white dark:bg-neutral-900">
         <div className="container mx-auto px-4 py-24 md:py-32 max-w-4xl">
           <div className="mb-12">
-            {project.categories[0] && <Chip>{project.categories[0]}</Chip>}
+            {(project.categories || [])[0] && <Chip>{project.categories[0]}</Chip>}
             <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mt-4 mb-4">
               {project.title}
             </h1>
-            <Breadcrumbs />
+            <Breadcrumbs dynamicLabels={{ [project.slug]: project.title }} />
             <p className="text-lg text-neutral-700 dark:text-neutral-300 mb-6">{project.description}</p>
             <div className="flex flex-wrap gap-4 text-neutral-700 dark:text-neutral-300">
               {project.location && (
