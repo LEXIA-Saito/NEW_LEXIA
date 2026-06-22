@@ -18,13 +18,13 @@ export default function MasatoSaitoProfile() {
       no: 1,
       name: "Google アナリティクス認定資格",
       provider: "Google",
-      evidence: "https://skillshop.credential.net/32cb0472-08eb-4cb0-a397-0ee66cd3061c#acc.ERNX8itG",
+      evidence: "https://skillshop.credential.net/1ffa7890-3b53-4f69-b7c6-840478a8b550#acc.fuzGUxDJ",
     },
     {
       no: 2,
       name: "コンバージョン最適化認定資格試験",
       provider: "Google",
-      evidence: "https://skillshop.credential.net/4064cb8b-8082-459f-8e59-8222694e91bc#acc.Rm4TUPGI",
+      evidence: "https://skillshop.credential.net/bd9db346-4029-4138-8833-ec85232ee40b#acc.hK8CkIBM",
     },
     {
       no: 3,
