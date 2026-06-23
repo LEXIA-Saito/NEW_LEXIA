@@ -791,3 +791,118 @@ fallbackBlogPosts.push({
     },
   ],
 })
+
+// Append Firecrawl (web data API for AI) overview article
+fallbackBlogPosts.push({
+  slug: "what-is-firecrawl-web-data-api",
+  title: "Firecrawlとは？Webを“LLMが使えるデータ”に変えるAI時代のスクレイピングAPI",
+  description:
+    "Firecrawlは、WebサイトをクリーンなMarkdownや構造化JSONに変換し、RAGやAIエージェントにそのまま渡せるWebデータAPI。Scrape・Search・Crawl・Map・Agentなどのエンドポイント、JS描画やプロキシの自動処理、スキーマによる構造化抽出、MCPサーバー連携までを公式情報に基づいて解説します。",
+  genre: "Backend",
+  tags: ["Firecrawl", "RAG", "スクレイピング"],
+  date: "2026-06-23",
+  latest_update: "2026-06-23",
+  heroImage: "/images/blog-placeholder.svg",
+  heroImageAlt: "Firecrawl - WebをLLM向けデータに変換するAI時代のスクレイピングAPIの解説",
+  sections: [
+    {
+      body: [
+        "本記事は一次情報（Firecrawl公式リポジトリおよびREADME）に基づき構成しています。Firecrawlは活発に開発が進んでおり、機能や仕様は今後変更される可能性があります。",
+      ],
+    },
+    {
+      heading: "この記事でわかること",
+      list: [
+        "Firecrawlとは何か／どんな課題を解くか",
+        "主要エンドポイント（Scrape・Search・Crawl・Map・Agent・Batch）",
+        "ただのスクレイパーではない理由（JS描画・プロキシ・Actions・構造化抽出）",
+        "最小コード例とSDK／クラウドとセルフホスト",
+        "AIエコシステム連携（MCPサーバーほか）",
+        "ライセンスと成熟度",
+      ],
+    },
+    {
+      heading: "Firecrawlとは？Webを“LLMが使えるデータ”に",
+      body: [
+        "Firecrawlは「Webを大規模に検索・スクレイプ・操作するためのAPI」です。乱雑なWebページを、クリーンなMarkdownや構造化JSON、スクリーンショットといったLLM最適化された形式に変換します。",
+        "RAG（検索拡張生成）やAIエージェントを作るとき、Webから信頼できるデータを取り出すのは想像以上に厄介です。サイトごとに構造はバラバラ、JavaScriptレンダリング、プロキシ・レート制限・ボット対策…。Firecrawlはこの面倒をまるごと肩代わりし、トークン消費を抑えた出力をそのままAIスタックに流し込めます。",
+        "GitHubスターは13万超と非常に人気が高く、ライセンスはAGPL-3.0のオープンソースです。",
+      ],
+    },
+    {
+      heading: "主要エンドポイント",
+      table: {
+        headers: ["エンドポイント", "役割"],
+        rows: [
+          ["Scrape", "単一URLをMarkdown/HTML/JSON/スクショに変換。JS重めのページにも対応"],
+          ["Search", "Web検索し、結果ページの本文まで取得（URL未知のRAG向け）"],
+          ["Crawl", "サイト内の全URLをスクレイプ。ジョブID＋ポーリングで非同期処理"],
+          ["Map", "サイトの全URLを即座に発見。検索フィルタで関連順に絞り込み可"],
+          ["Agent（旧 extract）", "自然言語で“ほしい情報”を指定すると、探索・取得まで自動実行"],
+          ["Batch Scrape", "複数URLを1リクエストで非同期にまとめて取得"],
+        ],
+      },
+    },
+    {
+      heading: "ただのスクレイパーではない",
+      body: [
+        "Firecrawlが単なる取得ツールと違うのは、実運用で詰まりがちな部分を標準で備えている点です。",
+        "JavaScriptレンダリング：JS重めのサイトもネイティブ対応（公式は“Webの96%をカバー”と表現）",
+        "プロキシ自動ローテーション：ゼロ設定で切り替え",
+        "Actions（操作）：抽出前にクリック・スクロール・入力・待機などを実行。フォームやECサイト向け",
+        "メディア解析：Web上のPDFやDOCXなどの文書からも内容を抽出",
+        "構造化抽出：JSONスキーマを定義すると、生Markdownではなく検証済みの構造化データを返す",
+      ],
+    },
+    {
+      heading: "使ってみる：最小コードとSDK",
+      body: [
+        "クラウド版はAPIキーを取得するだけで使えます（インフラ不要）。セルフホストもAGPL-3.0で可能です。",
+        "",
+        "Python（Scrape）の例：",
+        "from firecrawl import Firecrawl",
+        "app = Firecrawl(api_key='fc-YOUR_API_KEY')",
+        "result = app.scrape('firecrawl.dev')",
+        "print(result.markdown)",
+        "",
+        "Agentはスキーマ（例：Pydanticモデル）を渡すと、自然言語の指示から構造化データを返します。たとえば「Firecrawlの創業者を探して」という指示＋スキーマで、名前・役職などを型付きで取得できます。",
+        "",
+        "公式SDKはPython（firecrawl-py）・Node.js（firecrawl）・Java・Elixir・Rust、コミュニティ製のGoなど。Crawlやバッチの非同期ポーリングはSDKが自動で面倒を見ます。",
+      ],
+    },
+    {
+      heading: "AIエコシステム連携（MCPほか）",
+      body: [
+        "FirecrawlはMCP（Model Context Protocol）サーバーを提供しており、ClaudeなどMCP対応エージェントから直接Webデータ取得を呼び出せます。導入は npx -y firecrawl-mcp をMCPサーバーとして登録し、環境変数 FIRECRAWL_API_KEY を設定するだけです。",
+        "このほかCLI連携やLovable・Zapier・n8nなどのプラットフォーム連携も用意されています。Claude Codeを使う開発フローとも噛み合います。",
+        "",
+        "{{RELATED_ARTICLE:claude-code-overview-2025-10-14}}",
+      ],
+    },
+    {
+      heading: "ライセンスと成熟度",
+      body: [
+        "ライセンスはAGPL-3.0（SDKはMIT）。最新版はv2.11.0（2026年6月時点）で、TypeScript中心にPython・Rustを含む構成です。",
+        "活発に開発・メンテナンスが続いており、クラウド版にはプレミアム機能、セルフホストはAGPLで完全サポートという二本立てです。",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "Firecrawlは、Webスクレイピングの定型作業（JS描画・プロキシ・構造化）を肩代わりし、Webを“LLMがそのまま使えるデータ”に変えるAPIです。",
+        "高いカバー率と構造化抽出、Agentによる自然言語取得、MCP連携まで揃っており、RAGパイプラインやリアルタイムな知識ベース、最新情報を必要とするAIエージェントの土台として有力です。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "GitHub: firecrawl/firecrawl",
+        "https://github.com/firecrawl/firecrawl",
+        "公式サイト",
+        "https://firecrawl.dev/",
+        "ドキュメント",
+        "https://docs.firecrawl.dev/",
+      ],
+    },
+  ],
+})
