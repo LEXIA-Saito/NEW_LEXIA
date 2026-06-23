@@ -427,8 +427,8 @@ fallbackBlogPosts.push({
   tags: ["Turso", "SQLite", "Rust"],
   date: "2026-06-23",
   latest_update: "2026-06-23",
-  heroImage: "/images/blog-placeholder.svg",
-  heroImageAlt: "Turso - SQLiteをRustで書き直した次世代インプロセスデータベースの解説",
+  heroImage: "/images/blog/what-is-turso-sqlite-in-rust-hero.jpg",
+  heroImageAlt: "Tursoとは？SQLiteをRustで書き直す次世代の組み込みDBの全貌",
   sections: [
     {
       body: [
