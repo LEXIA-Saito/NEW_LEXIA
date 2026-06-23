@@ -535,3 +535,147 @@ fallbackBlogPosts.push({
     },
   ],
 })
+
+// Append OpenMontage (agentic video production) overview article
+fallbackBlogPosts.push({
+  slug: "what-is-openmontage-agentic-video",
+  title: "OpenMontageとは？AIエージェントが“制作チーム”になる次世代の動画生成システム",
+  description:
+    "OpenMontageは、AIコーディングアシスタントを動画制作スタジオに変えるオープンソースのエージェント駆動システム。1クリップ生成で終わらず、リサーチ→脚本→素材生成→編集→合成という実際の制作工程を自動化します。12のパイプライン・52ツール・500以上のスキル、無料ローカル完結から有料API連携までを公式情報に基づいて解説します。",
+  genre: "AI",
+  tags: ["OpenMontage", "AI動画", "エージェント"],
+  date: "2026-06-23",
+  latest_update: "2026-06-23",
+  heroImage: "/images/blog-placeholder.svg",
+  heroImageAlt: "OpenMontage - AIエージェントが制作チームになる動画生成システムの解説",
+  sections: [
+    {
+      body: [
+        "本記事は一次情報（OpenMontage公式リポジトリおよびREADME）に基づき構成しています。本プロジェクトは活発に開発が進んでおり、機能や仕様は今後変更される可能性があります。",
+      ],
+    },
+    {
+      heading: "この記事でわかること",
+      list: [
+        "OpenMontageとは何か／既存のAI動画ツールとの違い",
+        "仕組み（3層アーキテクチャと「12パイプライン・52ツール・500+スキル」）",
+        "対応する生成モデル・ツールの幅",
+        "エージェントがどう動くか（プロバイダ選定・品質ゲート・予算管理）",
+        "インストールと最小実行例（APIキーなしでも動く）",
+        "ライセンスと注意点",
+      ],
+    },
+    {
+      heading: "OpenMontageとは？1クリップ生成では終わらない",
+      body: [
+        "OpenMontageは、Claude CodeやCursorのようなAIコーディングアシスタントを“動画制作スタジオ”に変える、オープンソースのエージェント駆動型動画制作システムです。",
+        "既存のAI動画ツールの多くは「プロンプト→単発クリップ」で完結します。OpenMontageが異なるのは、実際の制作チームがたどる工程（リサーチ→提案→脚本→シーン設計→素材→編集→合成）をまるごとエージェントに自動実行させる点です。",
+        "アニメ静止画を数枚動かして“動画”と称するのではなく、Archive.orgやNASA、Wikimedia Commonsなど無料・オープンな実写素材から検索可能なコーパスを構築し、本物のモーション映像で構成できるのも特徴です。GitHub Trendingで「Repository of the Day」1位を獲得しています。",
+      ],
+    },
+    {
+      heading: "仕組み：3層アーキテクチャと「12・52・500+」",
+      body: [
+        "知識を3層に分けて、エージェントが段階的に読み込みます。",
+        "Layer 1（tools/ + pipeline_defs/）：実行可能な機能と進行ロジック",
+        "Layer 2（skills/）：OpenMontage独自の作法・品質基準・制作プレイブック",
+        "Layer 3（.agents/skills/）：外部技術の知識パック",
+        "",
+        "「12パイプライン」は用途別の制作ワークフロー、「52ツール」は8領域にまたがる実行機能、「500以上のスキル」は各ツールを“専門家のように”使うためのMarkdown指示書です。各パイプラインはYAMLマニフェスト（工程と合格基準）と、工程ごとの“ディレクタースキル”で定義されます。",
+      ],
+    },
+    {
+      heading: "12のパイプライン（用途別ワークフロー）",
+      table: {
+        headers: ["パイプライン", "用途"],
+        rows: [
+          ["Animated Explainer", "リサーチ＋ナレーション付きのAI解説動画"],
+          ["Animation", "モーショングラフィックス／キネティックタイポ"],
+          ["Avatar Spokesperson", "アバターが話すプレゼン動画"],
+          ["Cinematic", "予告編・ティザー・ムード重視の編集"],
+          ["Clip Factory", "長尺素材から短尺クリップを量産"],
+          ["Documentary Montage", "無料ストック・アーカイブ素材でのテーマ編集"],
+          ["Hybrid", "既存映像にAI生成グラフィックを追加"],
+          ["Localization & Dub", "字幕・吹替・翻訳"],
+          ["Podcast Repurpose", "ポッドキャストを動画ハイライト化"],
+          ["Screen Demo", "ソフトのチュートリアル・操作解説"],
+          ["Talking Head", "話者中心の映像"],
+        ],
+      },
+    },
+    {
+      heading: "対応モデル・ツールの幅",
+      body: [
+        "52ツールは8領域に分かれ、無料ローカルから有料クラウドまで自由に組み合わせられます。主要なものを挙げます。",
+      ],
+      table: {
+        headers: ["領域", "主な対応"],
+        rows: [
+          ["動画生成（14）", "Kling / Runway Gen-4 / Google Veo 3 / HeyGen、ローカルGPUのWAN 2.1・Hunyuan・LTX-Video、Pexels等のストック"],
+          ["画像生成（10）", "FLUX / Google Imagen 4 / DALL-E 3 / Recraft / Stable Diffusion（ローカル）/ Unsplash ほか"],
+          ["音声合成（4）", "ElevenLabs / Google TTS（700+音声・50+言語）/ OpenAI TTS / Piper（無料・オフライン）"],
+          ["音楽・効果音", "Suno AI（最長8分）/ ElevenLabs Music・SFX"],
+          ["合成・レンダリング", "Remotion（React）/ HyperFrames（HTML/CSS/GSAP）"],
+          ["後処理", "FFmpeg、Real-ESRGAN拡大、背景除去、WhisperX文字起こし、Wav2Lipリップシンク"],
+        ],
+      },
+    },
+    {
+      heading: "エージェントはどう動くか",
+      body: [
+        "別途オーケストレーターを用意せず、エージェント自身が制作を進めます。流れはおおむね次の通りです。",
+        "1. パイプラインのYAMLマニフェスト（工程・ツール・レビュー基準）を読む",
+        "2. 工程ごとのディレクタースキル（実行手順）を読む",
+        "3. プロバイダを7次元スコアで選定（タスク適合30%・品質20%・制御15%・信頼性15%・コスト10%・遅延5%・連続性5%）",
+        "4. Pythonツールを呼び、レビュアースキルで自己点検",
+        "5. 状態をJSONでチェックポイント保存（判断ログ・コストも記録）",
+        "6. 創造的な判断ポイントで人間に承認を求める",
+        "7. 合成前のバリデーションゲートが“スライドショー化”を防止",
+        "8. RemotionまたはFFmpegでレンダリング後、ffprobe等で自己レビュー",
+        "",
+        "予算管理も組み込みで、実行前に見積もり、上限（既定で合計10ドル）やアクション単位の承認しきい値を設定できます。",
+      ],
+    },
+    {
+      heading: "使ってみる：インストールと最小例",
+      body: [
+        "前提：Python 3.10+ / FFmpeg / Node.js 18+ / AIコーディングアシスタント（Claude Code・Cursor・Copilot・Windsurf・Codex）。",
+        "",
+        "git clone https://github.com/calesthio/OpenMontage.git",
+        "cd OpenMontage",
+        "make setup",
+        "",
+        "あとはAIアシスタントでプロジェクトを開き、自然言語で指示するだけです。例：「なぜ空は青いのかを45秒のアニメ解説動画にして」。",
+        "エージェントはリサーチ→脚本→画像/素材→ナレーション（Piper TTS・無料）→BGM→字幕→Remotionでレンダリング→自己レビューまで実行し、projects/<名前>/renders/final.mp4 を出力します。",
+        "",
+        "Piper・Remotion・FFmpeg・無料アーカイブ素材だけでAPIキーなしでも完結します。有料APIを足すと選択肢が広がり、READMEの実例では60秒アニメ約1.33ドル、製品広告約0.69ドル、12枚構成のジブリ風動画約0.15ドルといった低コストが示されています。",
+      ],
+    },
+    {
+      heading: "ライセンスと注意点",
+      body: [
+        "ライセンスはGNU AGPLv3（コピーレフト）。商用・プロプライエタリ利用には別途ライセンスが必要な点に注意が必要です。",
+        "またWeb UIやAPIサーバーは付属せず“エージェント前提”で動きます。ローカルGPUの動画生成は相応のVRAMが必要で、多くのワークフローはクラウドAPIが現実的です。ドキュメントやスキルは英語中心です。",
+        "ローカルLLM（Ollama・LM Studio）対応は今後予定されています。",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "OpenMontageは、単発クリップ生成と本格的な映像制作の間を埋める“エージェント駆動の動画パイプライン”です。リサーチから合成までを構造化された工程として自動化し、品質ゲートと予算管理で破綻を防ぎます。",
+        "無料ローカルツールで始められ、必要に応じて有料APIへ拡張できる柔軟さは、Claude Codeを日常的に使う開発者にとって特に試す価値があります。",
+        "",
+        "{{RELATED_ARTICLE:claude-code-overview-2025-10-14}}",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "GitHub: calesthio/OpenMontage",
+        "https://github.com/calesthio/OpenMontage",
+        "YouTubeチャンネル（@OpenMontage）",
+        "https://www.youtube.com/@OpenMontage",
+      ],
+    },
+  ],
+})
