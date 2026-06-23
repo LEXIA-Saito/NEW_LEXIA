@@ -416,3 +416,122 @@ fallbackBlogPosts.push({
     },
   ],
 })
+
+// Append Turso (SQLite in Rust) overview article
+fallbackBlogPosts.push({
+  slug: "what-is-turso-sqlite-in-rust",
+  title: "Tursoとは？SQLiteをRustで書き直す“次世代の組み込みDB”の全貌",
+  description:
+    "TursoはSQLiteをRustで一から書き直した、SQLite互換のインプロセスSQLデータベース。BEGIN CONCURRENTによる並行書き込み、ネイティブなベクトル検索、io_uringによる非同期I/Oなど、SQLiteの制約を超える機能を備えています。本記事ではlibSQLとの関係、注目機能、導入方法、成熟度までを公式情報に基づいて解説します。",
+  genre: "Backend",
+  tags: ["Turso", "SQLite", "Rust"],
+  date: "2026-06-23",
+  latest_update: "2026-06-23",
+  heroImage: "/images/blog-placeholder.svg",
+  heroImageAlt: "Turso - SQLiteをRustで書き直した次世代インプロセスデータベースの解説",
+  sections: [
+    {
+      body: [
+        "本記事は一次情報（Turso公式リポジトリおよびドキュメント）に基づき構成しています。Tursoは現在ベータ段階のため、機能や仕様は今後変更される可能性があります。",
+      ],
+    },
+    {
+      heading: "この記事でわかること",
+      list: [
+        "Tursoとは何か／SQLite・libSQLとの関係",
+        "なぜRustで書き直すのか（非同期I/O・安全性）",
+        "SQLiteとの違いと注目機能（並行書き込み・ベクトル検索ほか）",
+        "インストールと最小コード例",
+        "AIとの接点：MCPサーバーモード",
+        "本番投入できるか（成熟度・ライセンス・注意点）",
+      ],
+    },
+    {
+      heading: "Tursoとは？SQLiteを“フォーク”ではなく“書き直す”",
+      body: [
+        "Tursoは「Rustで書かれた、SQLite互換のインプロセス（組み込み）SQLデータベース」です。アプリと同じプロセス内で動作し、サーバーを立てずに使える点はSQLiteと同じ思想を継いでいます。",
+        "決定的に異なるのは、TursoがSQLiteのコードをフォーク（改変）したものではなく、SQLiteをRustでゼロから書き直したプロジェクトだという点です。公式は「SQLiteの次の進化形をRustで作る、オープンな貢献を重視したプロジェクト」と位置づけています。",
+        "同チームはかつて、SQLiteをCのままフォークして拡張する「libSQL」を進めていました。しかしRustでの書き直しが想像以上にうまくいったため、現在はTursoがlibSQLに代わる本命の方向性とされています。",
+      ],
+    },
+    {
+      heading: "なぜRustなのか",
+      body: [
+        "Rustを選ぶ最大の動機は、Cでは難しかったアーキテクチャ上の自由度です。代表例がLinux上での io_uring を用いた非同期I/Oで、従来のSQLiteがスレッドに頼っていた並行処理のオーバーヘッドを削減できます。",
+        "これはサーバーレスやエッジのように「スレッドを増やしにくい・接続が大量に発生する」環境で特に効きます。加えてRustのメモリ安全性により、より積極的な最適化を安全に行える点も書き直しの理由です。",
+      ],
+    },
+    {
+      heading: "SQLiteとの違いと注目機能",
+      body: [
+        "TursoはSQLite互換を保ちながら、SQLiteの「単一ライター」という根本制約に踏み込む機能を追加しています。主なものは次の通りです。",
+      ],
+      table: {
+        headers: ["機能", "概要"],
+        rows: [
+          ["BEGIN CONCURRENT", "MVCC（多版型同時実行制御）による並行書き込みでスループットを改善"],
+          ["Change Data Capture（CDC）", "データ変更をリアルタイムに追跡"],
+          ["ネイティブ・ベクトル検索", "厳密検索やベクトル操作を標準サポート（埋め込み活用向け）"],
+          ["全文検索（FTS）", "Tantivyライブラリを利用した全文検索"],
+          ["スキーマ管理の強化", "ALTER対応の拡張など"],
+          ["保存時暗号化", "Encryption at rest（実験的）"],
+          ["インクリメンタル計算", "DBSPによる増分ビュー更新"],
+        ],
+      },
+    },
+    {
+      heading: "使ってみる：インストールと最小例",
+      body: [
+        "CLIインストーラーで導入できます。",
+        "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/tursodatabase/turso/releases/latest/download/turso_cli-installer.sh | sh",
+        "",
+        "対話シェルは tursodb で起動します。SQLそのものはSQLiteと同じ感覚で書けます。",
+        "CREATE TABLE users (id INT, username TEXT);",
+        "INSERT INTO users VALUES (1, 'alice');",
+        "SELECT * FROM users;",
+        "",
+        "JavaScript（Node.js）では @tursodatabase/database を使います。",
+        "import { connect } from '@tursodatabase/database';",
+        "const db = await connect('sqlite.db');",
+        "const users = db.prepare('SELECT * FROM users').all();",
+        "",
+        "このほかRust・Go・Python・Java・.NET・WebAssembly向けのバインディングが提供されています。",
+      ],
+    },
+    {
+      heading: "AIとの接点：MCPサーバーモード",
+      body: [
+        "Tursoは Model Context Protocol（MCP）サーバーモードを備えており、Claude CodeやClaude DesktopのようなAIアシスタントから直接データベースを操作できます。",
+        "「組み込みDB × AIエージェント」という組み合わせは、ローカルで完結するRAGや開発支援ツールとの相性がよく、LEXIAが扱うAI開発のテーマとも地続きです。",
+        "",
+        "{{RELATED_ARTICLE:claude-code-overview-2025-10-14}}",
+      ],
+    },
+    {
+      heading: "本番で使える？成熟度と注意点",
+      body: [
+        "公式は「本ソフトウェアはベータであり、バグや想定外の挙動が残る可能性がある」と明記しています。一方で、Turso Cloud・Kin AIアシスタント・Spice.aiなど実運用での採用事例もあります。",
+        "品質面では、独自の決定的シミュレーションテスト（DST）やAntithesisなど多数のツールで広範にテストされており、目標として「SQLiteレベルの信頼性」を掲げています。",
+        "ライセンスはMITで商用採用のハードルが低い点も魅力です。最新版はv0.6.1（2026年5月時点）。新規プロジェクトでSQLite互換と現代的な並行性・ベクトル検索を両立したい場合は、評価する価値があります。",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "Tursoは、SQLiteの“組み込みで手軽”という長所を保ちつつ、並行書き込み・非同期I/O・ベクトル検索といった現代的な要求に応える「SQLiteの書き直し」プロジェクトです。",
+        "ベータゆえにミッションクリティカル用途は慎重に判断すべきですが、活発な開発と実運用事例、MITライセンス、AI連携（MCP）まで含めて、今後の本命として注目に値します。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "GitHub: tursodatabase/turso",
+        "https://github.com/tursodatabase/turso",
+        "公式サイト",
+        "https://turso.tech/",
+        "ドキュメント",
+        "https://docs.turso.tech/",
+      ],
+    },
+  ],
+})
