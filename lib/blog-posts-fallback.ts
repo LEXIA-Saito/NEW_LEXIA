@@ -1051,3 +1051,321 @@ fallbackBlogPosts.push({
     },
   ],
 })
+
+// Append Voicebox (local-first AI voice studio) overview article
+fallbackBlogPosts.push({
+  slug: "what-is-voicebox-local-ai-voice",
+  title: "Voiceboxとは？ElevenLabs代替をローカルで動かすオープンソースのAI音声スタジオ",
+  description:
+    "Voiceboxは、音声合成（TTS）・文字起こし（STT）・音声クローンを1つにまとめ、すべてローカルで完結させるオープンソースのAI音声スタジオ。7つのTTSエンジン、23言語、OpenAI Whisperによる音声入力、Claude CodeなどへのMCP連携、Tauri製デスクトップアプリまでを公式情報に基づいて解説します。",
+  genre: "AI",
+  tags: ["Voicebox", "AI音声", "MCP"],
+  date: "2026-06-23",
+  latest_update: "2026-06-23",
+  heroImage: "/images/blog-placeholder.svg",
+  heroImageAlt: "Voicebox - 音声合成・文字起こし・音声クローンをローカルで完結させるオープンソースAI音声スタジオの解説",
+  sections: [
+    {
+      body: [
+        "本記事は一次情報（Voicebox公式リポジトリおよびREADME）に基づき構成しています。Voiceboxは活発に開発が進んでおり、機能や仕様は今後変更される可能性があります。",
+      ],
+    },
+    {
+      heading: "この記事でわかること",
+      list: [
+        "Voiceboxとは何か／どんな課題を解くか",
+        "ローカル完結であることの意味（プライバシー）",
+        "7つのTTSエンジンと表現力（多言語・音声クローン）",
+        "音声入力（OpenAI Whisper）と編集機能",
+        "MCPでAIエージェントに“声”を与える",
+        "技術スタックと対応プラットフォーム",
+        "ライセンスと位置づけ",
+      ],
+    },
+    {
+      heading: "Voiceboxとは？クラウドに送らないAI音声",
+      body: [
+        "Voiceboxは「オープンソースのAI音声スタジオ」を掲げるアプリで、公式は“ElevenLabsとWisprFlowの代替を1つのアプリに”と表現しています。音声合成（TTS）・文字起こし（STT）・音声クローンを一体化し、すべてを手元のマシンで動かせるのが最大の特徴です。",
+        "公式は「モデル・音声データ・録音が、マシンの外に出ることはない」と明言しています。クラウドの文字起こし／音声生成に頼らず、プライバシーを保ったまま“声”を扱えるのが、従来のクラウドサービスとの決定的な違いです。",
+        "開発者はSpacedriveで知られるJamie Pine氏で、ライセンスはMIT。デスクトップアプリとして配布されています。",
+      ],
+    },
+    {
+      heading: "7つのTTSエンジンと表現力",
+      body: [
+        "Voiceboxは用途に応じて7つのTTSエンジンを切り替えられます。Qwen3-TTS、Qwen CustomVoice、LuxTTS、Chatterbox Multilingual、Chatterbox Turbo、HumeAI TADA、Kokoroです。",
+        "23言語に対応し、KokoroやQwen CustomVoiceによる50以上のプリセット音声に加え、音声サンプルからのクローンも可能。さらに [laugh] [chuckle] [gasp] [sigh] [clear throat] のようなパラ言語タグで、笑いやため息といった表現を差し込めます。長文は自動チャンク分割とクロスフェードで、長さ無制限に生成できます。",
+      ],
+    },
+    {
+      heading: "音声入力（Whisper）と編集機能",
+      body: [
+        "入力側はOpenAI Whisperを採用し、Base / Small / Medium / Largeに加え、Whisper Largeより約8倍高速で品質低下を抑えたTurboを選べます。グローバルなディクテーション用ホットキー（押している間だけ／トグル）や、macOSではフォーカス中のテキスト欄への自動ペーストにも対応します。",
+        "生成後の音声には、ピッチ変更・リバーブ・ディレイ・コーラス・コンプレッションといった後処理（Spotify製のPedalboardを利用）をかけられます。複数の声をタイムラインに並べる「ストーリーエディタ」や、ローカルLLMでセリフを書き換える“声の個性”機能も備えています。",
+      ],
+    },
+    {
+      heading: "MCPでAIエージェントに“声”を与える",
+      body: [
+        "VoiceboxはMCP（Model Context Protocol）サーバーを内蔵し、Claude CodeやCursorなどのエージェントに音声出力・文字起こしの能力を渡せます。公開ツールは voicebox.speak / voicebox.transcribe / voicebox.list_captures / voicebox.list_profiles の4つです。",
+        "Claude Codeへの登録はコマンド1行で完了します。",
+        "claude mcp add voicebox --transport http --url http://127.0.0.1:17493/mcp --header \"X-Voicebox-Client-Id: claude-code\"",
+        "",
+        "ローカルサーバーはポート17493で動作し、POST /generate（音声生成）・POST /speak（エージェント発話）・POST /transcribe（文字起こし）・GET /profiles（音声一覧）などのAPIも提供します。",
+      ],
+    },
+    {
+      heading: "技術スタックと対応プラットフォーム",
+      body: [
+        "デスクトップ層はTauri（Rust）で軽量に作られ、推論はApple SiliconならMLX、その他はPyTorch（CUDA・ROCmなど）に対応します。",
+      ],
+      table: {
+        headers: ["領域", "技術"],
+        rows: [
+          ["デスクトップ", "Tauri（Rust）"],
+          ["フロントエンド", "React / TypeScript / Tailwind CSS"],
+          ["バックエンド", "FastAPI（Python）"],
+          ["推論", "MLX（Apple Silicon）/ PyTorch（CUDA・ROCm ほか）"],
+          ["保存", "SQLite"],
+          ["対応OS", "macOS（Apple Silicon・Intel）/ Windows / Linux / Docker"],
+        ],
+      },
+    },
+    {
+      heading: "LEXIA視点：ローカルAIという選択",
+      body: [
+        "Voiceboxの面白さは、生成AIの体験を“クラウド前提”から“ローカル完結”へと引き戻した点にあります。データを外に出さずに高品質な音声を扱えることは、機密性が問われる制作現場や個人開発にとって大きな安心材料です。",
+        "MCPを介してエージェントに音声を与える設計は、Claude Codeを軸にしたワークフローとも自然につながります。",
+        "",
+        "{{RELATED_ARTICLE:claude-code-overview-2025-10-14}}",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "Voiceboxは、TTS・STT・音声クローンを1つにまとめ、すべてローカルで完結させるオープンソースのAI音声スタジオです。7つのTTSエンジンと23言語、Whisperベースの音声入力、後処理やストーリーエディタ、そしてMCP連携まで揃っています。",
+        "クラウドにデータを預けたくない、けれど高品質なAI音声を使いたい——そんなニーズに正面から応える一本で、MITライセンスで気軽に試せます。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "GitHub: jamiepine/voicebox",
+        "https://github.com/jamiepine/voicebox",
+        "公式サイト",
+        "https://voicebox.sh/",
+        "Model Context Protocol（MCP）",
+        "https://modelcontextprotocol.io/",
+      ],
+    },
+  ],
+})
+
+// Append Cybersecurity Skills (agent skills for security) overview article
+fallbackBlogPosts.push({
+  slug: "what-is-anthropic-cybersecurity-skills",
+  title: "AIエージェント向けに817のサイバーセキュリティ知識を構造化したOSS「Cybersecurity Skills」とは？",
+  description:
+    "「Anthropic-Cybersecurity-Skills」は、817のサイバーセキュリティ知識をAIエージェント用に構造化したオープンソースのスキル集。29ドメイン・6つのフレームワーク（MITRE ATT&CK／NIST CSFほか）にマッピングし、Claude Codeなどから必要なスキルだけを段階的に読み込めます。Agent Skills標準・構造・使い方・注意点を公式情報に基づいて解説します。",
+  genre: "Security",
+  tags: ["セキュリティ", "Agent Skills", "Claude Code"],
+  date: "2026-06-23",
+  latest_update: "2026-06-23",
+  heroImage: "/images/blog-placeholder.svg",
+  heroImageAlt: "Cybersecurity Skills - AIエージェント向けに817のサイバーセキュリティ知識を構造化したオープンソースのスキル集の解説",
+  sections: [
+    {
+      body: [
+        "本記事は一次情報（公式リポジトリおよびREADME）に基づき構成しています。なお本プロジェクトはリポジトリ名に「Anthropic」を含みますが、Anthropic公式の製品ではなく、開発者mukul975氏によるコミュニティ主導のオープンソース（Apache-2.0）です。Anthropicが提唱する「Agent Skills」の形式に準拠している点に由来します。",
+      ],
+    },
+    {
+      heading: "この記事でわかること",
+      list: [
+        "このスキル集とは何か／何が新しいのか",
+        "「Agent Skills」という考え方",
+        "6つのセキュリティフレームワークへのマッピング",
+        "スキルの構造と段階的読み込み（省トークン）",
+        "対応するAIエージェント／導入方法",
+        "扱う上での注意（デュアルユース・認可）",
+      ],
+    },
+    {
+      heading: "何を解決するのか：知識を“エージェントが使える形”に",
+      body: [
+        "このプロジェクトは、自らを「817のプロダクション級サイバーセキュリティスキル・29のセキュリティドメイン・6つのフレームワークマッピング・26以上のAIプラットフォーム対応」と説明します。",
+        "ねらいは、断片的なドキュメントやチュートリアルではなく、AIエージェントがそのまま実行できる“作業手順つきの知識ベース”を用意することです。クラウドセキュリティ（66）、脅威ハンティング（58）、脅威インテリジェンス（52）、ネットワークセキュリティ（43）、Webアプリセキュリティ（42）、デジタルフォレンジック（41）など、29ドメインに体系立てて整理されています。",
+      ],
+    },
+    {
+      heading: "「Agent Skills」という考え方",
+      body: [
+        "Agent Skillsは、AIエージェントに専門知識を“スキル”という単位で渡す仕組みです。各スキルはMarkdownで書かれ、エージェントは必要なときに必要なスキルだけを読み込みます。",
+        "この設計の肝は省トークン性にあります。各スキルは冒頭のメタ情報（フロントマター）だけなら約30トークンで走査でき、実際に使う段になって500〜2,000トークンで全文を読み込みます。膨大な知識を抱えていても、コンテキスト窓を浪費しません。",
+      ],
+    },
+    {
+      heading: "6つのフレームワークへのマッピング",
+      body: [
+        "各スキルは主要なセキュリティフレームワークに対応づけられており、ATT&CKのテクニック番号などから逆引きできます。",
+      ],
+      table: {
+        headers: ["フレームワーク", "バージョン", "カバー範囲"],
+        rows: [
+          ["MITRE ATT&CK", "v19.1", "15戦術・286テクニック"],
+          ["NIST CSF", "2.0", "6機能・22カテゴリ"],
+          ["MITRE ATLAS", "v5.4", "16戦術・84テクニック（AI/MLの敵対的脅威）"],
+          ["MITRE D3FEND", "v1.3", "7カテゴリ・267の防御テクニック"],
+          ["NIST AI RMF", "1.0", "4機能・72サブカテゴリ"],
+          ["MITRE F3（不正対策）", "v1.1", "8戦術・123テクニック"],
+        ],
+      },
+    },
+    {
+      heading: "スキルの構造と対応エージェント",
+      body: [
+        "各スキルはYAMLフロントマター（名前・説明・ドメイン・タグ・フレームワークID）と、「When to Use（いつ使うか）」「Prerequisites（前提）」「Workflow（手順）」「Verification（検証）」というMarkdownのセクション、さらに references / scripts / assets のディレクトリで構成されます。",
+        "対応はClaude Code・GitHub Copilot・Cursor・Windsurf・Cline・Aider・Continue・Amazon Q・JetBrains AIなど広範で、agentskills.io標準に準拠したプラットフォームで利用できます。導入はパッケージコマンド、またはリポジトリのクローンで行います。",
+        "npx skills add mukul975/Anthropic-Cybersecurity-Skills",
+      ],
+    },
+    {
+      heading: "扱う上での注意：デュアルユースと認可",
+      body: [
+        "本スキル集にはレッドチーム演習・ペネトレーションテスト・マルウェア解析など、攻撃と防御の両面（デュアルユース）の知識が含まれます。これらは本来、自社資産や明示的に許可された対象に対する正当なセキュリティ業務・学習のためのものです。",
+        "実務で用いる際は、対象範囲の合意（スコープ）や法令・社内規程の遵守を前提とし、防御・ガバナンス・インシデント対応といった文脈で活用するのが基本です。AIエージェントの提案は必ずレビューし、無許可の対象には使用しないでください。",
+      ],
+    },
+    {
+      heading: "LEXIA視点：スキルで広がるエージェント運用",
+      body: [
+        "このプロジェクトは、「AIエージェント × 専門知識」をスキル単位でモジュール化する流れの好例です。省トークンな段階的読み込みは、codebase-memory-mcpのような“エージェントの土台”を整える発想とも通じます。",
+        "Claude Codeを業務に組み込む際、こうした構造化スキルをどう選び・どう統制するかは、これからの開発・運用テーマになりそうです。",
+        "",
+        "{{RELATED_ARTICLE:claude-code-overview-2025-10-14}}",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "「Cybersecurity Skills」は、817のサイバーセキュリティ知識をAIエージェントが実行できる形に構造化し、6つのフレームワークへマッピングしたオープンソースのスキル集です。省トークンな段階的読み込みと広範なエージェント対応により、知識ベースとして実用的にまとまっています。",
+        "Anthropic公式ではないコミュニティ製である点と、デュアルユースゆえの認可・統制の必要性を理解したうえで、防御や学習の土台として活用する価値があります。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "GitHub: mukul975/Anthropic-Cybersecurity-Skills",
+        "https://github.com/mukul975/Anthropic-Cybersecurity-Skills",
+        "Agent Skills（agentskills.io）",
+        "https://agentskills.io/",
+        "MITRE ATT&CK",
+        "https://attack.mitre.org/",
+      ],
+    },
+  ],
+})
+
+// Append AI Website Cloner Template (frontend) overview article
+fallbackBlogPosts.push({
+  slug: "what-is-ai-website-cloner-template",
+  title: "ai-website-cloner-templateとは？AIエージェントで既存サイトをNext.jsに“複製”するテンプレート",
+  description:
+    "ai-website-cloner-templateは、任意のWebサイトをAIコーディングエージェントでクリーンなNext.jsコードに作り直すための再利用可能テンプレート。/clone-websiteコマンド一発で、偵察→基盤→コンポーネント設計→並列ビルド→組み立てと進みます。仕組み・対応エージェント・技術スタック・責任ある使い方を公式情報に基づいて解説します。",
+  genre: "Frontend",
+  tags: ["Next.js", "AIエージェント", "Claude Code"],
+  date: "2026-06-23",
+  latest_update: "2026-06-23",
+  heroImage: "/images/blog-placeholder.svg",
+  heroImageAlt: "ai-website-cloner-template - AIエージェントで既存サイトをNext.jsコードに複製するテンプレートの解説",
+  sections: [
+    {
+      body: [
+        "本記事は一次情報（公式リポジトリおよびREADME）に基づき構成しています。本プロジェクトは活発に開発が進んでおり、機能や仕様は今後変更される可能性があります。",
+      ],
+    },
+    {
+      heading: "この記事でわかること",
+      list: [
+        "このテンプレートとは何か／どんな用途か",
+        "/clone-website の使い方（最小コマンド）",
+        "5段階の複製パイプラインの仕組み",
+        "git worktreeによる並列ビルド",
+        "対応するAIコーディングエージェント",
+        "技術スタックと責任ある使い方",
+      ],
+    },
+    {
+      heading: "ai-website-cloner-templateとは？",
+      body: [
+        "ai-website-cloner-templateは、公式の言葉を借りれば「任意のWebサイトを、クリーンでモダンなNext.jsコードベースへとリバースエンジニアリングするための、再利用可能なテンプレート」です。URLを指定してコマンドを実行すると、AIエージェントがサイトを調べ、デザインを抽出し、各セクションをコンポーネントとして組み直します。",
+        "想定する用途は3つ。WordPress / Webflow / SquarespaceなどからNext.jsへの移行、ソースコードを失った稼働中サイトの復旧、そして本番サイトのレイアウト・アニメーション・レスポンシブ設計を学ぶための分解です。",
+      ],
+    },
+    {
+      heading: "使い方：/clone-website 一発",
+      body: [
+        "セットアップは最小限です。依存をインストールし、ブラウザ連携付きでエージェントを起動して、複製コマンドを叩くだけです。",
+        "npm install",
+        "claude --chrome",
+        "/clone-website <target-url1> [<target-url2> ...]",
+        "",
+        "あとはエージェントが対象サイトを解析し、コンポーネントを生成して組み立てていきます。元サイトとのビジュアル差分比較や、フォント・色の反映、アセットのダウンロードも自動で行われます。",
+      ],
+    },
+    {
+      heading: "5段階の複製パイプライン",
+      body: [
+        "/clone-websiteは、実際の制作に近い5つの工程として実行されます。",
+      ],
+      list: [
+        "1. Reconnaissance（偵察）：スクリーンショット・デザイントークン・インタラクションを収集",
+        "2. Foundation（基盤）：スタイルやテーマなど土台を構築",
+        "3. Component Specs（設計）：各セクションをコンポーネント仕様に落とし込む",
+        "4. Parallel Build（並列ビルド）：セクション/コンポーネント単位でビルダーを並走",
+        "5. Assembly & QA（組み立て・品質チェック）：統合し、差分検証で仕上げる",
+      ],
+    },
+    {
+      heading: "git worktreeによる並列ビルドと対応エージェント",
+      body: [
+        "速さの工夫が並列ビルドです。公式は「セクション/コンポーネントごとに1つ、git worktree内でビルダーエージェントを起動する」と説明しており、複数の部品を同時並行で作り進められます。",
+        "対応エージェントは13種。Claude Code（Opus 4.7推奨）・Codex CLI・OpenCode・GitHub Copilot・Cursor・Windsurf・Gemini CLI・Cline・Roo Code・Continue・Amazon Q・Augment Code・Aiderです。",
+      ],
+    },
+    {
+      heading: "技術スタックと責任ある使い方",
+      body: [
+        "生成されるコードはモダンな構成です。Next.js 16（App Router・React 19・TypeScript strict）、shadcn/ui（Radix + Tailwind CSS v4）、Tailwind CSS v4、Lucide Reactを用います。ライセンスはMITです。",
+        "一方で、サイトの“複製”は権利・規約への配慮が欠かせません。対象は自社サイトや明示的に許可されたサイトに限り、著作権や各サービスの利用規約を尊重して使うのが前提です。移行・復旧・学習という本来の用途の範囲で活用しましょう。",
+      ],
+    },
+    {
+      heading: "LEXIA視点：デザインとコードの距離を縮める",
+      body: [
+        "このテンプレートは、「見えているUI」から「保守可能なコード」へ橋渡しする、エージェント時代の制作支援ツールです。手作業の再現に比べ、初期の足場づくりを大幅に短縮できます。",
+        "ビジュアルとコードを行き来するという発想は、デザイン編集が即コードに反映されるツールとも地続きです。",
+        "",
+        "{{RELATED_ARTICLE:what-is-onlook}}",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "ai-website-cloner-templateは、AIコーディングエージェントで既存サイトをクリーンなNext.jsコードへ作り直す、再利用可能なテンプレートです。/clone-website一発で偵察から組み立てまでを5段階で進め、git worktreeによる並列ビルドで効率化します。",
+        "移行・復旧・学習に強力な一方、複製には権利と規約への配慮が不可欠です。責任ある範囲で使えば、フロントエンド制作の初速を大きく引き上げてくれます。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "GitHub: JCodesMore/ai-website-cloner-template",
+        "https://github.com/JCodesMore/ai-website-cloner-template",
+        "Next.js",
+        "https://nextjs.org/",
+        "shadcn/ui",
+        "https://ui.shadcn.com/",
+      ],
+    },
+  ],
+})
