@@ -906,3 +906,148 @@ fallbackBlogPosts.push({
     },
   ],
 })
+
+// Append codebase-memory-mcp (code intelligence MCP server) overview article
+fallbackBlogPosts.push({
+  slug: "what-is-codebase-memory-mcp",
+  title: "codebase-memory-mcpとは？AIにコードを“読ませない”知識グラフ型コード解析MCPサーバー",
+  description:
+    "codebase-memory-mcpは、コードベースを永続的な知識グラフにインデックスする高速・省トークンなコード解析エンジン。ファイル総当たり比で最大120倍少ないトークン、158言語対応のtree-sitter解析、14のMCPツール、Claude Codeなど11エージェントへの自動連携、ローカル完結の安全性までを公式情報に基づいて解説します。",
+  genre: "Backend",
+  tags: ["MCP", "コード解析", "AIエージェント"],
+  date: "2026-06-23",
+  latest_update: "2026-06-23",
+  heroImage: "/images/blog-placeholder.svg",
+  heroImageAlt: "codebase-memory-mcp - コードベースを知識グラフ化する高速・省トークンなコード解析MCPサーバーの解説",
+  sections: [
+    {
+      body: [
+        "本記事は一次情報（codebase-memory-mcp公式リポジトリおよびREADME）に基づき構成しています。本プロジェクトは活発に開発が進んでおり、機能や仕様は今後変更される可能性があります。",
+      ],
+    },
+    {
+      heading: "この記事でわかること",
+      list: [
+        "codebase-memory-mcpとは何か／どんな課題を解くか",
+        "なぜ速くて省トークンなのか（C製バイナリ × tree-sitter × 知識グラフ）",
+        "コードを“グラフ”として持つという発想",
+        "14のMCPツールでAIエージェントに何ができるか",
+        "対応言語とセマンティック解析の範囲",
+        "導入手順とエージェント連携（Claude Codeほか）",
+        "セキュリティ・ライセンス・成熟度",
+      ],
+    },
+    {
+      heading: "codebase-memory-mcpとは？ファイルを“読ませない”という発想",
+      body: [
+        "codebase-memory-mcpは、自らを「AIコーディングエージェントのための、最速かつ最も効率的なコード知能エンジン」と位置づけるMCP（Model Context Protocol）サーバーです。コードベースを丸ごと解析し、関数やクラス、呼び出し関係を持つ“永続的な知識グラフ”に変換します。",
+        "解こうとしている課題はシンプルです。AIエージェントが既存コードを理解しようとすると、ファイルを一つひとつ読み込む必要があり、膨大なトークンと何度ものツール呼び出しを消費します。大規模リポジトリでは、これがコスト・速度・コンテキスト窓を一気に圧迫します。",
+        "codebase-memory-mcpは、この“ファイル総当たり”をグラフへの構造的な問い合わせに置き換えます。公式の計測では、5つの構造クエリで約3,400トークン（ファイル総当たりの約412,000トークン比）と、最大120倍・約99.2%のトークン削減を示しています。",
+      ],
+    },
+    {
+      heading: "なぜ速くて省トークンなのか",
+      body: [
+        "速さと軽さの源泉は、徹底して“低レベル”に作られている点にあります。本体は依存ゼロの単一静的バイナリ（Pure C）で、tree-sitterの文法をバイナリに同梱し、解析結果をSQLiteベースの知識グラフへ保存します。",
+        "インデックス性能も具体的です。Linuxカーネル（2,800万行・7.5万ファイル）をフル解析しても約3分、高速インデックスなら約1分12秒、Django規模なら数秒で完了すると公表されています。一度作ったグラフは永続化され、差分だけを更新できます。",
+      ],
+      table: {
+        headers: ["項目", "内容"],
+        rows: [
+          ["トークン削減", "5つの構造クエリで約3,400トークン（ファイル総当たり比 約412,000トークン）。最大120倍・約99.2%削減"],
+          ["インデックス速度", "Linuxカーネル（2,800万行・7.5万ファイル）をフル解析約3分／高速インデックス約1分12秒"],
+          ["実装", "依存ゼロの単一静的バイナリ（Pure C）。tree-sitter文法を同梱"],
+          ["保存", "SQLite＋LZ4圧縮のローカル知識グラフ（増分更新対応）"],
+          ["可視化", "localhost:9749 で3Dグラフを表示"],
+        ],
+      },
+    },
+    {
+      heading: "コードを“グラフ”として持つ",
+      body: [
+        "codebase-memory-mcpの中核は、コードを「ノード」と「エッジ」の知識グラフとして表現することです。プロジェクト・フォルダ・ファイル・クラス・関数・メソッド・ルートなどがノードになり、CALLS（呼び出し）・IMPORTS（インポート）・DEFINES（定義）・IMPLEMENTS（実装）といった関係がエッジになります。",
+        "この構造のおかげで、「この関数を呼んでいるのは誰か」「この変更はどこに波及するか」といった問いに、ファイルを開かずに答えられます。問い合わせには読み取り専用のopenCypherサブセット（MATCH / WHERE / RETURN）が使え、グラフDBのように直接クエリすることも可能です。",
+        "DockerfileやKubernetesマニフェストといったInfrastructure as Codeもインデックス対象で、生成した圧縮グラフはチームで共有できます。コードの“地図”をAIと人の双方が共有できるイメージです。",
+      ],
+    },
+    {
+      heading: "14のMCPツールでできること",
+      body: [
+        "codebase-memory-mcpは14のMCPツールを公開しており、AIエージェントは自然言語の指示をこれらのツール呼び出しへと変換します。代表的なものを役割別に整理すると次の通りです。",
+      ],
+      table: {
+        headers: ["ツール", "役割"],
+        rows: [
+          ["index_repository / index_status", "リポジトリを解析してグラフ化・進捗を確認"],
+          ["search_graph / search_code", "関数・クラスなどをパターン検索／コードを検索"],
+          ["trace_path", "呼び出し経路を上流・下流にたどり、影響範囲を把握"],
+          ["get_architecture", "依存関係やクラスタからアーキテクチャを俯瞰"],
+          ["query_graph / get_graph_schema", "openCypherサブセットでグラフを直接問い合わせ"],
+          ["get_code_snippet", "該当ノードの実コードを取得"],
+          ["detect_changes", "変更を検知して必要箇所だけ再解析"],
+          ["manage_adr / ingest_traces", "設計判断記録（ADR）の管理・実行トレースの取り込み"],
+        ],
+      },
+    },
+    {
+      heading: "対応言語とセマンティック解析",
+      body: [
+        "tree-sitter文法を同梱することで、158言語の構文解析に対応します。さらに一部の主要言語では、単なる構文木にとどまらず、型を解決する“ハイブリッドLSP”によるセマンティック解析を備えています。",
+        "セマンティック解析の対象は、Python・TypeScript / JavaScript / JSX / TSX・PHP・C#・Go・C・C++・Java・Kotlin・Rustなどです。型情報まで踏み込むことで、同名関数の取り違えなどを避け、より正確な呼び出しグラフを構築できます。",
+      ],
+    },
+    {
+      heading: "導入とエージェント連携",
+      body: [
+        "導入はワンライナーのインストーラーで完了します（macOS / Linux）。",
+        "curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash",
+        "",
+        "3Dグラフの可視化UIも使いたい場合は --ui を付けます。Windowsは同梱のPowerShellスクリプトに対応します。",
+        "curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash -s -- --ui",
+        "",
+        "インストーラーは導入済みのAIツールを自動検出し、設定まで行います。対応するのはClaude Code・Codex CLI・Gemini CLI・Zed・OpenCode・Antigravity・Aider・KiloCode・VS Code・OpenClaw・Kiroなど。手動で登録する場合のMCP設定はシンプルです。",
+        "",
+        '{ "mcpServers": { "codebase-memory-mcp": { "command": "/path/to/codebase-memory-mcp", "args": [] } } }',
+        "",
+        "CLIから直接呼ぶこともでき、まずはリポジトリをインデックスしてから検索・追跡を試せます。",
+        "codebase-memory-mcp cli index_repository '{\"repo_path\": \"/path/to/repo\"}'",
+        "codebase-memory-mcp cli trace_path '{\"function_name\": \"ProcessOrder\", \"direction\": \"inbound\"}'",
+      ],
+    },
+    {
+      heading: "セキュリティと信頼性（ローカル完結）",
+      body: [
+        "コード解析はすべてローカルで完結し、ソースコードがマシンの外に出ることはありません。機密性の高いコードベースを扱う現場でも導入のハードルが低い設計です。",
+        "配布物の信頼性にも力が入っており、SLSA Level 3のビルドプロベナンス、Sigstore cosignによるキーレス署名、SHA-256チェックサム、そして70以上のアンチウイルスエンジンによるVirusTotalスキャンが用意されています。ライセンスはMITで、商用採用のハードルも低めです。",
+        "なお、設計と評価をまとめた研究もREADMEから参照されています（arXiv:2603.27277）。バージョンは2026年6月時点でv0.8.1です。",
+      ],
+    },
+    {
+      heading: "LEXIA視点：MCPで広がる“AIネイティブ開発”",
+      body: [
+        "codebase-memory-mcpが面白いのは、「AIにコードを読ませる」のではなく「AIが問い合わせられるコードの地図を用意する」という発想の転換にあります。トークン効率はもちろん、回答の再現性や影響範囲の把握といった“実務の質”に効いてきます。",
+        "Turso（組み込みDB）やFirecrawl（Webデータ取得）と同様に、MCPを介してAIエージェントと外部能力をつなぐという潮流の一部でもあります。Claude Codeのようなエージェントを日常的に使う開発フローと、特に相性が良いツールです。",
+        "",
+        "{{RELATED_ARTICLE:claude-code-overview-2025-10-14}}",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "codebase-memory-mcpは、コードベースを永続的な知識グラフへインデックスし、AIエージェントに“ファイルを読ませず”構造的な問い合わせで答えさせるコード知能MCPサーバーです。最大120倍のトークン削減と高速インデックス、158言語対応、ローカル完結の安全性を兼ね備えています。",
+        "依存ゼロのC製バイナリで導入も容易、主要エージェントへ自動連携でき、MITライセンスで商用利用もしやすい。大規模リポジトリをAIと扱う際のコストとコンテキスト不足に悩んでいるなら、評価する価値のある一本です。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "GitHub: DeusData/codebase-memory-mcp",
+        "https://github.com/DeusData/codebase-memory-mcp",
+        "インストールスクリプト",
+        "https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh",
+        "Model Context Protocol（MCP）",
+        "https://modelcontextprotocol.io/",
+      ],
+    },
+  ],
+})
