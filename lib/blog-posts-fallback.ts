@@ -9,13 +9,14 @@ export const fallbackBlogPosts: BlogPost[] = [
     genre: "tech",
     tags: ["Onlook", "React", "Tailwind"],
     date: "2025-10-06",
-    latest_update: "2025-10-06",
+    latest_update: "2026-06-24",
     heroImage:
       "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/onlook-article-images/onlook-hero-cursor-for-designers.avif",
     heroImageAlt: "Onlook のメインビジュアル（デザイン編集 UI）",
     sections: [
       {
         body: [
+          "こんにちは、LEXIAの齋藤です。",
           "Cursorがエンジニアの作業を変えたように、Onlookはデザイナーの手に“コードの自由”を与えます。ReactとTailwindのプロジェクトを“見た目で編集→即コード反映”できる点で注目を集めており、Y Combinator参加やオープンソースという背景も相まって急速に話題になっています。",
           "FramerやFigmaと似たUI面の編集体験を持ちながら、Onlookが異なるのは“リアルな開発コード”をそのまま扱う点です。デザイン上の操作が直接JSX/TSXに反映されるため、プロダクションコードとデザインの乖離を大幅に減らせます。",
         ],
@@ -142,13 +143,14 @@ fallbackBlogPosts.push({
   genre: "AI",
   tags: ["Firebase", "AI", "開発環境", "チュートリアル"],
   date: "2025-10-14",
-  latest_update: "2025-10-14",
+  latest_update: "2026-06-24",
   heroImage:
     "https://2iuxfx58zw36rxwq.public.blob.vercel-storage.com/firebase-studio/firebase-studio-getting-started-tutorial-hero.webp",
   heroImageAlt: "Firebase Studio始め方チュートリアル - ワークスペース作成からデプロイまでの完全ガイド",
   sections: [
     {
       body: [
+        "こんにちは、LEXIAの齋藤です。",
         "本記事は一次情報（Firebase公式ドキュメント、Google Developers Blog、Firebase Blog）に基づき構成しています。Firebase Studioは現在プレビュー段階のため、機能や仕様は今後変更される可能性があります。",
       ],
     },
@@ -203,15 +205,16 @@ fallbackBlogPosts.push({
     },
     {
       heading: "3. 既存リポジトリをインポートする（任意）",
-      body: ["GitHub／GitLab／Bitbucketから既存プロジェクトを取り込むことも可能です。", "", "手順:"],
+      body: [
+        "GitHub／GitLab／Bitbucketから既存プロジェクトを取り込むことも可能です。",
+        "手順:",
+        "特殊なネイティブ依存やビルド設定がある場合、dev.nix を編集して環境をカスタマイズ可能です。",
+        "参考: Import existing project — https://firebase.google.com/docs/studio/get-started-import",
+      ],
       list: [
         "1. メニューから Import from GitHub を選択",
         "2. リポジトリを選択 → Import",
         "3. Studioが自動的に package.json や依存関係を解析し、環境を構築",
-      ],
-      body: [
-        "特殊なネイティブ依存やビルド設定がある場合、dev.nix を編集して環境をカスタマイズ可能です。",
-        "参考: Import existing project — https://firebase.google.com/docs/studio/get-started-import",
       ],
     },
     {
@@ -328,10 +331,12 @@ fallbackBlogPosts.push({
   genre: "tech",
   tags: ["Claude Code", "Anthropic", "AI", "開発支援", "エージェント"],
   date: "2025-10-14",
+  latest_update: "2026-06-24",
   readingTime: "5分",
   sections: [
     {
       body: [
+        "こんにちは、LEXIAの齋藤です。",
         "Claude Codeは、ターミナルから自然言語で指示できる“エージェント型”のコーディングツールです。コードベースの理解、ルーチンタスクの自動化、Gitワークフロー支援、複雑なコードの説明などを一体化し、開発スピードと作業品質の向上を狙います。",
         "本記事では、公式ドキュメントとリポジトリREADMEをもとに、安全に導入・運用するための要点を整理します。",
       ],
@@ -426,12 +431,13 @@ fallbackBlogPosts.push({
   genre: "Backend",
   tags: ["Turso", "SQLite", "Rust"],
   date: "2026-06-23",
-  latest_update: "2026-06-23",
+  latest_update: "2026-06-24",
   heroImage: "/images/blog/what-is-turso-sqlite-in-rust-hero.jpg",
   heroImageAlt: "Tursoとは？SQLiteをRustで書き直す次世代の組み込みDBの全貌",
   sections: [
     {
       body: [
+        "こんにちは、LEXIAの齋藤です。",
         "本記事は一次情報（Turso公式リポジトリおよびドキュメント）に基づき構成しています。Tursoは現在ベータ段階のため、機能や仕様は今後変更される可能性があります。",
       ],
     },
@@ -545,12 +551,13 @@ fallbackBlogPosts.push({
   genre: "AI",
   tags: ["OpenMontage", "AI動画", "エージェント"],
   date: "2026-06-23",
-  latest_update: "2026-06-23",
+  latest_update: "2026-06-24",
   heroImage: "/images/blog-placeholder.svg",
   heroImageAlt: "OpenMontage - AIエージェントが制作チームになる動画生成システムの解説",
   sections: [
     {
       body: [
+        "こんにちは、LEXIAの齋藤です。",
         "本記事は一次情報（OpenMontage公式リポジトリおよびREADME）に基づき構成しています。本プロジェクトは活発に開発が進んでおり、機能や仕様は今後変更される可能性があります。",
       ],
     },
@@ -689,12 +696,13 @@ fallbackBlogPosts.push({
   genre: "Frontend",
   tags: ["Penpot", "デザインツール", "Figma代替"],
   date: "2026-06-23",
-  latest_update: "2026-06-23",
+  latest_update: "2026-06-24",
   heroImage: "/images/blog-placeholder.svg",
   heroImageAlt: "Penpot - Web標準でデザインとコードをつなぐオープンソースのデザインプラットフォーム解説",
   sections: [
     {
       body: [
+        "こんにちは、LEXIAの齋藤です。",
         "本記事は一次情報（Penpot公式リポジトリおよびREADME）に基づき構成しています。Penpotは活発に開発が進んでおり、機能や仕様は今後変更される可能性があります。",
       ],
     },
@@ -801,12 +809,13 @@ fallbackBlogPosts.push({
   genre: "Backend",
   tags: ["Firecrawl", "RAG", "スクレイピング"],
   date: "2026-06-23",
-  latest_update: "2026-06-23",
+  latest_update: "2026-06-24",
   heroImage: "/images/blog-placeholder.svg",
   heroImageAlt: "Firecrawl - WebをLLM向けデータに変換するAI時代のスクレイピングAPIの解説",
   sections: [
     {
       body: [
+        "こんにちは、LEXIAの齋藤です。",
         "本記事は一次情報（Firecrawl公式リポジトリおよびREADME）に基づき構成しています。Firecrawlは活発に開発が進んでおり、機能や仕様は今後変更される可能性があります。",
       ],
     },
