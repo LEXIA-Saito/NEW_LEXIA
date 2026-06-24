@@ -1369,3 +1369,301 @@ fallbackBlogPosts.push({
     },
   ],
 })
+
+// Append DeerFlow (super agent harness) overview article
+fallbackBlogPosts.push({
+  slug: "what-is-deerflow-super-agent",
+  title: "DeerFlowとは？サブエージェント・メモリ・サンドボックスで“ほぼ何でも”こなすAIスーパーエージェント",
+  description:
+    "DeerFlowは、ByteDance発のオープンソース“スーパーエージェント・ハーネス”。サブエージェント・永続メモリ・サンドボックス実行を束ね、拡張可能なスキルで長時間タスクを自律的にこなします。v2.0の全面書き直し、導入方法、各種メッセンジャー連携、Claude Code連携までを公式情報に基づいて解説します。",
+  genre: "AI",
+  tags: ["DeerFlow", "AIエージェント", "ByteDance"],
+  date: "2026-06-24",
+  latest_update: "2026-06-24",
+  heroImage: "/images/blog-placeholder.svg",
+  heroImageAlt: "DeerFlow - サブエージェント・メモリ・サンドボックスを束ねるオープンソースAIスーパーエージェントの解説",
+  sections: [
+    {
+      body: [
+        "本記事は一次情報（DeerFlow公式リポジトリおよびREADME）に基づき構成しています。DeerFlowは活発に開発が進んでおり、機能や仕様は今後変更される可能性があります。",
+      ],
+    },
+    {
+      heading: "この記事でわかること",
+      list: [
+        "DeerFlowとは何か／何を解決するか",
+        "v2.0が“全面書き直し”である意味",
+        "中核機能（スキル・サブエージェント・サンドボックス・メモリ）",
+        "導入方法（make一発）と連携先",
+        "推奨モデルと技術スタック",
+        "運用上の注意（サンドボックスとセキュリティ）",
+      ],
+    },
+    {
+      heading: "DeerFlowとは？“何でも屋”のエージェントハーネス",
+      body: [
+        "DeerFlowは公式の言葉で「サブエージェント・メモリ・サンドボックスを束ね、拡張可能なスキルによって“ほぼ何でも”こなす、オープンソースのスーパーエージェント・ハーネス」と表現されています。ByteDanceが開発し、ライセンスはMITです。",
+        "一般的なチャットボットは文脈をすぐ忘れ、実際の作業を実行できません。DeerFlowは永続メモリ・実ファイルシステム・実行サンドボックス・サブエージェントの生成を備えることで、数分〜数時間かかるような長時間タスクを自律的に進められるようにします。",
+      ],
+    },
+    {
+      heading: "v2.0は“ゼロからの書き直し”",
+      body: [
+        "現行のDeerFlow 2.0は、公式が「ゼロからの全面書き直しであり、v1とコードを共有しない」と明言する大型アップデートです（v1系は1.xブランチで維持）。",
+        "設計の中心にあるのが“スキル”という単位です。標準のAgent Skillは「ワークフローを定義したMarkdownファイル」で、必要なときに必要な能力だけを読み込みます。膨大な機能を抱えてもコンテキストを浪費しない、いまのエージェント設計のトレンドに沿った作りです。",
+      ],
+    },
+    {
+      heading: "中核機能：サブエージェント・サンドボックス・メモリ",
+      table: {
+        headers: ["機能", "概要"],
+        rows: [
+          ["スキル", "ワークフローを定義したMarkdownの能力モジュールを段階的に読み込む"],
+          ["サブエージェント", "状況に応じて生成。各自にスコープ付き文脈・ツール・終了条件を持ち、可能なら並列実行"],
+          ["サンドボックス", "タスクごとに専用の実行環境（フルのファイルシステムを参照）"],
+          ["永続メモリ", "プロフィール・好み・蓄積した知識をセッションを越えて保持"],
+          ["コンテキスト管理", "完了タスクを要約し、中間結果をファイルへ退避してトークンを節約"],
+        ],
+      },
+    },
+    {
+      heading: "導入と連携",
+      body: [
+        "導入はmakeコマンドで完結します。",
+        "git clone https://github.com/bytedance/deer-flow.git",
+        "make setup",
+        "make dev",
+        "",
+        "起動後は http://localhost:2026 にアクセスします。Docker利用時は make docker-start（開発）/ make up（本番）も用意されています。",
+        "外部連携も広く、Telegram・Slack・Feishu（Lark）・WeChat・WeCom・DingTalkといったメッセンジャーに対応。MCPサーバーやスキルを設定でき、claude-to-deerflowスキルを使えばClaude Codeから直接DeerFlowを操作できます。",
+        "",
+        "{{RELATED_ARTICLE:claude-code-overview-2025-10-14}}",
+      ],
+    },
+    {
+      heading: "推奨モデルと技術スタック",
+      body: [
+        "DeerFlowはモデル非依存ですが、長いコンテキスト・推論力・強いツール利用に対応するモデルを推奨し、ByteDanceはDoubao-Seed-2.0-Code・DeepSeek v3.2・Kimi 2.5を挙げています。",
+        "技術スタックはPython 3.12+とNode.js 22+を前提に、中核はLangGraphとLangChainで構築されています。エージェントのオーケストレーションをグラフとして扱う、堅実な構成です。",
+      ],
+    },
+    {
+      heading: "運用上の注意",
+      body: [
+        "強力な反面、DeerFlowはシステムコマンドの実行やリソース操作を行うため、公式も「不適切なデプロイはセキュリティリスクを招きうる」と警告しています。",
+        "外部公開する場合はIP許可リスト・認証ゲートウェイ・ネットワーク分離を、基本はローカルや信頼できるネットワークでの運用を推奨します。サンドボックスがある前提でも、権限と公開範囲は最小化するのが安全です。",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "DeerFlowは、サブエージェント・サンドボックス・永続メモリ・スキルを統合し、長時間の複雑なタスクを自律実行できるオープンソースのスーパーエージェント・ハーネスです。v2.0の全面書き直しで設計が刷新され、Claude Codeを含む幅広い連携先を備えています。",
+        "MITライセンスで自由度が高く、セルフホストでエージェント基盤を持ちたいチームにとって有力な選択肢です。実行能力が高いぶん、デプロイ時のセキュリティ設計だけは丁寧に行いましょう。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "GitHub: bytedance/deer-flow",
+        "https://github.com/bytedance/deer-flow",
+        "LangGraph",
+        "https://www.langchain.com/langgraph",
+        "Model Context Protocol（MCP）",
+        "https://modelcontextprotocol.io/",
+      ],
+    },
+  ],
+})
+
+// Append WorldMonitor (global intelligence dashboard) overview article
+fallbackBlogPosts.push({
+  slug: "what-is-worldmonitor-global-intelligence",
+  title: "WorldMonitorとは？500以上のソースをAIで束ねる“地球規模”のリアルタイム情報ダッシュボード",
+  description:
+    "WorldMonitorは、地政学・金融・インフラの情報をAIで統合表示するオープンソースのダッシュボード。500以上のニュースフィード、3D地球儀＋WebGLマップ、OllamaによるローカルAI（APIキー不要）、Tauri 2のデスクトップアプリまでを備えます。機能・データソース・技術スタック・ライセンスを公式情報に基づいて解説します。",
+  genre: "Full-stack",
+  tags: ["WorldMonitor", "データ可視化", "ローカルAI"],
+  date: "2026-06-24",
+  latest_update: "2026-06-24",
+  heroImage: "/images/blog-placeholder.svg",
+  heroImageAlt: "WorldMonitor - 500以上のソースをAIで統合するリアルタイム地球規模情報ダッシュボードの解説",
+  sections: [
+    {
+      body: [
+        "本記事は一次情報（WorldMonitor公式リポジトリおよびREADME）に基づき構成しています。WorldMonitorは活発に開発が進んでおり、機能や仕様は今後変更される可能性があります。",
+      ],
+    },
+    {
+      heading: "この記事でわかること",
+      list: [
+        "WorldMonitorとは何か／どんな課題を解くか",
+        "主な機能（地図・指数・フィード・多言語）",
+        "データソースとAIの使い方（ローカル完結）",
+        "技術スタックとアーキテクチャ",
+        "導入方法（環境変数ゼロ）",
+        "ライセンスと注意点",
+      ],
+    },
+    {
+      heading: "WorldMonitorとは？分断された情報を1画面に",
+      body: [
+        "WorldMonitorは、地政学・金融・インフラにまたがる情報をAIで統合表示する、オープンソースのリアルタイム情報ダッシュボードです。ニュース・市場データ・各種シグナル・災害アラートといった断片的な情報源を、ひとつの“状況把握”プラットフォームにまとめます。",
+        "現代の情報は量も経路もバラバラで、全体像をつかむのは困難です。WorldMonitorは数百のソースを集約し、AIで相関づけることで、世界の動きを俯瞰できるようにします。GitHubスターは約59.5k、最新はv2.5.23（2026年3月）です。",
+      ],
+    },
+    {
+      heading: "主な機能",
+      table: {
+        headers: ["機能", "概要"],
+        rows: [
+          ["AI統合ニュース", "15カテゴリ・500以上のキュレーション済みフィードをAIで要約・統合"],
+          ["デュアル地図", "3D地球儀（globe.gl）とWebGLの平面マップ（deck.gl）を切替"],
+          ["国家不安定指数（CII）", "v8のストレススコアでTier-1の31カ国を評価"],
+          ["金融レーダー", "29の証券取引所・商品・暗号資産をカバー"],
+          ["6つのサイト派生", "world / tech / finance / commodity / happy / energy"],
+          ["多言語", "24言語に対応（RTL対応含む）"],
+        ],
+      },
+    },
+    {
+      heading: "データソースとAIの使い方（ローカル完結）",
+      body: [
+        "地政学・金融・エネルギー・航空など65以上の外部プロバイダからデータを集約します。AIによる要約・相関づけは、ローカルのOllamaを使えばAPIキー不要で動かせるのが大きな特徴です。",
+        "クラウドを使いたい場合はGroqやOpenRouterにも対応し、さらにブラウザ側でTransformers.jsを用いた推論も組み合わせられます。“手元で完結させるか、クラウドに広げるか”を選べる柔軟さがあります。",
+        "",
+        "{{RELATED_ARTICLE:what-is-voicebox-local-ai-voice}}",
+      ],
+    },
+    {
+      heading: "技術スタックとアーキテクチャ",
+      body: [
+        "フロントエンドはTypeScript・Vite・Three.jsで構築され、可視化に強い構成です。デスクトップ版はTauri 2にNode.jsサイドカーを組み合わせ、Windows・macOS・Linux向けのネイティブアプリを提供します。",
+        "サービス間の契約にはProtocol Buffers（276のproto・34サービス）を採用し、配信はVercel Edge・Railwayリレー・PWAという多面的な構成。キャッシュにはRedis/Upstashやサービスワーカーを使います。フロント中心の大規模アプリらしい、現代的なフルスタック設計です。",
+      ],
+    },
+    {
+      heading: "導入方法（環境変数ゼロ）",
+      body: [
+        "ローカル起動は数コマンドで済み、環境変数の設定は不要です。",
+        "git clone https://github.com/koala73/worldmonitor.git",
+        "cd worldmonitor && npm install && npm run dev",
+        "",
+        "起動後は http://localhost:3000 で開きます。APIキーなしでローカルAIまで含めて試せるため、最初のハードルが低いのも魅力です。",
+      ],
+    },
+    {
+      heading: "ライセンスと注意点",
+      body: [
+        "ライセンスはAGPL-3.0-only（コピーレフト）。個人利用・セルフホスト・フォークは許可されますが、商用のSaaS提供にはAGPL遵守または別途ライセンスが必要です。改変して公開する場合はソース公開義務が及ぶ点に注意してください。",
+        "扱う情報の性質上、表示内容はあくまで参考情報として捉え、重要な判断には一次情報の確認を併用するのが安全です。",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "WorldMonitorは、500以上のソースとAIを束ね、世界の動きを1画面で俯瞰できるオープンソースのダッシュボードです。3D地球儀やWebGLマップ、国家不安定指数、金融レーダー、24言語対応など、情報の“見える化”に振り切った機能が揃っています。",
+        "OllamaによるローカルAIでAPIキーなしに動かせる手軽さと、Tauri 2のデスクトップアプリまで含めた完成度は、データ可視化やフルスタック開発の好例としても学びの多いプロジェクトです。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "GitHub: koala73/worldmonitor",
+        "https://github.com/koala73/worldmonitor",
+        "Ollama",
+        "https://ollama.com/",
+        "deck.gl",
+        "https://deck.gl/",
+      ],
+    },
+  ],
+})
+
+// Append Claude Code official plugin directory overview article
+fallbackBlogPosts.push({
+  slug: "what-is-claude-code-plugins-official",
+  title: "Claude Code公式プラグインディレクトリとは？スキル・MCP・コマンドを“入れて使う”仕組み",
+  description:
+    "Anthropic公式の「claude-plugins-official」は、Claude Codeを拡張する高品質プラグインを集めた厳選ディレクトリ。スキル・MCPサーバー・スラッシュコマンド・エージェントをまとめて配布でき、/pluginコマンドで導入します。仕組み・導入方法・プラグイン構造・貢献方法・注意点を公式情報に基づいて解説します。",
+  genre: "Update",
+  tags: ["Claude Code", "プラグイン", "MCP"],
+  date: "2026-06-24",
+  latest_update: "2026-06-24",
+  heroImage: "/images/blog-placeholder.svg",
+  heroImageAlt: "Claude Code公式プラグインディレクトリ - スキル・MCP・コマンド・エージェントをまとめて導入する仕組みの解説",
+  sections: [
+    {
+      body: [
+        "本記事は一次情報（Anthropic公式リポジトリおよびREADME）に基づき構成しています。Claude Codeおよびプラグイン機能は活発に更新されており、コマンドや仕様は今後変更される可能性があります。",
+      ],
+    },
+    {
+      heading: "この記事でわかること",
+      list: [
+        "公式プラグインディレクトリとは何か",
+        "プラグインで何を拡張できるか（スキル・MCP・コマンド・エージェント）",
+        "導入と発見の方法（/pluginコマンド）",
+        "プラグインの標準構造",
+        "貢献（自作プラグインの提出）方法",
+        "インストール時の注意（信頼性）",
+      ],
+    },
+    {
+      heading: "公式プラグインディレクトリとは？",
+      body: [
+        "claude-plugins-officialは、Claude Codeを拡張する高品質なプラグインをAnthropicが厳選して集めた公式ディレクトリです。リポジトリは内部プラグイン（Anthropicが保守する /plugins）と、サードパーティ製の外部プラグイン（/external_plugins）の2つに分かれています。",
+        "プラグインは、スキル・MCPサーバー・スラッシュコマンド・エージェントといった機能をまとめて配布する仕組みで、Claude Codeの能力を“パッケージ単位”で足せるのが特徴です。ライセンスはApache-2.0（各プラグインは個別ライセンスの場合あり）、スターは約31kです。",
+      ],
+    },
+    {
+      heading: "導入と発見：/plugin コマンド",
+      body: [
+        "インストールはコマンド1行です。マーケットプレイス名を添えて指定します。",
+        "/plugin install {plugin-name}@claude-plugins-official",
+        "",
+        "どんなプラグインがあるかを探すときは、/plugin から Discover を開いて一覧をブラウズできます。導入後はそのプラグインが持つスキルやコマンド、MCPサーバーがClaude Codeから使えるようになります。",
+      ],
+    },
+    {
+      heading: "プラグインの標準構造",
+      body: [
+        "各プラグインは決まったディレクトリ構造に従います。メタ情報を定義する .claude-plugin/plugin.json が必須で、あとは必要な機能だけを足していく形です。",
+      ],
+      list: [
+        ".claude-plugin/plugin.json … プラグインのメタ情報（必須）",
+        ".mcp.json … MCPサーバー設定（任意）",
+        "commands/ … スラッシュコマンド（任意）",
+        "agents/ … エージェント定義（任意）",
+        "skills/ … スキル定義（任意）",
+        "README.md … ドキュメント",
+      ],
+    },
+    {
+      heading: "貢献と注意点",
+      body: [
+        "内部プラグインはAnthropicのチームが開発し、/plugins/example-plugin が参考になります。サードパーティはプラグインディレクトリの提出フォームから申請でき、外部プラグインはセキュリティと品質の基準を満たす必要があります。",
+        "ただし重要な注意があります。Anthropicはプラグインが含むMCPサーバーやファイルの中身までを管理しているわけではありません。インストール前に提供元を信頼できるか必ず確認し、不要な権限や未知のMCPサーバーを安易に有効化しないことが大切です。",
+        "",
+        "{{RELATED_ARTICLE:what-is-anthropic-cybersecurity-skills}}",
+      ],
+    },
+    {
+      heading: "まとめ",
+      body: [
+        "claude-plugins-officialは、スキル・MCP・コマンド・エージェントをまとめて配布できる、Claude Codeの公式プラグインディレクトリです。/plugin install で手軽に導入でき、Discoverで探せて、決まった構造に従えば自作プラグインの提出もできます。",
+        "Claude Codeを“自分たちのワークフロー”に合わせて拡張する公式の入口として要注目です。便利さの一方で、外部プラグインは信頼性の確認を忘れずに運用しましょう。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "GitHub: anthropics/claude-plugins-official",
+        "https://github.com/anthropics/claude-plugins-official",
+        "Claude Code 公式ドキュメント",
+        "https://docs.anthropic.com/en/docs/claude-code/overview",
+        "Model Context Protocol（MCP）",
+        "https://modelcontextprotocol.io/",
+      ],
+    },
+  ],
+})
