@@ -436,6 +436,8 @@ fallbackBlogPosts.push({
   heroImageAlt: "Tursoとは？SQLiteをRustで書き直す次世代の組み込みDBの全貌",
   sections: [
     {
+      image: "/images/blog/turso-cloud-beta-production-comparison.png",
+      imageAlt: "TursoとTurso Cloudの機能・成熟度比較（ベータ版とプロダクション版の全体像）",
       body: [
         "こんにちは、LEXIAの齋藤です。",
         "本記事は一次情報（Turso公式リポジトリおよびドキュメント）に基づき構成しています。Tursoは現在ベータ段階のため、機能や仕様は今後変更される可能性があります。",
@@ -515,8 +517,8 @@ fallbackBlogPosts.push({
     },
     {
       heading: "本番で使える？成熟度と注意点",
-      image: "/images/blog/turso-cloud-beta-production-comparison.png",
-      imageAlt: "本番で使える？成熟度と注意点（TursoとTurso Cloudの機能・成熟度比較）",
+      image: "/images/blog/turso-cloud-dashboard-overview.png",
+      imageAlt: "Turso Cloud管理ダッシュボードの概要（データベース管理と連携機能）",
       body: [
         "公式は「本ソフトウェアはベータであり、バグや想定外の挙動が残る可能性がある」と明記しています。一方で、Turso Cloud・Kin AIアシスタント・Spice.aiなど実運用での採用事例もあります。",
         "品質面では、独自の決定的シミュレーションテスト（DST）やAntithesisなど多数のツールで広範にテストされており、目標として「SQLiteレベルの信頼性」を掲げています。",
