@@ -1,4 +1,10 @@
 import type { BlogPost } from "./blog-posts.types"
+import {
+  AFFILIATE_DISCLOSURE_HTML,
+  affiliateAlertHtml,
+  affiliateNoteHtml,
+  amazonProductHtml,
+} from "./affiliate"
 
 export const fallbackBlogPosts: BlogPost[] = [
   {
@@ -950,6 +956,276 @@ fallbackBlogPosts.push({
         "https://firecrawl.dev/",
         "ドキュメント",
         "https://docs.firecrawl.dev/",
+      ],
+    },
+  ],
+})
+
+// Append Claude Code pricing / cost-optimization article (続き記事・Claude Code入門の派生)
+fallbackBlogPosts.push({
+  slug: "claude-code-pricing-cost-optimization",
+  title: "Claude Codeの料金は結局いくら？Pro・Max・API課金とコスト最適化【2026年版】",
+  description:
+    "Claude Codeを使うには結局いくらかかるのか。Claude Pro / Max 5x / Max 20x の定額プランとAPI従量課金の違い、使い方別の損益分岐、トークンを節約する実践テクニックまでを整理します。",
+  genre: "AI",
+  tags: ["Claude Code", "料金", "コスト最適化"],
+  date: "2026-06-26",
+  readingTime: "6分",
+  sections: [
+    {
+      body: [
+        "こんにちは、LEXIAの齋藤です。",
+        "「Claude Codeは便利そうだけど、結局いくらかかるの？」——入門記事（ https://lexia-hp.com/blog/claude-code-overview-2025-10-14 ）を読んだ次に、誰もが最初にぶつかる疑問がこれです。",
+        "本記事では、Claude Codeを動かすための料金体系を「定額プラン」と「API従量課金」に分けて整理し、自分の使い方ならどれが得かを損益分岐の考え方で示します。さらに、同じプランでも“持ち”が変わるトークン節約の実践テクまでまとめました。",
+      ],
+    },
+    {
+      richtext: affiliateNoteHtml(
+        "補足：料金は変わりやすい",
+        "プランの金額や上限、モデルの単価は改定されることがあります。本記事は2026年6月時点の整理です。契約前に必ず<strong>公式の料金ページ</strong>で最新を確認してください（為替・税の扱いも環境により異なります）。",
+      ),
+    },
+    {
+      heading: "① 料金体系の全体像（定額プラン × API従量課金）",
+      body: [
+        "Claude Codeは、Anthropicの有料サブスクリプション（Claudeアカウント）または APIキーのどちらかで動かします。大きく4つの入口があります。",
+      ],
+      list: [
+        "Claude Pro（約$20/月）：まず試す個人向け。軽い利用に。",
+        "Claude Max 5x（約$100/月）：Proより使用量上限が高く、毎日触る人向け。",
+        "Claude Max 20x（約$200/月）：上限が最も高く、終日ヘビー利用や複数セッション並列向け。",
+        "API従量課金：モデルのトークン量に応じて課金。使った分だけ＝上限が無い代わりに青天井になりうる。",
+      ],
+    },
+    {
+      heading: "② 自分はどれが得？使い方別の損益分岐",
+      body: [
+        "定額プランは「上限はあるが金額が読める」、API従量は「上限は無いが金額が読めない」のが本質的な違いです。月の使い方から逆算すると選びやすくなります。",
+      ],
+      table: {
+        headers: ["使い方の目安", "向いている課金", "理由"],
+        rows: [
+          ["週に数回・お試し中心", "Claude Pro", "金額が小さく、まず体験するのに十分"],
+          ["毎日1〜数時間・1セッション", "Claude Max 5x", "Proの上限に当たり始める層。定額で読める"],
+          ["終日ヘビー／複数セッション並列", "Claude Max 20x", "上限が最も高く、回し続けても定額で安心"],
+          ["CI・夜間バッチ・自動化", "API従量課金", "人が張り付かない断続実行はトークン課金が合理的"],
+        ],
+      },
+    },
+    {
+      heading: "③ 同じプランでも“持ち”が変わるトークン節約術",
+      body: [
+        "Claude Codeのコストはトークン消費量に比例します。定額プランなら上限到達までの体感が、API課金なら請求額が、以下の工夫で大きく変わります。",
+      ],
+      list: [
+        "/compact でコンテキストを圧縮し、/clear で不要になった会話をリセットする",
+        "CLAUDE.md に前提・規約・ディレクトリ構成を書き、毎回の説明を省く",
+        "重い思考はOpus 4.8、定型作業はSonnet 4.6へとモデルを使い分ける",
+        "サブエージェントや大量並列は強力だがトークンを一気に消費する。必要な場面に絞る",
+        "大きなファイルを丸ごと読ませず、対象範囲を指定して渡す",
+        "計画と実行を分け、無駄な往復（やり直し）を減らす",
+      ],
+    },
+    {
+      heading: "④ API従量課金が向くケースと「青天井」リスク",
+      body: [
+        "API課金は、CIでのテスト自動修正、夜間のバッチ処理、大量のサブエージェントを並列で回す自動化など「人が張り付かない処理」と相性が良い課金方式です。一方で、上限が無いぶん想定外の消費が請求に直結します。",
+      ],
+      richtext: affiliateAlertHtml(
+        "注意：API課金は上限が無い",
+        "ループや過剰な並列でトークンを大量消費すると、請求が一気に膨らみます。<strong>使用上限アラート・予算上限の設定・小さく試してから広げる</strong>運用を徹底してください。常時ヘビーに回すなら、青天井のAPIより定額のMaxの方が読めるケースも多いです。",
+      ),
+    },
+    {
+      heading: "⑤ まとめ：3パターンで考える",
+      body: [
+        "迷ったら次の3択で考えると外しません。",
+        "(1) まず試す → Pro。(2) 毎日の相棒にする → Max 5x、足りなければ Max 20x。(3) 自動化・大量並列で回す → APIを予算上限つきで、または定額Maxと自前マシンの併用。",
+        "特に「複数のClaude Codeを終日並列で回して稼ぎたい」なら、API青天井に頼るより定額Maxを自前マシンで回し続ける構成が現実的です。その具体的なやり方と採算は、Mac miniクラスタの記事（ https://lexia-hp.com/blog/mac-mini-cluster-claude-code-monetization ）でシミュレーションしています。",
+      ],
+    },
+    {
+      heading: "関連記事",
+      list: [
+        "Claude Code入門：ターミナルで動く“エージェント型”コーディングアシスタント",
+        "https://lexia-hp.com/blog/claude-code-overview-2025-10-14",
+        "Mac mini複数台で「AIエージェント部署」を作る｜収益化の採算シミュレーション",
+        "https://lexia-hp.com/blog/mac-mini-cluster-claude-code-monetization",
+      ],
+    },
+  ],
+})
+
+// Append Mac mini × Claude Code cluster monetization article (Amazonアソシエイト記事)
+fallbackBlogPosts.push({
+  slug: "mac-mini-cluster-claude-code-monetization",
+  title: "Mac mini複数台で「AIエージェント部署」を作る｜Claude Code並列稼働と収益化の採算シミュレーション",
+  description:
+    "Mac miniを複数台そろえてClaude Codeを並列で動かし続ける——“AI社員チーム”の作り方を、機種・周辺機器の選び方から、何台で黒字化するかの採算シミュレーション、常時稼働のセキュリティまで実務目線で解説します。",
+  genre: "Full-stack",
+  tags: ["Mac mini", "Claude Code", "収益化"],
+  date: "2026-06-26",
+  readingTime: "10分",
+  sections: [
+    { richtext: AFFILIATE_DISCLOSURE_HTML },
+    {
+      body: [
+        "こんにちは、LEXIAの齋藤です。",
+        "「Mac miniを何台か並べて、その上でClaude Codeを動かしまくって稼ぐ」——2026年に入って一気に現実味を帯びてきたこの構成を、機材選びから採算計算まで一気通貫で設計します。",
+        "1台＝1人のAI社員、複数台＝ひとつの“部署”。そう捉えると、何を何台そろえ、どう束ね、いくらで黒字化するかが見えてきます。",
+      ],
+    },
+    {
+      heading: "① なぜ今「複数台のMac mini」なのか",
+      body: [
+        "きっかけは、ローカルで常時動くAIエージェント（OpenClaw＝旧ClawdBot）の爆発的ヒットでMac miniが品薄になるほどの社会現象になったことです。低消費電力・静音・省スペースで24時間つけっぱなしにできるMac miniは、AIエージェントの“常駐ホスト”として理想的でした。",
+        "そこにClaude Codeの定額プラン（Max）を組み合わせると、API課金の青天井を気にせず、複数のエージェントを終日回し続けられます（料金の考え方は https://lexia-hp.com/blog/claude-code-pricing-cost-optimization を参照）。「クラウドに毎月払い続けるより、手元の箱で完結させたい」というローカルファースト志向（ https://lexia-hp.com/blog/end-of-cloud-local-first-thinking ）とも噛み合います。",
+      ],
+    },
+    {
+      heading: "② まずは1台目——入門ノードの選び方",
+      body: [
+        "いきなり複数台をそろえる必要はありません。まずは1台で「Claude Codeを並列で回す」「軽いローカルLLMを動かす」感覚をつかむのがおすすめです。検証用の入門ノードなら、無印のMac mini M4で十分始められます。",
+      ],
+      richtext: amazonProductHtml({
+        name: "Apple Mac mini（M4・16GB / 24GB）",
+        context: "まず1台で試す入門ノード。Claude Codeの並列実行や軽量モデルの検証に。在庫は変動するため、最新の在庫・価格はリンク先でご確認ください（Apple Storeでも購入できます）。",
+        url: "https://amzn.to/43XtC7M",
+      }),
+    },
+    {
+      heading: "③ 主力ノードのスペック設計（メモリは盛れるだけ盛る）",
+      body: [
+        "“部署の主力”として常用するなら、Mac mini M4 Proが本命です。理由は2つ。ユニファイドメモリの帯域が広く、ローカルLLMとClaude Codeの同時稼働に耐えること。そして高速なクラスタ接続（Thunderbolt 5）に対応することです。",
+        "重要なのは、Macのメモリは後から増設できないという点。用途が伸びる前提なら、買う時点で“盛れるだけ盛る”のが鉄則です。",
+      ],
+      table: {
+        headers: ["メモリ", "向き", "ひとことで"],
+        rows: [
+          ["24GB", "最低限", "Claude Code中心・軽いモデルなら"],
+          ["32GB", "実用", "エージェント＋中規模モデルの常用"],
+          ["48GB / 64GB", "本命", "複数エージェントの連続運用・大きめモデル"],
+        ],
+      },
+    },
+    {
+      richtext: affiliateNoteHtml(
+        "主力ノード：Apple Mac mini（M4 Pro・48GB / 64GB）",
+        "クラスタの主力。Claude Codeの並列稼働＋ローカルLLM常用の本命です。メモリは後から増設できないため、買う時点で余裕を持った構成に。<strong>Amazonでは在庫が変動しやすいため、最新の在庫は「Mac mini M4 Pro」で検索、または Apple Store のビルド注文が確実です。</strong>",
+      ),
+    },
+    {
+      heading: "④ 複数台を束ねる——配線とネットワーク",
+      body: [
+        "複数台に分担させると、体感速度を左右するのはノード間の通信です。Wi-Fiはボトルネックになりやすいので、有線で束ねるのが基本。台数を増やすほど、スイッチングハブと良質なLANケーブル、そして高速なノード直結が効いてきます。",
+        "分散の仕組みづくりには、余り端末をAIクラスター化するOSS『exo』の解説（ https://lexia-hp.com/blog/what-is-exo-ai-cluster ）も参考になります。",
+      ],
+      richtext:
+        amazonProductHtml({
+          name: "2.5GbE / 10GbE スイッチングハブ",
+          context: "複数ノードを束ねる有線バックボーン。台数が増えるほどノード間通信の速度が効く。",
+          url: "https://amzn.to/4ex7xmr",
+        }) +
+        amazonProductHtml({
+          name: "エレコム CAT6A LANケーブル",
+          context: "2.5G / 10GbEを活かすための配線。スイッチとセットで本数をそろえる。",
+          url: "https://amzn.to/4g27ZdD",
+        }) +
+        amazonProductHtml({
+          name: "Thunderbolt 5 ケーブル",
+          context: "M4 Pro同士の高速直結に。低遅延でノード間をつなぐ要（対応機種を要確認）。",
+          url: "https://amzn.to/44vbJ03",
+        }) +
+        amazonProductHtml({
+          name: "Anker USB-C KVMスイッチ",
+          context: "複数台を1組のキーボード・マウス・モニタで切り替え。初期セットアップが一気に楽になる。",
+          url: "https://amzn.to/4vx3ZGL",
+        }),
+    },
+    {
+      heading: "⑤ 24時間運用の現実——電源・熱・ストレージ",
+      body: [
+        "常時稼働＋複数台になると、地味な「運用の足回り」が効いてきます。突然の停電でセッションやデータを失わないUPS、積み重ねて省スペース化するスタンド、内蔵SSDが割高なMac miniを助ける外付けSSD——このあたりは台数ぶん必要になりがちです。",
+      ],
+      richtext:
+        amazonProductHtml({
+          name: "CyberPower ST425JP UPS（425VA / 260W）",
+          context: "24時間ヘッドレス運用の前提。停電時のデータ保護と安全なシャットダウンに。",
+          url: "https://amzn.to/4ey3CWI",
+        }) +
+        amazonProductHtml({
+          name: "Crucial X10 外付けSSD 2TB（USB-C）",
+          context: "モデルの重みやデータの置き場に。割高な内蔵SSDを増やさず外付けで逃がす。",
+          url: "https://amzn.to/4g8GM99",
+        }) +
+        amazonProductHtml({
+          name: "UGREEN Mac mini M4 / M4 Pro 専用 USB-Cハブ＆スタンド（10-in-1）",
+          context: "ハブ＋スタンド一体型。ポート拡張・M.2 NVMeエンクロージャ内蔵で、Mac miniの足回りをまとめて整える。",
+          url: "https://amzn.to/4uWCjdg",
+        }),
+    },
+    {
+      heading: "⑥ 採算シミュレーション——何台で黒字化する？",
+      body: [
+        "ここが本題です。下表は「1台あたりの初期投資」「月額の定額プラン」「電気代」をざっくり置いた“モデルケース”です（金額はすべて仮の前提。構成・為替・電気料金で変わります）。",
+        "ポイントは、Mac miniのアイドル消費電力は数Wと小さく、電気代は1台あたり月100〜200円程度に収まること。つまり毎月の主なコストは電気代ではなく、定額プラン（Max）の月額です。",
+      ],
+      table: {
+        headers: ["項目", "1台あたりの目安（仮）", "メモ"],
+        rows: [
+          ["初期投資（本体＋周辺機器）", "20〜35万円", "M4 / M4 Proの構成による"],
+          ["定額プラン（Claude Max）", "月 約$100〜$200", "並列で回すなら20xが現実的"],
+          ["電気代", "月 約100〜200円", "アイドル数Wと省電力"],
+          ["回収の考え方", "成果物の粗利 ÷ 月額", "月額を上回る付加価値を出せれば黒字"],
+        ],
+      },
+    },
+    {
+      richtext: affiliateAlertHtml(
+        "重要：これは「儲け」を保証するものではありません",
+        "上表はあくまで前提を置いたシミュレーションで、収益額を約束するものではありません。実際の成果は、案件の有無・スキル・運用次第で大きく変わります。<strong>「Mac miniを買えば必ず稼げる」わけではない</strong>点を理解したうえで、小さく1台から検証することを強くおすすめします。",
+      ),
+    },
+    {
+      heading: "⑦ 常時稼働の落とし穴——セキュリティ",
+      body: [
+        "終日つけっぱなしのエージェントは、攻撃面も“常時”開きっぱなしになります。実際、ローカルAIエージェントには深刻な脆弱性（WebSocketの乗っ取り等）が報告された例もあります。複数台に権限を委譲して自動実行させるほど、事故の影響範囲は広がります。",
+      ],
+      list: [
+        "LAN内へのサービス公開は最小限にし、不要なポートは閉じる",
+        "エージェントに渡す権限・APIキー・秘密情報は必要最小限に絞る",
+        "プロンプトインジェクション対策として、外部入力をそのまま実行させない",
+        "自動実行は段階的に。まずは人のレビューを挟む運用から始める",
+      ],
+    },
+    {
+      heading: "⑧ まとめ：1台から始めて“部署”に育てる",
+      body: [
+        "いきなり大量導入はおすすめしません。(1) M4 1台でClaude Codeの並列と運用感をつかむ→(2) 手応えがあればM4 Pro（メモリ大）を主力に追加→(3) 配線・UPS・スタンドで“部署”として束ねる、の順で育てるのが安全で確実です。",
+        "機材は文脈に合った最小限から。AdSense併用のこのブログでは、関連記事への内部リンクで回遊を作りつつ、本当に必要な機材だけを紹介していくのが、読者にも運営にも健全だと考えています。",
+      ],
+    },
+    {
+      richtext:
+        affiliateNoteHtml(
+          "さらに学ぶ（書籍）",
+          "AIエージェント開発やローカルLLMの基礎を体系的に押さえたい方へ。実務に近い解説書を1冊持っておくと、クラスタ運用の判断が速くなります。",
+        ) +
+        amazonProductHtml({
+          name: "AIエージェント 設計＆実装 完全ガイド",
+          context: "ローコード開発やユースケースを徹底解説。エージェント設計の基礎固めに。",
+          url: "https://amzn.to/4f5zDp2",
+        }),
+    },
+    {
+      heading: "関連記事",
+      list: [
+        "Claude Codeの料金は結局いくら？Pro・Max・API課金とコスト最適化",
+        "https://lexia-hp.com/blog/claude-code-pricing-cost-optimization",
+        "exoとは？余ってる端末が“ひとつのAIクラスター”になるOSSを解説",
+        "https://lexia-hp.com/blog/what-is-exo-ai-cluster",
+        "Claude Code入門：ターミナルで動く“エージェント型”コーディングアシスタント",
+        "https://lexia-hp.com/blog/claude-code-overview-2025-10-14",
       ],
     },
   ],

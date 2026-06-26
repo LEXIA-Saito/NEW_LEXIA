@@ -95,6 +95,16 @@ export default function PrivacyPolicyPage() {
           </div>
 
           <div>
+            <h2 className="text-2xl font-semibold">アフィリエイトプログラムについて</h2>
+            <p className="mt-2 leading-relaxed">
+              当サイトのブログ記事では、Amazon.co.jp を含むアフィリエイトプログラムを利用し、商品・サービスを紹介する場合があります。これらの記事には広告（アフィリエイトリンク）が含まれ、リンクを経由して商品が購入された場合、当事業が紹介料を受け取ることがあります。商品の価格・在庫状況は変動するため、最新の情報は必ずリンク先の各販売サイトでご確認ください。紹介内容は当事業の見解に基づくものであり、購入を強制するものではありません。
+            </p>
+            <p className="mt-2 leading-relaxed">
+              当事業は「Amazonアソシエイト・プログラム」の参加者です。Amazonアソシエイト・プログラムは、Amazon.co.jp を宣伝しリンクすることによって紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムです。
+            </p>
+          </div>
+
+          <div>
             <h2 className="text-2xl font-semibold">6. 個人情報の管理</h2>
             <p className="mt-2 leading-relaxed">当事業は、個人情報を安全に管理するため、以下の対策を実施します。</p>
             <ul className="mt-2 list-disc space-y-2 pl-6">
