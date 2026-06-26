@@ -124,7 +124,7 @@ export const fallbackBlogPosts: BlogPost[] = [
           "https://news.ycombinator.com/item?id=44127653",
           "https://www.ycombinator.com/companies/onlook",
           "",
-          "LEXIA技術スタックとの関連（補足参照用）",
+          "関連技術・フレームワーク",
           "https://nextjs.org/",
           "https://tailwindcss.com/",
           "https://supabase.com/",
@@ -508,7 +508,7 @@ fallbackBlogPosts.push({
       heading: "AIとの接点：MCPサーバーモード",
       body: [
         "Tursoは Model Context Protocol（MCP）サーバーモードを備えており、Claude CodeやClaude DesktopのようなAIアシスタントから直接データベースを操作できます。",
-        "「組み込みDB × AIエージェント」という組み合わせは、ローカルで完結するRAGや開発支援ツールとの相性がよく、LEXIAが扱うAI開発のテーマとも地続きです。",
+        "「組み込みDB × AIエージェント」という組み合わせは、ローカルで完結するRAGや開発支援ツールとの相性がよく、これからのAIエージェント開発における強力な選択肢となるでしょう。",
         "",
         "{{RELATED_ARTICLE:claude-code-overview-2025-10-14}}",
       ],
