@@ -987,6 +987,8 @@ fallbackBlogPosts.push({
     },
     {
       heading: "① 料金体系の全体像（定額プラン × API従量課金）",
+      image: "/images/blog/claude-code-ai-assistant.webp",
+      imageAlt: "Claude CodeをエディタとターミナルでAIアシスタントとして使うイメージ",
       body: [
         "Claude Codeは、Anthropicの有料サブスクリプション（Claudeアカウント）または APIキーのどちらかで動かします。大きく4つの入口があります。",
       ],
@@ -1077,6 +1079,8 @@ fallbackBlogPosts.push({
     },
     {
       heading: "① なぜ今「複数台のMac mini」なのか",
+      image: "/images/blog/mac-mini-cluster-rack.webp",
+      imageAlt: "ラックに複数台のMac miniを積み上げて構成したクラスタ",
       body: [
         "きっかけは、ローカルで常時動くAIエージェント（OpenClaw＝旧ClawdBot）の爆発的ヒットでMac miniが品薄になるほどの社会現象になったことです。低消費電力・静音・省スペースで24時間つけっぱなしにできるMac miniは、AIエージェントの“常駐ホスト”として理想的でした。",
         "そこにClaude Codeの定額プラン（Max）を組み合わせると、API課金の青天井を気にせず、複数のエージェントを終日回し続けられます（料金の考え方は https://lexia-hp.com/blog/claude-code-pricing-cost-optimization を参照）。「クラウドに毎月払い続けるより、手元の箱で完結させたい」というローカルファースト志向（ https://lexia-hp.com/blog/end-of-cloud-local-first-thinking ）とも噛み合います。",
@@ -1116,6 +1120,8 @@ fallbackBlogPosts.push({
     },
     {
       heading: "④ 複数台を束ねる——配線とネットワーク",
+      image: "/images/blog/mac-mini-cluster-topology.webp",
+      imageAlt: "Mac miniクラスタのトポロジーとノード間通信のイメージ",
       body: [
         "複数台に分担させると、体感速度を左右するのはノード間の通信です。Wi-Fiはボトルネックになりやすいので、有線で束ねるのが基本。台数を増やすほど、スイッチングハブと良質なLANケーブル、そして高速なノード直結が効いてきます。",
         "分散の仕組みづくりには、余り端末をAIクラスター化するOSS『exo』の解説（ https://lexia-hp.com/blog/what-is-exo-ai-cluster ）も参考になります。",
@@ -1166,6 +1172,8 @@ fallbackBlogPosts.push({
     },
     {
       heading: "⑥ 採算シミュレーション——何台で黒字化する？",
+      image: "/images/blog/mac-mini-monetization-path.webp",
+      imageAlt: "MVPからPMF、そして収益化・スケールへ至る成長と採算のイメージ",
       body: [
         "ここが本題です。下表は「1台あたりの初期投資」「月額の定額プラン」「電気代」をざっくり置いた“モデルケース”です（金額はすべて仮の前提。構成・為替・電気料金で変わります）。",
         "ポイントは、Mac miniのアイドル消費電力は数Wと小さく、電気代は1台あたり月100〜200円程度に収まること。つまり毎月の主なコストは電気代ではなく、定額プラン（Max）の月額です。",
