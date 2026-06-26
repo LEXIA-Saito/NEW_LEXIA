@@ -4,7 +4,6 @@ import BreadcrumbsLite from "@/components/breadcrumbs-lite"
 import {
   BLOG_GENRES,
   fetchBlogPosts,
-  getBlogGenreDescription,
   getBlogGenreLabel,
 } from "@/lib/blog-posts"
 import type { BlogGenre } from "@/lib/blog-posts"
@@ -13,7 +12,7 @@ import { SITE_URL } from "@/lib/config"
 import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
 import Image from "next/image"
-import GenreFilterList from "@/components/blog/GenreFilterList"
+import BlogExplorer from "@/components/blog/BlogExplorer"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
@@ -45,10 +44,6 @@ export const revalidate = 60
 
 import { formatJapaneseDate } from "@/lib/utils"
 
-function createGenreAnchor(genre: BlogGenre) {
-  return `genre-${genre}`
-}
-
 // tag anchor helper removed (no tag list on index)
 
 type PageProps = {
@@ -58,6 +53,7 @@ type PageProps = {
 export default async function BlogIndexPage(props: PageProps) {
   const sp = (await props.searchParams) || {}
   const initialGenre = (typeof sp.genre === "string" ? sp.genre : undefined) as BlogGenre | undefined
+  const initialQuery = typeof sp.q === "string" ? sp.q : ""
   const posts = (await fetchBlogPosts()).slice().sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   )
@@ -271,11 +267,12 @@ export default async function BlogIndexPage(props: PageProps) {
             </section>
           )}
 
-          {/* Category filter list: Tech / Ideas */}
-          <GenreFilterList
+          {/* 記事を探す: サイドバー（検索・カテゴリ・タグ）＋ 一覧 */}
+          <BlogExplorer
             posts={posts}
             genres={BLOG_GENRES.map((g) => ({ id: g.id, label: g.label }))}
             initialGenre={initialGenre}
+            initialQuery={initialQuery}
           />
 
               {/* tags section removed as requested */}
