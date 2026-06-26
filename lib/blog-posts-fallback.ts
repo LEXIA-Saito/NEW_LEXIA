@@ -1043,7 +1043,7 @@ fallbackBlogPosts.push({
       body: [
         "迷ったら次の3択で考えると外しません。",
         "(1) まず試す → Pro。(2) 毎日の相棒にする → Max 5x、足りなければ Max 20x。(3) 自動化・大量並列で回す → APIを予算上限つきで、または定額Maxと自前マシンの併用。",
-        "特に「複数のClaude Codeを終日並列で回して稼ぎたい」なら、API青天井に頼るより定額Maxを自前マシンで回し続ける構成が現実的です。その具体的なやり方と採算は、Mac miniクラスタの記事（ https://lexia-hp.com/blog/mac-mini-cluster-claude-code-monetization ）でシミュレーションしています。",
+        "特に「複数のClaude Codeを終日並列で回して稼ぎたい」なら、API青天井に頼るより定額Maxを自前マシンで回し続ける構成が現実的です。その具体的なやり方と採算シミュレーションは、Mac miniクラスタの記事（ https://lexia-hp.com/blog/mac-mini-cluster-claude-code-monetization ）が参考になります。",
       ],
     },
     {
@@ -1083,7 +1083,7 @@ fallbackBlogPosts.push({
       imageAlt: "ラックに複数台のMac miniを積み上げて構成したクラスタ",
       body: [
         "きっかけは、ローカルで常時動くAIエージェント（OpenClaw＝旧ClawdBot）の爆発的ヒットでMac miniが品薄になるほどの社会現象になったことです。低消費電力・静音・省スペースで24時間つけっぱなしにできるMac miniは、AIエージェントの“常駐ホスト”として理想的でした。",
-        "そこにClaude Codeの定額プラン（Max）を組み合わせると、API課金の青天井を気にせず、複数のエージェントを終日回し続けられます（料金の考え方は https://lexia-hp.com/blog/claude-code-pricing-cost-optimization を参照）。「クラウドに毎月払い続けるより、手元の箱で完結させたい」というローカルファースト志向（ https://lexia-hp.com/blog/end-of-cloud-local-first-thinking ）とも噛み合います。",
+        "そこにClaude Codeの定額プラン（Max）を組み合わせると、API課金の青天井を気にせず、複数のエージェントを終日回し続けられます（料金の考え方は https://lexia-hp.com/blog/claude-code-pricing-cost-optimization を参照）。「クラウドに毎月払い続けるより、手元の箱で完結させたい」と感じている人も多いはず。その背景にある“ローカルファースト”の考え方は、別記事（ https://lexia-hp.com/blog/end-of-cloud-local-first-thinking ）が参考になります。",
       ],
     },
     {
