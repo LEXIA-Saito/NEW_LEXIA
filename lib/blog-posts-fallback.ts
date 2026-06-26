@@ -928,7 +928,7 @@ fallbackBlogPosts.push({
       heading: "AIエコシステム連携（MCPほか）",
       body: [
         "FirecrawlはMCP（Model Context Protocol）サーバーを提供しており、ClaudeなどMCP対応エージェントから直接Webデータ取得を呼び出せます。導入は npx -y firecrawl-mcp をMCPサーバーとして登録し、環境変数 FIRECRAWL_API_KEY を設定するだけです。",
-        "このほかCLI連携やLovable・Zapier・n8nなどのプラットフォーム連携も用意されています。Claude Codeを使う開発フローとも噛み合います。",
+        "このほかCLI連携やLovable・Zapier・n8nなどのプラットフォーム連携も用意されています。Claude Codeを使う開発フローにも自然に組み込めます。",
         "",
         "{{RELATED_ARTICLE:claude-code-overview-2025-10-14}}",
       ],
