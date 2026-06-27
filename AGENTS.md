@@ -10,6 +10,20 @@
 
 アプリは優先的にmicroCMSから記事を取得し、取得できない場合は `fallbackBlogPosts` を使用します。並び替え・描画は `app/blog/page.tsx`（一覧/カード）および `app/blog/[slug]/page.tsx`（記事ページ・meta）で行われます。
 
+## Daily Publication Policy
+
+毎日投稿の制作・レビュー・公開手順は [`docs/blog/BLOG_WORKFLOW.md`](docs/blog/BLOG_WORKFLOW.md) に従います。
+
+- 通常記事は記事専用ブランチ `blog/YYYY-MM-DD-<slug>` で制作する
+- Pull RequestとVercel Previewで本文・一覧・目次を確認する
+- 最初の30日間は毎日18:00 JSTの公開を目標とする
+- 公開待ち記事を3件程度確保し、未完成記事を公開しない
+- 画像は任意。本文と一次情報確認を優先し、後日追加してよい
+- Amazonアソシエイトなどの広告記事は運営者本人の承認なしに公開しない
+- 記事の基準構成は `/blog/open-notebook-ai-notebooklm-alt-2025` を参考にする
+
+通常記事の本文には、依頼者への回答、執筆プロンプト、内部メモ、未公開の運用意図を含めません。読者の疑問から書き始め、機能だけでなく制約・費用・セキュリティ・運用継続性のうち必要な判断材料を示してください。
+
 ## microCMS Article Creation (Recommended)
 
 ### 1. リッチエディタV2使用時（contentHtml）
@@ -90,6 +104,8 @@ sections使用時は `headings` 不要（自動生成されます）。
 ```
 
 ## Image Usage
+画像は公開の必須条件ではありません。画像が未設定の場合は既存のプレースホルダー表示を利用し、本文を先に公開できます。画像を後日追加する場合も、内容に変更がなければ記事を不必要に新着扱いへ戻さないでください。
+
 ### Hero Image
 - フィールド: `heroImage`
 - 用途: 一覧カード、OG/Twitterプレビュー、記事ヘッダー
@@ -102,23 +118,34 @@ sections使用時は `headings` 不要（自動生成されます）。
 
 ## Field Notes
 - `slug`: 一意、半角英数とハイフン（URLになるため慎重に）
-- `date`: `YYYY-MM-DD`（一覧の並び順に影響）
-- `genre`: 既存は `"tech"` / `"trends"` / `"ideas"`
+- `date`: `YYYY-MM-DD`（一覧の並び順に影響）。公開時刻は記事PR本文の `blog-publish-metadata.publishAt` で管理
+- `genre`: 既存は `"AI"` / `"Frontend"` / `"Backend"` / `"Update"` / `"Full-stack"` / `"Security"`（旧データの `"tech"` は後方互換で利用）
   - 新ジャンル追加時は `lib/blog-posts.types.ts` と `lib/blog-posts.ts` の `GENRE_METADATA` を更新
   - 記事生成時は、実際の内容（コード中心か／動向紹介か／戦略・思想か）を把握した上で最も適切なカテゴリを決定すること
 - `readingTime`: 2025-10以降は自動計算（語数 ÷ 400wpm を切り上げ、最低1分）。データファイル値は無視されます
 - `tags`: UIの都合上3つ程度が無難（トリミングされる可能性あり）
 
 ## Implementation Flow
-1. `lib/blog-posts-fallback.ts` に記事データを追加／更新
-2. 画像URLを `heroImage` / `sections[].image` に設定
-3. ローカルで確認（任意）
+1. `main`を最新・クリーンな状態にし、記事ブランチを作成
+   - `pnpm blog:branch -- --slug <slug> --date YYYY-MM-DD`
+2. microCMSとfallbackの重複を確認
+3. `lib/blog-posts-fallback.ts` に記事データを追加／更新
+4. 一次情報・公式情報を確認し、記事末尾に参考リンクを置く
+5. 画像は必要な場合だけ `heroImage` / `sections[].image` に設定
+6. ローカルで確認
    - `pnpm dev` → `http://localhost:3000/blog`
-   - heroImage・section image の表示とレイアウトを確認
-4. Lint（任意推奨）: `pnpm lint`
-5. コミット／PR
+   - 一覧、本文、目次、表、外部リンク、画像未設定時の表示を確認
+7. 記事チェック
+   - `pnpm blog:check -- --base origin/main`
+   - `pnpm test:blog`
+8. コミット後、記事PRを作成
+   - `pnpm blog:pr -- --slug <slug> --title "記事タイトル" --date YYYY-MM-DD`
    - 例: `feat(blog): add <slug> article` / `fix(blog): …`
-   - UI変更がある場合はスクリーンショットを添付
+9. Vercel PreviewとBlog article policyの成功を確認
+10. 通常記事は `blog:ready` を付けて18:00 JSTの予約公開キューへ入れる
+11. アフィリエイト記事は本人のApproveレビューと `blog:manual-approved` が必要
+
+記事ブランチへ新しいコミットが入ると `blog:ready` は解除されます。修正後はPreviewを再確認してください。
 
 ## Performance / Maintenance Notes
 - 大きな静的ファイルの直接importは避け、URL参照を推奨
@@ -185,6 +212,12 @@ sections使用時は `headings` 不要（自動生成されます）。
 - 記事生成時はこのスキーマを参照し、適宜 `note` / `alert` / `blockquote` を挿入すること
 - 目安として3段落に1つはビジュアル的変化（補足・引用・区切り等）を入れる
 - コンテンツ構成は「専門性 × 温度 × リズム」を意識すること
+- 記事冒頭は定型の執筆者挨拶ではなく、読者の疑問・課題・前提から始めること
+- 主要な事実、料金、仕様、リリース情報は一次情報または公式情報で確認すること
+- 「この記事でわかること」、判断材料、まとめ、参考リンクを基本構成に含めること
+- `AFFILIATE_DISCLOSURE_HTML`、`amazonProductHtml`、`amzn.to`、Amazon商品URLを含む記事はアフィリエイト記事として扱うこと
+- アフィリエイト記事に `blog:manual-approved` を自動付与してはならない
+- 画像生成や画像不足を理由に、完成した通常記事の公開を遅らせないこと
 
 ---
 

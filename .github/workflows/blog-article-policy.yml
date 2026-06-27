@@ -1,0 +1,125 @@
+name: Blog article policy
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled, ready_for_review]
+    paths:
+      - "lib/blog-posts-fallback.ts"
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pull request
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Test article policy
+        run: node tests/blog-article-policy.test.mjs
+
+      - name: Check diff formatting
+        run: git diff --check "origin/${{ github.base_ref }}...HEAD"
+
+      - name: Analyze changed articles
+        id: analyze
+        continue-on-error: true
+        run: node scripts/blog/analyze-article-changes.mjs --base "origin/${{ github.base_ref }}"
+
+      - name: Synchronize article labels
+        if: steps.analyze.outputs.changed == 'true'
+        uses: actions/github-script@v7
+        env:
+          IS_AFFILIATE: ${{ steps.analyze.outputs.affiliate }}
+        with:
+          script: |
+            const owner = context.repo.owner
+            const repo = context.repo.repo
+            const issue_number = context.issue.number
+            const definitions = {
+              "blog:article": ["1D76DB", "Daily blog publication workflow"],
+              "blog:ready": ["0E8A16", "Ready for scheduled publication"],
+              "blog:affiliate": ["B60205", "Contains affiliate or sponsored links"],
+              "blog:manual-approved": ["FBCA04", "Affiliate publication manually approved by owner"],
+            }
+
+            for (const [name, [color, description]] of Object.entries(definitions)) {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name })
+              } catch (error) {
+                if (error.status !== 404) throw error
+                await github.rest.issues.createLabel({ owner, repo, name, color, description })
+              }
+            }
+
+            const current = await github.rest.issues.get({
+              owner,
+              repo,
+              issue_number,
+            })
+            const labels = new Set(current.data.labels.map((label) =>
+              typeof label === "string" ? label : label.name
+            ))
+
+            async function add(name) {
+              if (labels.has(name)) return
+              await github.rest.issues.addLabels({ owner, repo, issue_number, labels: [name] })
+              labels.add(name)
+            }
+
+            async function remove(name) {
+              if (!labels.has(name)) return
+              try {
+                await github.rest.issues.removeLabel({ owner, repo, issue_number, name })
+              } catch (error) {
+                if (error.status !== 404) throw error
+              }
+              labels.delete(name)
+            }
+
+            await add("blog:article")
+            if (context.payload.action === "synchronize") {
+              await remove("blog:ready")
+            }
+            if (process.env.IS_AFFILIATE === "true") {
+              await add("blog:affiliate")
+              if (context.payload.action === "synchronize") {
+                await remove("blog:manual-approved")
+              }
+            } else {
+              await remove("blog:affiliate")
+              await remove("blog:manual-approved")
+            }
+
+      - name: Lint fallback article source
+        run: pnpm exec eslint lib/blog-posts-fallback.ts
+
+      - name: Report article warnings
+        if: steps.analyze.outputs.warnings != '[]'
+        env:
+          WARNINGS: ${{ steps.analyze.outputs.warnings }}
+        run: |
+          node -e 'for (const warning of JSON.parse(process.env.WARNINGS || "[]")) console.log(`::warning::${warning}`)'
+
+      - name: Fail on article policy errors
+        if: steps.analyze.outcome == 'failure'
+        run: exit 1

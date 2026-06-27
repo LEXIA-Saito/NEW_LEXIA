@@ -1,0 +1,163 @@
+name: Blog scheduled publish
+
+on:
+  schedule:
+    # 18:00 JST. GitHub Actions cron can start a few minutes late.
+    - cron: "0 9 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Select and validate the due PR without merging"
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  checks: read
+  contents: write
+  pull-requests: write
+  statuses: read
+
+concurrency:
+  group: blog-daily-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout workflow helpers
+        uses: actions/checkout@v4
+
+      - name: Select, validate, and merge one due article
+        uses: actions/github-script@v7
+        env:
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}
+          MANUAL_APPROVER: LEXIA-Saito
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const path = require("node:path")
+            const { pathToFileURL } = require("node:url")
+            const helperUrl = pathToFileURL(
+              path.join(process.env.GITHUB_WORKSPACE, "scripts/blog/publication-metadata.mjs")
+            ).href
+            const { selectDuePullRequest } = await import(helperUrl)
+
+            const owner = context.repo.owner
+            const repo = context.repo.repo
+            const pullRequests = await github.paginate(github.rest.pulls.list, {
+              owner,
+              repo,
+              state: "open",
+              per_page: 100,
+            })
+            const selected = selectDuePullRequest(pullRequests, new Date())
+
+            if (!selected) {
+              core.info("公開時刻を迎えた blog:ready PR はありません。")
+              return
+            }
+
+            const pr = selected.pullRequest
+            const labels = new Set(pr.labels.map((label) => label.name))
+            core.info(`公開候補: #${pr.number} ${pr.title} (${selected.metadata.publishAt})`)
+
+            if (!pr.head.ref.startsWith("blog/")) {
+              core.setFailed(`記事ブランチではありません: ${pr.head.ref}`)
+              return
+            }
+
+            const combined = await github.rest.repos.getCombinedStatusForRef({
+              owner,
+              repo,
+              ref: pr.head.sha,
+            })
+            const vercel = combined.data.statuses.find((status) => status.context === "Vercel")
+            if (!vercel || vercel.state !== "success") {
+              core.setFailed("Vercel Previewが成功していません。")
+              return
+            }
+
+            const checkRuns = await github.paginate(github.rest.checks.listForRef, {
+              owner,
+              repo,
+              ref: pr.head.sha,
+              per_page: 100,
+            })
+            const articleCheck = checkRuns.find((check) => check.name === "validate")
+            if (!articleCheck || articleCheck.conclusion !== "success") {
+              core.setFailed("Blog article policyチェックが成功していません。")
+              return
+            }
+            const failedChecks = checkRuns.filter((check) =>
+              check.status === "completed" &&
+              !["success", "neutral", "skipped"].includes(check.conclusion)
+            )
+            if (failedChecks.length > 0) {
+              core.setFailed(`失敗中のチェックがあります: ${failedChecks.map((check) => check.name).join(", ")}`)
+              return
+            }
+
+            if (labels.has("blog:affiliate")) {
+              if (!labels.has("blog:manual-approved")) {
+                core.setFailed("アフィリエイト記事に blog:manual-approved がありません。")
+                return
+              }
+
+              const reviews = await github.paginate(github.rest.pulls.listReviews, {
+                owner,
+                repo,
+                pull_number: pr.number,
+                per_page: 100,
+              })
+              const latestReviewByUser = new Map()
+              for (const review of reviews) {
+                if (review.user?.login) latestReviewByUser.set(review.user.login, review.state)
+              }
+              if (latestReviewByUser.get(process.env.MANUAL_APPROVER) !== "APPROVED") {
+                core.setFailed(`${process.env.MANUAL_APPROVER} の最新レビュー承認が必要です。`)
+                return
+              }
+            }
+
+            if (process.env.DRY_RUN === "true") {
+              core.info("dry-runのためマージしません。")
+              return
+            }
+
+            const merge = await github.rest.pulls.merge({
+              owner,
+              repo,
+              pull_number: pr.number,
+              merge_method: "squash",
+              commit_title: pr.title,
+              commit_message: `Scheduled blog publication: ${selected.metadata.publishAt}`,
+            })
+            if (!merge.data.merged) {
+              core.setFailed(`PRをマージできませんでした: ${merge.data.message}`)
+              return
+            }
+
+            core.info(`PR #${pr.number} を ${merge.data.sha} としてマージしました。`)
+
+            for (let attempt = 1; attempt <= 20; attempt += 1) {
+              const production = await github.rest.repos.getCombinedStatusForRef({
+                owner,
+                repo,
+                ref: merge.data.sha,
+              })
+              const deployment = production.data.statuses.find((status) => status.context === "Vercel")
+              if (deployment?.state === "success") {
+                core.info(`Vercel本番デプロイ成功: ${deployment.target_url}`)
+                return
+              }
+              if (deployment?.state === "failure" || deployment?.state === "error") {
+                core.setFailed(`Vercel本番デプロイ失敗: ${deployment.target_url || "URLなし"}`)
+                return
+              }
+              core.info(`Vercel本番デプロイ待機中 (${attempt}/20)`)
+              await new Promise((resolve) => setTimeout(resolve, 30000))
+            }
+
+            core.setFailed("10分以内にVercel本番デプロイの成功を確認できませんでした。")
