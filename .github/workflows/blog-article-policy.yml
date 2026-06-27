@@ -16,17 +16,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout pull request
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.15.0
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: pnpm
@@ -47,7 +47,7 @@ jobs:
 
       - name: Synchronize article labels
         if: steps.analyze.outputs.changed == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         env:
           IS_AFFILIATE: ${{ steps.analyze.outputs.affiliate }}
         with:
