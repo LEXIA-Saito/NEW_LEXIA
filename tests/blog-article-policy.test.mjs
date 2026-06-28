@@ -5,6 +5,7 @@ import {
   extractFallbackPosts,
 } from "../scripts/blog/analyze-article-changes.mjs"
 import {
+  evaluateArticleReadiness,
   parsePublicationMetadata,
   selectDuePullRequest,
 } from "../scripts/blog/publication-metadata.mjs"
@@ -127,5 +128,44 @@ const due = selectDuePullRequest(
   new Date("2026-06-30T00:00:00Z"),
 )
 assert.equal(due?.pullRequest.number, 2)
+
+const readyPr = {
+  draft: false,
+  head: { ref: "blog/2026-06-28-example" },
+  body: '<!-- blog-publish-metadata: {"publishAt":"2026-06-28T18:00:00+09:00"} -->',
+  labels: [{ name: "blog:article" }],
+}
+const readyArgs = {
+  pr: readyPr,
+  labels: readyPr.labels,
+  vercelState: "success",
+  validateConclusion: "success",
+  failedCheckNames: [],
+}
+
+assert.equal(evaluateArticleReadiness(readyArgs).ready, true)
+
+// Affiliate articles never auto-ready.
+assert.equal(
+  evaluateArticleReadiness({
+    ...readyArgs,
+    labels: [{ name: "blog:article" }, { name: "blog:affiliate" }],
+  }).ready,
+  false,
+)
+
+// Each gate independently blocks readiness.
+assert.equal(evaluateArticleReadiness({ ...readyArgs, vercelState: "pending" }).ready, false)
+assert.equal(evaluateArticleReadiness({ ...readyArgs, validateConclusion: "failure" }).ready, false)
+assert.equal(evaluateArticleReadiness({ ...readyArgs, failedCheckNames: ["lint"] }).ready, false)
+assert.equal(evaluateArticleReadiness({ ...readyArgs, pr: { ...readyPr, draft: true } }).ready, false)
+assert.equal(
+  evaluateArticleReadiness({ ...readyArgs, pr: { ...readyPr, head: { ref: "feature/x" } } }).ready,
+  false,
+)
+assert.equal(
+  evaluateArticleReadiness({ ...readyArgs, pr: { ...readyPr, body: "no metadata" } }).ready,
+  false,
+)
 
 console.log("blog article policy tests passed")
