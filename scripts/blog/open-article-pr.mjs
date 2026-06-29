@@ -100,15 +100,16 @@ const body = `<!-- blog-publish-metadata: ${metadata} -->
 - 公開予定: \`${publishAt}\`
 - アフィリエイト: ${affiliate ? "あり（手動承認必須）" : "なし"}
 
-## 公開前チェック
+## レビュー → 承認でマージ
 
-- [ ] 一次情報・公式情報を確認した
-- [ ] 既存記事との重複がない
-- [ ] 読者向けの文章になっている
-- [ ] Vercel Previewで一覧・本文・目次を確認した
-- [ ] 画像は任意。未設定時のプレースホルダーを確認した
-- [ ] 公開可能になったら \`blog:ready\` ラベルを付ける
-${affiliate ? "- [ ] 本人が内容とリンクを確認し、承認レビュー後に `blog:manual-approved` を付ける" : ""}
+- [ ] Vercel Preview で一覧・本文・目次・表示を確認した
+- [ ] 一次情報・公式情報のリンクが正しい
+- [ ] 既存記事との重複がない／読者向けの文章になっている
+- [ ] 内部事情・作業メモが本文に無い
+
+検証が全て緑になると \`blog:ready\` が自動付与されます（公開可否の合図）。
+**本人(${process.env.MANUAL_APPROVER || "LEXIA-Saito"})がこのPRを Approve すると、次回 18:00 JST のジョブがマージ・公開します。** 新しいcommitをpushすると承認は無効化され、再レビューが必要です。
+${affiliate ? "\n> アフィリエイト記事: Approve に加えて `blog:manual-approved` ラベルも必要です。" : ""}
 `
 
 const labels = ["blog:article"]
@@ -130,7 +131,7 @@ for (const label of labels) args.push("--label", label)
 
 run("gh", args)
 
-console.log("PRを作成しました。Vercel Preview確認後に blog:ready を付けてください。")
+console.log("PRを作成しました。検証が緑になると blog:ready が自動付与されます。Vercel Previewを確認し、Approveレビューすると18時のジョブがマージ・公開します。")
 if (affiliate) {
-  console.log("アフィリエイト記事は承認レビューと blog:manual-approved が揃うまで自動公開されません。")
+  console.log("アフィリエイト記事は Approve に加えて blog:manual-approved も必要です。")
 }

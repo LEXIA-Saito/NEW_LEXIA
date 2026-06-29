@@ -5,14 +5,18 @@
 最大1件だけ `main` へ squash merge して Vercel 本番デプロイ成功まで確認します。
 
 ```
-09:00 JST  生成     launchd → 分離worktree → headless Claude → blog/<date>-<slug> ブランチ + PR(blog:article)
+09:00 JST  生成     （生成トリガー）→ 分離worktree → headless Claude → blog/<date>-<slug> ブランチ + PR(blog:article)
    ↓
 PR上で      検証     blog-article-policy.yml (schema/lint/test/affiliate判定) + Vercel Preview
    ↓
-全緑なら    準備完了  blog-article-ready.yml が blog:ready を自動付与（アフィリ記事は対象外）
+全緑なら    準備完了  blog-article-ready.yml が blog:ready を自動付与（公開可否の“合図”。アフィリ記事は対象外）
    ↓
-18:00 JST  公開     blog-scheduled-publish.yml (cron 0 9 * * * = 18:00 JST) が最古の公開予定PRを1件マージ → 本番デプロイ確認
+人間ゲート  レビュー  LEXIA-Saito が Vercel Preview を確認 → 問題なければ PR を Approve（不備があれば修正を依頼）
+   ↓
+18:00 JST  公開     blog-scheduled-publish.yml (cron 0 9 * * * = 18:00 JST) が「blog:ready かつ 本人がApprove済み」の最古PRを1件マージ → 本番デプロイ確認
 ```
+
+> 重要: 通常記事も**本人の Approve レビューが無いと自動マージされません**（人間レビューゲート）。`blog:ready` は「技術チェックが全緑」という合図にすぎず、公開はあなたの承認後です。新しい commit を push すると承認は無効化され、再レビューが必要です。
 
 ## 構成ファイル
 
@@ -43,6 +47,16 @@ PR上で      検証     blog-article-policy.yml (schema/lint/test/affiliate判�
 `blog/` 始まり／公開メタデータあり／`blog:article` あり／`blog:affiliate` でない／記事ポリシー
 `validate` 成功／Vercel Preview 成功／失敗中チェックなし。
 
+### マージ条件（人間レビューゲート）
+
+18:00 のジョブが実際にマージするのは、上記 `blog:ready` に加えて次を満たす最古の1件だけです。
+
+- **`LEXIA-Saito` 本人が、その PR の最新コミットに対して Approve レビュー済み**（`blog:ready` だけでは公開されません）。
+- 新しい commit を push すると、その承認は無効化されます（承認は承認時点のコミットに紐づくため）。
+- アフィリエイト記事は、Approve に加えて `blog:manual-approved` ラベルも必要。
+
+運用フロー: 生成された PR を Vercel Preview で確認 → 不備があれば修正（ここで依頼、または新規セッションで Claude に修正させる）→ 問題なければ PR を **Approve** → 次の 18:00 JST で自動マージ・公開。
+
 ## アフィリエイト記事の手動ゲート
 
 `blog:affiliate` が付いた記事は **自動公開されません**。公開には次がすべて必要です：
@@ -70,7 +84,20 @@ scripts/blog/install-launchd.sh logs        # 当日ログを tail
 
 > 補足: 完全ヘッドレス実行のため `claude -p ... --dangerously-skip-permissions` を使います。
 > 動作は分離worktree内のブログ生成フローに限定され、`main` への push やマージは行いません
-> （マージは18時Workflow＋全チェック通過時のみ）。停止したいときは `uninstall` を実行してください。
+> （マージは18時Workflow＋全チェック通過＋本人Approve時のみ）。停止は `uninstall`。
+
+> ⚠️ **既知の制約（macOS TCC）**: このリポジトリは `~/Desktop` 配下にあり、`~/Desktop` /
+> `~/Documents` / `~/Downloads` は macOS のプライバシー保護(TCC)対象です。**launchd エージェントは
+> これらにアクセスできず、09:00 の自動起動は `Operation not permitted` で失敗します**（手動の
+> `install-launchd.sh run` を“認証済みのGUIセッション”から実行した場合のみ完走）。さらに完全無人だと
+> keychain 認証（claude / gh）も別の壁になり得ます。
+>
+> **そのため、無人で確実に毎日生成したい場合は launchd ではなく次を推奨します:**
+> - **GitHub Actions cron（00:00 UTC = 09:00 JST）＋ Claude API**（`ANTHROPIC_API_KEY` を GitHub
+>   Secrets に）で生成＋PR作成。Mac・TCC・keychain に一切依存せず、既存の policy / ready / publish
+>   ワークフローと人間レビューゲートはそのまま使えます。
+> - どうしても launchd を使う場合は、リポジトリを TCC 非対象の場所（例 `~/.lexia-blog/repo` の専用
+>   クローン）に置く、または実行バイナリにフルディスクアクセスを付与する必要があります。
 
 ## 重複防止
 
