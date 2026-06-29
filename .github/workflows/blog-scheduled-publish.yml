@@ -99,26 +99,34 @@ jobs:
               return
             }
 
-            if (labels.has("blog:affiliate")) {
-              if (!labels.has("blog:manual-approved")) {
-                core.setFailed("アフィリエイト記事に blog:manual-approved がありません。")
-                return
-              }
+            // Human review gate (ALL articles): the owner must Approve the CURRENT head commit.
+            // Pushing a new commit changes pr.head.sha, so an approval tied to an older commit no
+            // longer counts — this enforces "a new commit invalidates the approval".
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
+              owner,
+              repo,
+              pull_number: pr.number,
+              per_page: 100,
+            })
+            const approverApprovals = reviews.filter(
+              (review) => review.user?.login === process.env.MANUAL_APPROVER && review.state === "APPROVED",
+            )
+            const latestApproval = approverApprovals[approverApprovals.length - 1]
+            if (!latestApproval) {
+              core.setFailed(`${process.env.MANUAL_APPROVER} のApproveレビューが必要です（Vercel Previewを確認のうえ承認してください）。`)
+              return
+            }
+            if (latestApproval.commit_id && latestApproval.commit_id !== pr.head.sha) {
+              core.setFailed(
+                `承認は古いコミット(${latestApproval.commit_id.slice(0, 7)})へのものです。最新コミットを再レビュー・再承認してください。`,
+              )
+              return
+            }
 
-              const reviews = await github.paginate(github.rest.pulls.listReviews, {
-                owner,
-                repo,
-                pull_number: pr.number,
-                per_page: 100,
-              })
-              const latestReviewByUser = new Map()
-              for (const review of reviews) {
-                if (review.user?.login) latestReviewByUser.set(review.user.login, review.state)
-              }
-              if (latestReviewByUser.get(process.env.MANUAL_APPROVER) !== "APPROVED") {
-                core.setFailed(`${process.env.MANUAL_APPROVER} の最新レビュー承認が必要です。`)
-                return
-              }
+            // Affiliate articles require the extra manual-approved label on top of the review.
+            if (labels.has("blog:affiliate") && !labels.has("blog:manual-approved")) {
+              core.setFailed("アフィリエイト記事に blog:manual-approved がありません。")
+              return
             }
 
             if (process.env.DRY_RUN === "true") {
