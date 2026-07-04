@@ -26,9 +26,9 @@ export async function POST(req: Request) {
       }, { status: 500 })
     }
   } catch (error) {
-    console.error("❌ Failed to load secure configuration:", error)
-    return NextResponse.json({ 
-      error: "設定の読み込みに失敗しました" 
+    console.error("❌ Failed to load secure configuration:", error instanceof Error ? error.message : "unknown error")
+    return NextResponse.json({
+      error: "設定の読み込みに失敗しました"
     }, { status: 500 })
   }
 
@@ -37,9 +37,15 @@ export async function POST(req: Request) {
   try {
     data = await req.json()
   } catch (error) {
-    return NextResponse.json({ 
-      error: "リクエストデータの形式が正しくありません" 
+    return NextResponse.json({
+      error: "リクエストデータの形式が正しくありません"
     }, { status: 400 })
+  }
+
+  // Security: Honeypot bot trap. Real users never see or fill the hidden `website` field.
+  // If it is populated, silently accept (so bots don't retry) without sending any email.
+  if (typeof data?.website === "string" && data.website.trim() !== "") {
+    return NextResponse.json({ success: true, source: "secure-config-v1" })
   }
 
   // Security: Validate contact form data
@@ -67,23 +73,33 @@ export async function POST(req: Request) {
     preferredContact,
   } = data
 
-  const text = `名前: ${name}
-会社名: ${company}
-メール: ${email}
-電話番号: ${phone}
-種別: ${inquiryType}
-制作内容: ${services.join(', ')} ${otherService ? '(' + otherService + ')' : ''}
-予算感: ${budget}
-希望納期: ${due}
-URL: ${url}
-詳細: ${details}
-希望連絡方法: ${preferredContact ? preferredContact.join(', ') : ''}`
+  // Sanitize before interpolating into the email body: collapse CR/LF in single-line
+  // fields (prevents body/pseudo-header injection) and cap lengths.
+  const line = (v: unknown, max = 200) =>
+    String(v ?? "").replace(/[\r\n]+/g, " ").trim().slice(0, max)
+  const block = (v: unknown, max = 2000) => String(v ?? "").trim().slice(0, max)
+  const list = (v: unknown, max = 300) =>
+    (Array.isArray(v) ? v.map((x) => String(x)).join(", ") : String(v ?? "")).slice(0, max)
+
+  const text = `名前: ${line(name, 100)}
+会社名: ${line(company, 100)}
+メール: ${line(email, 254)}
+電話番号: ${line(phone, 50)}
+種別: ${line(inquiryType, 50)}
+制作内容: ${list(services)} ${otherService ? '(' + line(otherService, 100) + ')' : ''}
+予算感: ${line(budget, 50)}
+希望納期: ${line(due, 100)}
+URL: ${line(url, 300)}
+詳細: ${block(details)}
+希望連絡方法: ${list(preferredContact)}`
+
+  const safeName = line(name, 100)
 
   console.log("📧 Sending contact form submission (runtime-config):", {
-    name,
-    email,
-    inquiryType,
-    services: services.join(', ') + (otherService ? ` (${otherService})` : ''),
+    name: safeName,
+    email: line(email, 254),
+    inquiryType: line(inquiryType, 50),
+    services: list(services) + (otherService ? ` (${line(otherService, 100)})` : ''),
     timestamp: new Date().toISOString(),
     configSource: 'runtime-config'
   })
@@ -109,7 +125,7 @@ URL: ${url}
       from: config.resend.from,
       to: [email],
       subject: "お問い合わせありがとうございます - LEXIA",
-      text: `${name} 様
+      text: `${safeName} 様
 
 この度は、LEXIAにお問い合わせいただき、誠にありがとうございます。
 
@@ -125,7 +141,8 @@ Email: lexia0web@gmail.com`,
 
     console.log("✅ Emails sent successfully (runtime-config)")
   } catch (e) {
-    console.error("❌ Email sending failed (runtime-config):", e)
+    // Log only a message, never the full error object (may contain keys/PII).
+    console.error("❌ Email sending failed (runtime-config):", e instanceof Error ? e.message : "unknown error")
     return NextResponse.json({ error: "メール送信に失敗しました" }, { status: 500 })
   }
 

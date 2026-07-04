@@ -79,6 +79,22 @@ export default function Navigation() {
   const [activeSection, setActiveSection] = useState("hero")
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const megaMenuRef = useRef<HTMLDivElement>(null)
+
+  // Close the mega menu when keyboard focus leaves both the header and the menu itself.
+  const handleMegaMenuBlur = (e: React.FocusEvent<HTMLElement>) => {
+    if (pathname?.startsWith("/blog")) return
+    const next = e.relatedTarget as Node | null
+    if (
+      next &&
+      (headerRef.current?.contains(next) || megaMenuRef.current?.contains(next))
+    ) {
+      return
+    }
+    setMegaMenuOpen(false)
+  }
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -91,6 +107,32 @@ export default function Navigation() {
       document.body.style.overflow = ""
     }
   }, [mobileMenuOpen])
+
+  // Mobile menu: close on Escape and manage focus (move into drawer on open,
+  // restore to the trigger on close).
+  useEffect(() => {
+    if (!mobileMenuOpen) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false)
+    }
+    document.addEventListener("keydown", onKeyDown)
+    const focusTimer = window.setTimeout(() => closeButtonRef.current?.focus(), 0)
+    return () => {
+      document.removeEventListener("keydown", onKeyDown)
+      window.clearTimeout(focusTimer)
+      menuButtonRef.current?.focus()
+    }
+  }, [mobileMenuOpen])
+
+  // Desktop mega menu: close on Escape for keyboard users.
+  useEffect(() => {
+    if (!megaMenuOpen) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMegaMenuOpen(false)
+    }
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [megaMenuOpen])
 
   // Map route paths to homepage section ids for active indicator sync
   const routeToSection: Record<string, string> = {
@@ -198,14 +240,19 @@ export default function Navigation() {
         onMouseLeave={() => {
           if (!isBlog) setMegaMenuOpen(false)
         }}
+        onFocus={() => {
+          if (!isBlog) setMegaMenuOpen(true)
+        }}
+        onBlur={handleMegaMenuBlur}
       >
         <div className="container mx-auto px-4 flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center" aria-label="LEXIA">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
+              {/* Link already provides the accessible name; logo images are decorative to avoid duplicate readout. */}
               <div className="flex items-center">
                 <Image
                   src={LOGO_URL || "/placeholder.svg"}
-                  alt="LEXIA"
+                  alt=""
                   width={120}
                   height={24}
                   className="h-6 w-auto block dark:hidden"
@@ -214,7 +261,7 @@ export default function Navigation() {
                 />
                 <Image
                   src={LOGO_TEXT_URL || "/placeholder.svg"}
-                  alt="LEXIA text"
+                  alt=""
                   width={120}
                   height={24}
                   className="h-6 w-auto ml-2 block dark:hidden"
@@ -223,21 +270,17 @@ export default function Navigation() {
                 />
                 <Image
                   src={LOGO_WHITE_URL || "/placeholder.svg"}
-                  alt="LEXIA"
+                  alt=""
                   width={120}
                   height={24}
                   className="h-6 w-auto hidden dark:block"
-                  priority
-                  fetchPriority="high"
                 />
                 <Image
                   src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
-                  alt="LEXIA text"
+                  alt=""
                   width={120}
                   height={24}
                   className="h-6 w-auto ml-2 hidden dark:block"
-                  priority
-                  fetchPriority="high"
                 />
               </div>
             </motion.div>
@@ -259,6 +302,7 @@ export default function Navigation() {
                   >
                     <Link
                       href={item.href}
+                      aria-current={isActive ? "page" : undefined}
                       className={`text-xs sm:text-sm transition-colors relative text-center px-2 ${
                         isActive
                           ? "text-neutral-900 dark:text-neutral-100"
@@ -323,6 +367,7 @@ export default function Navigation() {
               <Mail className="h-5 w-5" />
             </motion.a>
             <motion.button
+              ref={menuButtonRef}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.6 }}
@@ -332,6 +377,9 @@ export default function Navigation() {
                 trackEvent("menu_open", { location: "header" })
               }}
               aria-label="メニューを開く"
+              aria-haspopup="dialog"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               <Menu />
             </motion.button>
@@ -342,6 +390,7 @@ export default function Navigation() {
       <AnimatePresence>
         {!isBlog && megaMenuOpen && (
           <motion.div
+            ref={megaMenuRef}
             className="fixed top-[var(--header-height)] left-0 right-0 z-40 hidden md:block bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-sm"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -349,6 +398,7 @@ export default function Navigation() {
             transition={{ duration: 0.2 }}
             onMouseEnter={() => setMegaMenuOpen(true)}
             onMouseLeave={() => setMegaMenuOpen(false)}
+            onBlur={handleMegaMenuBlur}
           >
             <div className="container mx-auto px-4 py-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8">
               {navItems.map((item) => (
@@ -380,6 +430,10 @@ export default function Navigation() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="メニュー"
             className="fixed inset-0 bg-white dark:bg-neutral-900 z-50 md:hidden"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -388,6 +442,7 @@ export default function Navigation() {
           >
             <div className="flex justify-end p-4">
               <button
+                ref={closeButtonRef}
                 onClick={() => {
                   setMobileMenuOpen(false)
                   trackEvent("menu_close", { location: "drawer" })
@@ -402,31 +457,31 @@ export default function Navigation() {
             <nav className="flex flex-col items-center justify-between h-full pt-4 pb-28">
               {/* Logo + Tagline */}
               <div className="flex flex-col items-center px-6">
-                <div className="flex items-center">
+                <div className="flex items-center" role="img" aria-label="LEXIA">
                   <Image
                     src={LOGO_URL || "/placeholder.svg"}
-                    alt="LEXIA"
+                    alt=""
                     width={120}
                     height={24}
                     className="h-6 w-auto block dark:hidden"
                   />
                   <Image
                     src={LOGO_TEXT_URL || "/placeholder.svg"}
-                    alt="LEXIA text"
+                    alt=""
                     width={120}
                     height={24}
                     className="h-6 w-auto ml-2 block dark:hidden"
                   />
                   <Image
                     src={LOGO_WHITE_URL || "/placeholder.svg"}
-                    alt="LEXIA"
+                    alt=""
                     width={120}
                     height={24}
                     className="h-6 w-auto hidden dark:block"
                   />
                   <Image
                     src={LOGO_TEXT_WHITE_URL || "/placeholder.svg"}
-                    alt="LEXIA text"
+                    alt=""
                     width={120}
                     height={24}
                     className="h-6 w-auto ml-2 hidden dark:block"
@@ -452,6 +507,7 @@ export default function Navigation() {
                     >
                       <Link
                         href={item.href}
+                        aria-current={isActive ? "page" : undefined}
                         className={`text-2xl font-light ${
                           isActive
                             ? "text-neutral-900 dark:text-neutral-100"

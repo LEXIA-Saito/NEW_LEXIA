@@ -86,28 +86,34 @@ export default function Team() {
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                <div className="p-6 w-full">
-                  <div className="flex justify-center space-x-3">
-                    <Link
-                      href={`mailto:${member.email}`}
-                      className="bg-white/90 dark:bg-neutral-900/90 p-2 rounded-full text-neutral-900 dark:text-neutral-100 hover:scale-110 transition-transform duration-300"
-                      aria-label={`Email ${member.name}`}
-                    >
-                      <Mail className="h-5 w-5" />
-                    </Link>
-                    <Link
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-white/90 dark:bg-neutral-900/90 p-2 rounded-full text-neutral-900 dark:text-neutral-100 hover:scale-110 transition-transform duration-300"
-                      aria-label={`${member.name}'s LinkedIn profile`}
-                    >
-                      <Linkedin className="h-5 w-5" />
-                    </Link>
+              {(member.email || member.linkedin) && (
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div className="p-6 w-full">
+                    <div className="flex justify-center space-x-3">
+                      {member.email && (
+                        <Link
+                          href={`mailto:${member.email}`}
+                          className="bg-white/90 dark:bg-neutral-900/90 p-2 rounded-full text-neutral-900 dark:text-neutral-100 hover:scale-110 transition-transform duration-300"
+                          aria-label={`Email ${member.name}`}
+                        >
+                          <Mail className="h-5 w-5" />
+                        </Link>
+                      )}
+                      {member.linkedin && (
+                        <Link
+                          href={member.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-white/90 dark:bg-neutral-900/90 p-2 rounded-full text-neutral-900 dark:text-neutral-100 hover:scale-110 transition-transform duration-300"
+                          aria-label={`${member.name}'s LinkedIn profile`}
+                        >
+                          <Linkedin className="h-5 w-5" />
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
             <div className="p-6">
               <h3 className="text-xl font-medium text-neutral-900 dark:text-neutral-100 mb-1">{member.name}</h3>

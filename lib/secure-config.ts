@@ -1,9 +1,20 @@
 // Secure configuration management
 import crypto from 'crypto'
 
-// Security configuration
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || 'lexia-secure-key-2024-production-env'
+// Security configuration.
+// No hardcoded fallback: a real key must be supplied via the environment before any
+// encrypt/decrypt is performed. The salt is also configurable; the legacy default is
+// retained only for backward-compatibility with previously-encrypted blobs.
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY
+const ENCRYPTION_SALT = process.env.ENCRYPTION_SALT || 'salt'
 const IV_LENGTH = 16 // For AES, this is always 16
+
+function requireEncryptionKey(): string {
+  if (!ENCRYPTION_KEY) {
+    throw new Error('ENCRYPTION_KEY environment variable is required for encrypted configuration')
+  }
+  return ENCRYPTION_KEY
+}
 
 interface SecureConfig {
   resend: {
@@ -36,7 +47,7 @@ const DEFAULT_EMAIL_SETTINGS = {
  */
 function decryptConfig(encryptedData: string, iv: string): string {
   try {
-    const key = crypto.scryptSync(ENCRYPTION_KEY, 'salt', 32)
+    const key = crypto.scryptSync(requireEncryptionKey(), ENCRYPTION_SALT, 32)
     const decipher = crypto.createDecipheriv('aes-256-cbc', key, Buffer.from(iv, 'hex'))
     let decrypted = decipher.update(encryptedData, 'hex', 'utf8')
     decrypted += decipher.final('utf8')
@@ -51,7 +62,7 @@ function decryptConfig(encryptedData: string, iv: string): string {
  * Encrypt configuration data (for setup/rotation)
  */
 export function encryptConfig(data: string): { encrypted: string; iv: string } {
-  const key = crypto.scryptSync(ENCRYPTION_KEY, 'salt', 32)
+  const key = crypto.scryptSync(requireEncryptionKey(), ENCRYPTION_SALT, 32)
   const iv = crypto.randomBytes(IV_LENGTH)
   const cipher = crypto.createCipheriv('aes-256-cbc', key, iv)
   let encrypted = cipher.update(data, 'utf8', 'hex')

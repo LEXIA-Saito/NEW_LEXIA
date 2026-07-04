@@ -1,8 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import React from "react"
-import { motion, useAnimation, useScroll } from "framer-motion"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowDown, ExternalLink } from "lucide-react"
 import ParticlesBackground from "@/components/kokonutui/particles-background"
@@ -10,19 +9,6 @@ import { t } from "@/lib/i18n"
 import { trackEvent } from "@/lib/analytics"
 
 export default function Hero() {
-  const controls = useAnimation()
-  const { scrollY } = useScroll()
-
-  React.useEffect(() => {
-    return scrollY.on("change", (y) => {
-      if (y > 100) {
-        controls.start({ y: 100, opacity: 0 })
-      } else {
-        controls.start({ y: 0, opacity: 1 })
-      }
-    })
-  }, [controls, scrollY])
-
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 bg-white dark:bg-neutral-900">
       <div className="absolute inset-0 opacity-60 pointer-events-none">
@@ -103,15 +89,13 @@ export default function Hero() {
         transition={{ duration: 0.8, delay: 0.8, repeat: Number.POSITIVE_INFINITY, repeatType: "reverse" }}
       >
         <Link
-          href="#about"
+          href="#blog"
           aria-label="下にスクロール"
           className="block p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors duration-200"
         >
           <ArrowDown className="h-6 w-6 text-neutral-400 dark:text-neutral-500" />
         </Link>
       </motion.div>
-
-      <motion.div className="absolute bottom-4 right-4 z-20" animate={controls} />
     </div>
   )
 }

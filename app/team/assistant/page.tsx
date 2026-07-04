@@ -12,7 +12,7 @@ export default function AssistantProfile() {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen bg-white dark:bg-neutral-900">
+      <main id="main-content" className="min-h-screen bg-white dark:bg-neutral-900">
         <div className="container mx-auto px-4 py-24 md:py-32">
           <div className="text-center mb-12">
                         <div className="relative aspect-square bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden">

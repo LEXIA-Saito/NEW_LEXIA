@@ -22,6 +22,12 @@ export default function TypewriterEffect() {
     // Do not run typewriter animations on blog pages or any /blog/* routes.
     // This prevents typing animations for blog articles and blog CTAs.
     if (pathname && pathname.startsWith("/blog")) return
+    // Respect users who prefer reduced motion: leave headings untouched.
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+      return
     const elements = Array.from(
       document.querySelectorAll<HTMLElement>("h2, .hero-title, .hero-subtitle")
     )

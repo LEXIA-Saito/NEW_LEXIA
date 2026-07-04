@@ -147,7 +147,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
 
     return (
       <>
-        <main className="min-h-screen bg-white dark:bg-neutral-900">
+        <main id="main-content" className="min-h-screen bg-white dark:bg-neutral-900">
           <div className="container mx-auto px-4 pt-24 md:pt-32 pb-12 md:pb-16">
             <div className="max-w-3xl mx-auto">
               <Breadcrumbs dynamicLabels={{ [post.slug]: post.title }} />
