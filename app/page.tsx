@@ -9,9 +9,11 @@ import PricingCTA from "@/components/sections/pricing-cta"
 import ServicesCTA from "@/components/sections/services-cta"
 import LexiaTools from "@/components/LexiaTools"
 import BlogPreview from "@/components/sections/blog-preview"
+import Faq from "@/components/sections/faq"
 import type { Metadata } from "next"
 import { SITE_URL } from "@/lib/config"
 import { jsonLdString } from "@/lib/json-ld"
+import { homepageFaq } from "@/lib/faq"
 
 export const dynamic = "force-static"
 export const revalidate = 3600 // Revalidate every hour
@@ -59,40 +61,15 @@ export default function Home() {
       {
         "@type": "FAQPage",
         "@id": `${base}/#faq`,
-        mainEntity: [
-          {
-            "@type": "Question",
-            name: "ホームページ制作の料金はいくらですか？",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "LEXIAでは小規模サイトで15万円〜、コーポレートサイトで30万円〜承っております。詳細は料金ページをご覧ください。",
-            },
+        // ページ上に表示するFAQ(components/sections/faq.tsx)と同一データ。
+        mainEntity: homepageFaq.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
           },
-          {
-            "@type": "Question",
-            name: "制作期間はどれくらいですか？",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "一般的なコーポレートサイトで約1〜2ヶ月を想定しています。規模や要件により変動します。",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "愛知県外からの依頼も可能ですか？",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "はい、オンラインでのお打ち合わせに対応しておりますので、全国からご依頼いただけます。",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "保守・運用サポートはありますか？",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "はい。公開後の保守・改善も継続的にサポートします。月額プランをご用意しております。",
-            },
-          },
-        ],
+        })),
       },
     ],
   }
@@ -106,31 +83,37 @@ export default function Home() {
           <Hero />
         </section>
 
-        <BlogPreview />
-
+        {/* 受注三点セットをファーストビュー直下に: 何ができる → 実績 → 料金 */}
         <section id="services" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
           <ServicesCTA />
-        </section>
-
-        <section id="lexia-tools" className="below-fold">
-          <LexiaTools />
-        </section>
-
-        <section id="pricing" className="py-24 md:py-32 below-fold">
-          <PricingCTA />
         </section>
 
         <section id="work" className="py-24 md:py-32 below-fold">
           <Work />
         </section>
 
-        <section id="team" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
+        <section id="pricing" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
+          <PricingCTA />
+        </section>
+
+        <section id="lexia-tools" className="below-fold">
+          <LexiaTools />
+        </section>
+
+        <section id="faq" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
+          <Faq />
+        </section>
+
+        <section id="team" className="py-24 md:py-32 below-fold">
           <Team />
         </section>
 
-        <section id="about" className="py-24 md:py-32 below-fold">
+        <section id="about" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
           <About />
         </section>
+
+        {/* ブログはSEO/権威性目的で後半へ */}
+        <BlogPreview />
 
         <section id="contact" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
           <Contact />
