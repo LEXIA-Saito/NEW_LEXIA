@@ -50,7 +50,12 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
     }
   }
 
-  const canonical = `${SITE_URL.replace(/\/$/, "")}/blog/${post.slug}`
+  const siteBase = SITE_URL.replace(/\/$/, "")
+  const canonical = `${siteBase}/blog/${post.slug}`
+  // heroImage未設定の記事でもog:image/twitter:imageが必ず出るよう、
+  // サイト共通のデフォルトOG画像にフォールバックする。
+  const ogImageUrl = post.heroImage || `${siteBase}/og/og-image.png`
+  const ogImageAlt = (post as any).heroImageAlt ?? post.title
 
   return {
     title: `${post.title} | LEXIA BLOG`,
@@ -63,21 +68,16 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
       description: post.description,
       type: "article",
       url: canonical,
+      siteName: "LEXIA BLOG",
       publishedTime: post.date,
-      images: post.heroImage
-        ? [
-            {
-              url: post.heroImage,
-              alt: (post as any).heroImageAlt ?? post.title,
-            },
-          ]
-        : undefined,
+      modifiedTime: post.latest_update ?? post.date,
+      images: [{ url: ogImageUrl, alt: ogImageAlt }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${post.title} | LEXIA BLOG`,
       description: post.description,
-      images: post.heroImage ? [post.heroImage] : undefined,
+      images: [ogImageUrl],
     },
     keywords: post.tags && post.tags.length > 0 ? post.tags : undefined,
   }
@@ -122,7 +122,8 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
       .slice(0, 3)
 
     // 記事URL（SNSシェア用）
-    const articleUrl = `${SITE_URL.replace(/\/$/, "")}/blog/${post.slug}`
+    const siteBase = SITE_URL.replace(/\/$/, "")
+    const articleUrl = `${siteBase}/blog/${post.slug}`
 
     const jsonLd = {
       "@context": "https://schema.org",
@@ -130,18 +131,24 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
       headline: post.title,
       description: post.description,
       datePublished: post.date,
+      dateModified: post.latest_update ?? post.date,
       articleSection: getBlogGenreLabel(post.genre),
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": articleUrl,
+      },
       author: {
         "@type": "Person",
         name: "齋藤雅人",
-        url: `${SITE_URL.replace(/\/$/, "")}/team/masato-saito`,
+        url: `${siteBase}/team/masato-saito`,
       },
+      // レイアウト側(app/layout.tsx)で定義済みの単一Organizationエンティティを
+      // @idで参照する。ここで別内容のOrganizationノードを再宣言しない。
       publisher: {
-        "@type": "Organization",
-        name: "LEXIA",
+        "@id": `${siteBase}/#organization`,
       },
       url: articleUrl,
-      image: post.heroImage,
+      image: post.heroImage || `${siteBase}/og/og-image.png`,
       keywords: post.tags && post.tags.length > 0 ? post.tags.join(", ") : undefined,
     }
 
@@ -157,7 +164,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               {/* ===== 記事ヘッダー ===== */}
               <header className="mb-12">
                 <Link
-                  href={`/blog?genre=${post.genre}#genre-filter`}
+                  href={`/blog/genres/${post.genre}`}
                   className="inline-flex items-center rounded-full bg-neutral-900 px-4 py-1 text-xs font-medium tracking-wide text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200"
                   aria-label={`${getBlogGenreLabel(post.genre)} の記事一覧`}
                 >

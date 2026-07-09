@@ -5,6 +5,9 @@ import { fetchBlogPosts, getBlogGenreLabel } from "@/lib/blog-posts"
 import type { Metadata } from "next"
 import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
+import { SITE_URL } from "@/lib/config"
+
+const siteBase = SITE_URL.replace(/\/$/, "")
 
 export const revalidate = 60
 
@@ -13,6 +16,9 @@ type Params = {
     tag: string
   }
 }
+
+/** 1件以下しか記事が無いタグは薄いコンテンツとしてnoindex対象にする */
+const MIN_ARTICLES_TO_INDEX = 2
 
 export async function generateStaticParams() {
   const posts = await fetchBlogPosts()
@@ -26,21 +32,35 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const tag = params.tag
+  // generateStaticParamsは生タグ値を返すが、on-demand生成時にparams.tagが
+  // URLエンコードされたまま渡ってくるケースがあるため、表示前に必ずdecodeする。
+  const tag = decodeURIComponent(params.tag)
   const title = `#${tag} の記事一覧 | LEXIA BLOG`
   const description = `タグ「${tag}」に関連する記事一覧です。`
+  const canonical = `${siteBase}/blog/tags/${encodeURIComponent(tag)}`
+
+  const posts = await fetchBlogPosts()
+  const articleCount = posts.filter((p) => p.tags?.includes(tag)).length
+  const isThin = articleCount < MIN_ARTICLES_TO_INDEX
+
   return {
     title,
     description,
+    alternates: { canonical },
+    ...(isThin ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title,
       description,
       type: "website",
+      url: canonical,
+      siteName: "LEXIA BLOG",
+      images: [`${siteBase}/og/og-image.png`],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [`${siteBase}/og/og-image.png`],
     },
   }
 }
@@ -48,7 +68,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 import { formatJapaneseDate } from "@/lib/utils"
 
 export default async function TagIndexPage({ params }: Params) {
-  const tag = params.tag
+  const tag = decodeURIComponent(params.tag)
   const posts = (await fetchBlogPosts())
     .filter((p) => p.tags?.includes(tag))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())

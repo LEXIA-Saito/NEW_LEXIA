@@ -31,12 +31,15 @@ export const metadata: Metadata = {
       "WEB制作事業LEXIAがWEB制作技術やITの最新トレンドを発信します。",
     type: "website",
     url: `${siteBase}/blog`,
+    siteName: "LEXIA BLOG",
+    images: [`${siteBase}/og/og-image.png`],
   },
   twitter: {
     card: "summary_large_image",
     title: "LEXIA BLOG | 愛知県碧南市のWEB制作・マーケティング情報",
     description:
       "WEB制作事業LEXIAがWEB制作技術やITの最新トレンドを発信します。",
+    images: [`${siteBase}/og/og-image.png`],
   },
 }
 
@@ -136,7 +139,7 @@ export default async function BlogIndexPage(props: PageProps) {
                       </p>
                       <div className="flex flex-wrap items-center gap-3 text-sm text-neutral-300/90">
                         <Link
-                          href={`/blog?genre=${latestPost.genre}#genre-filter`}
+                          href={`/blog/genres/${latestPost.genre}`}
                           className="inline-flex items-center rounded-full border border-white/20 px-3 py-1 hover:bg-white/10"
                           aria-label={`${getBlogGenreLabel(latestPost.genre)} の記事一覧`}
                         >
@@ -212,7 +215,7 @@ export default async function BlogIndexPage(props: PageProps) {
                         <div className="p-8">
                           <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
                             <Link
-                              href={`/blog?genre=${post.genre}#genre-filter`}
+                              href={`/blog/genres/${post.genre}`}
                               className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 hover:underline"
                               aria-label={`${getBlogGenreLabel(post.genre)} の記事一覧`}
                             >

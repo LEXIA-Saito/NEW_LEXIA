@@ -30,6 +30,9 @@ export const metadata: Metadata = {
     description:
       "愛知県碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAのWEB制作事業にお任せください。",
     type: "website",
+    url: SITE_URL,
+    siteName: "LEXIA",
+    images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
   },
   twitter: {
     card: "summary_large_image",

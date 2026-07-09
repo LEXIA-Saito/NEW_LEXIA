@@ -6,8 +6,10 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
 import LinkifyText from "@/components/LinkifyText"
+import { SITE_URL } from "@/lib/config"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
+const siteBase = SITE_URL.replace(/\/$/, "")
 
 type Params = { genre: BlogGenre }
 
@@ -19,9 +21,25 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const label = getBlogGenreLabel(params.genre)
   const description = getBlogGenreDescription(params.genre) || `${label} に関する記事一覧`
+  const canonical = `${siteBase}/blog/genres/${params.genre}`
   return {
     title: `${label} の記事一覧 | LEXIA BLOG`,
     description,
+    alternates: { canonical },
+    openGraph: {
+      title: `${label} の記事一覧 | LEXIA BLOG`,
+      description,
+      type: "website",
+      url: canonical,
+      siteName: "LEXIA BLOG",
+      images: [`${siteBase}/og/og-image.png`],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${label} の記事一覧 | LEXIA BLOG`,
+      description,
+      images: [`${siteBase}/og/og-image.png`],
+    },
   }
 }
 

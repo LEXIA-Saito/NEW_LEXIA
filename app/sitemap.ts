@@ -1,7 +1,11 @@
 import type { MetadataRoute } from "next"
 import { fetchProjects } from "@/lib/microcms-projects"
-import { fetchBlogPosts } from "@/lib/blog-posts"
+import { fetchBlogPosts, BLOG_GENRES } from "@/lib/blog-posts"
 import { SITE_URL } from "../lib/config"
+
+// app/blog/tags/[tag]/page.tsx のnoindex閾値と揃える。
+// 1記事のみの薄いタグはnoindexのためsitemapにも載せない。
+const MIN_ARTICLES_TO_INDEX = 2
 
 function safeDate(input?: string | Date | undefined): Date {
   try {
@@ -56,5 +60,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...routes, ...projectRoutes, ...blogRoutes]
+  const genreRoutes = BLOG_GENRES.map((genre) => ({
+    url: `${base}/blog/genres/${genre.id}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+  }))
+
+  const tagCounts = new Map<string, number>()
+  for (const post of posts) {
+    for (const tag of post.tags ?? []) {
+      tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1)
+    }
+  }
+  const tagRoutes = Array.from(tagCounts.entries())
+    .filter(([, count]) => count >= MIN_ARTICLES_TO_INDEX)
+    .map(([tag]) => ({
+      url: `${base}/blog/tags/${encodeURIComponent(tag)}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.5,
+    }))
+
+  return [...routes, ...projectRoutes, ...blogRoutes, ...genreRoutes, ...tagRoutes]
 }
