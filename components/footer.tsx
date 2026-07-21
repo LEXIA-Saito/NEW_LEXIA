@@ -42,6 +42,18 @@ export default function Footer() {
         { name: "お問い合わせ", href: "/contact" },
       ],
     },
+    {
+      // 別サブドメイン tools.lexia-hp.com の無料ツールへの内部リンク。
+      // 全ページのフッターから個別ツールへ導線を張り、回遊とクロール誘導・権威移転を両立する。
+      title: "無料ツール",
+      links: [
+        { name: "画像フォーマット変換", href: "https://tools.lexia-hp.com/image-converter" },
+        { name: "画像リサイズ", href: "https://tools.lexia-hp.com/image-resizer" },
+        { name: "ZIP圧縮・解凍", href: "https://tools.lexia-hp.com/zip-tool" },
+        { name: "ファイル名一括変更", href: "https://tools.lexia-hp.com/file-renamer" },
+        { name: "ツール一覧", href: "https://tools.lexia-hp.com" },
+      ],
+    },
   ]
 
   const contactChannels = [
