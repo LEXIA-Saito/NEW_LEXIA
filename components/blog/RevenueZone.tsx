@@ -37,6 +37,19 @@ interface RevenueZoneProps {
   genreLabel: string
 }
 
+// 在宅ワーク・デスク環境ガイド（og.lexia-hp.com）への内部リンク。
+// 別サブドメインの物販記事へ導線を張り、回遊とクロール誘導・権威移転を両立する。
+const DESK_GUIDES: { slug: string; title: string; desc: string }[] = [
+  { slug: 'remote-work-desk-setup-roadmap', title: '在宅デスク環境 完全ガイド', desc: '快適な作業環境の作り方を総まとめ' },
+  { slug: 'monitor-arm-guide', title: 'モニターアームの選び方', desc: 'デスクを広く使う定番アイテム' },
+  { slug: 'laptop-stand-guide', title: 'ノートPCスタンド', desc: '姿勢改善と冷却に効く一台' },
+  { slug: 'standing-desk-guide', title: 'スタンディングデスク', desc: '昇降デスクの比較と選び方' },
+  { slug: 'ergonomic-chair-guide', title: '疲れないワークチェア', desc: '長時間作業を支える椅子選び' },
+  { slug: 'docking-station-guide', title: 'ドッキングステーション', desc: 'ケーブル1本で拡張する' },
+]
+
+const OG_BASE = 'https://og.lexia-hp.com/articles'
+
 // SNSシェアボタン
 function ShareButtons({ title, url }: { title: string; url: string }) {
   const [copied, setCopied] = useState(false)
@@ -227,6 +240,37 @@ export default function RevenueZone({
           </div>
         </div>
       )}
+
+      {/* 6.5 在宅ワーク・デスク環境ガイド（og.サイトへの内部リンク：回遊＋クロール誘導） */}
+      <div className="mb-10">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
+            在宅ワークの<span className="text-blue-600 dark:text-blue-400">デスク環境</span>ガイド
+          </h3>
+          <a
+            href={`${OG_BASE}/remote-work-desk-setup-roadmap`}
+            className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+          >
+            すべて見る →
+          </a>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {DESK_GUIDES.map((g) => (
+            <a
+              key={g.slug}
+              href={`${OG_BASE}/${g.slug}`}
+              className="block p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/70 hover:shadow-md hover:border-blue-300 dark:hover:border-blue-700 transition-all"
+            >
+              <span className="block font-semibold text-neutral-900 dark:text-neutral-100">
+                {g.title}
+              </span>
+              <span className="mt-1 block text-sm text-neutral-600 dark:text-neutral-400 line-clamp-1">
+                {g.desc}
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
 
       {/* CTA: お問い合わせ導線 */}
       <div className="mt-12 p-6 rounded-2xl bg-gradient-to-br from-neutral-100 to-neutral-50 dark:from-neutral-800 dark:to-neutral-900 border border-neutral-200 dark:border-neutral-700">
