@@ -10,8 +10,8 @@ import ServicesCTA from "@/components/sections/services-cta"
 import LexiaTools from "@/components/LexiaTools"
 import BlogPreview from "@/components/sections/blog-preview"
 import type { Metadata } from "next"
-import Script from "next/script"
-import { SITE_URL, LOGO_URL } from "@/lib/config"
+import { SITE_URL } from "@/lib/config"
+import { jsonLdString } from "@/lib/json-ld"
 
 export const dynamic = "force-static"
 export const revalidate = 3600 // Revalidate every hour
@@ -39,72 +39,26 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
+  // Site-wide Organization / LocalBusiness / WebSite entities live in app/layout.tsx.
+  // The homepage only declares page-specific entities and references the shared @ids.
+  const base = SITE_URL.replace(/\/$/, "")
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": ["Organization", "LocalBusiness"],
-        "@id": `${SITE_URL}/#organization`,
-        name: "LEXIA",
-        url: SITE_URL,
-        logo: LOGO_URL,
-        description: "愛知県碧南市のWEB制作・システム開発。要件整理からUI実装、運用改善まで一貫対応。",
-        telephone: "090-1742-3456",
-        email: "lexia0web@gmail.com",
-        address: {
-          "@type": "PostalAddress",
-          addressCountry: "JP",
-          addressRegion: "愛知県",
-          addressLocality: "碧南市",
-          streetAddress: "川端町1-45",
-          postalCode: "447-0876",
-        },
-        geo: {
-          "@type": "GeoCoordinates",
-          latitude: 34.867852,
-          longitude: 136.99312,
-        },
-        areaServed: {
-          "@type": "GeoCircle",
-          geoMidpoint: {
-            "@type": "GeoCoordinates",
-            latitude: 34.867852,
-            longitude: 136.99312,
-          },
-          geoRadius: "50000",
-        },
-        priceRange: "¥¥",
-        openingHoursSpecification: {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          opens: "09:00",
-          closes: "18:00",
-        },
-        sameAs: ["https://www.instagram.com/lexia_web", "https://x.com/lexia_web"],
-      },
-      {
-        "@type": "WebSite",
-        "@id": `${SITE_URL}/#website`,
-        url: SITE_URL,
-        name: "LEXIA",
-        description: "愛知県碧南市のホームページ制作・WEB制作事業",
-        publisher: { "@id": `${SITE_URL}/#organization` },
-        inLanguage: "ja",
-      },
-      {
         "@type": "WebPage",
-        "@id": `${SITE_URL}/#webpage`,
+        "@id": `${base}/#webpage`,
         url: SITE_URL,
         name: "愛知県碧南市のホームページ制作・WEB制作事業 | LEXIA",
         description:
           "愛知県碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAのWEB制作事業にお任せください。",
-        isPartOf: { "@id": `${SITE_URL}/#website` },
-        about: { "@id": `${SITE_URL}/#organization` },
+        isPartOf: { "@id": `${base}/#website` },
+        about: { "@id": `${base}/#organization` },
         inLanguage: "ja",
       },
       {
         "@type": "FAQPage",
-        "@id": `${SITE_URL}/#faq`,
+        "@id": `${base}/#faq`,
         mainEntity: [
           {
             "@type": "Question",
@@ -144,50 +98,50 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-white dark:bg-neutral-900">
+    <>
       <Navigation />
 
-      <section id="hero">
-        <Hero />
-      </section>
+      <main id="main-content" className="min-h-screen bg-white dark:bg-neutral-900">
+        <section id="hero">
+          <Hero />
+        </section>
 
-      <BlogPreview />
+        <BlogPreview />
 
-      <section id="services" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
-        <ServicesCTA />
-      </section>
+        <section id="services" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
+          <ServicesCTA />
+        </section>
 
-      <section id="lexia-tools" className="below-fold">
-        <LexiaTools />
-      </section>
+        <section id="lexia-tools" className="below-fold">
+          <LexiaTools />
+        </section>
 
-      <section id="pricing" className="py-24 md:py-32 below-fold">
-        <PricingCTA />
-      </section>
+        <section id="pricing" className="py-24 md:py-32 below-fold">
+          <PricingCTA />
+        </section>
 
-      <section id="work" className="py-24 md:py-32 below-fold">
-        <Work />
-      </section>
+        <section id="work" className="py-24 md:py-32 below-fold">
+          <Work />
+        </section>
 
-      <section id="team" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
-        <Team />
-      </section>
+        <section id="team" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
+          <Team />
+        </section>
 
-      <section id="about" className="py-24 md:py-32 below-fold">
-        <About />
-      </section>
+        <section id="about" className="py-24 md:py-32 below-fold">
+          <About />
+        </section>
 
-      <section id="contact" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
-        <Contact />
-      </section>
+        <section id="contact" className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-800 below-fold">
+          <Contact />
+        </section>
+      </main>
 
       <Footer />
-      <Script
-        id="home-jsonld"
+      <script
         type="application/ld+json"
-        strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
-    </main>
+    </>
   )
 }

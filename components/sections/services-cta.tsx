@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { trackEvent } from "@/lib/analytics"
@@ -45,10 +46,12 @@ export default function ServicesCTA() {
           variants={fadeIn}
           className="relative aspect-[1024/667] rounded-lg overflow-hidden order-1 md:order-2"
         >
-          <img
+          <Image
             src="/images/lexia-services-hero.webp"
             alt="LEXIAのサービス - 地域のデジタル化を推進する価値を伝えるカタチに"
-            className="object-contain w-full h-full"
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-contain"
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>

@@ -33,6 +33,7 @@ export default async function ProjectsPage() {
     <>
       <Navigation />
       <main
+        id="main-content"
         className="min-h-screen bg-white dark:bg-neutral-900"
         style={{ paddingTop: "var(--header-height)" }}
       >

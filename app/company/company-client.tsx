@@ -252,7 +252,7 @@ export default function CompanyClient({ projects }: { projects: Project[] }) {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen bg-white dark:bg-neutral-900">
+      <main id="main-content" className="min-h-screen bg-white dark:bg-neutral-900">
         {/* Hero */}
         <section className="relative h-screen w-full flex items-center justify-center overflow-hidden" id="hero">
           <div className="absolute inset-0 pointer-events-none select-none">

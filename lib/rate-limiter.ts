@@ -105,19 +105,32 @@ export const contactRateLimiter = new RateLimiter(3, 15 * 60 * 1000, 60 * 60 * 1
  * Get client identifier for rate limiting
  */
 export function getClientIdentifier(request: Request): string {
-  // Try to get real IP from headers (Vercel)
-  const forwardedFor = request.headers.get('x-forwarded-for')
+  // NOTE: This limiter keys on the connecting IP and stores counters in-memory per
+  // instance. On serverless / multi-instance deployments the limit is enforced per
+  // instance, so for hard guarantees move the store to a shared backend (Redis/KV).
+
+  // Prefer platform-set headers that a trusted proxy controls and a client cannot
+  // easily forge. On Vercel, x-real-ip is set to the true connecting IP.
   const realIp = request.headers.get('x-real-ip')
-  
+  if (realIp && realIp.trim()) {
+    return realIp.trim()
+  }
+
+  // Fall back to X-Forwarded-For. This is a client-controllable, comma-separated list
+  // where trusted proxies APPEND the real client IP on the right. Use the right-most
+  // entry (the hop closest to us) instead of the spoofable left-most client value.
+  const forwardedFor = request.headers.get('x-forwarded-for')
   if (forwardedFor) {
-    return forwardedFor.split(',')[0].trim()
+    const parts = forwardedFor
+      .split(',')
+      .map((p) => p.trim())
+      .filter(Boolean)
+    if (parts.length > 0) {
+      return parts[parts.length - 1]
+    }
   }
-  
-  if (realIp) {
-    return realIp
-  }
-  
-  // Fallback to user agent + timestamp hash for development
+
+  // Fallback to user agent hash for development
   const userAgent = request.headers.get('user-agent') || 'unknown'
   return `fallback-${Buffer.from(userAgent).toString('base64').substring(0, 10)}`
 }

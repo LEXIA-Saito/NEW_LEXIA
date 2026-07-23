@@ -92,7 +92,7 @@ export default async function BlogIndexPage(props: PageProps) {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen bg-white dark:bg-neutral-900">
+      <main id="main-content" className="min-h-screen bg-white dark:bg-neutral-900">
         <div className="container mx-auto px-4 py-24 md:py-32 max-w-6xl">
           <BreadcrumbsLite trail={breadcrumbs} />
           <div className="mb-12 max-w-4xl">

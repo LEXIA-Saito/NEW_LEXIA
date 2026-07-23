@@ -131,7 +131,10 @@ export default function OurWorkClient({ initialProjects }: { initialProjects: Pr
             {filteredProjects.map((project, index) => (
               <motion.div key={project.id} variants={cardVariants}>
                 {project.isComingSoon ? (
-                  <Card className="group hover:shadow-xl transition-all duration-300 overflow-hidden border-0 bg-white dark:bg-neutral-800 cursor-not-allowed">
+                  <Card
+                    aria-disabled="true"
+                    className="group hover:shadow-xl transition-all duration-300 overflow-hidden border-0 bg-white dark:bg-neutral-800 cursor-not-allowed"
+                  >
                     <div className="relative overflow-hidden aspect-video">
                       <Image
                         src={project.image || "/placeholder.svg"}
@@ -141,8 +144,9 @@ export default function OurWorkClient({ initialProjects }: { initialProjects: Pr
                       />
                       <div className="absolute inset-0 bg-black/60" />
                       <Badge className="absolute top-4 left-4 bg-blue-600 text-white">
-                        <Clock className="w-3 h-3 mr-1" />
+                        <Clock className="w-3 h-3 mr-1" aria-hidden="true" />
                         Coming Soon
+                        <span className="sr-only">（近日公開予定・現在はご覧いただけません）</span>
                       </Badge>
                     </div>
                     <CardContent className="p-6">

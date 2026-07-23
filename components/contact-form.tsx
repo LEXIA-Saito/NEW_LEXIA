@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { Controller, useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -31,6 +32,8 @@ type ContactFormValues = {
   attachment?: FileList
   privacy: boolean
   preferredContact: string[]
+  // Honeypot: hidden from real users, only bots fill it.
+  website: string
 }
 
 const INQUIRY_TYPE_OPTIONS = [
@@ -67,7 +70,8 @@ export default function ContactForm() {
       url: "",
       details: "",
       privacy: false,
-      preferredContact: []
+      preferredContact: [],
+      website: ""
     }
   })
   const [submitting, setSubmitting] = useState(false)
@@ -115,26 +119,44 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div>
-        <Label>お名前 *</Label>
-        <Input {...register("name", { required: "必須項目です" })} />
-        {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+      {/* Honeypot: hidden from users and assistive tech; bots that fill it are rejected server-side. */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}>
+        <label htmlFor="website">Website</label>
+        <input id="website" type="text" tabIndex={-1} autoComplete="off" {...register("website")} />
       </div>
       <div>
-        <Label>会社名</Label>
-        <Input {...register("company")} />
+        <Label htmlFor="name">お名前 *</Label>
+        <Input
+          id="name"
+          aria-required="true"
+          aria-invalid={errors.name ? "true" : undefined}
+          aria-describedby={errors.name ? "name-error" : undefined}
+          {...register("name", { required: "必須項目です" })}
+        />
+        {errors.name && <p id="name-error" role="alert" className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
       </div>
       <div>
-        <Label>メールアドレス *</Label>
-        <Input type="email" {...register("email", { required: "必須項目です" })} />
-        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+        <Label htmlFor="company">会社名</Label>
+        <Input id="company" {...register("company")} />
       </div>
       <div>
-        <Label>電話番号</Label>
-        <Input {...register("phone")} />
+        <Label htmlFor="email">メールアドレス *</Label>
+        <Input
+          id="email"
+          type="email"
+          aria-required="true"
+          aria-invalid={errors.email ? "true" : undefined}
+          aria-describedby={errors.email ? "email-error" : undefined}
+          {...register("email", { required: "必須項目です" })}
+        />
+        {errors.email && <p id="email-error" role="alert" className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
       </div>
       <div>
-        <Label>お問い合わせ種別 *</Label>
+        <Label htmlFor="phone">電話番号</Label>
+        <Input id="phone" type="tel" {...register("phone")} />
+      </div>
+      <div role="group" aria-labelledby="inquiryType-label">
+        <Label id="inquiryType-label">お問い合わせ種別 *</Label>
         <Controller
           name="inquiryType"
           control={control}
@@ -142,6 +164,9 @@ export default function ContactForm() {
           render={({ field }) => (
             <RadioGroup
               className="flex flex-col gap-2"
+              aria-required="true"
+              aria-invalid={errors.inquiryType ? "true" : undefined}
+              aria-describedby={errors.inquiryType ? "inquiryType-error" : undefined}
               value={field.value || undefined}
               onValueChange={(value) => {
                 field.onChange(value)
@@ -157,10 +182,10 @@ export default function ContactForm() {
             </RadioGroup>
           )}
         />
-        {errors.inquiryType && <p className="text-red-500 text-sm mt-1">{errors.inquiryType.message}</p>}
+        {errors.inquiryType && <p id="inquiryType-error" role="alert" className="text-red-500 text-sm mt-1">{errors.inquiryType.message}</p>}
       </div>
-      <div>
-        <Label>ご希望の制作内容 *</Label>
+      <div role="group" aria-labelledby="services-label">
+        <Label id="services-label">ご希望の制作内容 *</Label>
         <Controller
           name="services"
           control={control}
@@ -195,12 +220,12 @@ export default function ContactForm() {
           }}
         />
         {showOther && (
-          <Input className="mt-2" placeholder="その他の内容" {...register("otherService")}/>
+          <Input className="mt-2" aria-label="その他の内容" placeholder="その他の内容" {...register("otherService")}/>
         )}
-        {errors.services && <p className="text-red-500 text-sm mt-1">{errors.services.message}</p>}
+        {errors.services && <p id="services-error" role="alert" className="text-red-500 text-sm mt-1">{errors.services.message}</p>}
       </div>
       <div>
-        <Label>予算感</Label>
+        <Label htmlFor="budget" id="budget-label">予算感</Label>
         <Controller
           name="budget"
           control={control}
@@ -216,7 +241,7 @@ export default function ContactForm() {
                 }
               }}
             >
-              <SelectTrigger>
+              <SelectTrigger id="budget" aria-labelledby="budget-label">
                 <SelectValue placeholder="選択してください" />
               </SelectTrigger>
               <SelectContent>
@@ -229,20 +254,20 @@ export default function ContactForm() {
         />
       </div>
       <div>
-        <Label>希望納期</Label>
-        <Input {...register("due")} />
+        <Label htmlFor="due">希望納期</Label>
+        <Input id="due" {...register("due")} />
       </div>
       <div>
-        <Label>現状のURL</Label>
-        <Input {...register("url")} />
+        <Label htmlFor="url">現状のURL</Label>
+        <Input id="url" type="url" {...register("url")} />
       </div>
       <div>
-        <Label>お問い合わせ詳細</Label>
-        <Textarea {...register("details")} />
+        <Label htmlFor="details">お問い合わせ詳細</Label>
+        <Textarea id="details" {...register("details")} />
       </div>
       <div>
-        <Label>添付ファイル (PDF/画像 最大5MB)</Label>
-        <Input type="file" accept="image/*,application/pdf" {...register("attachment")} />
+        <Label htmlFor="attachment">添付ファイル (PDF/画像 最大5MB)</Label>
+        <Input id="attachment" type="file" accept="image/*,application/pdf" {...register("attachment")} />
       </div>
       <div>
         <Controller
@@ -250,23 +275,34 @@ export default function ContactForm() {
           control={control}
           rules={{ validate: (value) => value || "必須項目です" }}
           render={({ field }) => (
-            <label className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <Checkbox
+                id="privacy"
                 checked={field.value}
+                aria-required="true"
+                aria-invalid={errors.privacy ? "true" : undefined}
+                aria-describedby={errors.privacy ? "privacy-error" : undefined}
                 onCheckedChange={(checked) => {
                   field.onChange(checked === true)
                 }}
                 onBlur={field.onBlur}
                 ref={field.ref}
               />
-              プライバシーポリシーに同意します
-            </label>
+              <Label htmlFor="privacy" className="font-normal">
+                プライバシーポリシーに同意します *
+              </Label>
+            </div>
           )}
         />
-        {errors.privacy && <p className="text-red-500 text-sm mt-1">{errors.privacy.message}</p>}
+        <p className="text-sm mt-1">
+          <Link href="/privacy" target="_blank" rel="noopener noreferrer" className="underline text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100">
+            プライバシーポリシーを読む
+          </Link>
+        </p>
+        {errors.privacy && <p id="privacy-error" role="alert" className="text-red-500 text-sm mt-1">{errors.privacy.message}</p>}
       </div>
-      <div>
-        <Label>希望連絡方法</Label>
+      <div role="group" aria-labelledby="preferredContact-label">
+        <Label id="preferredContact-label">希望連絡方法</Label>
         <Controller
           name="preferredContact"
           control={control}
@@ -300,10 +336,14 @@ export default function ContactForm() {
           }}
         />
       </div>
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-      {isSubmitSuccessful && !error && (
-        <p className="text-green-600 text-sm">送信が完了しました。ありがとうございました。</p>
-      )}
+      <div aria-live="assertive" role="alert">
+        {error && <p className="text-red-500 text-sm">{error}</p>}
+      </div>
+      <div aria-live="polite" role="status">
+        {isSubmitSuccessful && !error && (
+          <p className="text-green-600 text-sm">送信が完了しました。ありがとうございました。</p>
+        )}
+      </div>
       <Button type="submit" disabled={submitting} className="w-full sm:w-auto">
         {submitting ? "送信中..." : "送信"}
       </Button>

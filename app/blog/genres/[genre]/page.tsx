@@ -47,7 +47,7 @@ export default async function GenreListPage({ params }: { params: Params }) {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen bg-white dark:bg-neutral-900">
+      <main id="main-content" className="min-h-screen bg-white dark:bg-neutral-900">
         <div className="container mx-auto max-w-6xl px-4 py-28 md:py-36">
           <BreadcrumbsLite trail={breadcrumbs} />
           
