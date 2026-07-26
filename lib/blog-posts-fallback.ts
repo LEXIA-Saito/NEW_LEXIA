@@ -339,6 +339,8 @@ fallbackBlogPosts.push({
   date: "2025-10-14",
   latest_update: "2026-06-24",
   readingTime: "5分",
+  heroImage: "/images/blog/claude_code_overview.jpg",
+  heroImageAlt: "Claude Code overview",
   sections: [
     {
       body: [
@@ -972,6 +974,8 @@ fallbackBlogPosts.push({
   date: "2026-06-26",
   latest_update: "2026-06-27",
   readingTime: "6分",
+  heroImage: "/images/blog/claude_code_pricing.jpg",
+  heroImageAlt: "Claude Code pricing",
   sections: [
     {
       body: [
@@ -1097,6 +1101,8 @@ fallbackBlogPosts.push({
   date: "2026-06-26",
   latest_update: "2026-06-27",
   readingTime: "10分",
+  heroImage: "/images/blog/mac_mini_cluster.jpg",
+  heroImageAlt: "Mac mini cluster",
   sections: [
     { richtext: AFFILIATE_DISCLOSURE_HTML },
     {
@@ -1280,6 +1286,8 @@ fallbackBlogPosts.push({
   genre: "Backend",
   tags: ["Valkey", "Redis", "OSS"],
   date: "2026-06-29",
+  heroImage: "/images/blog/valkey_redis_fork.jpg",
+  heroImageAlt: "Valkey Redis fork",
   sections: [
     {
       body: [
