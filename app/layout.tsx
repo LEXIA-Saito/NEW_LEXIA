@@ -32,7 +32,7 @@ const organizationJsonLd = {
     addressRegion: "愛知県",
     addressLocality: "碧南市",
     streetAddress: "川端町1-45",
-    postalCode: "447-0876",
+    postalCode: "447-0817",
   },
   geo: {
     "@type": "GeoCoordinates",
@@ -78,7 +78,7 @@ const localBusinessJsonLd = {
     streetAddress: "川端町1-45",
     addressLocality: "碧南市",
     addressRegion: "愛知県",
-    postalCode: "447-0876",
+    postalCode: "447-0817",
     addressCountry: "JP",
   },
   geo: {
