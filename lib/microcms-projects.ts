@@ -21,6 +21,8 @@ export type MicroCMSProject = {
   solutions_design?: string
   solutions_tech?: string
   solutions_growth?: string
+  results?: string
+  results_note?: string
 
   testimonial_text?: string
   testimonial_author?: string
@@ -102,6 +104,8 @@ function convertMicroCMSProject(post: MicroCMSProject): Project {
     services: parseCommaSeparated(post.services).length > 0 ? parseCommaSeparated(post.services) : undefined,
     challenges: parseCommaSeparated(post.challenges).length > 0 ? parseCommaSeparated(post.challenges) : undefined,
     solutions,
+    results: parseCommaSeparated(post.results).length > 0 ? parseCommaSeparated(post.results) : undefined,
+    resultsNote: post.results_note || undefined,
 
     testimonial,
     techStack: parseCommaSeparated(post.techStack).length > 0 ? parseCommaSeparated(post.techStack) : undefined,

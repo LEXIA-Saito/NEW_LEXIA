@@ -126,6 +126,89 @@ export default async function ProjectPage(props: ProjectPageProps) {
             <Image src={project.image || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
           </div>
 
+          {/* 課題 → 施策 → 成果 → お客様の声（microCMS に入力された分だけ表示） */}
+          {project.challenges && project.challenges.length > 0 && (
+            <section className="mb-16">
+              <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6">課題</h2>
+              <ul className="space-y-3">
+                {project.challenges.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-neutral-700 dark:text-neutral-300">
+                    <span className="mt-2 inline-block h-1.5 w-1.5 rounded-full bg-neutral-400 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {project.solutions &&
+            (project.solutions.design.length > 0 ||
+              project.solutions.tech.length > 0 ||
+              project.solutions.growth.length > 0) && (
+              <section className="mb-16">
+                <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6">実施したこと</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {[
+                    { label: "デザイン", items: project.solutions.design },
+                    { label: "技術", items: project.solutions.tech },
+                    { label: "集客・改善", items: project.solutions.growth },
+                  ]
+                    .filter((group) => group.items.length > 0)
+                    .map((group) => (
+                      <div
+                        key={group.label}
+                        className="rounded-lg border border-neutral-200 dark:border-neutral-800 p-5"
+                      >
+                        <h3 className="text-sm font-medium text-neutral-500 dark:text-neutral-400 mb-3">
+                          {group.label}
+                        </h3>
+                        <ul className="space-y-2">
+                          {group.items.map((item) => (
+                            <li key={item} className="text-sm text-neutral-700 dark:text-neutral-300">
+                              ・{item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                </div>
+              </section>
+            )}
+
+          {project.results && project.results.length > 0 && (
+            <section className="mb-16">
+              <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6">成果</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {project.results.map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-lg bg-neutral-50 dark:bg-neutral-800 p-6 text-lg text-neutral-900 dark:text-neutral-100"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+              <p className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">
+                {project.resultsNote ??
+                  "※成果は一例です。個社により異なり、特定の成果を保証するものではありません。"}
+              </p>
+            </section>
+          )}
+
+          {project.testimonial && (
+            <section className="mb-16">
+              <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-6">お客様の声</h2>
+              <blockquote className="border-l-2 border-neutral-900 dark:border-neutral-100 pl-6">
+                <p className="text-lg text-neutral-800 dark:text-neutral-200 leading-relaxed">
+                  「{project.testimonial.text}」
+                </p>
+                <footer className="mt-3 text-sm text-neutral-600 dark:text-neutral-400">
+                  {project.testimonial.author}
+                </footer>
+              </blockquote>
+            </section>
+          )}
+
           {relatedProjects.length > 0 && (
             <div className="mt-16">
               <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100 mb-8">Related Projects</h2>

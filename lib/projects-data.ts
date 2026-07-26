@@ -20,6 +20,10 @@ export interface Project {
     tech: string[]
     growth: string[]
   }
+  /** 公開後に得られた成果。microCMS の results（カンマ区切り）から取り込む */
+  results?: string[]
+  /** 成果に添える注記。未設定の場合は既定の注記を表示する */
+  resultsNote?: string
 
   testimonial?: {
     text: string

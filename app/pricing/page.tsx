@@ -7,6 +7,7 @@ import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import HomepageCalculator from "@/components/pricing/homepage-calculator"
+import PackagePlans from "@/components/pricing/package-plans"
 import ComingSoon from "@/components/pricing/coming-soon"
 // Temporarily disable other calculators in favor of ComingSoon placeholder
 // import EcCalculator from "@/components/pricing/ec-calculator"
@@ -25,8 +26,8 @@ export default function PricingPage() {
   }
 
   const offers = [
-    { name: "ホームページ制作", price: "100000" },
-    { name: "ECサイト制作", price: "120000" },
+    { name: "ホームページ制作", price: "250000" },
+    { name: "ECサイト制作", price: "1200000" },
     { name: "システム開発", price: "180000" },
     { name: "デザイン制作", price: "100000" },
     { name: "PC教室", price: "5000" },
@@ -50,11 +51,11 @@ export default function PricingPage() {
       <main className="min-h-screen bg-white dark:bg-neutral-900">
         <div className="container mx-auto px-4 py-24 md:py-32 max-w-5xl">
           <h1 className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-neutral-100 mb-4 text-center">
-            料金計算・サービス別料金表
+            料金プラン
           </h1>
           <Breadcrumbs />
           <p className="text-center text-neutral-700 dark:text-neutral-300 mb-8">
-            このページではAI活用サポートをはじめ、各サービスの料金目安を紹介します。
+            目的から選べる制作パッケージと、公開後の月額運用プランをご紹介します。
           </p>
           <Tabs value={tab} onValueChange={handleTabChange} className="w-full">
             <div className="overflow-x-auto mb-4">
@@ -68,7 +69,20 @@ export default function PricingPage() {
               </TabsList>
             </div>
             <TabsContent value="homepage">
-              <HomepageCalculator />
+              <PackagePlans />
+
+              {/* 内訳から概算したい方向けに、従来の積み上げ計算も残す */}
+              <section className="mt-20 pt-12 border-t border-neutral-200 dark:border-neutral-800">
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-light text-neutral-900 dark:text-neutral-100">
+                    内訳から概算する
+                  </h2>
+                  <p className="mt-3 text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
+                    ページ数や素材の数から概算を出したい場合はこちらをご利用ください。
+                  </p>
+                </div>
+                <HomepageCalculator />
+              </section>
             </TabsContent>
             <TabsContent value="ec">
               <ComingSoon />
