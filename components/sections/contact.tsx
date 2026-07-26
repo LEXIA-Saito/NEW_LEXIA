@@ -31,7 +31,7 @@ export default function Contact() {
             </h2>
           </div>
             <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
-            愛知県碧南市のWEB制作事業 LEXIA では、愛知県碧南市・刈谷市・安城市・高浜市・西尾市の中小企業や個人事業主向けに、成果にこだわるホームページ制作をご提供しています。ご質問・ご相談はメールまたはお問い合わせフォームから承ります。
+            愛知県碧南市のWEB制作事業 LEXIA では、名古屋市を中心に愛知全域の企業・事業者向けに、成果にこだわるホームページ制作をご提供しています。オンラインでのお打ち合わせに対応しているため、遠方からのご依頼も承ります。ご質問・ご相談はメールまたはお問い合わせフォームから承ります。
           </p>
           <div className="mt-8">
             <Link href="/contact">
