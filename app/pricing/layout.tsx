@@ -3,24 +3,24 @@ import { SITE_URL } from "@/lib/config"
 import Script from "next/script"
 
 export const metadata: Metadata = {
-  title: "料金計算・サービス別料金表 | LEXIA",
+  title: "料金プラン | LEXIA",
   description:
-    "LEXIAのホームページ制作、ECサイト、システム開発、デザイン制作、PC教室、AI活用サポートの料金目安をご確認いただけます。",
+    "目的から選べる制作パッケージと、公開後の月額運用プランをご紹介します。ホームページ制作、ECサイト、システム開発、デザイン制作の料金目安をご確認いただけます。",
   alternates: {
     canonical: `${SITE_URL.replace(/\/$/, "")}/pricing`,
   },
   openGraph: {
-    title: "料金計算・サービス別料金表 | LEXIA",
+    title: "料金プラン | LEXIA",
     description:
-      "LEXIAのホームページ制作、ECサイト、システム開発、デザイン制作、PC教室、AI活用サポートの料金目安をご確認いただけます。",
+      "目的から選べる制作パッケージと、公開後の月額運用プランをご紹介します。ホームページ制作、ECサイト、システム開発、デザイン制作の料金目安をご確認いただけます。",
     type: "website",
     url: `${SITE_URL.replace(/\/$/, "")}/pricing`,
   },
   twitter: {
     card: "summary_large_image",
-    title: "料金計算・サービス別料金表 | LEXIA",
+    title: "料金プラン | LEXIA",
     description:
-      "LEXIAのホームページ制作、ECサイト、システム開発、デザイン制作、PC教室、AI活用サポートの料金目安をご確認いただけます。",
+      "目的から選べる制作パッケージと、公開後の月額運用プランをご紹介します。ホームページ制作、ECサイト、システム開発、デザイン制作の料金目安をご確認いただけます。",
     images: [`${SITE_URL.replace(/\/$/, "")}/og/og-image.png`],
   },
 }
@@ -31,8 +31,8 @@ export default function PricingLayout({
   children: React.ReactNode
 }) {
   const offers = [
-    { name: "ホームページ制作", price: "100000" },
-    { name: "ECサイト制作", price: "120000" },
+    { name: "ホームページ制作", price: "250000" },
+    { name: "ECサイト制作", price: "1200000" },
     { name: "システム開発", price: "180000" },
     { name: "デザイン制作", price: "100000" },
     { name: "PC教室", price: "5000" },
