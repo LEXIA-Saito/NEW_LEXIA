@@ -31,14 +31,7 @@ export default function LexiaTools({ id = "lexia-tools", className = "" }: Lexia
   }, [id])
 
   const tools = [
-    {
-      name: "LEXSYNC",
-      subtitle: "予定調整ツール",
-      description: "複数人のスケジュール調整を自動化。候補日の一括提案で調整時間を大幅削減。",
-      url: "https://lexsync.lexia-hp.com/",
-      image: "/images/ogp.png",
-      features: ["カレンダー連携", "候補日自動提案", "リマインダー通知"],
-    },
+
     {
       name: "LEXIA TOOLS",
       subtitle: "WEB制作支援ツール集",
@@ -65,7 +58,7 @@ export default function LexiaTools({ id = "lexia-tools", className = "" }: Lexia
         </p>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2 max-w-6xl mx-auto">
+      <div className="grid gap-8 md:grid-cols-1 max-w-3xl mx-auto">
         {tools.map((tool) => (
           <article
             key={tool.name}
