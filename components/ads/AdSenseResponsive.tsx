@@ -15,22 +15,28 @@ import { useEffect, useRef, useState } from 'react'
 // パブリッシャーID（環境変数から取得も可能）
 const ADSENSE_CLIENT_ID = 'ca-pub-8789901212664644'
 
-// 広告スロットID（AdSense管理画面で取得）
-// TODO: 実際のスロットIDに置き換えてください
+// 広告スロットID（AdSense管理画面で取得し、Vercelの環境変数に設定）
 export const AD_SLOTS = {
-  // 記事上部
-  ARTICLE_TOP: '1234567890',
-  // 記事中（H2見出し後）
-  ARTICLE_MID: '2345678901',
-  // 記事下メイン（収益ゾーン）
-  ARTICLE_BOTTOM_MAIN: '3456789012',
-  // 記事下サブ（回遊前）
-  ARTICLE_BOTTOM_SUB: '4567890123',
-  // インフィード（記事一覧）
-  INFEED: '5678901234',
-  // サイドバー
-  SIDEBAR: '6789012345',
+  ARTICLE_TOP: process.env.NEXT_PUBLIC_ADSENSE_ARTICLE_TOP_SLOT ?? '',
+  ARTICLE_MID: process.env.NEXT_PUBLIC_ADSENSE_ARTICLE_MID_SLOT ?? '',
+  ARTICLE_BOTTOM_MAIN: process.env.NEXT_PUBLIC_ADSENSE_ARTICLE_BOTTOM_MAIN_SLOT ?? '',
+  ARTICLE_BOTTOM_SUB: process.env.NEXT_PUBLIC_ADSENSE_ARTICLE_BOTTOM_SUB_SLOT ?? '',
+  INFEED: process.env.NEXT_PUBLIC_ADSENSE_INFEED_SLOT ?? '',
+  SIDEBAR: process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT ?? '',
 } as const
+
+const LEGACY_PLACEHOLDER_SLOTS = new Set([
+  '1234567890',
+  '2345678901',
+  '3456789012',
+  '4567890123',
+  '5678901234',
+  '6789012345',
+])
+
+export function isAdSlotConfigured(slot: string) {
+  return /^\d{10,20}$/.test(slot) && !LEGACY_PLACEHOLDER_SLOTS.has(slot)
+}
 
 interface AdSenseResponsiveProps {
   /** 広告スロットID */
@@ -64,8 +70,11 @@ export default function AdSenseResponsive({
   const adRef = useRef<HTMLModElement>(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const hasConfiguredSlot = isAdSlotConfigured(slot)
 
   useEffect(() => {
+    if (!hasConfiguredSlot) return
+
     // 既に読み込み済みの場合はスキップ
     if (isLoaded) return
 
@@ -88,7 +97,10 @@ export default function AdSenseResponsive({
     const timer = setTimeout(initAd, 100)
 
     return () => clearTimeout(timer)
-  }, [isLoaded, position])
+  }, [hasConfiguredSlot, isLoaded, position])
+
+  // ダミーまたは未設定の広告IDでは空白枠を作らない。
+  if (!hasConfiguredSlot) return null
 
   // エラー時はプレースホルダーを表示（広告枠は維持）
   if (hasError) {

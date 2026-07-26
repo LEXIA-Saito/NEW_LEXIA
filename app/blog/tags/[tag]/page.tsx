@@ -5,12 +5,22 @@ import { fetchBlogPosts, getBlogGenreLabel } from "@/lib/blog-posts"
 import type { Metadata } from "next"
 import Link from "next/link"
 import LinkifyText from "@/components/LinkifyText"
+import { SITE_URL } from "@/lib/config"
+import { formatJapaneseDate } from "@/lib/utils"
 
 export const revalidate = 60
 
 type Params = {
   params: {
     tag: string
+  }
+}
+
+function decodeTag(tag: string) {
+  try {
+    return decodeURIComponent(tag)
+  } catch {
+    return tag
   }
 }
 
@@ -26,16 +36,22 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const tag = params.tag
+  const tag = decodeTag(params.tag)
   const title = `#${tag} の記事一覧 | LEXIA BLOG`
   const description = `タグ「${tag}」に関連する記事一覧です。`
+  const canonical = `${SITE_URL.replace(/\/$/, "")}/blog/tags/${encodeURIComponent(tag)}`
+
   return {
     title,
     description,
+    alternates: {
+      canonical,
+    },
     openGraph: {
       title,
       description,
       type: "website",
+      url: canonical,
     },
     twitter: {
       card: "summary_large_image",
@@ -45,10 +61,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   }
 }
 
-import { formatJapaneseDate } from "@/lib/utils"
-
 export default async function TagIndexPage({ params }: Params) {
-  const tag = params.tag
+  const tag = decodeTag(params.tag)
   const posts = (await fetchBlogPosts())
     .filter((p) => p.tags?.includes(tag))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())

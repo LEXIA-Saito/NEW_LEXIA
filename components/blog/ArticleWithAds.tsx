@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import AdSenseResponsive, { AD_SLOTS } from '@/components/ads/AdSenseResponsive'
+import { AD_SLOTS, isAdSlotConfigured } from '@/components/ads/AdSenseResponsive'
 
 /**
  * 記事本文に広告を自動挿入するコンポーネント
@@ -25,6 +25,7 @@ export default function ArticleWithAds({ html, className = '' }: ArticleWithAdsP
 
   useEffect(() => {
     if (!containerRef.current || adInsertedRef.current) return
+    if (!isAdSlotConfigured(AD_SLOTS.ARTICLE_MID)) return
 
     const container = containerRef.current
     const h2Elements = container.querySelectorAll('h2')

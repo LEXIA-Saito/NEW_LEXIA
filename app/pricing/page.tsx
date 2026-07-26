@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
@@ -13,9 +14,15 @@ import ComingSoon from "@/components/pricing/coming-soon"
 // import DesignCalculator from "@/components/pricing/design-calculator"
 import PcClassPricingTable from "@/components/pricing/pc-class-pricing-table"
 import { SITE_URL } from "@/lib/config"
+import { trackEvent } from "@/lib/analytics"
 
 export default function PricingPage() {
   const [tab, setTab] = useState("homepage")
+
+  const handleTabChange = (value: string) => {
+    setTab(value)
+    trackEvent("pricing_tab_view", { service: value })
+  }
 
   const offers = [
     { name: "ホームページ制作", price: "100000" },
@@ -49,7 +56,7 @@ export default function PricingPage() {
           <p className="text-center text-neutral-700 dark:text-neutral-300 mb-8">
             このページではAI活用サポートをはじめ、各サービスの料金目安を紹介します。
           </p>
-          <Tabs value={tab} onValueChange={setTab} className="w-full">
+          <Tabs value={tab} onValueChange={handleTabChange} className="w-full">
             <div className="overflow-x-auto mb-4">
               <TabsList className="flex w-max">
                 <TabsTrigger value="homepage">ホームページ制作</TabsTrigger>
@@ -82,18 +89,24 @@ export default function PricingPage() {
           {/* Global CTA at bottom */}
           <div className="mt-12 text-center">
             <div className="inline-flex flex-wrap gap-3 justify-center">
-              <a
-                href="/contact"
-                className="inline-flex items-center justify-center rounded-md bg-neutral-900 text-white px-5 py-3 text-sm font-medium hover:bg-neutral-800 transition-colors"
-              >
-                この内容で相談する
-              </a>
-              <a
+              {tab !== "homepage" && (
+                <Link
+                  href={`/contact?source=pricing&service=${encodeURIComponent(tab)}`}
+                  onClick={() => trackEvent("service_cta_click", {
+                    location: "pricing_page",
+                    service: tab,
+                  })}
+                  className="inline-flex items-center justify-center rounded-md bg-neutral-900 text-white px-5 py-3 text-sm font-medium hover:bg-neutral-800 transition-colors"
+                >
+                  このサービスについて相談する
+                </Link>
+              )}
+              <Link
                 href="/services"
                 className="inline-flex items-center justify-center rounded-md border border-neutral-300 dark:border-neutral-700 px-5 py-3 text-sm font-medium text-neutral-900 dark:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
               >
                 サービス一覧へ
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -20,6 +20,9 @@ export function AdSenseLoader() {
     script.async = true
     script.src = ADSENSE_SRC
     script.crossOrigin = "anonymous"
+    // Googleが認める設定で、画面を大きく覆う折りたたみ式アンカー広告を避ける。
+    // Auto ads側でアンカーを有効にしている場合も、通常サイズの下部広告だけに限定する。
+    script.dataset.overlays = "collapsed-bottom"
     document.head.appendChild(script)
   }, [])
 

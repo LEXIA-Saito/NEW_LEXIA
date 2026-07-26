@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 /**
  * A8.net アフィリエイト広告バナー
  * 728×90px レクタングル広告（レスポンシブ対応）
@@ -8,7 +10,7 @@ export default function A8Banner() {
       <div className="inline-block">
         <a 
           href="https://px.a8.net/svt/ejp?a8mat=45G5XJ+C08PYQ+50+2HOB4X" 
-          rel="nofollow noopener noreferrer"
+          rel="sponsored nofollow noopener noreferrer"
           target="_blank"
           aria-label="スポンサー広告"
         >

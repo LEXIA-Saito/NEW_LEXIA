@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useState } from "react"
 import {
   Table,
@@ -26,6 +27,7 @@ import {
   TooltipContent,
   TooltipProvider,
 } from "@/components/ui/tooltip"
+import { trackEvent } from "@/lib/analytics"
 
 export default function HomepageCalculator() {
   const [pages, setPages] = useState(5)
@@ -92,10 +94,40 @@ export default function HomepageCalculator() {
   }
   const discountAmount =
     discountType === "percent" ? Math.floor((total * discount) / 100) : discount
-  total = total - discountAmount
+  total = Math.max(0, total - discountAmount)
+
+  const quoteParams = new URLSearchParams({
+    source: "pricing-homepage",
+    service: "corporate",
+    estimate: String(total),
+    pages: String(pages),
+    pageType,
+    cms: String(cms),
+    ssr: String(ssr),
+    design: designLevel,
+    maintenance,
+    schedule,
+  })
+  const quoteHref = `/contact?${quoteParams.toString()}`
+
+  const handleQuoteClick = () => {
+    trackEvent("pricing_complete", {
+      calculator: "homepage",
+      estimate: total,
+      pages,
+      cms,
+      maintenance,
+    })
+    trackEvent("service_cta_click", {
+      location: "pricing_homepage_calculator",
+      service: "web_production",
+      estimate: total,
+    })
+  }
 
   return (
-    <Table>
+    <>
+      <Table>
       <TableHeader>
         <TableRow>
           <TableHead>項目</TableHead>
@@ -372,6 +404,22 @@ export default function HomepageCalculator() {
           <TableHead className="text-right">{total.toLocaleString()} 円</TableHead>
         </TableRow>
       </TableFooter>
-    </Table>
+      </Table>
+      <div className="mt-8 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 text-center dark:border-neutral-800 dark:bg-neutral-800/40">
+        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+          計算結果と選択内容を問い合わせフォームへ自動入力します。
+        </p>
+        <Link
+          href={quoteHref}
+          onClick={handleQuoteClick}
+          className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-neutral-800 sm:w-auto dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200"
+        >
+          概算 {total.toLocaleString("ja-JP")}円で相談する
+        </Link>
+        <p className="mt-3 text-xs text-neutral-500 dark:text-neutral-400">
+          シミュレーションは目安です。正式な金額は要件確認後にご案内します。
+        </p>
+      </div>
+    </>
   )
 }

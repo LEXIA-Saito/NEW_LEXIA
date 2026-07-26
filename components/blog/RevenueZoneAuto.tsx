@@ -4,6 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Share2, Twitter, Facebook, Copy, Check } from 'lucide-react'
 import { useState } from 'react'
+import { trackEvent } from '@/lib/analytics'
+import AffiliateRecommendations from '@/components/blog/AffiliateRecommendations'
 /**
  * 回遊促進ゾーンコンポーネント
  * 
@@ -24,12 +26,16 @@ interface RelatedPost {
 }
 
 interface RevenueZoneAutoProps {
+  /** 現在の記事スラッグ */
+  articleSlug: string
   /** 現在の記事タイトル */
   articleTitle: string
   /** 現在の記事URL */
   articleUrl: string
   /** 現在の記事ジャンル */
   genre: string
+  /** 現在の記事タグ */
+  tags?: string[]
   /** 同ジャンルの関連記事 */
   relatedPosts: RelatedPost[]
   /** 新着記事 */
@@ -56,6 +62,7 @@ function ShareButtons({ title, url }: { title: string; url: string }) {
   const [copied, setCopied] = useState(false)
 
   const shareOnTwitter = () => {
+    trackEvent('share', { method: 'x', content_type: 'article', item_id: url })
     const text = encodeURIComponent(`${title}\n`)
     const shareUrl = encodeURIComponent(url)
     window.open(
@@ -66,6 +73,7 @@ function ShareButtons({ title, url }: { title: string; url: string }) {
   }
 
   const shareOnFacebook = () => {
+    trackEvent('share', { method: 'facebook', content_type: 'article', item_id: url })
     const shareUrl = encodeURIComponent(url)
     window.open(
       `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
@@ -77,6 +85,7 @@ function ShareButtons({ title, url }: { title: string; url: string }) {
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(url)
+      trackEvent('share', { method: 'copy', content_type: 'article', item_id: url })
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
@@ -150,9 +159,11 @@ function ArticleCardCompact({ post }: { post: RelatedPost }) {
 }
 
 export default function RevenueZoneAuto({
+  articleSlug,
   articleTitle,
   articleUrl,
   genre,
+  tags,
   relatedPosts,
   latestPosts,
   genreLabel,
@@ -177,7 +188,52 @@ export default function RevenueZoneAuto({
         <ShareButtons title={articleTitle} url={articleUrl} />
       </div>
 
-      {/* 3. 関連記事（同ジャンル優先） */}
+      {/* 3. 記事テーマに合う提携サービスだけを表示 */}
+      <AffiliateRecommendations
+        articleSlug={articleSlug}
+        articleTitle={articleTitle}
+        genre={genre}
+        tags={tags}
+      />
+
+      {/* 4. 物販比較記事への送客 */}
+      <div className="mb-10">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
+            AI・開発作業を快適にする
+            <span className="text-blue-600 dark:text-blue-400">デスク環境</span>
+          </h3>
+          <a
+            href={`${OG_BASE}/remote-work-desk-setup-roadmap`}
+            data-affiliate-funnel="desk-guide"
+            className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+          >
+            比較ガイドを見る →
+          </a>
+        </div>
+        <p className="mb-4 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+          購入前に比較しやすいよう、用途別の選び方をまとめています。
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {DESK_GUIDES.slice(0, 4).map((g) => (
+            <a
+              key={g.slug}
+              href={`${OG_BASE}/${g.slug}`}
+              data-affiliate-funnel="desk-guide"
+              className="block p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/70 hover:shadow-md hover:border-blue-300 dark:hover:border-blue-700 transition-all"
+            >
+              <span className="block font-semibold text-neutral-900 dark:text-neutral-100">
+                {g.title}
+              </span>
+              <span className="mt-1 block text-sm text-neutral-600 dark:text-neutral-400 line-clamp-1">
+                {g.desc}
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* 5. 関連記事（同ジャンル優先） */}
       {relatedPosts.length > 0 && (
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4">
@@ -200,7 +256,7 @@ export default function RevenueZoneAuto({
         </div>
       )}
 
-      {/* 4. 新着記事（回遊促進） */}
+      {/* 6. 新着記事（回遊促進） */}
       {latestPosts.length > 0 && (
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
@@ -222,60 +278,6 @@ export default function RevenueZoneAuto({
         </div>
       )}
 
-      {/* 在宅ワーク・デスク環境ガイド（og.サイトへの内部リンク：回遊＋クロール誘導） */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
-            在宅ワークの<span className="text-blue-600 dark:text-blue-400">デスク環境</span>ガイド
-          </h3>
-          <a
-            href={`${OG_BASE}/remote-work-desk-setup-roadmap`}
-            className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-          >
-            すべて見る →
-          </a>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {DESK_GUIDES.map((g) => (
-            <a
-              key={g.slug}
-              href={`${OG_BASE}/${g.slug}`}
-              className="block p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/70 hover:shadow-md hover:border-blue-300 dark:hover:border-blue-700 transition-all"
-            >
-              <span className="block font-semibold text-neutral-900 dark:text-neutral-100">
-                {g.title}
-              </span>
-              <span className="mt-1 block text-sm text-neutral-600 dark:text-neutral-400 line-clamp-1">
-                {g.desc}
-              </span>
-            </a>
-          ))}
-        </div>
-      </div>
-
-      {/* CTA: お問い合わせ導線 */}
-      <div className="mt-12 p-6 rounded-2xl bg-gradient-to-br from-neutral-100 to-neutral-50 dark:from-neutral-800 dark:to-neutral-900 border border-neutral-200 dark:border-neutral-700">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          LEXIA BLOGの運営は、ホームページ制作・システム開発を行うWEB制作事業
-          <strong className="text-neutral-900 dark:text-neutral-100">LEXIA</strong>
-          が行っています。
-        </p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 font-medium text-sm hover:opacity-90 transition-opacity"
-          >
-            制作の相談をする
-            <span aria-hidden="true">→</span>
-          </Link>
-          <Link
-            href="/services/web"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 font-medium text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-          >
-            サービス一覧
-          </Link>
-        </div>
-      </div>
     </section>
   )
 }
