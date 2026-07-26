@@ -39,12 +39,13 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
+  const siteUrl = SITE_URL.replace(/\/$/, "")
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": ["Organization", "LocalBusiness"],
-        "@id": `${SITE_URL}/#organization`,
+        "@id": `${siteUrl}/#organization`,
         name: "LEXIA",
         url: SITE_URL,
         logo: LOGO_URL,
@@ -84,27 +85,27 @@ export default function Home() {
       },
       {
         "@type": "WebSite",
-        "@id": `${SITE_URL}/#website`,
+        "@id": `${siteUrl}/#website`,
         url: SITE_URL,
         name: "LEXIA",
         description: "愛知県碧南市のホームページ制作・WEB制作事業",
-        publisher: { "@id": `${SITE_URL}/#organization` },
+        publisher: { "@id": `${siteUrl}/#organization` },
         inLanguage: "ja",
       },
       {
         "@type": "WebPage",
-        "@id": `${SITE_URL}/#webpage`,
+        "@id": `${siteUrl}/#webpage`,
         url: SITE_URL,
         name: "愛知県碧南市のホームページ制作・WEB制作事業 | LEXIA",
         description:
           "愛知県碧南市を中心に小規模企業向けのモバイル最適化サイトを制作。愛知県でホームページ作成ならLEXIAのWEB制作事業にお任せください。",
-        isPartOf: { "@id": `${SITE_URL}/#website` },
-        about: { "@id": `${SITE_URL}/#organization` },
+        isPartOf: { "@id": `${siteUrl}/#website` },
+        about: { "@id": `${siteUrl}/#organization` },
         inLanguage: "ja",
       },
       {
         "@type": "FAQPage",
-        "@id": `${SITE_URL}/#faq`,
+        "@id": `${siteUrl}/#faq`,
         mainEntity: [
           {
             "@type": "Question",

@@ -11,8 +11,10 @@ import Image from "next/image"
 import EnhancedRichText from "@/components/blog/EnhancedRichText"
 import RichTextTableOfContents from "@/components/blog/RichTextTableOfContents"
 import { sanitizeBlogHtml } from "@/lib/sanitize-blog-html"
+import { formatJapaneseDate } from "@/lib/utils"
 // 回遊促進コンポーネント
 import RevenueZoneAuto from "@/components/blog/RevenueZoneAuto"
+import ArticleEngagementTracker from "@/components/blog/ArticleEngagementTracker"
 
 const PLACEHOLDER_IMG = "/images/blog-placeholder.svg"
 
@@ -85,8 +87,6 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
 
 export const revalidate = 60
 
-import { formatJapaneseDate } from "@/lib/utils"
-
 export default async function BlogArticlePage({ params }: BlogArticlePageProps) {
   try {
     const post = await fetchBlogPost(params.slug)
@@ -153,7 +153,12 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               <Breadcrumbs dynamicLabels={{ [post.slug]: post.title }} />
             </div>
 
-            <article className="max-w-3xl mx-auto">
+            <article
+              id="blog-article"
+              data-article-slug={post.slug}
+              className="max-w-3xl mx-auto"
+            >
+              <ArticleEngagementTracker articleSlug={post.slug} />
               {/* ===== 記事ヘッダー ===== */}
               <header className="mb-12">
                 <Link
@@ -351,9 +356,11 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
 
               {/* ===== 収益ゾーン（記事下） ===== */}
               <RevenueZoneAuto
+                articleSlug={post.slug}
                 articleTitle={post.title}
                 articleUrl={articleUrl}
                 genre={post.genre}
+                tags={post.tags}
                 genreLabel={getBlogGenreLabel(post.genre)}
                 relatedPosts={sameGenrePosts.map(p => ({
                   slug: p.slug,

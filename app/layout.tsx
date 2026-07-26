@@ -16,7 +16,7 @@ const organizationJsonLd = {
   "@type": "Organization",
   "@id": `${SITE_URL}#organization`,
   name: "LEXIA",
-  alternateName: "レクシア",
+  alternateName: "レキシア",
   url: SITE_URL,
   logo: {
     "@type": "ImageObject",
@@ -32,12 +32,12 @@ const organizationJsonLd = {
     addressRegion: "愛知県",
     addressLocality: "碧南市",
     streetAddress: "川端町1-45",
-    postalCode: "447-0000",
+    postalCode: "447-0876",
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 34.8847,
-    longitude: 136.9936,
+    latitude: 34.867852,
+    longitude: 136.99312,
   },
   contactPoint: [
     {
@@ -47,13 +47,17 @@ const organizationJsonLd = {
       availableLanguage: ["Japanese"],
     },
   ],
-  sameAs: [],
+  sameAs: [
+    "https://www.instagram.com/lexia_web",
+    "https://x.com/lexia_web",
+    "https://www.linkedin.com/in/lexia-saito/",
+  ],
   founder: {
     "@type": "Person",
     name: "齋藤雅人",
     jobTitle: "代表",
   },
-  foundingDate: "2023",
+  foundingDate: "2022-03-26",
   areaServed: {
     "@type": "Place",
     name: "愛知県",
@@ -67,20 +71,20 @@ const localBusinessJsonLd = {
   name: "LEXIA",
   image: `${SITE_URL.replace(/\/$/, "")}/og/og-image.png`,
   url: SITE_URL,
-  telephone: "",
+  telephone: "090-1742-3456",
   email: "lexia0web@gmail.com",
   address: {
     "@type": "PostalAddress",
     streetAddress: "川端町1-45",
     addressLocality: "碧南市",
     addressRegion: "愛知県",
-    postalCode: "447-0000",
+    postalCode: "447-0876",
     addressCountry: "JP",
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 34.8847,
-    longitude: 136.9936,
+    latitude: 34.867852,
+    longitude: 136.99312,
   },
   priceRange: "¥¥",
   openingHoursSpecification: [

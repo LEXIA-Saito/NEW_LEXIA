@@ -1,11 +1,23 @@
-export function trackEvent(name: string, params?: Record<string, any>) {
+type AnalyticsValue = string | number | boolean | undefined
+type AnalyticsParams = Record<string, AnalyticsValue>
+
+declare global {
+  interface Window {
+    gtag?: (command: "event", name: string, params?: AnalyticsParams) => void
+    va?: {
+      track?: (name: string, params?: AnalyticsParams) => void
+    }
+  }
+}
+
+export function trackEvent(name: string, params?: AnalyticsParams) {
   if (typeof window === "undefined") return
+
   try {
-    // Google Analytics (gtag)
-    ;(window as any).gtag?.("event", name, params || {})
+    window.gtag?.("event", name, params || {})
   } catch {}
+
   try {
-    // Vercel Analytics (client runtime)
-    ;(window as any).va?.track?.(name, params || {})
+    window.va?.track?.(name, params || {})
   } catch {}
 }
