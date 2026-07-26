@@ -124,7 +124,7 @@ export function ProfessionalServiceSchema() {
       streetAddress: "川端町1-45",
       addressLocality: "碧南市",
       addressRegion: "愛知県",
-      postalCode: "447-0000",
+      postalCode: "447-0817",
       addressCountry: "JP",
     },
     geo: {

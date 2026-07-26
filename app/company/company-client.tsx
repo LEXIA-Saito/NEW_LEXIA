@@ -170,7 +170,7 @@ export default function CompanyClient({ projects }: { projects: Project[] }) {
           addressRegion: "愛知県",
           addressLocality: "碧南市",
           streetAddress: "川端町1-45",
-          postalCode: "447-0876",
+          postalCode: "447-0817",
         },
         geo: {
           "@type": "GeoCoordinates",
