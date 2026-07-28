@@ -39,6 +39,8 @@ export default function Footer() {
         { name: "制作実績", href: "/projects" },
         { name: "料金プラン", href: "/pricing" },
         { name: "LEXIA BLOG", href: "/blog" },
+        // 自社運営メディア。実在の運営実績としての明示と、クロール誘導を兼ねる。
+        { name: "バイブナビ（運営メディア）", href: "https://vibe-navi.com" },
         { name: "お問い合わせ", href: "/contact" },
       ],
     },
