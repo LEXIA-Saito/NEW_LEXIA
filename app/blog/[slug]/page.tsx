@@ -113,13 +113,20 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     const sameGenrePosts = allPosts
       .filter((p) => p.slug !== post.slug && p.genre === post.genre)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .slice(0, 3)
-    
+      .slice(0, 6)
+
     // 新着記事（関連記事と重複しないもの）
     const latestPosts = allPosts
       .filter((p) => p.slug !== post.slug && !sameGenrePosts.find((s) => s.slug === p.slug))
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .slice(0, 3)
+      .slice(0, 6)
+
+    // 全記事への内部リンク（クロール網羅用）。既にインデックス済みの記事ページから
+    // 未クロールの記事へ内部リンクを供給し、クロール誘導と権威移転を図る。
+    const morePosts = allPosts
+      .filter((p) => p.slug !== post.slug)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .map((p) => ({ slug: p.slug, title: p.title, genre: p.genre }))
 
     // 記事URL（SNSシェア用）
     const articleUrl = `${SITE_URL.replace(/\/$/, "")}/blog/${post.slug}`
@@ -378,6 +385,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                   date: p.date,
                   readingTime: p.readingTime,
                 }))}
+                morePosts={morePosts}
               />
 
             </article>

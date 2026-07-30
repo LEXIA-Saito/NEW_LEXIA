@@ -40,6 +40,8 @@ interface RevenueZoneAutoProps {
   relatedPosts: RelatedPost[]
   /** 新着記事 */
   latestPosts: RelatedPost[]
+  /** 全記事への内部リンク（クロール網羅・回遊用の軽量リスト） */
+  morePosts?: { slug: string; title: string; genre: string }[]
   /** ジャンルラベル */
   genreLabel: string
 }
@@ -166,6 +168,7 @@ export default function RevenueZoneAuto({
   tags,
   relatedPosts,
   latestPosts,
+  morePosts,
   genreLabel,
 }: RevenueZoneAutoProps) {
   return (
@@ -249,7 +252,7 @@ export default function RevenueZoneAuto({
             </Link>
           </div>
           <div className="space-y-4">
-            {relatedPosts.slice(0, 3).map((post) => (
+            {relatedPosts.slice(0, 6).map((post) => (
               <ArticleCardCompact key={post.slug} post={post} />
             ))}
           </div>
@@ -271,10 +274,39 @@ export default function RevenueZoneAuto({
             </Link>
           </div>
           <div className="space-y-4">
-            {latestPosts.slice(0, 3).map((post) => (
+            {latestPosts.slice(0, 6).map((post) => (
               <ArticleCardCompact key={post.slug} post={post} />
             ))}
           </div>
+        </div>
+      )}
+
+      {/* すべての記事（内部リンク網羅：未クロール記事へのクロール誘導・回遊促進） */}
+      {morePosts && morePosts.length > 0 && (
+        <div className="mb-8 pt-8 border-t border-neutral-200 dark:border-neutral-800">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
+              LEXIA BLOG のすべての記事
+            </h3>
+            <Link
+              href="/blog"
+              className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+            >
+              ブログトップ →
+            </Link>
+          </div>
+          <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
+            {morePosts.map((p) => (
+              <li key={p.slug} className="leading-snug">
+                <Link
+                  href={`/blog/${p.slug}`}
+                  className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-1"
+                >
+                  {p.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 
