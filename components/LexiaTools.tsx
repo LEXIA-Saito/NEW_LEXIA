@@ -38,7 +38,14 @@ export default function LexiaTools({ id = "lexia-tools", className = "" }: Lexia
       description: "画像変換・リサイズ、ファイルリネーム、ZIP圧縮など、制作現場で必要な機能をブラウザで完結。",
       url: "https://tools.lexia-hp.com/",
       image: "/images/create-an-open-graph-protocol-image-with-an-aspect-1765943437748.png",
-      features: ["画像形式変換", "一括リサイズ", "ZIP圧縮・解凍", "ファイルリネーム"],
+      // 個別ツールページへの直リンク。フッター以外の導線を増やし、
+      // クロール頻度の高いトップページから各ツールページへ到達できるようにする。
+      features: [
+        { name: "画像形式変換", href: "https://tools.lexia-hp.com/image-converter" },
+        { name: "一括リサイズ", href: "https://tools.lexia-hp.com/image-resizer" },
+        { name: "ZIP圧縮・解凍", href: "https://tools.lexia-hp.com/zip-tool" },
+        { name: "ファイルリネーム", href: "https://tools.lexia-hp.com/file-renamer" },
+      ],
     },
   ]
 
@@ -92,23 +99,28 @@ export default function LexiaTools({ id = "lexia-tools", className = "" }: Lexia
 
                 <p className="text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">{tool.description}</p>
 
-                <div className="flex flex-wrap gap-2">
-                  {tool.features.map((feature) => (
-                    <span
-                      key={feature}
-                      className="inline-flex items-center rounded-full bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm text-neutral-700 dark:text-neutral-300"
-                    >
-                      {feature}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-6 flex items-center gap-2 text-accent font-medium group-hover:gap-3 transition-all">
+                <div className="flex items-center gap-2 text-accent font-medium group-hover:gap-3 transition-all">
                   <span>ツールを使う</span>
                   <ExternalLink className="h-4 w-4" />
                 </div>
               </div>
             </Link>
+
+            {/* 個別ツールへの導線。<Link> の入れ子を避けるためカード本体の外に出している */}
+            <div className="px-6 pb-6 flex flex-wrap gap-2">
+              {tool.features.map((feature) => (
+                <Link
+                  key={feature.name}
+                  href={feature.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("lexia_tool_click", { tool_name: feature.name })}
+                  className="inline-flex items-center rounded-full bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
+                >
+                  {feature.name}
+                </Link>
+              ))}
+            </div>
           </article>
         ))}
       </div>

@@ -10,7 +10,7 @@ import AffiliateRecommendations from '@/components/blog/AffiliateRecommendations
  * 回遊促進ゾーンコンポーネント
  * 
  * 記事読了後の回遊促進エリア
- * 感謝CTA → SNSシェア → 関連記事 → 新着記事 の順番
+ * 感謝CTA → SNSシェア → 提携サービス → デスク環境ガイド → 無料ツール → 関連記事 → 新着記事 の順番
  * 
  * ※ Google自動広告はコンテンツの区切りを自動検出し最適な位置に広告を配置するため、
  *   広告スペースの事前確保は不要です
@@ -58,6 +58,18 @@ const DESK_GUIDES: { slug: string; title: string; desc: string }[] = [
 ]
 
 const OG_BASE = 'https://og.lexia-hp.com/articles'
+
+// 自社無料ツール（tools.lexia-hp.com）への内部リンク。
+// フッターだけではクロールに拾われず個別ツールページが未インデックスのままだったため、
+// og. と同じく全記事の記事下からも導線を張ってクロール誘導・権威移転を狙う。
+const FREE_TOOLS: { slug: string; title: string; desc: string }[] = [
+  { slug: 'image-converter', title: '画像フォーマット変換', desc: 'PNG・JPG・WebP をブラウザで相互変換' },
+  { slug: 'image-resizer', title: '画像リサイズ', desc: 'サイズ指定・一括リサイズに対応' },
+  { slug: 'zip-tool', title: 'ZIP圧縮・解凍', desc: 'アップロード不要でその場で処理' },
+  { slug: 'file-renamer', title: 'ファイル名一括変更', desc: '連番・置換でまとめてリネーム' },
+]
+
+const TOOLS_BASE = 'https://tools.lexia-hp.com'
 
 // SNSシェアボタン
 function ShareButtons({ title, url }: { title: string; url: string }) {
@@ -236,7 +248,43 @@ export default function RevenueZoneAuto({
         </div>
       </div>
 
-      {/* 5. 関連記事（同ジャンル優先） */}
+      {/* 5. 自社無料ツールへの送客（tools.lexia-hp.com のクロール誘導も兼ねる） */}
+      <div className="mb-10">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
+            ブラウザで完結する
+            <span className="text-blue-600 dark:text-blue-400">無料ツール</span>
+          </h3>
+          <a
+            href={TOOLS_BASE}
+            className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+          >
+            ツール一覧を見る →
+          </a>
+        </div>
+        <p className="mb-4 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+          LEXIA が制作現場向けに開発した無料ツールです。登録不要・ブラウザ上で処理が完結します。
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {FREE_TOOLS.map((t) => (
+            <a
+              key={t.slug}
+              href={`${TOOLS_BASE}/${t.slug}`}
+              data-tools-funnel="blog-footer"
+              className="block p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/70 hover:shadow-md hover:border-blue-300 dark:hover:border-blue-700 transition-all"
+            >
+              <span className="block font-semibold text-neutral-900 dark:text-neutral-100">
+                {t.title}
+              </span>
+              <span className="mt-1 block text-sm text-neutral-600 dark:text-neutral-400 line-clamp-1">
+                {t.desc}
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* 6. 関連記事（同ジャンル優先） */}
       {relatedPosts.length > 0 && (
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4">
@@ -259,7 +307,7 @@ export default function RevenueZoneAuto({
         </div>
       )}
 
-      {/* 6. 新着記事（回遊促進） */}
+      {/* 7. 新着記事（回遊促進） */}
       {latestPosts.length > 0 && (
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
