@@ -1,353 +1,161 @@
 "use client"
 
-import React, { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 
 type EnhancedRichTextProps = {
+  /**
+   * lib/blog/transform-article-html.ts で加工済みのHTML。
+   * 見出しID・シンタックスハイライト・リンクカード・表のラッパーは
+   * すべてサーバー側で適用済みなので、ここでは触らない。
+   */
   html: string
   className?: string
 }
 
+/**
+ * 記事本文のうち、ブラウザでしか実現できない部分だけを担当する。
+ *
+ * 見た目の生成はサーバー側に移した。ここに残すのは
+ * 「クリックできる」「外部スクリプトを読む」といった対話的な振る舞いのみ。
+ */
 export default function EnhancedRichText({ html, className = "" }: EnhancedRichTextProps) {
   const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!contentRef.current) return
+    const container = contentRef.current
+    if (!container) return
 
     try {
-      // 1. 見出しにIDとアンカーリンクを追加
-      addHeadingAnchors()
-
-      // 2. コードブロックにコピーボタンとシンタックスハイライトを追加
-      enhanceCodeBlocks()
-
-      // 3. テーブルをレスポンシブラッパーで囲む
-      wrapTablesForResponsive()
-
-      // 4. 埋め込みコンテンツを処理（Twitter/Instagram/Facebook）
-      processEmbeds()
-
-      // 5. ページロード時のハッシュスクロール
-      handleHashScroll()
+      addHeadingAnchors(container)
+      addCopyButtons(container)
+      loadEmbedScripts(container, html)
+      scrollToHash()
     } catch (error) {
-      console.error("EnhancedRichText: Error applying enhancements", error)
+      console.error("EnhancedRichText: 拡張の適用に失敗しました", error)
     }
   }, [html])
 
-  const addHeadingAnchors = () => {
-    if (!contentRef.current) return
-
-    const headings = contentRef.current.querySelectorAll("h1, h2, h3, h4, h5, h6")
-
-    headings.forEach((heading, index) => {
-      const text = heading.textContent || ""
-
-      // IDを生成または使用
-      if (!heading.id) {
-        const id = `heading-${index}-${text
-          .toLowerCase()
-          .replace(/[^\w\s-]/g, "")
-          .replace(/\s+/g, "-")
-          .substring(0, 50)}`
-        heading.id = id
-      }
-
-      // アンカーリンクボタンを追加
-      if (!heading.querySelector(".heading-anchor")) {
-        heading.classList.add("group", "relative", "scroll-mt-24")
-
-        const anchorLink = document.createElement("a")
-        anchorLink.href = `#${heading.id}`
-        anchorLink.className =
-          "heading-anchor absolute -left-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-neutral-400 hover:text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-400 no-underline"
-        anchorLink.setAttribute("aria-label", `${text}へのリンク`)
-        anchorLink.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`
-
-        anchorLink.addEventListener("click", (e) => {
-          e.preventDefault()
-          heading.scrollIntoView({ behavior: "smooth", block: "start" })
-          window.history.pushState(null, "", `#${heading.id}`)
-          
-          // 一時的にハイライト
-          heading.classList.add("bg-yellow-100", "dark:bg-yellow-900/20", "transition-colors", "duration-300")
-          setTimeout(() => {
-            heading.classList.remove("bg-yellow-100", "dark:bg-yellow-900/20")
-          }, 2000)
-        })
-
-        heading.style.position = "relative"
-        heading.insertBefore(anchorLink, heading.firstChild)
-      }
-    })
-  }
-
-  const enhanceCodeBlocks = () => {
-    if (!contentRef.current) return
-
-    const codeBlocks = contentRef.current.querySelectorAll("pre")
-
-    codeBlocks.forEach((pre) => {
-      if (pre.querySelector(".copy-button")) return
-
-      pre.style.position = "relative"
-      pre.style.paddingTop = "2.5rem"
-
-      const code = pre.querySelector("code")
-      const codeText = code?.textContent || pre.textContent || ""
-
-      // 言語を検出
-      let language = "text"
-      if (code?.className) {
-        const match = code.className.match(/language-(\w+)/)
-        if (match) {
-          language = match[1]
-        }
-      }
-
-      // 言語ラベル
-      const langLabel = document.createElement("div")
-      langLabel.className =
-        "absolute top-2 left-3 text-xs font-medium text-neutral-400 dark:text-neutral-500 uppercase tracking-wide select-none"
-      langLabel.textContent = language
-      pre.appendChild(langLabel)
-
-      // コピーボタン
-      const copyButton = document.createElement("button")
-      copyButton.className =
-        "copy-button absolute top-2 right-2 p-2 rounded-md bg-neutral-700 hover:bg-neutral-600 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-white transition-all duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100"
-      copyButton.setAttribute("aria-label", "コードをコピー")
-      copyButton.title = "コードをコピー"
-      copyButton.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-        </svg>
-      `
-
-      copyButton.addEventListener("click", async () => {
-        try {
-          await navigator.clipboard.writeText(codeText)
-
-          copyButton.innerHTML = `
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          `
-          copyButton.classList.add("bg-green-600", "dark:bg-green-700")
-          copyButton.title = "コピーしました！"
-
-          setTimeout(() => {
-            copyButton.innerHTML = `
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-              </svg>
-            `
-            copyButton.classList.remove("bg-green-600", "dark:bg-green-700")
-            copyButton.title = "コードをコピー"
-          }, 2000)
-        } catch (err) {
-          console.error("Failed to copy code:", err)
-        }
-      })
-
-      pre.appendChild(copyButton)
-      pre.classList.add("group")
-
-      // シンタックスハイライト
-      if (code && language !== "text") {
-        applySyntaxHighlight(code, language)
-      }
-    })
-  }
-
-  const applySyntaxHighlight = (codeElement: HTMLElement, language: string) => {
-    const code = codeElement.textContent || ""
-
-    if (
-      ["javascript", "typescript", "js", "ts", "jsx", "tsx", "json"].includes(language)
-    ) {
-      const keywords =
-        /\b(const|let|var|function|return|if|else|for|while|class|import|export|from|async|await|try|catch|throw|new|this|typeof|instanceof|break|continue|switch|case|default|extends|implements|interface|type|enum|void|null|undefined|true|false)\b/g
-      const strings = /("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`)/g
-      const comments = /(\/\/.*$|\/\*[\s\S]*?\*\/)/gm
-      const numbers = /\b(\d+(?:\.\d+)?)\b/g
-      const functions = /\b([a-zA-Z_$][\w$]*)\s*(?=\()/g
-
-      let highlighted = code
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-
-      highlighted = highlighted
-        .replace(comments, '<span class="text-green-600 dark:text-green-400 italic">$1</span>')
-        .replace(strings, '<span class="text-amber-600 dark:text-amber-400">$1</span>')
-        .replace(keywords, '<span class="text-purple-600 dark:text-purple-400 font-semibold">$1</span>')
-        .replace(numbers, '<span class="text-blue-600 dark:text-blue-400">$1</span>')
-        .replace(functions, '<span class="text-cyan-600 dark:text-cyan-400">$1</span>')
-
-      codeElement.innerHTML = highlighted
-    } else if (["bash", "sh", "shell", "zsh"].includes(language)) {
-      const commands = /^(\s*)([\w-]+)/gm
-      const flags = /(\s-[\w-]+)/g
-      const strings = /("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')/g
-      const comments = /(#.*$)/gm
-
-      let highlighted = code
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-
-      highlighted = highlighted
-        .replace(comments, '<span class="text-green-600 dark:text-green-400 italic">$1</span>')
-        .replace(strings, '<span class="text-amber-600 dark:text-amber-400">$1</span>')
-        .replace(flags, '<span class="text-purple-600 dark:text-purple-400">$1</span>')
-        .replace(commands, '$1<span class="text-cyan-600 dark:text-cyan-400 font-semibold">$2</span>')
-
-      codeElement.innerHTML = highlighted
-    }
-  }
-
-  const wrapTablesForResponsive = () => {
-    if (!contentRef.current) return
-
-    const tables = contentRef.current.querySelectorAll("table")
-
-    tables.forEach((table) => {
-      // 既にラッパーで囲まれているかチェック
-      if (table.parentElement?.classList.contains("table-wrapper")) return
-
-      // レスポンシブラッパーを作成
-      const wrapper = document.createElement("div")
-      wrapper.className = "table-wrapper overflow-x-auto -mx-4 sm:mx-0 my-6"
-      
-      // テーブルをラッパーで囲む
-      table.parentNode?.insertBefore(wrapper, table)
-      wrapper.appendChild(table)
-    })
-  }
-
-  const handleHashScroll = () => {
-    if (window.location.hash) {
-      const id = window.location.hash.substring(1)
-      const element = document.getElementById(id)
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: "smooth", block: "start" })
-        }, 100)
-      }
-    }
-  }
-
-  const processEmbeds = () => {
-    if (!contentRef.current) return
-
-    // Twitter埋め込みの処理
-    const twitterEmbeds = contentRef.current.querySelectorAll('iframe[src*="twitter.com"], iframe[src*="x.com"], blockquote[class*="twitter-tweet"]')
-    if (twitterEmbeds.length > 0) {
-      loadTwitterWidgets()
-    }
-
-    // Instagram埋め込みの処理
-    const instagramEmbeds = contentRef.current.querySelectorAll('iframe[src*="instagram.com"], blockquote[class*="instagram-media"]')
-    if (instagramEmbeds.length > 0) {
-      loadInstagramEmbeds()
-    }
-
-    // Facebook埋め込みの処理
-    const facebookEmbeds = contentRef.current.querySelectorAll('iframe[src*="facebook.com"]')
-    if (facebookEmbeds.length > 0) {
-      loadFacebookSDK()
-    }
-
-    // YouTube埋め込みにレスポンシブラッパーを追加
-    const youtubeIframes = contentRef.current.querySelectorAll('iframe[src*="youtube.com"], iframe[src*="youtube-nocookie.com"]')
-    youtubeIframes.forEach((iframe) => {
-      if (!iframe.parentElement?.classList.contains('youtube-embed-wrapper')) {
-        const wrapper = document.createElement('div')
-        wrapper.className = 'youtube-embed-wrapper relative w-full pt-[56.25%] my-6'
-        iframe.parentNode?.insertBefore(wrapper, iframe)
-        wrapper.appendChild(iframe)
-        iframe.classList.add('absolute', 'top-0', 'left-0', 'w-full', 'h-full', 'rounded-lg')
-      }
-    })
-  }
-
-  const loadTwitterWidgets = () => {
-    const scriptId = "twitter-widgets-script"
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement("script")
-      script.id = scriptId
-      script.async = true
-      script.src = "https://platform.twitter.com/widgets.js"
-      script.charset = "utf-8"
-      document.head.appendChild(script)
-    } else if (window.twttr?.widgets && contentRef.current) {
-      window.twttr.widgets.load(contentRef.current)
-    }
-  }
-
-  const loadInstagramEmbeds = () => {
-    const scriptId = "instagram-embed-script"
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement("script")
-      script.id = scriptId
-      script.async = true
-      script.src = "https://www.instagram.com/embed.js"
-      document.head.appendChild(script)
-    } else if (window.instgrm?.Embeds) {
-      window.instgrm.Embeds.process()
-    }
-  }
-
-  const loadFacebookSDK = () => {
-    const scriptId = "facebook-jssdk"
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement("script")
-      script.id = scriptId
-      script.async = true
-      script.defer = true
-      script.crossOrigin = "anonymous"
-      script.src = "https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v12.0"
-      document.head.appendChild(script)
-    } else if (window.FB?.XFBML && contentRef.current) {
-      window.FB.XFBML.parse(contentRef.current)
-    }
-  }
-
-  // 文字列ベースの簡易サニタイズ（DOMParserを使わない）
-  // MicroCMSから配信される可能性のある不正なscriptタグなどを削除して
-  // ハイドレーションエラーやappendChildエラーを防ぐ
-  const sanitizedHtml = html
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // scriptタグを削除
-    .replace(/<!\[CDATA\[(.*?)\]\]>/g, '') // CDATAセクションを削除
-    .replace(/<!--(.*?)-->/g, '') // コメントを削除
-
-  return (
-    <div
-      ref={contentRef}
-      className={className}
-      dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
-    />
-  )
+  return <div ref={contentRef} className={className} dangerouslySetInnerHTML={{ __html: html }} />
 }
 
-// グローバル型定義の拡張
+/** 見出しにホバーで出るアンカーリンクを付ける。IDはサーバー側で振られている前提 */
+function addHeadingAnchors(container: HTMLElement): void {
+  container.querySelectorAll<HTMLElement>("h1, h2, h3, h4, h5, h6").forEach((heading) => {
+    if (!heading.id) return
+    if (heading.querySelector(".heading-anchor")) return
+
+    heading.classList.add("group", "relative")
+
+    const anchor = document.createElement("a")
+    anchor.href = `#${heading.id}`
+    anchor.className =
+      "heading-anchor absolute -left-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity duration-200 text-neutral-400 hover:text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-400 no-underline"
+    anchor.setAttribute("aria-label", `${heading.textContent?.trim() ?? ""}へのリンク`)
+    anchor.innerHTML =
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>'
+
+    anchor.addEventListener("click", (event) => {
+      event.preventDefault()
+      heading.scrollIntoView({ behavior: "smooth", block: "start" })
+      window.history.pushState(null, "", `#${heading.id}`)
+    })
+
+    heading.insertBefore(anchor, heading.firstChild)
+  })
+}
+
+const COPY_ICON =
+  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>'
+
+const CHECK_ICON =
+  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+
+/** サーバー側で組んだコードブロックのヘッダーにコピーボタンを差し込む */
+function addCopyButtons(container: HTMLElement): void {
+  container.querySelectorAll<HTMLElement>('[data-code-block="true"]').forEach((block) => {
+    const header = block.firstElementChild
+    if (!header || header.querySelector(".copy-button")) return
+
+    const codeText = block.querySelector("code")?.textContent ?? ""
+    if (!codeText.trim()) return
+
+    const button = document.createElement("button")
+    button.type = "button"
+    button.className =
+      "copy-button inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-neutral-500 opacity-0 transition-all duration-200 hover:bg-neutral-200 hover:text-neutral-900 focus:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 group-hover:opacity-100 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+    button.setAttribute("aria-label", "コードをコピー")
+    button.innerHTML = COPY_ICON
+
+    let resetTimer: ReturnType<typeof setTimeout> | undefined
+
+    button.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(codeText)
+        button.innerHTML = `${CHECK_ICON}<span class="text-xs">コピーしました</span>`
+        button.classList.add("text-green-600", "dark:text-green-400")
+      } catch {
+        button.innerHTML = '<span class="text-xs">コピーできませんでした</span>'
+      }
+
+      clearTimeout(resetTimer)
+      resetTimer = setTimeout(() => {
+        button.innerHTML = COPY_ICON
+        button.classList.remove("text-green-600", "dark:text-green-400")
+      }, 2000)
+    })
+
+    header.appendChild(button)
+  })
+}
+
+/** 埋め込み用の外部スクリプトを必要なときだけ読み込む */
+function loadEmbedScripts(container: HTMLElement, html: string): void {
+  const ensureScript = (id: string, src: string, extra?: (el: HTMLScriptElement) => void) => {
+    if (document.getElementById(id)) return false
+    const script = document.createElement("script")
+    script.id = id
+    script.async = true
+    script.src = src
+    extra?.(script)
+    document.head.appendChild(script)
+    return true
+  }
+
+  if (html.includes("platform.twitter.com") || html.includes("twitter-timeline")) {
+    const created = ensureScript("twitter-widgets-script", "https://platform.twitter.com/widgets.js")
+    if (!created) window.twttr?.widgets?.load(container)
+  }
+
+  if (html.includes("instagram.com/embed")) {
+    const created = ensureScript("instagram-embed-script", "https://www.instagram.com/embed.js")
+    if (!created) window.instgrm?.Embeds?.process()
+  }
+
+  if (html.includes("facebook.com/plugins")) {
+    const created = ensureScript(
+      "facebook-jssdk",
+      "https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v12.0",
+      (el) => {
+        el.defer = true
+        el.crossOrigin = "anonymous"
+      },
+    )
+    if (!created) window.FB?.XFBML?.parse(container)
+  }
+}
+
+/** ページ直リンクで #見出し が付いていたらそこまで送る */
+function scrollToHash(): void {
+  if (!window.location.hash) return
+  const target = document.getElementById(window.location.hash.substring(1))
+  if (!target) return
+  setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "start" }), 100)
+}
+
 declare global {
   interface Window {
-    twttr?: {
-      widgets?: {
-        load: (element?: HTMLElement) => void
-      }
-    }
-    instgrm?: {
-      Embeds?: {
-        process: () => void
-      }
-    }
-    FB?: {
-      XFBML?: {
-        parse: (element?: HTMLElement) => void
-      }
-    }
+    twttr?: { widgets?: { load: (element?: HTMLElement) => void } }
+    instgrm?: { Embeds?: { process: () => void } }
+    FB?: { XFBML?: { parse: (element?: HTMLElement) => void } }
   }
 }

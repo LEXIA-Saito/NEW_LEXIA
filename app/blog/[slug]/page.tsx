@@ -11,6 +11,7 @@ import Image from "next/image"
 import EnhancedRichText from "@/components/blog/EnhancedRichText"
 import RichTextTableOfContents from "@/components/blog/RichTextTableOfContents"
 import { sanitizeBlogHtml } from "@/lib/sanitize-blog-html"
+import { transformArticleHtml } from "@/lib/blog/transform-article-html"
 import { formatJapaneseDate } from "@/lib/utils"
 // 回遊促進コンポーネント
 import RevenueZoneAuto from "@/components/blog/RevenueZoneAuto"
@@ -105,7 +106,13 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
       notFound()
     }
 
+    // 目次はIDが無ければ自前で採番するため、ID付与前のHTMLを渡しても採番順は一致する
     const safeContentHtml = post.contentHtml ? sanitizeBlogHtml(post.contentHtml) : undefined
+
+    // 見出しID・シンタックスハイライト・リンクカード・表のラッパーを配信前に適用する
+    const articleHtml = safeContentHtml
+      ? await transformArticleHtml(safeContentHtml)
+      : undefined
 
     const allPosts = await fetchBlogPosts()
     
@@ -235,9 +242,9 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
               )}
 
               {/* ===== 記事本文 ===== */}
-              {safeContentHtml ? (
+              {articleHtml ? (
                 <EnhancedRichText
-                  html={safeContentHtml}
+                  html={articleHtml}
                   className="prose prose-neutral max-w-none dark:prose-invert mt-8"
                 />
               ) : post.custom && post.custom.length > 0 ? (
