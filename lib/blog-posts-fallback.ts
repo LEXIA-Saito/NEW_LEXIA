@@ -1392,6 +1392,8 @@ fallbackBlogPosts.push({
   genre: "Full-stack",
   tags: ["Jujutsu", "Git", "OSS"],
   date: "2026-08-24",
+  heroImage: "/images/blog/what-is-jujutsu-jj-vcs-hero.jpg",
+  heroImageAlt: "Gitのもつれた履歴を一本の流れに変えるjjを指し示すテック系アニメ少女",
   sections: [
     {
       body: [
