@@ -7,7 +7,8 @@ const LABELS = {
   article: { color: "1D76DB", description: "Daily blog publication workflow" },
   ready: { color: "0E8A16", description: "Ready for scheduled publication" },
   affiliate: { color: "B60205", description: "Contains affiliate or sponsored links" },
-  manual: { color: "FBCA04", description: "Affiliate publication manually approved by owner" },
+  manual: { color: "FBCA04", description: "Publication approved by owner (required for every article)" },
+  affiliateApproved: { color: "D93F0B", description: "Affiliate publication additionally approved by owner" },
 }
 
 function argument(name) {
@@ -82,6 +83,7 @@ for (const [name, config] of Object.entries({
   "blog:ready": LABELS.ready,
   "blog:affiliate": LABELS.affiliate,
   "blog:manual-approved": LABELS.manual,
+  "blog:affiliate-approved": LABELS.affiliateApproved,
 })) {
   ensureLabel(name, config)
 }
@@ -100,7 +102,7 @@ const body = `<!-- blog-publish-metadata: ${metadata} -->
 - 公開予定: \`${publishAt}\`
 - アフィリエイト: ${affiliate ? "あり（手動承認必須）" : "なし"}
 
-## レビュー → 承認でマージ
+## レビュー → 承認ラベルでマージ
 
 - [ ] Vercel Preview で一覧・本文・目次・表示を確認した
 - [ ] 一次情報・公式情報のリンクが正しい
@@ -108,8 +110,12 @@ const body = `<!-- blog-publish-metadata: ${metadata} -->
 - [ ] 内部事情・作業メモが本文に無い
 
 検証が全て緑になると \`blog:ready\` が自動付与されます（公開可否の合図）。
-**本人(${process.env.MANUAL_APPROVER || "LEXIA-Saito"})がこのPRを Approve すると、次回 18:00 JST のジョブがマージ・公開します。** 新しいcommitをpushすると承認は無効化され、再レビューが必要です。
-${affiliate ? "\n> アフィリエイト記事: Approve に加えて `blog:manual-approved` ラベルも必要です。" : ""}
+**本人(${process.env.MANUAL_APPROVER || "LEXIA-Saito"})が \`blog:manual-approved\` を付けると、次回 18:00 JST のジョブがマージ・公開します。** ラベル付与より後にcommitをpushすると承認は無効になるので、ラベルを付け直してください。
+
+\`\`\`bash
+gh pr edit <番号> --add-label blog:manual-approved
+\`\`\`
+${affiliate ? "\n> アフィリエイト記事: `blog:manual-approved` に加えて `blog:affiliate-approved` ラベルも必要です。" : ""}
 `
 
 const labels = ["blog:article"]
@@ -131,7 +137,7 @@ for (const label of labels) args.push("--label", label)
 
 run("gh", args)
 
-console.log("PRを作成しました。検証が緑になると blog:ready が自動付与されます。Vercel Previewを確認し、Approveレビューすると18時のジョブがマージ・公開します。")
+console.log("PRを作成しました。検証が緑になると blog:ready が自動付与されます。Vercel Previewを確認し、blog:manual-approved ラベルを付けると18時のジョブがマージ・公開します。")
 if (affiliate) {
-  console.log("アフィリエイト記事は Approve に加えて blog:manual-approved も必要です。")
+  console.log("アフィリエイト記事は blog:manual-approved に加えて blog:affiliate-approved も必要です。")
 }
