@@ -55,7 +55,7 @@ PR上で      検証     blog-article-policy.yml (schema/lint/test/affiliate判�
 18:00 のジョブが実際にマージするのは、上記 `blog:ready` に加えて次を満たす最古の1件だけです。
 
 - **`LEXIA-Saito` 本人が `blog:manual-approved` を付与済み**（`blog:ready` だけでは公開されません）。他人が付けたラベルは無効です。
-- ラベルは**最新コミットより後**に付いている必要があります。付与後に commit を push すると承認は無効化されるので、ラベルを外して付け直してください。
+- ラベルは**最新コミットより後**に付いている必要があります。commit を push すると承認ラベルは自動で外れるので、Preview を再確認して付け直してください。
 - アフィリエイト記事は、`blog:manual-approved` に加えて `blog:affiliate-approved` ラベルも必要。
 
 運用フロー: 生成された PR を Vercel Preview で確認 → 不備があれば修正（ここで依頼、または新規セッションで Claude に修正させる）→ 問題なければ **`blog:manual-approved` を付与** → 次の 18:00 JST で自動マージ・公開。

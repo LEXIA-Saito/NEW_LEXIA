@@ -59,7 +59,8 @@ jobs:
               "blog:article": ["1D76DB", "Daily blog publication workflow"],
               "blog:ready": ["0E8A16", "Ready for scheduled publication"],
               "blog:affiliate": ["B60205", "Contains affiliate or sponsored links"],
-              "blog:manual-approved": ["FBCA04", "Affiliate publication manually approved by owner"],
+              "blog:manual-approved": ["FBCA04", "Publication approved by owner (required for every article)"],
+              "blog:affiliate-approved": ["D93F0B", "Affiliate publication additionally approved by owner"],
             }
 
             for (const [name, [color, description]] of Object.entries(definitions)) {
@@ -97,17 +98,22 @@ jobs:
             }
 
             await add("blog:article")
+
+            // A new commit invalidates every automated and human signal on the PR.
+            // Approval labels are ONLY removed here: this workflow also runs on `labeled`,
+            // so removing them unconditionally would strip the approval the moment it is
+            // applied — which is exactly what used to happen to non-affiliate articles.
             if (context.payload.action === "synchronize") {
               await remove("blog:ready")
+              await remove("blog:manual-approved")
+              await remove("blog:affiliate-approved")
             }
+
             if (process.env.IS_AFFILIATE === "true") {
               await add("blog:affiliate")
-              if (context.payload.action === "synchronize") {
-                await remove("blog:manual-approved")
-              }
             } else {
               await remove("blog:affiliate")
-              await remove("blog:manual-approved")
+              await remove("blog:affiliate-approved")
             }
 
       - name: Lint fallback article source
