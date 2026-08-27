@@ -213,14 +213,16 @@ PRには次のメタデータが入ります。
 | `blog:article` | 記事PR |
 | `blog:ready` | Vercel Preview確認済み・予約公開可能 |
 | `blog:affiliate` | 広告・アフィリエイトリンクを含む |
-| `blog:manual-approved` | 運営者本人がアフィリエイト記事を承認済み |
+| `blog:manual-approved` | 運営者本人が公開を承認済み（**全記事共通の公開ゲート**） |
+| `blog:affiliate-approved` | 運営者本人がアフィリエイト記事を承認済み（追加ゲート） |
 
 記事PRチェックは変更された記事を解析し、Amazonリンクやアフィリエイト用ヘルパーを検出すると`blog:affiliate`を自動付与します。
 
 新しいコミットがpushされた場合:
 
 - `blog:ready`を自動解除
-- アフィリエイト記事では`blog:manual-approved`も自動解除
+- `blog:manual-approved` と `blog:affiliate-approved` も自動解除（新しいコミットは全ての承認を無効化する）
+- 公開ジョブ側でも、最新コミットより前に付いた承認ラベルは無効と判定する
 
 修正後はVercel Previewと記事内容を再確認してください。
 
@@ -276,8 +278,8 @@ GitHub Actions
 
 自動公開には通常条件に加えて次が必要です。
 
-1. `LEXIA-Saito`本人の最新レビューが`APPROVED`
-2. `blog:manual-approved`ラベル
+1. `LEXIA-Saito`本人が付けた`blog:manual-approved`ラベル（最新コミットより後に付与）
+2. `blog:affiliate-approved`ラベル
 
 どちらかが欠けている場合は予約公開されません。
 
