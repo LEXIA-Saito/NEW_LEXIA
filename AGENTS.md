@@ -143,7 +143,7 @@ sections使用時は `headings` 不要（自動生成されます）。
    - 例: `feat(blog): add <slug> article` / `fix(blog): …`
 9. Vercel PreviewとBlog article policyの成功を確認
 10. 通常記事は `blog:ready` を付けて18:00 JSTの予約公開キューへ入れる
-11. アフィリエイト記事は本人のApproveレビューと `blog:manual-approved` が必要
+11. 公開には本人の `blog:manual-approved` が必要（アフィリエイト記事はさらに `blog:affiliate-approved` も必要）
 
 記事ブランチへ新しいコミットが入ると `blog:ready` は解除されます。修正後はPreviewを再確認してください。
 
@@ -216,7 +216,7 @@ sections使用時は `headings` 不要（自動生成されます）。
 - 主要な事実、料金、仕様、リリース情報は一次情報または公式情報で確認すること
 - 「この記事でわかること」、判断材料、まとめ、参考リンクを基本構成に含めること
 - `AFFILIATE_DISCLOSURE_HTML`、`amazonProductHtml`、`amzn.to`、Amazon商品URLを含む記事はアフィリエイト記事として扱うこと
-- アフィリエイト記事に `blog:manual-approved` を自動付与してはならない
+- `blog:manual-approved` と `blog:affiliate-approved` を自動付与してはならない（この2つが人間の承認ゲートそのもの）
 - 画像生成や画像不足を理由に、完成した通常記事の公開を遅らせないこと
 
 ---
