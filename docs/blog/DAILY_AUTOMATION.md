@@ -11,12 +11,14 @@ PR上で      検証     blog-article-policy.yml (schema/lint/test/affiliate判�
    ↓
 全緑なら    準備完了  blog-article-ready.yml が blog:ready を自動付与（公開可否の“合図”。アフィリ記事は対象外）
    ↓
-人間ゲート  レビュー  LEXIA-Saito が Vercel Preview を確認 → 問題なければ PR を Approve（不備があれば修正を依頼）
+人間ゲート  レビュー  LEXIA-Saito が Vercel Preview を確認 → 問題なければ blog:manual-approved を付与（不備があれば修正を依頼）
    ↓
-18:00 JST  公開     blog-scheduled-publish.yml (cron 0 9 * * * = 18:00 JST) が「blog:ready かつ 本人がApprove済み」の最古PRを1件マージ → 本番デプロイ確認
+18:00 JST  公開     blog-scheduled-publish.yml (cron 0 9 * * * = 18:00 JST) が「blog:ready かつ blog:manual-approved 済み」の最古PRを1件マージ → 本番デプロイ確認
 ```
 
-> 重要: 通常記事も**本人の Approve レビューが無いと自動マージされません**（人間レビューゲート）。`blog:ready` は「技術チェックが全緑」という合図にすぎず、公開はあなたの承認後です。新しい commit を push すると承認は無効化され、再レビューが必要です。
+> 重要: 通常記事も**本人が `blog:manual-approved` を付けないと自動マージされません**（人間レビューゲート）。`blog:ready` は「技術チェックが全緑」という合図にすぎず、公開はあなたの承認後です。ラベル付与より後に commit を push すると承認は無効化され、ラベルを付け直す必要があります。
+>
+> 以前はここが「本人の Approve レビュー」でしたが、日次自動化は同じ `LEXIA-Saito` アカウントで PR を作るため GitHub が自己承認を拒否し（Can not approve your own pull request）、ゲートが原理的に成立していませんでした。同じ「人が Preview を見た」という合図をラベルで表現しています。
 
 ## 構成ファイル
 
@@ -41,7 +43,8 @@ PR上で      検証     blog-article-policy.yml (schema/lint/test/affiliate判�
 - `blog:article` … 日次生成記事（PR作成時に付与）
 - `blog:ready` … 全ゲート通過で**自動付与**。新規コミットpushで自動解除（再検証）
 - `blog:affiliate` … アフィリエイト/広告/スポンサー/紹介コードを含む記事（自動検出）
-- `blog:manual-approved` … アフィリ記事の本人手動承認（自動付与しない）
+- `blog:manual-approved` … **全記事共通の本人手動承認**。これが公開ゲート（自動付与しない）
+- `blog:affiliate-approved` … アフィリ記事の追加承認（自動付与しない）
 
 `blog:ready` 自動付与の条件（すべて満たす通常記事のみ）：PRがOpenかつDraftでない／ブランチが
 `blog/` 始まり／公開メタデータあり／`blog:article` あり／`blog:affiliate` でない／記事ポリシー
@@ -51,11 +54,19 @@ PR上で      検証     blog-article-policy.yml (schema/lint/test/affiliate判�
 
 18:00 のジョブが実際にマージするのは、上記 `blog:ready` に加えて次を満たす最古の1件だけです。
 
-- **`LEXIA-Saito` 本人が、その PR の最新コミットに対して Approve レビュー済み**（`blog:ready` だけでは公開されません）。
-- 新しい commit を push すると、その承認は無効化されます（承認は承認時点のコミットに紐づくため）。
-- アフィリエイト記事は、Approve に加えて `blog:manual-approved` ラベルも必要。
+- **`LEXIA-Saito` 本人が `blog:manual-approved` を付与済み**（`blog:ready` だけでは公開されません）。他人が付けたラベルは無効です。
+- ラベルは**最新コミットより後**に付いている必要があります。commit を push すると承認ラベルは自動で外れるので、Preview を再確認して付け直してください。
+- アフィリエイト記事は、`blog:manual-approved` に加えて `blog:affiliate-approved` ラベルも必要。
 
-運用フロー: 生成された PR を Vercel Preview で確認 → 不備があれば修正（ここで依頼、または新規セッションで Claude に修正させる）→ 問題なければ PR を **Approve** → 次の 18:00 JST で自動マージ・公開。
+運用フロー: 生成された PR を Vercel Preview で確認 → 不備があれば修正（ここで依頼、または新規セッションで Claude に修正させる）→ 問題なければ **`blog:manual-approved` を付与** → 次の 18:00 JST で自動マージ・公開。
+
+複数の PR をまとめて承認する場合:
+
+```bash
+gh pr edit 364 --add-label blog:manual-approved
+```
+
+cron は1日1本しかマージしないため、承認済み PR が溜まっていること自体が公開のバッファになります。
 
 ## アフィリエイト記事の手動ゲート
 
@@ -84,7 +95,7 @@ scripts/blog/install-launchd.sh logs        # 当日ログを tail
 
 > 補足: 完全ヘッドレス実行のため `claude -p ... --dangerously-skip-permissions` を使います。
 > 動作は分離worktree内のブログ生成フローに限定され、`main` への push やマージは行いません
-> （マージは18時Workflow＋全チェック通過＋本人Approve時のみ）。停止は `uninstall`。
+> （マージは18時Workflow＋全チェック通過＋本人の `blog:manual-approved` 付与時のみ）。停止は `uninstall`。
 
 > ⚠️ **既知の制約（macOS TCC）**: このリポジトリは `~/Desktop` 配下にあり、`~/Desktop` /
 > `~/Documents` / `~/Downloads` は macOS のプライバシー保護(TCC)対象です。**launchd エージェントは
