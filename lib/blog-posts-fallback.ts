@@ -1382,3 +1382,118 @@ fallbackBlogPosts.push({
     },
   ],
 })
+
+// Append zizmor explainer — GitHub Actions static analysis, audits, install, CI integration
+fallbackBlogPosts.push({
+  slug: "what-is-zizmor-github-actions-security",
+  title: "zizmorとは？GitHub Actionsの設定ミスを見つける静的解析ツールの使い方",
+  description:
+    "GitHub Actionsのワークフローを解析し、テンプレートインジェクションや認証情報の残留、過剰な権限といった設定ミスを検出するOSS「zizmor」を解説します。41種類の監査ルール、導入手順、CIへの組み込み方、運用上の注意点を一次情報から整理しました。",
+  genre: "Security",
+  tags: ["zizmor", "GitHub Actions", "CI/CD"],
+  date: "2026-08-27",
+  sections: [
+    {
+      body: [
+        "GitHub Actionsのワークフローファイルは、一度動き出すと読み返す機会がほとんどありません。uses: の参照がタグのまま、permissions: は書かずに既定値のまま、という状態が何年も残っているリポジトリは珍しくないはずです。",
+        "ただしCIは、リポジトリの書き込み権限とデプロイ用のシークレットが集まる場所でもあります。2025年3月には、広く使われていたアクション tj-actions/changed-files のタグが攻撃者のコミットに差し替えられ、実行ログにシークレットが出力される状態になりました。GitHubのアドバイザリは、影響を受けるバージョンを45.0.7以下、修正版を46.0.1としています（ https://github.com/advisories/GHSA-mrrh-fwg8-r2c3 ）。CISAも2025年3月18日に注意喚起を出しています。",
+        "こうした設定の問題は、目視のレビューで一つずつ潰すには数が多すぎます。ワークフローの中身を機械的に読んで危ないパターンを指摘してくれるのが、今回取り上げる「zizmor（ジズモア）」です。",
+      ],
+      list: [
+        "この記事でわかること：zizmorが何を解析し、どんな設定ミスを見つけるのか。",
+        "インストールから最初の1回を実行するまでの手順。",
+        "GitHub Actions上で継続的に回す方法と、そのときに必要な権限。",
+        "誤検出への対処、自動修正の範囲、導入前に確認しておきたい制約。",
+      ],
+    },
+    {
+      heading: "zizmorとは？CI/CDの設定ファイルを読む静的解析ツール",
+      body: [
+        "zizmorは、CI/CDの設定ファイルを静的解析してセキュリティ上の問題を見つけるコマンドラインツールです。中心になるのはGitHub Actionsのワークフローとアクション定義ですが、Dependabotの設定やpre-commitの設定も対象に含まれます。Rustで書かれており、ライセンスはMITです（公式ドキュメント: https://docs.zizmor.sh/ ）。",
+        "リポジトリが公開されたのは2024年8月で、2026年8月時点のスター数は約6,400。最新版はv1.29.0（2026年8月1日公開）です。開発はGrafana LabsやTrail of Bitsといったスポンサーに支えられており、更新も止まっていません。CIのセキュリティツールは作られては放置されがちなので、この点は導入判断の材料になります。",
+        "動作はシンプルで、ワークフローを実行せずにYAMLの構造と式を読んで判定します。CIを一度も走らせずに、リポジトリのルートで zizmor . と打つだけで既存のワークフローを一通り点検できる、というのがこのツールの立ち位置です。",
+      ],
+    },
+    {
+      heading: "何を検出するのか：41種類の監査ルール",
+      body: [
+        "zizmorは2026年8月時点で41種類の監査ルール（audits）を備えています。ルールごとに、対象がワークフローかアクション定義か、オフラインで動作するか、自動修正に対応しているかがドキュメントに整理されています（ https://docs.zizmor.sh/audits/ ）。",
+        "すべてを覚える必要はありません。効き目が大きいのは unpinned-uses と impostor-commit で、冒頭のtj-actionsの件で問題になった「タグを信用してよいのか」という論点にそのまま対応します。GitHubの公式ドキュメントも、アクションを不変の状態で利用する方法は現時点でフルレングスのコミットSHAによる固定だけだと明記しています（ https://docs.github.com/en/actions/reference/security/secure-use ）。",
+        "実際の事故につながりやすいルールを、よくある原因と合わせて挙げます。",
+      ],
+      table: {
+        headers: ["ルール", "検出する内容", "よくある原因"],
+        rows: [
+          ["template-injection", "テンプレート展開を経由した任意コード実行", "PRのタイトルや本文を run スクリプトへ直接埋め込んでいる"],
+          ["artipacked", "checkoutが残すGit資格情報の永続化", "actions/checkout の persist-credentials を既定のままにしている"],
+          ["excessive-permissions", "ワークフロー・ジョブの過剰な権限", "permissions を書かず既定値のまま、または全ジョブに広い権限を継承させている"],
+          ["dangerous-triggers", "pull_request_target や workflow_run の危険な使い方", "フォークからのPRで外部のコードをチェックアウトしている"],
+          ["unpinned-uses", "タグやブランチ参照のままのアクション", "uses: owner/action@v4 のように可変な参照を使っている"],
+          ["impostor-commit", "リポジトリ本体に存在しないコミットの参照", "フォーク側のコミットSHAを本体のスラッグで参照している"],
+          ["typosquat-uses", "有名アクションに似せた別アカウントの参照", "actions/checkout を action/checkout と書き間違えている"],
+          ["secrets-inherit", "secrets: inherit による一括継承", "再利用可能ワークフローへ渡すシークレットを絞っていない"],
+        ],
+      },
+    },
+    {
+      heading: "手元で動かす：インストールから最初の実行まで",
+      body: [
+        "インストール方法は環境に合わせて選べます。Homebrewなら brew install zizmor、Pythonのツール管理を使っているなら uv tool install zizmor または pipx install zizmor、Rust環境があれば cargo install --locked zizmor です。コンテナで動かす場合は ghcr.io/zizmorcore/zizmor が使えます。まず試すだけなら、uvx zizmor --help でインストールせずに実行できます（ https://docs.zizmor.sh/installation/ ）。",
+        "実行するときは対象を渡すだけです。リポジトリのルートで zizmor . と打てば .github/workflows 以下と action.yml をまとめて検査しますし、ファイルを個別に指定することもできます。手元にクローンしていないリポジトリなら、zizmor --gh-token=$(gh auth token) owner/repo のようにリモートを直接指定できます。",
+        "出力は既定でcargo風の診断表示です。終了コードは検出結果の深刻度に対応していて、指摘がなければ0、情報レベルなら11、低・中・高でそれぞれ12・13・14が返ります。「中以上が出たらCIを落とす」といった制御は、この終了コードと --min-severity の組み合わせで組み立てます。",
+      ],
+      list: [
+        "最初の1回は既定のペルソナ（regular）のままでよい。件数が多すぎるときは --min-severity=medium で絞る。",
+        "より細かく見たいときは --persona=pedantic、監査目的で網羅したいときは --persona=auditor を使う。",
+        "オンライン監査を有効にすると、impostor-commit や known-vulnerable-actions などGitHub APIを参照するルールが動く。GH_TOKEN などの環境変数を用意しておく。",
+        "ネットワークを使いたくない場合は --offline。ただしオンライン専用のルールは動かず、SHAピン留めの自動修正も行われない。",
+      ],
+    },
+    {
+      heading: "CIに組み込む：zizmor-actionとコードスキャニング",
+      body: [
+        "継続的に回すなら、公式のGitHub Action zizmorcore/zizmor-action を使うのが手早い方法です。既定ではSARIFを生成してコードスキャニングへアップロードするため、指摘はリポジトリのSecurityタブに蓄積され、対応済みかどうかを追跡できます。",
+        "GitHub Advanced Securityが使えない環境でも、advanced-security: false を指定すれば機能を落とさずに実行できます。この場合はSARIFのアップロードを行わないため、追加の権限も不要です。",
+        "気をつけたいのは、SARIF出力を使うモードでは指摘が出てもジョブが失敗しない点です。これはGitHub側の作法に合わせた仕様で、マージを止めたい場合はコードスキャニングのマージ保護（ルールセット）を設定します。「CIが緑だから問題なし」と読み違えないよう、チームで前提を揃えておいてください。",
+        "手元で先に気づきたい場合は、pre-commitフック（zizmorcore/zizmor-pre-commit）やエディタ連携も用意されています。VS CodeとZedには拡張があり、zizmor --lsp を使えばLSP対応のエディタから利用できます（ https://docs.zizmor.sh/integrations/ ）。",
+        "コードスキャニング連携を使う場合の最小構成は次のとおりです。ジョブへ security-events: write が必要で、プライベートおよび内部リポジトリではさらに contents: read と actions: read を付けます。",
+      ],
+      richtext:
+        "<pre><code>permissions: {}\n\njobs:\n  zizmor:\n    runs-on: ubuntu-latest\n    permissions:\n      security-events: write\n      contents: read # プライベート／内部リポジトリのみ\n      actions: read  # プライベート／内部リポジトリのみ\n    steps:\n      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1\n        with:\n          persist-credentials: false\n      - uses: zizmorcore/zizmor-action@3dc1ecc9bcb9e94e9b2c709687979e1298497054 # v0.6.2\n</code></pre>",
+    },
+    {
+      heading: "まとめ：導入前に確認しておきたいこと",
+      body: [
+        "zizmorは、ワークフローを書き換える前に「どこが危ないか」を一覧にしてくれるツールです。導入コストは低く、既存のリポジトリに一度流すだけでも、権限設定とアクション参照の見直しどころが具体的な行番号つきで出てきます。",
+        "とはいえ静的解析なので万能ではありません。判断材料として、次の点は事前に確認しておくと運用が安定します。",
+      ],
+      list: [
+        "誤検出への対処：安全だと判断したケースは # zizmor: ignore[ルール名] のコメント、またはリポジトリ直下の zizmor.yml でファイル単位・行単位に除外できる。除外した理由をコメントに残しておくと後任が困らない。",
+        "自動修正の範囲：--fix は既定で安全な修正だけを適用する。--fix=all は人の確認が要る修正まで含むため、差分をレビューしてから取り込む。",
+        "費用と前提：zizmor自体はOSSで無償だが、コードスキャニング連携はプライベートリポジトリの場合Advanced Securityの契約が前提になる。",
+        "更新への追随：監査ルールは頻繁に追加される。バージョンを固定して更新内容をレビューするか、追随して指摘が増えることを許容するかを先に決めておく。",
+        "静的解析の限界：ワークフローから呼び出すシェルスクリプトや自作アクションの中身までは追わない。指摘がゼロでも、依存関係や実行環境の見直しは別途必要になる。",
+        "まず1リポジトリで走らせ、権限の絞り込みとアクションのSHAピン留めから着手する。全部を一度に直すより、事故につながりやすい順に潰したほうが続く。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "zizmor 公式ドキュメント",
+        "https://docs.zizmor.sh/",
+        "監査ルール一覧（audits）",
+        "https://docs.zizmor.sh/audits/",
+        "インストール手順",
+        "https://docs.zizmor.sh/installation/",
+        "GitHub リポジトリ（zizmorcore/zizmor）",
+        "https://github.com/zizmorcore/zizmor",
+        "zizmor-action（公式GitHub Action）",
+        "https://github.com/zizmorcore/zizmor-action",
+        "GitHub 公式：GitHub Actions を安全に利用する",
+        "https://docs.github.com/en/actions/reference/security/secure-use",
+        "GitHub Advisory: CVE-2025-30066（tj-actions/changed-files）",
+        "https://github.com/advisories/GHSA-mrrh-fwg8-r2c3",
+      ],
+    },
+  ],
+})
