@@ -1382,3 +1382,113 @@ fallbackBlogPosts.push({
     },
   ],
 })
+
+// Append Djot explainer — CommonMark-derived light markup: design goals, syntax diffs, tooling, stability & security
+fallbackBlogPosts.push({
+  slug: "what-is-djot-markup-language",
+  title: "Djotとは？Markdownの曖昧さを設計から見直した軽量マークアップ言語",
+  description:
+    "pandoc作者のJohn MacFarlane氏が設計した軽量マークアップ言語「Djot」を解説します。CommonMarkとの関係、Markdownからの具体的な書き方の違い、属性やdivなどの拡張構文、実装・エディタの対応状況、導入前に確認したい安定性とセキュリティを整理します。",
+  genre: "Frontend",
+  tags: ["Djot", "Markdown", "OSS"],
+  date: "2026-08-28",
+  sections: [
+    {
+      body: [
+        "Markdownを書いていて、強調が意図しない位置で閉じた、リストの入れ子が崩れた、折り返した行の先頭が勝手にリストとして解釈された——といった経験はないでしょうか。CommonMarkが仕様を厳密に定めた今でも、「書いたつもり」と「解釈された結果」のずれは残っています。",
+        "その原因を個々のパーサーの実装ではなく構文設計そのものに求め、CommonMarkを土台に組み直したのがDjot（ジョット）です。作者は文書変換ツールpandocの開発者であり、CommonMark仕様の策定にも関わったJohn MacFarlane氏。本記事では、Djotが何を変えたのか、Markdownからどう書き換わるのか、そして実務に入れる前に確認すべき点を、公式ドキュメントをもとに整理します。",
+      ],
+      list: [
+        "この記事でわかること：Djotが生まれた背景と、CommonMarkとの関係。",
+        "Markdownから移行するときに必要になる、具体的な書き方の違い。",
+        "属性・div・脚注・数式など、Markdownにはない表現手段。",
+        "実装とエディタの対応状況、そして安定性・セキュリティ面の判断材料。",
+      ],
+    },
+    {
+      heading: "Djotとは？CommonMarkを土台に構文を組み直した軽量マークアップ",
+      body: [
+        "Djotは、プレーンテキストで文書を書くための軽量マークアップ構文です。機能の多くをCommonMarkから受け継ぎつつ、「CommonMarkの構文を複雑にし、効率的な解析を難しくしている部分」を修正することを目的としています。仕様・ドキュメント・実装はいずれもMITライセンスで公開されています（公式リポジトリ: https://github.com/jgm/djot ）。",
+        "見出し、リスト、フェンス付きコードブロック、引用といった基本要素は、Markdownとほぼ同じ感覚で書けます。そのうえでDjotには、定義リスト、脚注、表、挿入・削除・ハイライト・上付き・下付きといった装飾、数式、任意の要素に付けられる属性、汎用コンテナが標準で含まれます。Markdownでは方言ごとに分かれていた拡張機能が、最初から一つの仕様に入っている点が実務上の違いになります。",
+        "ファイル拡張子は「.djot」または「.dj」。公式のMIMEタイプは定められていませんが、必要な場合は「text/x-djot」を使ってよい、と仕様に明記されています。インストールせずに試したい場合は、公式のプレイグラウンド（ https://djot.net/playground/ ）に貼り付ければ、HTMLや構文木への変換結果をその場で確認できます。",
+      ],
+    },
+    {
+      heading: "なぜMarkdownを作り直したのか：設計目標を読む",
+      body: [
+        "出発点は、MacFarlane氏のエッセイ「Beyond Markdown」（ https://johnmacfarlane.net/beyond-markdown.html ）です。ここでは、CommonMarkの仕様が複雑にならざるを得なかった原因が具体的に列挙されています。Djotのリポジトリには、それを受けた設計目標が並んでいます。",
+      ],
+      list: [
+        "構文の解析を線形時間で、バックトラックなしに行えること。",
+        "インライン要素の解釈が「局所的」であること。CommonMarkでは「[foo][bar]」が何を意味するかが文書の別の場所にある参照定義に左右され、正確なシンタックスハイライトがほぼ不可能になる。",
+        "強調のルールを単純にすること。二重の記号で強い強調を表す方式は曖昧さを生み、CommonMarkでは17項目におよぶルールで決着させている。",
+        "表現できない盲点を作らないこと。CommonMarkでは「a*?*b」からHTMLの「a<em>?</em>b」を素直に得られない。",
+        "リスト項目に含まれる内容の判定ルールを単純にすること。",
+        "パーサーがUnicodeの文字クラス、HTMLタグ、実体参照、大文字小文字の畳み込みを扱わずに済むこと。",
+        "ハードラップに強いこと。段落を折り返した結果、行頭に来た数字や記号が勝手に別のブロックとして解釈されない。",
+        "任意の要素に属性を付けられ、汎用コンテナで拡張できること。",
+      ],
+    },
+    {
+      heading: "Markdownからの主な変更点",
+      body: [
+        "移行時に押さえるべき差分は、公式の「Quick Start for Markdown users」（ https://github.com/jgm/djot/blob/main/doc/quickstart-for-markdown-users.md ）にまとまっています。書き味はMarkdownに近いものの、無意識にやっている書き方がそのままでは通らない場面があります。",
+      ],
+      table: {
+        headers: ["項目", "Markdown（CommonMark）", "Djot"],
+        rows: [
+          ["ブロック要素の前後", "空行がなくても解釈される", "見出し・コードブロック・引用・区切り線の前後に空行が必要"],
+          ["入れ子のリスト", "空行なしで入れ子にできる", "サブリストの前にも空行が必要"],
+          ["強調", "「*強調*」と「**強い強調**」", "「_強調_」と「*強い強調*」"],
+          ["見出し", "「#」と下線（Setext）の2種類", "「#」のみ。複数行にまたがって書ける"],
+          ["コードブロック", "字下げとフェンスの2種類", "フェンスのみ"],
+          ["引用", "「>」の直後に空白は不要", "「>」の直後に空白が必要（行末の場合を除く）"],
+          ["強制改行", "行末に半角スペース2つ", "行末にバックスラッシュ"],
+          ["リンクのタイトル", "URLの後ろに引用符で指定", "属性構文で「{title=...}」と指定"],
+          ["生のHTML", "そのまま書ける", "raw指定（=html）で明示する必要がある"],
+        ],
+      },
+    },
+    {
+      heading: "属性・div・脚注：Markdownにない表現力",
+      body: [
+        "Djotでもっとも実用的な追加要素は、任意の要素に属性を付けられる構文です。波括弧の中に「.クラス名」「#識別子」「key=値」を書き、インライン要素なら直後に、ブロック要素なら直前の行に置きます。属性指定を複数に分けて書いても合成され、「%」で囲めばコメントも入れられます。",
+        "クラスや識別子を付けるためだけに生のHTMLへ落とす必要がなくなるため、静的サイトジェネレーターやドキュメントツールの側で独自のスタイルや挙動を割り当てやすくなります。ブロックをまとめる汎用コンテナ（div）は3つ以上のコロンで囲み、クラス名を添えれば、注意書きやコールアウトのような表現をCSS側に任せられます。",
+      ],
+      richtext:
+        "<pre><code>_強調したい語_{.highlight #term1}\n\n{#water}\n{.important .large}\n水を止めるのを忘れずに。\n\n::: warning\nここは注意書きです。\n\n段落を複数入れられます。\n:::\n</code></pre>",
+    },
+    {
+      heading: "実装とツールの対応状況、導入前に確認したいこと",
+      body: [
+        "公式READMEによれば、実装はdjot.js（JavaScript / TypeScript）、djot.lua（Lua）、djota（Prolog）、djot-php（PHP）、jotdown（Rust）、godjot（Go）、djoths（Haskell）の7種類です。当初のリファレンス実装はdjot.luaでしたが、現在の開発はdjot.jsが中心で、djot.luaは最新の構文変更に追従しない可能性があるとREADMEに明記されています。手元で試すだけなら「npm install -g @djot/djot」でCLIが入ります（npm公開の最新版は0.3.2、2024年12月19日公開）。",
+        "既存のMarkdown資産との橋渡しはpandocが担います。pandoc 3.1.12（2024年2月14日）でdjotが入力・出力の両方の形式として追加されたため、MarkdownからDjotへ、DjotからHTMLやWordなどへ変換できます（対応形式一覧: https://pandoc.org/MANUAL.html ）。エディタ側は、VimとEmacs向けの設定が公式リポジトリに同梱され、Helixは構文ハイライトを標準搭載、Zedは拡張機能、VS CodeとJetBrains系IDEにもコミュニティ製の拡張があります。tree-sitter文法も公開されています。",
+        "一方で、構文はまだ完全には固まっていません。公式サイトには「Djotはまだ完全に安定してはおらず、構文の細かな変更が今後もあり得る。公式のJavaScript実装は完成しており、利用できる状態にある」と明記されています（ https://djot.net ）。長期保存する文書や外部配布するコンテンツの原本に据える場合は、変換後のHTMLやMarkdownも併せて保管し、退避手段を用意しておくと安全です。",
+        "セキュリティ面では、仕様の「Security」節が、Djotのレンダラーは必ずしもHTMLをサニタイズしないと明言しています。ユーザー投稿など信頼できない入力をHTMLへ変換する用途では、出力を必ず別途サニタイズしてください（仕様: https://github.com/jgm/djot/blob/main/doc/syntax.md ）。",
+      ],
+      list: [
+        "raw指定されたインライン／ブロックの内容は、そのまま出力へ通る。",
+        "属性構文により、onclick・srcdoc・formaction のような属性を任意の要素へ付けられる。",
+        "javascript: や data: など危険なスキームのURLを、リンクや画像に書ける。",
+        "サニタイズは出力形式ごとに異なり、仕様上は利用側アプリケーションの責任と定められている。",
+        "深いネストによる問題を避けるため、実装がネスト段数に上限を設けてよい（仕様は512程度なら安全としている）。",
+      ],
+    },
+    {
+      heading: "まとめ：Markdownの置き換えではなく、用途で選ぶ",
+      body: [
+        "Djotは、Markdownの使い勝手を保ちながら、曖昧さの原因になっていた構文上の判断を設計段階で取り除いた軽量マークアップ言語です。属性と汎用コンテナが標準にあるため、生のHTMLへ逃げずに拡張できる点は、ドキュメントサイトや社内ナレッジのように「同じ書式を長く使い回す」用途で効いてきます。",
+        "とはいえ、既存のMarkdown資産をすべて置き換える必要はありません。構文がまだ変わり得ること、エディタやCI、社内ツールの対応状況が言語ごとにばらつくことを踏まえると、まずはpandocで一部の文書を変換して書き味と変換結果を確かめ、運用に耐えると判断できた範囲から広げるのが現実的です。最新の仕様やリリース情報は、以下の一次情報で確認してください。",
+      ],
+      list: [
+        "Djot 公式サイト（プレイグラウンドあり）：https://djot.net",
+        "GitHub リポジトリ（README・設計目標）：https://github.com/jgm/djot",
+        "Djot 構文リファレンス：https://github.com/jgm/djot/blob/main/doc/syntax.md",
+        "Markdown利用者向けクイックスタート：https://github.com/jgm/djot/blob/main/doc/quickstart-for-markdown-users.md",
+        "エッセイ「Beyond Markdown」：https://johnmacfarlane.net/beyond-markdown.html",
+        "JavaScript実装 djot.js：https://github.com/jgm/djot.js",
+        "pandoc マニュアル（対応形式一覧）：https://pandoc.org/MANUAL.html",
+      ],
+    },
+  ],
+})
