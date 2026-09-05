@@ -37,6 +37,9 @@ jobs:
       - name: Test article policy
         run: node tests/blog-article-policy.test.mjs
 
+      - name: Test fallback merge resolution
+        run: node tests/blog-fallback-merge.test.mjs
+
       - name: Check diff formatting
         run: git diff --check "origin/${{ github.base_ref }}...HEAD"
 

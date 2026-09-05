@@ -29,8 +29,11 @@ jobs:
     steps:
       - name: Checkout workflow helpers
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
-      - name: Select, validate, and merge one due article
+      - name: Select and validate one due article
+        id: select
         uses: actions/github-script@v9
         env:
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}
@@ -155,32 +158,129 @@ jobs:
               return
             }
 
+            core.setOutput("selected", process.env.DRY_RUN === "true" ? "false" : "true")
+            core.setOutput("pr_number", String(pr.number))
+            core.setOutput("head_sha", pr.head.sha)
+            core.setOutput("head_ref", pr.head.ref)
+            core.setOutput("title", pr.title)
+            core.setOutput("publish_at", selected.metadata.publishAt)
+
             if (process.env.DRY_RUN === "true") {
               core.info("dry-runのためマージしません。")
-              return
             }
 
-            const merge = await github.rest.pulls.merge({
-              owner,
-              repo,
-              pull_number: pr.number,
-              merge_method: "squash",
-              commit_title: pr.title,
-              commit_message: `Scheduled blog publication: ${selected.metadata.publishAt}`,
-            })
-            if (!merge.data.merged) {
-              core.setFailed(`PRをマージできませんでした: ${merge.data.message}`)
-              return
-            }
+      # ここから先が実際の公開。GitHubのマージAPIは .gitattributes の union 指定を
+      # 見てくれないため（記事PRは全員が同じ末尾に追記するので必ず衝突する）、
+      # ランナー上で git merge して push する。unionドライバはローカルgitでは効く。
+      - name: Set up pnpm
+        if: steps.select.outputs.selected == 'true'
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.15.0
 
-            core.info(`PR #${pr.number} を ${merge.data.sha} としてマージしました。`)
+      - name: Set up Node.js
+        if: steps.select.outputs.selected == 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        if: steps.select.outputs.selected == 'true'
+        run: pnpm install --no-frozen-lockfile
+
+      # 記事一覧をmainへ書き込む前に、解決ロジック自体が壊れていないことを確かめる。
+      - name: Test fallback merge resolution
+        if: steps.select.outputs.selected == 'true'
+        run: node tests/blog-fallback-merge.test.mjs
+
+      - name: Merge the article into main
+        id: merge
+        if: steps.select.outputs.selected == 'true'
+        env:
+          PR_NUMBER: ${{ steps.select.outputs.pr_number }}
+          HEAD_SHA: ${{ steps.select.outputs.head_sha }}
+          HEAD_REF: ${{ steps.select.outputs.head_ref }}
+          TITLE: ${{ steps.select.outputs.title }}
+          PUBLISH_AT: ${{ steps.select.outputs.publish_at }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch --no-tags --prune origin main "+refs/heads/${HEAD_REF}:refs/remotes/origin/${HEAD_REF}"
+          git checkout -B main origin/main
+          git show origin/main:lib/blog-posts-fallback.ts > "${RUNNER_TEMP}/base-fallback.ts"
+          BASE_SHA="$(git merge-base origin/main "${HEAD_SHA}")"
+
+          # 記事一覧の衝突は想定内なので、ここでは止めずに解決へ進む。
+          git merge --no-ff --no-commit "${HEAD_SHA}" || true
+
+          # 「mainの全文 + この記事ブランチが末尾に足した分」で決定的に解決する。
+          # 追記以外の変更が混ざっていたらこのスクリプトが異常終了して公開を止める。
+          node scripts/blog/resolve-fallback-merge.mjs "${BASE_SHA}" origin/main "${HEAD_SHA}"
+          git add lib/blog-posts-fallback.ts
+
+          UNRESOLVED="$(git diff --name-only --diff-filter=U)"
+          if [ -n "${UNRESOLVED}" ]; then
+            echo "::error::記事一覧以外にコンフリクトが残っています: ${UNRESOLVED}"
+            exit 1
+          fi
+          if grep -n '^<<<<<<<\|^>>>>>>>' lib/blog-posts-fallback.ts; then
+            echo "::error::マージ結果にコンフリクトマーカーが残っています。"
+            exit 1
+          fi
+
+          MESSAGE="$(printf '%s (#%s)\n\nScheduled blog publication: %s' "${TITLE}" "${PR_NUMBER}" "${PUBLISH_AT}")"
+          git commit --no-edit -m "${MESSAGE}"
+          echo "merged_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      # 解決結果が記事一覧として壊れていないことを既存のポリシー解析で確かめてから
+      # push する。増えた記事がちょうど1本であることもここで担保する。
+      - name: Validate the merged article list
+        if: steps.select.outputs.selected == 'true'
+        run: |
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs"
+            import { pathToFileURL } from "node:url"
+            const { analyzeSources } = await import(pathToFileURL("scripts/blog/analyze-article-changes.mjs").href)
+            const base = readFileSync(process.env.RUNNER_TEMP + "/base-fallback.ts", "utf8")
+            const head = readFileSync("lib/blog-posts-fallback.ts", "utf8")
+            const result = analyzeSources(base, head)
+            console.log(JSON.stringify(result, null, 2))
+            if (result.errors.length > 0) {
+              console.error("マージ結果が記事ポリシーに違反しています。pushを中止します。")
+              process.exit(1)
+            }
+            if (result.changedSlugs.length !== 1) {
+              console.error(`マージで増えた記事が1本ではありません: ${result.changedSlugs.join(", ")}`)
+              process.exit(1)
+            }
+            if (result.deletedSlugs.length > 0) {
+              console.error(`マージで記事が消えています: ${result.deletedSlugs.join(", ")}`)
+              process.exit(1)
+            }
+          '
+
+      - name: Push main
+        if: steps.select.outputs.selected == 'true'
+        run: git push origin main
+
+      - name: Wait for the production deployment
+        if: steps.select.outputs.selected == 'true'
+        uses: actions/github-script@v9
+        env:
+          MERGED_SHA: ${{ steps.merge.outputs.merged_sha }}
+          PR_NUMBER: ${{ steps.select.outputs.pr_number }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner
+            const repo = context.repo.repo
+            const sha = process.env.MERGED_SHA
+            core.info(`PR #${process.env.PR_NUMBER} を ${sha} としてmainへマージしました。`)
 
             for (let attempt = 1; attempt <= 20; attempt += 1) {
-              const production = await github.rest.repos.getCombinedStatusForRef({
-                owner,
-                repo,
-                ref: merge.data.sha,
-              })
+              const production = await github.rest.repos.getCombinedStatusForRef({ owner, repo, ref: sha })
               const deployment = production.data.statuses.find((status) => status.context === "Vercel")
               if (deployment?.state === "success") {
                 core.info(`Vercel本番デプロイ成功: ${deployment.target_url}`)
