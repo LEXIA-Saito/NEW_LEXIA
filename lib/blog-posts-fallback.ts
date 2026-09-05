@@ -1510,3 +1510,109 @@ fallbackBlogPosts.push({
     },
   ],
 })
+
+fallbackBlogPosts.push({
+  slug: "what-is-web-bot-auth",
+  title: "Web Bot Authとは？AIクローラーを暗号署名で見分ける仕組みと導入の判断材料",
+  description:
+    "User-AgentやIPレンジに頼らずAIクローラーの正体を確認する「Web Bot Auth」を解説します。RFC 9421を土台にした署名の仕組み、IETFでの標準化の現在地、CloudflareとAWS WAFの対応状況、サイト運営者が導入を判断するときに確認すべき点を一次情報から整理しました。",
+  genre: "Security",
+  tags: ["Web Bot Auth", "AIクローラー", "RFC 9421"],
+  date: "2026-08-25",
+  sections: [
+    {
+      body: [
+        "アクセスログにGPTBotやClaudeBotといった名前が並ぶようになり、「これは本当に公式のクローラーなのか」と確かめたくなった経験はないでしょうか。User-Agentは誰でも自由に名乗れる文字列で、それだけでは何の証明にもなりません。公開されているIPレンジと突き合わせる方法や逆引きDNSで確認する方法もありますが、ボットごとに手順が違い、レンジの更新にも追随し続ける必要があります。",
+        "この面倒さを根本から変えようとしているのが、HTTPリクエストそのものに電子署名を付けてボットの身元を示す「Web Bot Auth」です。IETFで標準化が進んでおり、CloudflareやAWS WAFはすでに対応を始めています。ここでは仕様の中身、標準化の現在地、そして自社サイトで扱うときに何を確認すべきかを、一次情報をもとに整理します。",
+      ],
+      list: [
+        "この記事でわかること：Web Bot Authが解決しようとしている問題と、従来手法との違い。",
+        "RFC 9421を土台にした署名・鍵ディレクトリ・Signature-Agentヘッダーの仕組み。",
+        "IETFでの標準化の現在地と、CloudflareおよびAWS WAFの対応状況。",
+        "導入・運用を判断するときに確認すべき点と、この仕組みで解決できないこと。",
+      ],
+    },
+    {
+      heading: "Web Bot Authとは？ボットの「自己申告」を署名に置き換える",
+      body: [
+        "Web Bot Authは、クローラーやAIエージェントのような自動化されたHTTPクライアントが、自分だけが持つ秘密鍵でリクエストに署名し、受け取った側が公開鍵で検証することで送信元を特定できるようにする仕組みです。中心となるインターネットドラフト「HTTP Message Signatures for automated traffic」は、IPアドレスの許可リストやUser-Agent文字列といった従来の方法を超えて、自動トラフィックの身元を暗号的な確度で検証できるようにすることを目的として掲げています（ドラフト本体: https://datatracker.ietf.org/doc/draft-meunier-webbotauth-httpsig-protocol/ ）。",
+        "ポイントは、確認の手間がボットごとの個別対応ではなくなることです。IPレンジや逆引きDNSは事業者ごとに公開方法も更新頻度もばらばらですが、署名方式であれば「決められた場所から公開鍵を取り、署名を検証する」という一本の手順に統一できます。",
+      ],
+      table: {
+        headers: ["確認方法", "なりすまし耐性", "検証側の運用負荷"],
+        rows: [
+          ["User-Agent文字列", "なし。誰でも同じ文字列を名乗れる", "低いが、そもそも信頼できない"],
+          ["公開IPレンジとの照合", "中。レンジの更新に追随できていれば有効", "ボットごとにリストを取得・更新し続ける"],
+          ["逆引き＋正引きDNS", "中〜高。設定が正しく運用されている前提", "ボットごとに手順が異なり、DNS参照も増える"],
+          ["Web Bot Auth（署名）", "高。秘密鍵がなければ署名を作れない", "鍵ディレクトリの取得と署名検証に一本化できる"],
+        ],
+      },
+    },
+    {
+      heading: "仕組み：RFC 9421の署名と.well-knownの鍵ディレクトリ",
+      body: [
+        "土台になっているのは、2024年2月に標準化されたRFC 9421「HTTP Message Signatures」です。これはHTTPメッセージの一部に電子署名を付けるための標準仕様で、署名の対象にした構成要素をSignature-Inputヘッダーで宣言し、署名値そのものをSignatureヘッダーで送ります（仕様本文: https://www.rfc-editor.org/rfc/rfc9421.html ）。",
+        "Web Bot Authはここに、鍵の入手先を示すSignature-Agentヘッダーを追加します。リクエストの中に公開鍵ディレクトリのURLが含まれるため、検証する側は事前にボット事業者の情報を登録しておかなくても、その場で鍵を取りに行けます。ドラフトでは署名パラメータとしてcreated・expires・keyidが必須とされ、tagはweb-bot-authという固定値を使うと定められています。keyidには公開鍵のJWKサムプリントをbase64urlで表現した値を用います。",
+        "Cloudflareのドキュメントでは、実装上の具体的な条件として鍵にEd25519を用いること、ディレクトリをapplication/http-message-signatures-directory+jsonというContent-Typeで配信することが示されています（Cloudflare公式ドキュメント: https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/ ）。",
+      ],
+      list: [
+        "ボット事業者が鍵ペアを生成し、公開鍵を自ドメインの /.well-known/http-message-signatures-directory にJWKS形式で公開する。",
+        "ボットはリクエスト送信時に、Signature-Inputで署名対象とcreated・expires・keyid・tagを宣言し、Signatureに署名値を入れる。",
+        "鍵の取得先を伝えるため、Signature-Agentヘッダーでディレクトリのアドレスを示す。",
+        "受け取った側はディレクトリから公開鍵を取得し、署名を検証して「どの事業者のボットか」を確定させる。",
+        "鍵を入れ替えるときは新旧の鍵を並べて公開し、移行が済んでから古い鍵を削除する。",
+      ],
+    },
+    {
+      heading: "標準化の現在地：IETFにワーキンググループが設置された",
+      body: [
+        "Web Bot Authは一社の独自仕様ではなく、IETFにWeb Bot Auth（webbotauth）ワーキンググループが設置され、Web and Internet Transport領域で議論が進んでいます。チャーターでは、人間向けに公開されたサイトへアクセスする自動クライアントを暗号的に認証する手法の標準化を目的とし、検索クローラー、Webアーカイブ、AI学習用クローラー、AIエージェントを想定範囲に挙げています。一方でHTTP以外のプロトコル、暗号を使わない識別方法、エンドユーザーの認証は対象外と明記されています（チャーター: https://datatracker.ietf.org/wg/webbotauth/about/ ）。",
+        "ただし仕様はまだ固まっていません。2026年8月時点で公開されている文書は個人提出のインターネットドラフトが中心で、ワーキンググループとして採択された文書は一覧に並んでいません。議論の土台になっているのは、プロトコルを定めるdraft-meunier-webbotauth-httpsig-protocol（-02、2026年8月18日）と、事業者を識別するための情報をまとめるdraft-meunier-webbotauth-registry（-03、2026年6月26日）です。ほかにもクローラーの行儀に関するベストプラクティスや、匿名のままレート制限だけを行う提案など、複数のドラフトが並行して議論されています（文書一覧: https://datatracker.ietf.org/wg/webbotauth/documents/ ）。",
+        "つまり、実装を進めるうえでは「まだ変わりうる仕様」という前提が欠かせません。ヘッダー名やパラメータの扱いが版によって変わる可能性を見込み、参照しているドラフトの版を記録しておくと後の追随が楽になります。",
+      ],
+    },
+    {
+      heading: "CloudflareとAWS WAFはすでに対応している",
+      body: [
+        "仕様が固まる前から、主要なCDNやWAFは実装を始めています。Cloudflareは2025年7月1日の記事で、HTTP Message SignaturesをVerified Botsプログラムに統合したと発表しました。サイト運営者側で追加の対応は不要で、Cloudflareがエッジ側で署名を自動的に検証するとしています。WAFルールではcf.verified_bot_categoryフィールドを使い、検証済みボットの種類ごとに扱いを変えられます（発表記事: https://blog.cloudflare.com/verified-bots-with-cryptography/ ）。",
+        "署名する側にまわる場合は、鍵ディレクトリを用意したうえでCloudflareのダッシュボードからボットを登録します。実装用にRust版とTypeScript版のライブラリがApache-2.0でオープンソース公開されており、Cloudflare WorkersやCaddyプラグインでの検証例も含まれています。ただしリポジトリには「このソフトウェアは監査を受けていない」という但し書きがあるため、本番投入前の検証は自分たちの責任で行う必要があります（リポジトリ: https://github.com/cloudflare/web-bot-auth ）。",
+        "AWSも2025年11月21日にAWS WAFのWeb Bot Auth対応を発表しました。Amazon CloudFrontディストリビューションを保護している構成で利用でき、追加料金はかからず標準のAWS WAF料金の範囲で使えます。従来はAIカテゴリのルールグループが未検証のボットをまとめて遮断していましたが、Web Bot Authで検証されたボットはデフォルトで許可される挙動に変わりました（発表: https://aws.amazon.com/about-aws/whats-new/2025/11/aws-waf-web-bot-auth-support/ ）。",
+      ],
+    },
+    {
+      heading: "まとめ：導入を判断する前に確認したいこと",
+      body: [
+        "最初に押さえておきたいのは、署名でわかるのは「誰が来ているか」であって「通してよいかどうか」ではない、という点です。正規のAIクローラーだと確認できたとしても、自社コンテンツの学習利用を許すかどうかは、robots.txtや利用規約、契約で決める別の判断になります。Web Bot Authは、その判断を下すための前提となる本人確認を担う仕組みだと捉えるのが正確です。",
+        "セキュリティ上の注意点もドラフトに明記されています。署名の対象をホスト名だけにすると、有効期限が切れるまでは同じホスト宛のあらゆるメソッド・パス・ボディに対してその署名が通ってしまう、という指摘です。有効期限を短く設定する、署名対象に含める要素を増やすといった設計判断が必要になります。",
+      ],
+      list: [
+        "利用中のCDNやWAFが対応しているかを確認する。CloudflareやCloudFront＋AWS WAFであれば追加費用なしで恩恵を受けられるが、自前運用のWebサーバーでは検証処理を組み込む必要がある。",
+        "未署名のボットの扱いを決める。いきなり遮断すると、まだ署名に対応していない正規のクローラーや社内の監視ツールまで巻き込む。まずは記録だけ残して影響範囲を見てから制限する。",
+        "仕様がドラフト段階であることを前提に実装する。参照した版を控え、差し替えやすい構造にしておく。",
+        "検証処理の失敗時の挙動を決めておく。鍵ディレクトリの取得はキャッシュし、取得できなかったときに通すのか止めるのかをあらかじめ定義する。",
+        "自社がボットを出す側になる場合は、鍵の保管場所、ローテーション手順、ディレクトリの可用性まで含めて運用設計する。",
+      ],
+    },
+    {
+      heading: "参考リンク",
+      list: [
+        "HTTP Message Signatures for automated traffic（プロトコルのドラフト）",
+        "https://datatracker.ietf.org/doc/draft-meunier-webbotauth-httpsig-protocol/",
+        "IETF Web Bot Auth ワーキンググループ チャーター",
+        "https://datatracker.ietf.org/wg/webbotauth/about/",
+        "IETF Web Bot Auth 関連文書一覧",
+        "https://datatracker.ietf.org/wg/webbotauth/documents/",
+        "RFC 9421 HTTP Message Signatures",
+        "https://www.rfc-editor.org/rfc/rfc9421.html",
+        "Cloudflare 公式ドキュメント Web Bot Auth",
+        "https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/",
+        "Cloudflare 発表記事 Message Signatures are now part of our Verified Bots Program",
+        "https://blog.cloudflare.com/verified-bots-with-cryptography/",
+        "AWS WAF が Web Bot Auth のサポートを発表",
+        "https://aws.amazon.com/about-aws/whats-new/2025/11/aws-waf-web-bot-auth-support/",
+        "cloudflare/web-bot-auth（署名・検証ライブラリ）",
+        "https://github.com/cloudflare/web-bot-auth",
+      ],
+    },
+  ],
+})
