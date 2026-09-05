@@ -42,10 +42,15 @@ REPO_SLUG="$(gh repo view --json nameWithOwner --jq .nameWithOwner 2>/dev/null |
 log "repo: ${REPO_SLUG:-unknown}"
 
 # --- Duplicate guard: skip if today's article already exists (branch or waiting PR) ---
-existing_branch="$(git ls-remote --heads origin "blog/$TODAY-*" || true)"
-existing_pr="$(gh pr list --state open --label blog:article --json body \
-  --jq "[.[] | select(.body | contains(\"${TODAY}T18:00:00+09:00\"))] | length" 2>/dev/null || echo 0)"
-if [[ -n "$existing_branch" || "${existing_pr:-0}" != "0" ]]; then
+todays_article_exists() {
+  local branch pr
+  branch="$(git ls-remote --heads origin "blog/$TODAY-*" || true)"
+  pr="$(gh pr list --state open --label blog:article --json body \
+    --jq "[.[] | select(.body | contains(\"${TODAY}T18:00:00+09:00\"))] | length" 2>/dev/null || echo 0)"
+  [[ -n "$branch" || "${pr:-0}" != "0" ]]
+}
+
+if todays_article_exists; then
   log "本日分（ブランチまたは公開待ちPR）が既に存在するため、重複作成を避けて終了します。"
   exit 0
 fi
@@ -75,11 +80,35 @@ log "installing dependencies in worktree…"
   || log "pnpm install warning (continuing; Claude can retry)"
 
 cd "$WT"
-log "invoking headless Claude…"
-set +e
-claude -p "$(cat "$PROMPT_FILE")" --dangerously-skip-permissions
-RC=$?
-set -e
-log "claude exited rc=$RC"
+
+# 朝9:00の1発勝負だと、Macのスリープ・DNS・セッション上限といった一過性の失敗で
+# その日の記事が丸ごと落ちる（8/26・8/31・9/1が実際にこれで消えている）。
+# 失敗したら間隔を空けて数回だけやり直す。ただし記事が既に出来ていたら再試行しない。
+ATTEMPTS="${LEXIA_BLOG_ATTEMPTS:-3}"
+RETRY_DELAY="${LEXIA_BLOG_RETRY_DELAY:-1800}"
+
+RC=1
+for attempt in $(seq 1 "$ATTEMPTS"); do
+  if (( attempt > 1 )); then
+    cd "$REPO_DIR"
+    git fetch origin main --quiet || true
+    if todays_article_exists; then
+      log "本日分の記事が既に存在するため再試行しません。"
+      RC=0
+      break
+    fi
+    cd "$WT"
+    log "${RETRY_DELAY}秒待って再試行します (attempt $attempt/$ATTEMPTS)"
+    sleep "$RETRY_DELAY"
+  fi
+
+  log "invoking headless Claude… (attempt $attempt/$ATTEMPTS)"
+  set +e
+  claude -p "$(cat "$PROMPT_FILE")" --dangerously-skip-permissions
+  RC=$?
+  set -e
+  log "claude exited rc=$RC (attempt $attempt/$ATTEMPTS)"
+  (( RC == 0 )) && break
+done
 log "=== daily article generation end (rc=$RC) ==="
 exit "$RC"
