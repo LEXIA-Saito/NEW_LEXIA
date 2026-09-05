@@ -48,8 +48,10 @@ cmd_install() {
     "$TEMPLATE" > "$PLIST_DST"
 
   launchctl bootout "$DOMAIN/$LABEL" 2>/dev/null || true
-  launchctl bootstrap "$DOMAIN" "$PLIST_DST"
+  # enable は bootstrap より先。無効化済みのラベルを bootstrap しようとすると
+  # "Bootstrap failed: 5: Input/output error" で失敗し、原因が読み取れない。
   launchctl enable "$DOMAIN/$LABEL"
+  launchctl bootstrap "$DOMAIN" "$PLIST_DST"
   echo "installed + loaded: $LABEL (daily 09:00 local time)"
   echo "plist: $PLIST_DST"
   echo "PATH: $launchd_path"
