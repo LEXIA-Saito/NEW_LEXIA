@@ -720,3 +720,56 @@ table tbody tr:hover {
     background-position: -200% 0;
   }
 }
+
+/* ===========================================================================
+   コードブロック（Shikiでサーバー側ハイライト済み）
+   lib/blog/transform-article-html.ts が生成する構造:
+     div[data-code-block] > div(ヘッダー) + div.code-block-body > pre.shiki
+   上の .prose pre / .prose code は背景と余白を付けるため、ここで打ち消す。
+   セレクタは .prose pre より詳細度を高くしてある。
+   =========================================================================== */
+
+.prose [data-code-block="true"] pre,
+[data-code-block="true"] pre.shiki {
+  margin: 0;
+  padding: 1rem;
+  border-radius: 0;
+  background-color: transparent;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.prose [data-code-block="true"] code,
+[data-code-block="true"] pre.shiki code {
+  background-color: transparent;
+  padding: 0;
+  font-size: inherit;
+  /* 長い行は折り返さず横スクロールさせる。インデントの意味を壊さないため */
+  white-space: pre;
+}
+
+/* Shikiは明暗2テーマ分の色をCSS変数で埋め込む。ここで実際の色に解決する */
+[data-code-block="true"] .shiki {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+[data-code-block="true"] .shiki span {
+  color: var(--shiki-light);
+}
+
+.dark [data-code-block="true"] .shiki {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+
+.dark [data-code-block="true"] .shiki span {
+  color: var(--shiki-dark);
+}
+
+@media (min-width: 768px) {
+  .prose [data-code-block="true"] pre,
+  [data-code-block="true"] pre.shiki {
+    font-size: 0.9375rem;
+  }
+}
