@@ -1,0 +1,6 @@
+# 日次記事は lib/blog-posts-fallback.ts の末尾に1記事1ブロックを追記するだけなので、
+# 記事PRどうしは常に同じ場所で衝突する（先に1本マージすると残りが全滅する）。
+# 追記専用のこのファイルに限り union マージで両方の追記を残す。
+# 記事ブロックを「書き換える」PRでは union が両方を残して壊れる可能性があるため、
+# 最終的な健全性は pull_request のマージrefで走る blog-article-policy に委ねる。
+lib/blog-posts-fallback.ts merge=union
